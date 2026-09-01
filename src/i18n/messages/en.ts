@@ -45,6 +45,12 @@ export const en = {
   'summary.ludwig.mild': 'Early diffuse thinning, most visible along the part.',
   'summary.ludwig.moderate': 'Diffuse thinning with a widening part and reduced volume.',
   'summary.ludwig.established': 'Pronounced diffuse thinning across the mid-scalp.',
+
+  'diagnosis.rail.intro': 'Intro',
+  'diagnosis.rail.gender': 'You',
+  'diagnosis.rail.photos': 'Photos',
+  'diagnosis.rail.analysis': 'Analysis',
+  'diagnosis.rail.results': 'Results',
 } as const;
 
 export type MessageKey = keyof typeof en;

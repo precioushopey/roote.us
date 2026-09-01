@@ -48,4 +48,10 @@ export const he: Record<MessageKey, string> = {
   'summary.ludwig.mild': 'דילול מפוזר מוקדם, בולט בעיקר לאורך הפסוקת.',
   'summary.ludwig.moderate': 'דילול מפוזר עם התרחבות הפסוקת וירידה בנפח.',
   'summary.ludwig.established': 'דילול מפוזר ניכר במרכז הקרקפת.',
+
+  'diagnosis.rail.intro': 'הקדמה',
+  'diagnosis.rail.gender': 'עליך',
+  'diagnosis.rail.photos': 'תמונות',
+  'diagnosis.rail.analysis': 'ניתוח',
+  'diagnosis.rail.results': 'תוצאות',
 };
