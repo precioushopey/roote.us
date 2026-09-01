@@ -47,6 +47,9 @@ const personas = [
 ];
 
 describe('ReportDocument (PDF)', () => {
+  // Real font embedding + A4 layout via @react-pdf/renderer is slow, and gets slower still under
+  // full-suite parallel load (many Vitest workers competing for CPU) — the default 5000ms timeout
+  // is comfortable in isolation but flakes under `pnpm test`. 20s gives real headroom either way.
   it.each(personas)('renders to a non-empty buffer for $name', async ({ gender, answers }) => {
     const model = persona(gender, answers);
     const buffer = await pdf(<ReportDocument model={model} />).toBuffer();
@@ -55,7 +58,7 @@ describe('ReportDocument (PDF)', () => {
     const full = Buffer.concat(chunks);
     expect(full.length).toBeGreaterThan(1000);
     expect(full.subarray(0, 4).toString()).toBe('%PDF');
-  });
+  }, 20000);
 
   it('renders the Hebrew locale without throwing', async () => {
     const model = persona('male', { q1_area: 'hairline', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'no', q5_goal: 'both' } as Answers);
@@ -64,5 +67,5 @@ describe('ReportDocument (PDF)', () => {
     const chunks: Buffer[] = [];
     for await (const chunk of buffer) chunks.push(chunk as Buffer);
     expect(Buffer.concat(chunks).length).toBeGreaterThan(1000);
-  });
+  }, 20000);
 });
