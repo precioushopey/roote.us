@@ -1,0 +1,15 @@
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router';
+import { LocaleProvider } from '@/i18n/LocaleProvider';
+import { ReportNotFound } from './ReportNotFound';
+
+describe('ReportNotFound', () => {
+  it('shows the not-found message and a restart link', () => {
+    localStorage.setItem('roote.locale', 'en');
+    const router = createMemoryRouter([{ path: '/report/x', element: <ReportNotFound /> }], { initialEntries: ['/report/x'] });
+    render(<LocaleProvider><RouterProvider router={router} /></LocaleProvider>);
+    expect(screen.getByText('Report not found')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Start a new diagnosis' })).toHaveAttribute('href', '/diagnosis');
+  });
+});
