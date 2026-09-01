@@ -14,11 +14,13 @@ describe('AnalyzingStrip', () => {
     const { rerender } = wrap(
       <AnalyzingStrip running gateReady={false} onComplete={onComplete} facetMs={100} />,
     );
-    act(() => vi.advanceTimersByTime(100 * 6));
+    // Advance one facetMs-sized step at a time — each act() call lets exactly one
+    // render+effect cycle complete and register the next timer, so the chain cascades.
+    for (let i = 0; i < 6; i++) act(() => vi.advanceTimersByTime(100));
     expect(onComplete).not.toHaveBeenCalled();
 
     rerender(<LocaleProvider><AnalyzingStrip running gateReady onComplete={onComplete} facetMs={100} /></LocaleProvider>);
-    act(() => vi.advanceTimersByTime(100 * 6));
+    for (let i = 0; i < 6; i++) act(() => vi.advanceTimersByTime(100));
     expect(onComplete).toHaveBeenCalledTimes(1);
   });
 
