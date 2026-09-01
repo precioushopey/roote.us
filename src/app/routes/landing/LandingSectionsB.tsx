@@ -8,6 +8,7 @@ import { rooteContent, type LocalizedText } from '@/content/roote.config';
 import productLineup from '@/assets/product-lineup.jpg';
 import scalpBefore from '@/assets/scalp-before.jpg';
 import scalpAfter from '@/assets/scalp-after.jpg';
+import hairCuticle from '@/assets/hair-cuticle.jpg';
 
 /** Same fallback rule as buildReport's private resolveLocalized: an empty translation is unresolved, not blank. */
 function resolveLocalized(text: LocalizedText, locale: 'en' | 'he', label: string): string | PendingMarker {
@@ -92,19 +93,19 @@ export function RegimenTeaser() {
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
         <h2 className="text-2xl font-medium sm:text-3xl">{t('landing.regimen.title')}</h2>
         <p className="max-w-xl text-sm text-muted-foreground">{t('landing.regimen.body')}</p>
-        <img
-          src={productLineup}
-          alt={t('landing.regimen.imageAlt')}
-          className="h-32 w-full max-w-2xl rounded-xl border border-border object-cover sm:h-40"
-        />
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {rooteContent.formula.ingredients.map((ing) => (
-            <div key={ing.key} className="flex flex-col items-center gap-1 rounded-lg border border-border bg-card p-4">
-              <p className="text-sm font-medium">{ing.name}</p>
-              <p className="text-[11px] text-muted-foreground">{t(ROLE_KEYS[ing.role])}</p>
-            </div>
-          ))}
+
+        <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-border">
+          <img src={productLineup} alt={t('landing.regimen.imageAlt')} className="block h-auto w-full" />
+          <div className="absolute inset-y-0 start-0 flex w-1/2 flex-col justify-center gap-3 p-4 sm:gap-4 sm:p-8">
+            {rooteContent.formula.ingredients.map((ing) => (
+              <div key={ing.key} className="text-start">
+                <p className="text-xs font-medium sm:text-sm">{ing.name}</p>
+                <p className="text-[10px] text-muted-foreground sm:text-[11px]">{t(ROLE_KEYS[ing.role])}</p>
+              </div>
+            ))}
+          </div>
         </div>
+
         <p className="rounded border border-dashed border-accent px-3 py-1.5 text-xs text-accent">
           {rooteContent.disclaimers.formulaPending[locale]}
         </p>
@@ -134,10 +135,19 @@ export function CtaBanner() {
 export function ResearchSection() {
   const t = useT();
   return (
-    <section className="px-6 py-16">
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
-        <h2 className="text-2xl font-medium sm:text-3xl">{t('landing.research.title')}</h2>
-        <p className="text-sm text-muted-foreground">{t('landing.research.body')}</p>
+    <section className="bg-secondary/40 px-6 py-16">
+      <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-2">
+        <div className="flex flex-col items-start gap-5">
+          <h2 className="text-2xl font-medium sm:text-3xl">{t('landing.research.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('landing.research.body')}</p>
+          <Link to="/diagnosis" className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm text-primary-foreground">
+            {t('landing.cta')}
+          </Link>
+        </div>
+        <figure className="mx-auto w-full max-w-sm">
+          <img src={hairCuticle} alt={t('landing.research.imageAlt')} className="h-64 w-full rounded-2xl border border-border object-cover shadow-sm sm:h-80" />
+          <figcaption className="mt-2 text-center text-[11px] text-muted-foreground">{t('landing.research.imageCaption')}</figcaption>
+        </figure>
       </div>
     </section>
   );
@@ -157,19 +167,26 @@ export function FinalCta() {
   const items = [t('landing.finalCta.item1'), t('landing.finalCta.item2'), t('landing.finalCta.item3')];
   return (
     <section className="px-6 py-16">
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
-        <h2 className="text-2xl font-medium sm:text-3xl">{t('landing.finalCta.title')}</h2>
-        <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-          {items.map((item) => (
-            <li key={item} className="flex items-center gap-2">
-              <CheckIcon />
-              {item}
-            </li>
-          ))}
-        </ul>
-        <Link to="/diagnosis" className="inline-flex items-center rounded-md bg-primary px-8 py-4 text-sm text-primary-foreground">
-          {t('landing.cta')}
-        </Link>
+      <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-2">
+        <div className="flex flex-col items-start gap-6">
+          <h2 className="text-2xl font-medium sm:text-3xl">{t('landing.finalCta.title')}</h2>
+          <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+            {items.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <CheckIcon />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <Link to="/diagnosis" className="inline-flex items-center rounded-md bg-primary px-8 py-4 text-sm text-primary-foreground">
+            {t('landing.cta')}
+          </Link>
+        </div>
+        <img
+          src={productLineup}
+          alt=""
+          className="mx-auto h-56 w-full max-w-md rounded-2xl border border-border object-cover shadow-sm sm:h-72"
+        />
       </div>
     </section>
   );
@@ -193,6 +210,9 @@ export function Footer() {
         ) : (
           <p className="max-w-xl text-[11px] text-muted-foreground">{disclaimer}</p>
         )}
+        <Link to="/diagnosis" className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm text-primary-foreground">
+          {t('landing.cta')}
+        </Link>
         <p className="text-[11px] text-muted-foreground">{t('landing.footer.copyright', { year: new Date().getFullYear() })}</p>
       </div>
     </footer>

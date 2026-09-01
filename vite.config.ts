@@ -40,5 +40,10 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     css: false,
+    // .worktrees/ holds sibling git worktrees (their own full checkout + node_modules) nested
+    // inside this repo root — without excluding it, Vitest's default discovery also picks up
+    // their test files, running two different node_modules' React copies in one process and
+    // crashing with "Cannot read properties of null (reading 'useState')".
+    exclude: ['**/node_modules/**', '**/.worktrees/**', '**/dist/**'],
   },
 })

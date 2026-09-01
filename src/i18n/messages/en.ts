@@ -165,6 +165,8 @@ export const en = {
   'landing.hero.insetCaption': 'Every plan starts with your own AI-guided scan.',
   'landing.hero.badgeLine1': 'AI-GUIDED',
   'landing.hero.badgeLine2': 'ANALYSIS',
+  'landing.hero.trustBadgeTitle': 'Dermatologically-informed',
+  'landing.hero.trustBadgeSub': 'Built on studied, well-understood ingredients.',
 
   'landing.science.progressTitle': 'See your progress over time',
   'landing.science.progressCaption': "Illustrative example of the comparison view in your report — not ROOTÉ product results.",
@@ -172,6 +174,8 @@ export const en = {
   'landing.science.progressAfter': 'After',
 
   'landing.regimen.imageAlt': 'The four ROOTÉ formula components',
+  'landing.research.imageAlt': 'Magnified view of a hair shaft cuticle',
+  'landing.research.imageCaption': 'Illustrative — magnified view of hair shaft structure.',
 
   'landing.planTeaser.title': 'Discover the plan built for you',
   'landing.planTeaser.body': 'Answer a short quiz and share a few photos to get an AI-guided assessment and a personalized plan recommendation.',

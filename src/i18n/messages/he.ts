@@ -168,6 +168,8 @@ export const he: Record<MessageKey, string> = {
   'landing.hero.insetCaption': 'כל תוכנית מתחילה בסריקה מבוססת AI משלכם.',
   'landing.hero.badgeLine1': 'ניתוח',
   'landing.hero.badgeLine2': 'מבוסס AI',
+  'landing.hero.trustBadgeTitle': 'מבוסס על ידע דרמטולוגי',
+  'landing.hero.trustBadgeSub': 'בנוי על רכיבים נחקרים ומוכרים.',
 
   'landing.science.progressTitle': 'עקבו אחר ההתקדמות שלכם לאורך זמן',
   'landing.science.progressCaption': 'דוגמה להמחשה של תצוגת ההשוואה בדוח שלכם — אינה מייצגת תוצאות מוצר ROOTÉ.',
@@ -175,6 +177,8 @@ export const he: Record<MessageKey, string> = {
   'landing.science.progressAfter': 'אחרי',
 
   'landing.regimen.imageAlt': 'ארבעת רכיבי הפורמולה של ROOTÉ',
+  'landing.research.imageAlt': 'תצוגה מוגדלת של קוטיקולת השערה',
+  'landing.research.imageCaption': 'להמחשה — תצוגה מוגדלת של מבנה השערה.',
 
   'landing.planTeaser.title': 'גלו את התוכנית שנבנתה עבורכם',
   'landing.planTeaser.body': 'ענו על שאלון קצר ושתפו כמה תמונות כדי לקבל הערכה מבוססת AI והמלצת תוכנית אישית.',
