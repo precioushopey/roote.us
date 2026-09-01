@@ -166,4 +166,12 @@ export const he: Record<MessageKey, string> = {
   'start.rail.payment': 'תשלום',
   'start.noReport.body': 'עליך להשלים ניתוח שיער לפני יצירת התוכנית שלך.',
   'start.noReport.devSeedCta': 'טעינת דוח הדגמה (למפתחים בלבד)',
+  'start.account.title': 'יצירת חשבון',
+  'start.account.emailLabel': 'אימייל',
+  'start.account.passwordLabel': 'סיסמה',
+  'start.account.submit': 'יצירת חשבון',
+  'start.account.magicLink': 'שליחת קישור כניסה למייל במקום (בקרוב)',
+  'start.account.error.invalidEmail': 'נא להזין כתובת אימייל תקינה.',
+  'start.account.error.weakPassword': 'יש להשתמש בלפחות 8 תווים.',
+  'start.account.error.duplicateEmail': 'קיים כבר חשבון עם כתובת אימייל זו.',
 };

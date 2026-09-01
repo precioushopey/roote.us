@@ -163,6 +163,14 @@ export const en = {
   'start.rail.payment': 'Payment',
   'start.noReport.body': 'We need a completed hair analysis before you can create your program.',
   'start.noReport.devSeedCta': 'Load a demo report (dev only)',
+  'start.account.title': 'Create your account',
+  'start.account.emailLabel': 'Email',
+  'start.account.passwordLabel': 'Password',
+  'start.account.submit': 'Create account',
+  'start.account.magicLink': 'Email me a sign-in link instead (coming soon)',
+  'start.account.error.invalidEmail': 'Enter a valid email address.',
+  'start.account.error.weakPassword': 'Use at least 8 characters.',
+  'start.account.error.duplicateEmail': 'An account with this email already exists.',
 } as const;
 
 export type MessageKey = keyof typeof en;
