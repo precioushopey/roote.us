@@ -48,19 +48,23 @@ export function ScienceSection() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-3 pt-4">
+        <div className="flex w-full flex-col items-center gap-3 pt-4">
           <h3 className="text-lg font-medium" style={{ fontFamily: "'Spectral', 'Libre Franklin', serif" }}>
             {t('landing.science.progressTitle')}
           </h3>
-          <div className="flex gap-3">
-            <figure className="flex flex-col items-center gap-1">
-              <img src={scalpBefore} alt={t('landing.science.progressBefore')} className="h-32 w-32 rounded-lg border border-border object-cover sm:h-40 sm:w-40" />
-              <figcaption className="text-[11px] uppercase tracking-wide text-muted-foreground">{t('landing.science.progressBefore')}</figcaption>
-            </figure>
-            <figure className="flex flex-col items-center gap-1">
-              <img src={scalpAfter} alt={t('landing.science.progressAfter')} className="h-32 w-32 rounded-lg border border-border object-cover sm:h-40 sm:w-40" />
-              <figcaption className="text-[11px] uppercase tracking-wide text-muted-foreground">{t('landing.science.progressAfter')}</figcaption>
-            </figure>
+          <div className="grid w-full max-w-2xl grid-cols-2 gap-4">
+            <div className="relative">
+              <img src={scalpBefore} alt={t('landing.science.progressBefore')} className="aspect-square w-full rounded-xl border border-border object-cover" />
+              <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide shadow-sm">
+                {t('landing.science.progressBefore')}
+              </span>
+            </div>
+            <div className="relative">
+              <img src={scalpAfter} alt={t('landing.science.progressAfter')} className="aspect-square w-full rounded-xl border border-border object-cover" />
+              <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide shadow-sm">
+                {t('landing.science.progressAfter')}
+              </span>
+            </div>
           </div>
           <p className="max-w-sm text-[11px] text-muted-foreground">{t('landing.science.progressCaption')}</p>
         </div>
