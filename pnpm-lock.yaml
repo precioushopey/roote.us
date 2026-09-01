@@ -17,12 +17,12 @@ importers:
       '@emotion/styled':
         specifier: 11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.18)(react@18.3.1))(@types/react@19.2.18)(react@18.3.1)
-      '@fontsource/heebo':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource/libre-franklin':
-        specifier: ^5.3.0
-        version: 5.3.0
+      '@expo-google-fonts/heebo':
+        specifier: ^0.4.2
+        version: 0.4.2
+      '@expo-google-fonts/libre-franklin':
+        specifier: ^0.4.2
+        version: 0.4.2
       '@mui/icons-material':
         specifier: 7.3.5
         version: 7.3.5(@mui/material@7.3.5(@emotion/react@11.14.0(@types/react@19.2.18)(react@18.3.1))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.18)(react@18.3.1))(@types/react@19.2.18)(react@18.3.1))(@types/react@19.2.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@19.2.18)(react@18.3.1)
@@ -559,6 +559,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@expo-google-fonts/heebo@0.4.2':
+    resolution: {integrity: sha512-mNSjLv9kikSexvdNteFElzeYEOrOPXHQctAJOGEfnUZPU9PgiEaSMcKM6K50Geahy2Aiq/xlbMD0OwhGRhSBiQ==}
+
+  '@expo-google-fonts/libre-franklin@0.4.2':
+    resolution: {integrity: sha512-aUf6qenmy23hL2BteGl8bk1Y1rmxplz3e1HhmjDkFt171aT7gEc4uSbuS1URbD5mUPzt0rv+VuOlKezPlDegew==}
+
   '@floating-ui/core@1.8.0':
     resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
 
@@ -573,12 +579,6 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
-
-  '@fontsource/heebo@5.3.0':
-    resolution: {integrity: sha512-Z01U2fWWrfJnSE6SmDYtZJ1uCnKs8V3WSdip/lVDfKnsC1ASumb7IZmOrXjaYK+PVm7qGD3+4cwTAFOxG5uMaw==}
-
-  '@fontsource/libre-franklin@5.3.0':
-    resolution: {integrity: sha512-owd+HDvD4hnGHG1jO3rHtg0BiNT0DJbZMaSqJ7g4r0646G5Q91MjTFWxZbpwg8njLu4BSH3EBqwkVSMLud6brg==}
 
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
@@ -3390,6 +3390,10 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
+  '@expo-google-fonts/heebo@0.4.2': {}
+
+  '@expo-google-fonts/libre-franklin@0.4.2': {}
+
   '@floating-ui/core@1.8.0':
     dependencies:
       '@floating-ui/utils': 0.2.12
@@ -3406,10 +3410,6 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   '@floating-ui/utils@0.2.12': {}
-
-  '@fontsource/heebo@5.3.0': {}
-
-  '@fontsource/libre-franklin@5.3.0': {}
 
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
