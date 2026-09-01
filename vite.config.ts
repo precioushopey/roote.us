@@ -40,11 +40,5 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     css: false,
-    onUnhandledRejection: (error: Error) => {
-      // Suppress react-router AbortSignal compatibility error in jsdom test environment
-      if (error.message?.includes('AbortSignal') && error.message?.includes('RequestInit')) {
-        return 'ignore';
-      }
-    },
   },
 })

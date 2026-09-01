@@ -59,7 +59,7 @@ if (OriginalRequest) {
       try {
         super(input, init);
       } catch (e: any) {
-        if (e.message?.includes('AbortSignal')) {
+        if (e.message?.includes('AbortSignal') && e.message?.includes('RequestInit')) {
           // Bypass AbortSignal validation and create request without signal
           const initWithoutSignal = { ...init };
           delete initWithoutSignal.signal;
