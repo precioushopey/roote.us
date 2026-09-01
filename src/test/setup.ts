@@ -5,10 +5,12 @@ import { cleanup } from '@testing-library/react';
 
 afterEach(() => {
   cleanup();
-  localStorage.clear();
+  if (typeof localStorage !== 'undefined') {
+    localStorage.clear();
+  }
 });
 
-if (!window.matchMedia) {
+if (typeof window !== 'undefined' && !window.matchMedia) {
   window.matchMedia = vi.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
@@ -49,7 +51,9 @@ if (!Blob.prototype.text) {
   };
 }
 
-window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
+if (typeof window !== 'undefined') {
+  window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
+}
 
 // Mock Request to bypass AbortSignal validation for react-router compatibility
 const OriginalRequest = global.Request;
