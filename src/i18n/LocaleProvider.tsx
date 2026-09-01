@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { messages, DEFAULT_LOCALE, type Locale, type MessageKey } from './messages';
+import { interpolate } from './interpolate';
 
 const STORAGE_KEY = 'roote.locale';
 
@@ -19,11 +20,6 @@ function readStored(): Locale {
   } catch {
     return DEFAULT_LOCALE;
   }
-}
-
-function interpolate(template: string, vars?: Record<string, string | number>): string {
-  if (!vars) return template;
-  return template.replace(/\{(\w+)\}/g, (_, k) => (k in vars ? String(vars[k]) : `{${k}}`));
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
