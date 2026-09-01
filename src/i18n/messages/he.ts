@@ -59,4 +59,8 @@ export const he: Record<MessageKey, string> = {
   'diagnosis.intro.point1': 'לוקח רק כמה דקות',
   'diagnosis.intro.point2': 'ניתוח שיער מבוסס AI',
   'diagnosis.intro.point3': 'תוכנית טיפול אישית',
+
+  'diagnosis.gender.title': 'מה המין שלך?',
+  'diagnosis.gender.male': 'גבר',
+  'diagnosis.gender.female': 'אישה',
 };

@@ -56,6 +56,10 @@ export const en = {
   'diagnosis.intro.point1': 'Takes just a few minutes',
   'diagnosis.intro.point2': 'AI analysis of your hair',
   'diagnosis.intro.point3': 'A personalized treatment plan',
+
+  'diagnosis.gender.title': 'What is your gender?',
+  'diagnosis.gender.male': 'Male',
+  'diagnosis.gender.female': 'Female',
 } as const;
 
 export type MessageKey = keyof typeof en;
