@@ -71,6 +71,10 @@ export const en = {
   'photo.error.type': 'Please choose an image file.',
   'photo.error.size': 'That image is too large (max 15 MB).',
   'photo.error.generic': 'Could not process that image. Try another.',
+
+  'diagnosis.photos.title': 'Add photos of the area',
+  'diagnosis.photos.howto': 'Good lighting, hair dry, camera straight on. Front, top, crown, hairline.',
+  'diagnosis.photos.privacy': 'Your photos are used only for your analysis.',
 } as const;
 
 export type MessageKey = keyof typeof en;

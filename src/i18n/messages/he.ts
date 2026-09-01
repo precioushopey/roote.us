@@ -74,4 +74,8 @@ export const he: Record<MessageKey, string> = {
   'photo.error.type': 'יש לבחור קובץ תמונה.',
   'photo.error.size': 'התמונה גדולה מדי (עד 15MB).',
   'photo.error.generic': 'לא ניתן לעבד את התמונה. נסו אחרת.',
+
+  'diagnosis.photos.title': 'הוספת תמונות של האזור',
+  'diagnosis.photos.howto': 'תאורה טובה, שיער יבש, מצלמה ישרה. קדמי, עליון, קודקוד, קו שיער.',
+  'diagnosis.photos.privacy': 'התמונות משמשות אך ורק לאבחון שלך.',
 };
