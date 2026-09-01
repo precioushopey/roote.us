@@ -195,6 +195,11 @@ export const en = {
   'start.checkout.error.expiry': 'Enter expiry as MM/YY.',
   'start.checkout.error.cvc': 'Enter a valid CVC.',
   'start.checkout.error.payment': 'Payment failed — please try again.',
+  'start.success.title': "You're all set",
+  'start.success.point1': 'Your plan starts today.',
+  'start.success.point2': 'We will remind you when to apply each step.',
+  'start.success.point3': 'Track your progress with photos as you go.',
+  'start.success.cta': 'Go to my program',
 } as const;
 
 export type MessageKey = keyof typeof en;
