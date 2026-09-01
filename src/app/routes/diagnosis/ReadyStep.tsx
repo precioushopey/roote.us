@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useLocale, useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { redirectForStep } from './guards';
+import { rooteContent } from '@/content/roote.config';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function ReadyStep() {
   const t = useT();
+  const { locale } = useLocale();
   const navigate = useNavigate();
   const session = useSession();
   const [email, setEmailValue] = useState('');
@@ -36,6 +38,7 @@ export function ReadyStep() {
           zones: a.flaggedZones.length,
         })}
       </p>
+      <p className="text-xs text-accent">{rooteContent.disclaimers.demo[locale]}</p>
       <form onSubmit={submit} className="flex flex-col gap-3">
         <input
           type="email"

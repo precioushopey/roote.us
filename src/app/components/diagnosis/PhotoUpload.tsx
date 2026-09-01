@@ -29,9 +29,13 @@ export function PhotoUpload({
     setBusy(true);
     try {
       const { blob, dataUrl } = await downscaleImage(file);
+      const { dataUrl: thumb } = await downscaleImage(file, { maxEdge: 256, quality: 0.6 });
       const id = crypto.randomUUID();
       await putBlob(id, blob);
-      onAdd({ id, angleKey, thumb: dataUrl, blobId: id });
+      if (value) {
+        await deleteBlob(value.blobId).catch(() => {});
+      }
+      onAdd({ id, angleKey, thumb, blobId: id });
     } catch {
       setError(t('photo.error.generic'));
     } finally {
@@ -41,7 +45,11 @@ export function PhotoUpload({
 
   async function handleRemove() {
     if (!value) return;
-    await deleteBlob(value.blobId);
+    try {
+      await deleteBlob(value.blobId);
+    } catch {
+      // best-effort cleanup — still remove from state so the UI isn't stuck
+    }
     onRemove(value.id);
   }
 
@@ -69,7 +77,7 @@ export function PhotoUpload({
         id={inputId}
         type="file"
         accept="image/*"
-        capture="user"
+        capture
         className="sr-only"
         onChange={handleChange}
       />

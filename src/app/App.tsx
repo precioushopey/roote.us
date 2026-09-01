@@ -17,6 +17,7 @@ const router = createBrowserRouter([
     element: <DiagnosisLayout />,
     children: [
       { index: true, element: <IntroStep /> },
+      { path: 'intro', element: <IntroStep /> },
       { path: 'gender', element: <GenderStep /> },
       { path: 'photos', element: <PhotosStep /> },
       { path: 'analyzing', element: <AnalyzingStep /> },

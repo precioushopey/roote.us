@@ -18,14 +18,14 @@ export function AnalyzingStep() {
   const latest = useRef(session.diagnosis);
   latest.current = session.diagnosis;
 
-  const redirect = redirectForStep('analyzing', session);
-  if (redirect) return <Navigate to={redirect} replace />;
-
   const answers = session.diagnosis.answers;
   const allAnswered = useMemo(
     () => QUESTIONS.every((q) => answers[q.id] !== undefined),
     [answers],
   );
+
+  const redirect = redirectForStep('analyzing', session);
+  if (redirect) return <Navigate to={redirect} replace />;
 
   const current = QUESTIONS[Math.min(step, QUESTIONS.length - 1)];
 
