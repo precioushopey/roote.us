@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
+import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { Landing } from './Landing';
 
 function renderAt(path: string) {
@@ -8,7 +9,11 @@ function renderAt(path: string) {
     [{ path: '/', element: <Landing /> }],
     { initialEntries: [path] },
   );
-  return render(<RouterProvider router={router} />);
+  return render(
+    <LocaleProvider>
+      <RouterProvider router={router} />
+    </LocaleProvider>
+  );
 }
 
 describe('Landing', () => {
