@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { SessionProvider } from '@/store/sessionStore';
 import { Landing } from './routes/landing/Landing';
-import { ReportPlaceholder } from './routes/report/ReportPlaceholder';
+import { ReportPage } from './routes/report/ReportPage';
 import { DiagnosisLayout } from './routes/diagnosis/DiagnosisLayout';
 import { IntroStep } from './routes/diagnosis/IntroStep';
 import { GenderStep } from './routes/diagnosis/GenderStep';
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       { path: 'ready', element: <ReadyStep /> },
     ],
   },
-  { path: '/report/:reportId', element: <ReportPlaceholder /> },
+  { path: '/report/:reportId', element: <ReportPage /> },
   { path: '*', element: <Navigate to="/" replace /> },
 ]);
 
