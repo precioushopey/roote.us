@@ -75,6 +75,28 @@ export const en = {
   'diagnosis.photos.title': 'Add photos of the area',
   'diagnosis.photos.howto': 'Good lighting, hair dry, camera straight on. Front, top, crown, hairline.',
   'diagnosis.photos.privacy': 'Your photos are used only for your analysis.',
+
+  'q.counter': 'Question {index} of {total}',
+  'q.area.prompt': 'Where are you experiencing hair loss?',
+  'q.area.hairline': 'Hairline',
+  'q.area.crown': 'Crown',
+  'q.area.entire': 'Entire scalp',
+  'q.onset.prompt': 'When did you first notice hair loss?',
+  'q.onset.lt1': 'Less than 1 year',
+  'q.onset.1to5': '1–5 years',
+  'q.onset.gt5': 'More than 5 years',
+  'q.prior.prompt': 'Have you previously used hair-loss treatments?',
+  'q.prior.never': 'Never',
+  'q.prior.nosuccess': 'Yes, without success',
+  'q.prior.partial': 'Yes, with partial improvement',
+  'q.family.prompt': 'Does hair loss run in your family?',
+  'q.family.yes': 'Yes',
+  'q.family.no': 'No',
+  'q.family.notsure': 'Not sure',
+  'q.goal.prompt': 'What is your main goal?',
+  'q.goal.stop': 'Stop hair loss',
+  'q.goal.regrow': 'Regrow lost hair',
+  'q.goal.both': 'Both',
 } as const;
 
 export type MessageKey = keyof typeof en;
