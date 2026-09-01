@@ -1,5 +1,5 @@
 import { rooteContent } from '@/content/roote.config';
-import { PENDING, isPending, collectPending, type PendingMarker } from '@/content/pending';
+import { PENDING, collectPending, type PendingMarker } from '@/content/pending';
 import { messages } from '@/i18n/messages';
 import { interpolate } from '@/i18n/interpolate';
 import type { HairAnalysis } from '@/domain/analysis/types';
@@ -49,7 +49,19 @@ export function buildReport(input: {
     severity: t(locale, `severity.${analysis.severityBand}`),
     zones: analysis.flaggedZones.length,
   });
-  const demoDisclaimer = content.disclaimers.demo[locale];
+  const demoDisclaimer = resolveLocalized(content.disclaimers.demo, locale, 'demo disclaimer');
+
+  const titles = {
+    header: t(locale, 'report.header.title'),
+    photos: t(locale, 'report.section.photos.title'),
+    analysis: t(locale, 'report.section.analysis.title'),
+    hairLossType: t(locale, 'report.section.hairLossType.title'),
+    currentSituation: t(locale, 'report.section.currentSituation.title'),
+    plan: t(locale, 'report.section.plan.title'),
+    duration: t(locale, 'report.section.duration.title'),
+    pricing: t(locale, 'report.section.pricing.title'),
+    claims: t(locale, 'report.section.claims.title'),
+  };
 
   const photos = diagnosis.photos.map((p) => ({
     angleKey: p.angleKey,
@@ -75,10 +87,18 @@ export function buildReport(input: {
     level: m.level,
   }));
 
+  const areaLabels = ALL_ZONES.filter((z) => flaggedZoneSet.has(z)).map((z) => t(locale, `zone.${z}`));
   const hairLossType = {
-    title: scaleLine,
-    areaLabels: ALL_ZONES.filter((z) => flaggedZoneSet.has(z)).map((z) => t(locale, `zone.${z}`)),
-    patternNote: t(locale, analysis.summaryPlainKey),
+    // I4/R24: a composed *type label* from already-localized tokens (severity band + affected areas),
+    // not the scale line (which meta.scaleLine already carries).
+    title: t(locale, 'report.hairLossType.typeLabel', {
+      band: t(locale, `severity.${analysis.severityBand}`),
+      areas: areaLabels.join(', '),
+    }),
+    areaLabels,
+    // I4/R26 (option A): prior-treatment + family-history context, distinct from
+    // currentSituation.paragraphs[0] (which is the summaryPlainKey line).
+    patternNote: analysis.notes.map((k) => t(locale, k)).join(' '),
   };
 
   const currentSituation = {
@@ -96,11 +116,18 @@ export function buildReport(input: {
     usage: t(locale, tr.usageKey),
     frequency: t(locale, tr.frequencyKey),
   }));
+  const planLabels = {
+    core: t(locale, 'report.plan.core.title'),
+    supporting: t(locale, 'report.plan.supporting.title'),
+    applicationFrequency: t(locale, 'report.plan.applicationFrequencyLabel'),
+    appliesTo: t(locale, 'report.plan.appliesToLabel'),
+  };
   const formula = {
     ingredients: content.formula.ingredients.map((ing) => ({
       name: ing.name,
       percentage: content.formula.displayPercentagesPublicly ? ing.percentage : undefined,
-      roleLabel: ing.role,
+      // M6 (folded into I2): resolve the kebab role key to a localized functional label.
+      roleLabel: t(locale, `role.${ing.role}`),
     })),
     statusLabel: resolveLocalized(content.disclaimers.formulaPending, locale, 'formula status'),
   };
@@ -129,6 +156,9 @@ export function buildReport(input: {
     duration: { days: recommendedDuration.days, label: recommendedDuration.label },
     price: priceFor(recommendedDuration.days),
     perDay: perDayFor(recommendedDuration.days),
+    perDayLabel: t(locale, 'report.pricing.perDayLabel'),
+    compareTitle: t(locale, 'report.pricing.compareTitle'),
+    recommendedBadge: t(locale, 'report.pricing.recommendedBadge'),
     compareAll: content.programDurations.map((d) => ({
       days: d.days,
       label: t(locale, 'report.duration.label', { days: d.days }),
@@ -164,11 +194,12 @@ export function buildReport(input: {
 
   const model: ReportModel = {
     meta: { reportId, generatedAt: new Date().toISOString(), locale, dir, scaleLine, demoDisclaimer },
+    titles,
     photos,
     analysis: { scaleLabel, scaleStrip, flagged, densityMap, metrics },
     hairLossType,
     currentSituation,
-    plan: { matchedToScanBadge: t(locale, 'report.section.plan.matchedBadge'), core, supporting, formula },
+    plan: { matchedToScanBadge: t(locale, 'report.section.plan.matchedBadge'), labels: planLabels, core, supporting, formula },
     recommendedDuration,
     pricing,
     claims,
