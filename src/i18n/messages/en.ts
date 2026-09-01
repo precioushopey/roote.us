@@ -97,6 +97,13 @@ export const en = {
   'q.goal.stop': 'Stop hair loss',
   'q.goal.regrow': 'Regrow lost hair',
   'q.goal.both': 'Both',
+
+  'analysis.title': 'Analyzing your hair',
+  'analysis.facet.density': 'Hair density',
+  'analysis.facet.area': 'Hair loss area',
+  'analysis.facet.hairline': 'Hairline',
+  'analysis.facet.scalp': 'Scalp condition',
+  'analysis.facet.thinning': 'Hair thinning',
 } as const;
 
 export type MessageKey = keyof typeof en;

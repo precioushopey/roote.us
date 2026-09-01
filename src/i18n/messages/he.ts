@@ -100,4 +100,11 @@ export const he: Record<MessageKey, string> = {
   'q.goal.stop': 'להפסיק נשירת שיער',
   'q.goal.regrow': 'להחזיר שיער שאבד',
   'q.goal.both': 'שניהם',
+
+  'analysis.title': 'מנתחים את השיער שלך',
+  'analysis.facet.density': 'צפיפות שיער',
+  'analysis.facet.area': 'אזור הנשירה',
+  'analysis.facet.hairline': 'קו השיער',
+  'analysis.facet.scalp': 'מצב הקרקפת',
+  'analysis.facet.thinning': 'דילול שיער',
 };
