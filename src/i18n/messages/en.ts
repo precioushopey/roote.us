@@ -104,6 +104,13 @@ export const en = {
   'analysis.facet.hairline': 'Hairline',
   'analysis.facet.scalp': 'Scalp condition',
   'analysis.facet.thinning': 'Hair thinning',
+
+  'ready.title': 'Your hair analysis is ready',
+  'ready.teaser': '{scale} · {severity} pattern · {zones} area(s) flagged',
+  'ready.email.placeholder': 'Email address',
+  'ready.email.submit': 'Send my personalized results',
+  'ready.email.invalid': 'Please enter a valid email address.',
+  'ready.consent': 'We\'ll email your report and may contact you about your plan.',
 } as const;
 
 export type MessageKey = keyof typeof en;

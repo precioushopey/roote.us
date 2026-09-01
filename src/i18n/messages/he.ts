@@ -107,4 +107,11 @@ export const he: Record<MessageKey, string> = {
   'analysis.facet.hairline': 'קו השיער',
   'analysis.facet.scalp': 'מצב הקרקפת',
   'analysis.facet.thinning': 'דילול שיער',
+
+  'ready.title': 'אבחון השיער שלך הושלם בהצלחה',
+  'ready.teaser': '{scale} · דפוס {severity} · {zones} אזורים מסומנים',
+  'ready.email.placeholder': 'כתובת אימייל',
+  'ready.email.submit': 'שליחת התוצאות האישיות שלי',
+  'ready.email.invalid': 'נא להזין כתובת אימייל תקינה.',
+  'ready.consent': 'נשלח לך את הדוח ונוכל ליצור קשר בנוגע לתוכנית.',
 };
