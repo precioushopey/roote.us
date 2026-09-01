@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
 import { lsGet, lsSet } from './persistence';
 import type { HairAnalysis, Gender, Answers } from '@/domain/analysis/types';
+import type { Program, ProgramDurationDays } from '@/domain/program/types';
 
 export type AngleKey = 'front' | 'top' | 'crown' | 'hairline';
 export type PhotoRef = { id: string; angleKey: AngleKey; thumb: string; blobId: string };
@@ -10,7 +11,8 @@ export type SessionState = {
   analysis: HairAnalysis | null;
   reportId: string | null;
   account: { email: string | null };
-  program: null;
+  draftDurationDays: ProgramDurationDays | null;
+  program: Program | null;
 };
 
 const EMPTY: SessionState = {
@@ -18,6 +20,7 @@ const EMPTY: SessionState = {
   analysis: null,
   reportId: null,
   account: { email: null },
+  draftDurationDays: null,
   program: null,
 };
 
@@ -30,6 +33,8 @@ type Action =
   | { type: 'SET_ANALYSIS'; analysis: HairAnalysis }
   | { type: 'SET_REPORT_ID'; id: string }
   | { type: 'SET_EMAIL'; email: string }
+  | { type: 'SET_DRAFT_DURATION'; days: ProgramDurationDays }
+  | { type: 'SET_PROGRAM'; program: Program }
   | { type: 'RESET' };
 
 function reducer(state: SessionState, action: Action): SessionState {
@@ -65,6 +70,10 @@ function reducer(state: SessionState, action: Action): SessionState {
       return { ...state, reportId: action.id };
     case 'SET_EMAIL':
       return { ...state, account: { email: action.email } };
+    case 'SET_DRAFT_DURATION':
+      return { ...state, draftDurationDays: action.days };
+    case 'SET_PROGRAM':
+      return { ...state, program: action.program };
     case 'RESET':
       return EMPTY;
     default:
@@ -81,6 +90,8 @@ const SessionContext = createContext<
     setAnalysis: (a: HairAnalysis) => void;
     setReportId: (id: string) => void;
     setEmail: (email: string) => void;
+    setDraftDurationDays: (days: ProgramDurationDays) => void;
+    setProgram: (program: Program) => void;
     reset: () => void;
   }) | null
 >(null);
@@ -105,6 +116,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setAnalysis: (analysis: HairAnalysis) => dispatch({ type: 'SET_ANALYSIS', analysis }),
       setReportId: (id: string) => dispatch({ type: 'SET_REPORT_ID', id }),
       setEmail: (email: string) => dispatch({ type: 'SET_EMAIL', email }),
+      setDraftDurationDays: (days: ProgramDurationDays) => dispatch({ type: 'SET_DRAFT_DURATION', days }),
+      setProgram: (program: Program) => dispatch({ type: 'SET_PROGRAM', program }),
       reset: () => dispatch({ type: 'RESET' }),
     }),
     [state],
