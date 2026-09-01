@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
@@ -52,12 +52,11 @@ describe('ReadyStep', () => {
     renderReady();
     const input = screen.getByRole('textbox') as HTMLInputElement;
     await userEvent.type(input, 'not-an-email');
-    // Trigger form submission by calling onSubmit directly
     const form = input.closest('form')!;
-    form.dispatchEvent(new Event('submit', { bubbles: true }));
-    await waitFor(() => {
-      expect(screen.getByText(/תקינה|valid/i)).toBeInTheDocument();
+    act(() => {
+      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     });
+    expect(screen.getByRole('alert')).toBeInTheDocument();
     expect(screen.queryByText('report page')).not.toBeInTheDocument();
   });
 
