@@ -10,9 +10,9 @@ import { ProgressRail } from './ProgressRail';
 const wrap = (ui: React.ReactNode) => render(<LocaleProvider>{ui}</LocaleProvider>);
 
 describe('brand components', () => {
-  it('Wordmark renders ROOTÉ text', () => {
+  it('Wordmark renders the ROOTÉ logo image', () => {
     wrap(<Wordmark />);
-    expect(screen.getByText('ROOTÉ')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'ROOTÉ' })).toBeInTheDocument();
   });
 
   it('LocaleToggle flips he -> en', async () => {

@@ -157,6 +157,72 @@ export const en = {
   'frequency.weekly': 'Weekly',
   'usage.cleanse': 'Use in place of your regular shampoo',
   'frequency.daily': 'Daily',
+
+  'landing.hero.headline': 'Hair growth,',
+  'landing.hero.headlineAccent': 'made for you.',
+  'landing.hero.tagline': 'A personalized hair growth plan, built from your own photos and answers — not a guess.',
+  'landing.hero.subCta': 'Free · About 3 minutes · No commitment',
+  'landing.hero.insetCaption': 'Every plan starts with your own AI-guided scan.',
+  'landing.hero.badgeLine1': 'AI-GUIDED',
+  'landing.hero.badgeLine2': 'ANALYSIS',
+
+  'landing.science.progressTitle': 'See your progress over time',
+  'landing.science.progressCaption': "Illustrative example of the comparison view in your report — not ROOTÉ product results.",
+  'landing.science.progressBefore': 'Before',
+  'landing.science.progressAfter': 'After',
+
+  'landing.regimen.imageAlt': 'The four ROOTÉ formula components',
+
+  'landing.planTeaser.title': 'Discover the plan built for you',
+  'landing.planTeaser.body': 'Answer a short quiz and share a few photos to get an AI-guided assessment and a personalized plan recommendation.',
+  'landing.planTeaser.step1': 'Answer a short quiz',
+  'landing.planTeaser.step2': 'Share a few photos',
+  'landing.planTeaser.step3': 'Get your AI-guided plan',
+
+  'landing.trust.item1': 'Dermatologically-informed formulation',
+  'landing.trust.item2': 'Confidential, AI-guided assessment',
+  'landing.trust.item3': 'Built around your own photos, not a generic plan',
+
+  'landing.howItWorks.title': 'Healthier hair, made simple',
+  'landing.howItWorks.subtitle': 'A few guided steps — refined as your program progresses.',
+  'landing.howItWorks.step1.title': 'Take a short quiz',
+  'landing.howItWorks.step1.body': 'Tell us about your hair goals and history.',
+  'landing.howItWorks.step2.title': 'Upload a few photos',
+  'landing.howItWorks.step2.body': 'Front, top, crown, and hairline — right from your phone.',
+  'landing.howItWorks.step3.title': 'Get your AI analysis',
+  'landing.howItWorks.step3.body': "We map what's flagged against a recognized hair-loss scale.",
+  'landing.howItWorks.step4.title': 'Receive your personalized plan',
+  'landing.howItWorks.step4.body': 'A treatment plan and program length matched to your scan.',
+
+  'landing.science.title': 'Matched to a recognized hair-loss scale',
+  'landing.science.body': "Your photos are mapped against the Norwood–Hamilton (male) or Ludwig (female) scale — the same clinical reference used in the report you'll receive.",
+  'landing.science.stat1.label': 'Reported improvement',
+  'landing.science.stat2.label': 'Time to visible change',
+  'landing.science.stat3.label': 'Would recommend',
+  'landing.science.footnote': 'Figures pending clinical validation and regulatory review.',
+
+  'landing.regimen.title': 'One formula, four active ingredients',
+  'landing.regimen.body': 'Your plan centers on a single combined topical — no separate bottles to juggle.',
+  'landing.regimen.role.regrowth-stimulant': 'Regrowth stimulant',
+  'landing.regimen.role.dht-blocker': 'DHT blocker',
+  'landing.regimen.role.dht-support': 'DHT support',
+  'landing.regimen.role.proprietary-support': 'Proprietary support',
+
+  'landing.ctaBanner.title': 'Start your free hair analysis',
+  'landing.ctaBanner.body': "Three minutes. No commitment. See what's really going on before you decide anything.",
+
+  'landing.research.title': 'Built on established, well-studied ingredients',
+  'landing.research.body': 'Minoxidil and Finasteride are among the most studied compounds for pattern hair loss; Azelaic Acid is a recognized DHT-support ingredient. ROOTÉ combines them into one formulation, currently pending regulatory review before launch.',
+
+  'landing.finalCta.title': 'Start your journey to healthier hair',
+  'landing.finalCta.item1': 'Get your personalized plan in minutes',
+  'landing.finalCta.item2': 'Track your progress with photo comparisons',
+  'landing.finalCta.item3': 'Reminders to help you stay on track',
+
+  'landing.footer.navHowItWorks': 'How It Works',
+  'landing.footer.navScience': 'The Science',
+  'landing.footer.navPlan': 'Your Plan',
+  'landing.footer.copyright': '© {year} ROOTÉ. All rights reserved.',
 } as const;
 
 export type MessageKey = keyof typeof en;

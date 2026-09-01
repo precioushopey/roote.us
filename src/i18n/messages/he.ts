@@ -160,4 +160,70 @@ export const he: Record<MessageKey, string> = {
   'frequency.weekly': 'שבועי',
   'usage.cleanse': 'להשתמש במקום שמפו רגיל',
   'frequency.daily': 'יומי',
+
+  'landing.hero.headline': 'צמיחת שיער,',
+  'landing.hero.headlineAccent': 'בהתאמה אישית.',
+  'landing.hero.tagline': 'תוכנית אישית לצמיחת שיער, בנויה מהתמונות והתשובות שלך — לא ניחוש.',
+  'landing.hero.subCta': 'חינם · כ-3 דקות · ללא התחייבות',
+  'landing.hero.insetCaption': 'כל תוכנית מתחילה בסריקה מבוססת AI משלכם.',
+  'landing.hero.badgeLine1': 'ניתוח',
+  'landing.hero.badgeLine2': 'מבוסס AI',
+
+  'landing.science.progressTitle': 'עקבו אחר ההתקדמות שלכם לאורך זמן',
+  'landing.science.progressCaption': 'דוגמה להמחשה של תצוגת ההשוואה בדוח שלכם — אינה מייצגת תוצאות מוצר ROOTÉ.',
+  'landing.science.progressBefore': 'לפני',
+  'landing.science.progressAfter': 'אחרי',
+
+  'landing.regimen.imageAlt': 'ארבעת רכיבי הפורמולה של ROOTÉ',
+
+  'landing.planTeaser.title': 'גלו את התוכנית שנבנתה עבורכם',
+  'landing.planTeaser.body': 'ענו על שאלון קצר ושתפו כמה תמונות כדי לקבל הערכה מבוססת AI והמלצת תוכנית אישית.',
+  'landing.planTeaser.step1': 'ענו על שאלון קצר',
+  'landing.planTeaser.step2': 'שתפו כמה תמונות',
+  'landing.planTeaser.step3': 'קבלו את התוכנית המבוססת AI שלכם',
+
+  'landing.trust.item1': 'פורמולציה מבוססת ידע דרמטולוגי',
+  'landing.trust.item2': 'הערכה חסויה מבוססת AI',
+  'landing.trust.item3': 'בנויה סביב התמונות שלכם, לא תוכנית גנרית',
+
+  'landing.howItWorks.title': 'שיער בריא יותר, בפשטות',
+  'landing.howItWorks.subtitle': 'כמה שלבים מודרכים — מתעדכנים ככל שהתוכנית מתקדמת.',
+  'landing.howItWorks.step1.title': 'ענו על שאלון קצר',
+  'landing.howItWorks.step1.body': 'ספרו לנו על מטרות ורקע נשירת השיער שלכם.',
+  'landing.howItWorks.step2.title': 'העלו כמה תמונות',
+  'landing.howItWorks.step2.body': 'קדמי, עליון, קודקוד וקו שיער — ישירות מהטלפון.',
+  'landing.howItWorks.step3.title': 'קבלו את הניתוח מבוסס ה-AI',
+  'landing.howItWorks.step3.body': 'אנו ממפים את מה שזוהה מול סולם נשירת שיער מוכר.',
+  'landing.howItWorks.step4.title': 'קבלו את התוכנית האישית שלכם',
+  'landing.howItWorks.step4.body': 'תוכנית טיפול ואורך תוכנית מותאמים לסריקה שלכם.',
+
+  'landing.science.title': 'מותאם לסולם נשירת שיער מוכר',
+  'landing.science.body': 'התמונות שלכם ממופות מול סולם נורווד–המילטון (לגברים) או סולם לודוויג (לנשים) — אותו סימוכין קליני המשמש בדוח שתקבלו.',
+  'landing.science.stat1.label': 'שיפור מדווח',
+  'landing.science.stat2.label': 'זמן לשינוי נראה לעין',
+  'landing.science.stat3.label': 'היו ממליצים',
+  'landing.science.footnote': 'הנתונים בבחינה, בכפוף לאימות קליני ואישור רגולטורי.',
+
+  'landing.regimen.title': 'פורמולה אחת, ארבעה רכיבים פעילים',
+  'landing.regimen.body': 'התוכנית שלכם מתבססת על תרחיף משולב אחד — בלי בקבוקים נפרדים.',
+  'landing.regimen.role.regrowth-stimulant': 'ממריץ צמיחה מחדש',
+  'landing.regimen.role.dht-blocker': 'חוסם DHT',
+  'landing.regimen.role.dht-support': 'תמיכה נגד DHT',
+  'landing.regimen.role.proprietary-support': 'תמיכה קניינית',
+
+  'landing.ctaBanner.title': 'התחילו את אבחון השיער החינמי שלכם',
+  'landing.ctaBanner.body': 'שלוש דקות. ללא התחייבות. גלו מה באמת קורה לפני שתחליטו על משהו.',
+
+  'landing.research.title': 'מבוסס על רכיבים מוכרים ונחקרים היטב',
+  'landing.research.body': 'מינוקסידיל ופינסטריד הם מבין התרכובות הנחקרות ביותר לנשירת שיער בדפוס גברי; חומצה אזלאית היא רכיב מוכר לתמיכה נגד DHT. ROOTÉ משלבת אותם לפורמולציה אחת, הנמצאת כעת בבחינה מול הרגולטור לקראת ההשקה.',
+
+  'landing.finalCta.title': 'התחילו את המסע שלכם לשיער בריא יותר',
+  'landing.finalCta.item1': 'קבלו את התוכנית האישית שלכם תוך דקות',
+  'landing.finalCta.item2': 'עקבו אחר ההתקדמות שלכם עם השוואות תמונות',
+  'landing.finalCta.item3': 'תזכורות שיעזרו לכם להישאר על המסלול',
+
+  'landing.footer.navHowItWorks': 'איך זה עובד',
+  'landing.footer.navScience': 'המדע שמאחורי זה',
+  'landing.footer.navPlan': 'התוכנית שלכם',
+  'landing.footer.copyright': '© {year} ROOTÉ. כל הזכויות שמורות.',
 };

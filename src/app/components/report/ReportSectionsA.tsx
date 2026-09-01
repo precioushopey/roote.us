@@ -4,7 +4,7 @@ import { Wordmark } from '@/app/components/brand/Wordmark';
 export function ReportHeader({ model }: { model: ReportModel }) {
   return (
     <header className="flex flex-col items-center gap-2 py-6 text-center">
-      <Wordmark className="text-2xl" />
+      <Wordmark className="w-28" />
       <h1 className="text-lg font-medium">Personalized Hair Report</h1>
       <p className="text-xs text-muted-foreground">
         {model.meta.scaleLine}

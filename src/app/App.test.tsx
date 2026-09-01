@@ -6,10 +6,10 @@ import App from './App';
 describe('App shell', () => {
   it('renders the landing route with localized CTA and a working language toggle', async () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: /ROOTÉ/ })).toBeInTheDocument();
-    // default he
-    expect(screen.getByRole('link', { name: /אבחון שיער חינם/ })).toBeInTheDocument();
+    expect(screen.getAllByRole('img', { name: 'ROOTÉ' }).length).toBeGreaterThan(0);
+    // default he — the landing page repeats its CTA in several sections, so expect at least one
+    expect(screen.getAllByRole('link', { name: /אבחון שיער חינם/ }).length).toBeGreaterThan(0);
     await userEvent.click(screen.getByRole('button', { name: /Switch language/i }));
-    expect(screen.getByRole('link', { name: /Start Free Diagnosis/i })).toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: /Start Free Diagnosis/i }).length).toBeGreaterThan(0);
   });
 });
