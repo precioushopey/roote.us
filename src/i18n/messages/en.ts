@@ -171,6 +171,9 @@ export const en = {
   'start.account.error.invalidEmail': 'Enter a valid email address.',
   'start.account.error.weakPassword': 'Use at least 8 characters.',
   'start.account.error.duplicateEmail': 'An account with this email already exists.',
+  'start.plan.durationLegend': 'Program length',
+  'start.plan.recommendedBadge': 'Recommended for you',
+  'start.plan.continue': 'Continue to payment',
 } as const;
 
 export type MessageKey = keyof typeof en;

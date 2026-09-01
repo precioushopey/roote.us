@@ -174,4 +174,7 @@ export const he: Record<MessageKey, string> = {
   'start.account.error.invalidEmail': 'נא להזין כתובת אימייל תקינה.',
   'start.account.error.weakPassword': 'יש להשתמש בלפחות 8 תווים.',
   'start.account.error.duplicateEmail': 'קיים כבר חשבון עם כתובת אימייל זו.',
+  'start.plan.durationLegend': 'משך התוכנית',
+  'start.plan.recommendedBadge': 'מומלץ עבורך',
+  'start.plan.continue': 'המשך לתשלום',
 };
