@@ -1,10 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { SessionProvider } from '@/store/sessionStore';
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { ReportPage } from './ReportPage';
+
+vi.mock('@react-pdf/renderer', () => ({ pdf: vi.fn() }));
+vi.mock('@/pdf/ReportDocument', () => ({ ReportDocument: () => null }));
 
 function seedSession(reportId: string | null) {
   localStorage.setItem('roote.locale', 'en');
@@ -46,5 +50,12 @@ describe('ReportPage', () => {
     expect(screen.getByText('Personalized Hair Report')).toBeInTheDocument();
     expect(screen.getByText('MATCHED TO YOUR SCAN')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Start My Program' })).toBeInTheDocument();
+  });
+
+  it('shows a Download PDF button that is enabled once the report is built', async () => {
+    seedSession('rep-abc');
+    renderAt('/report/rep-abc');
+    const btn = screen.getByRole('button', { name: 'Download PDF' });
+    expect(btn).toBeEnabled();
   });
 });
