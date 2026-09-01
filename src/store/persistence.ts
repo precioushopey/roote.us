@@ -55,30 +55,14 @@ function tx<T>(mode: IDBTransactionMode, run: (store: IDBObjectStore) => IDBRequ
 type StoredBlob = { buffer: ArrayBuffer; type: string };
 
 export async function putBlob(id: string, blob: Blob): Promise<void> {
-  const buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as ArrayBuffer);
-    reader.onerror = () => reject(reader.error);
-    reader.readAsArrayBuffer(blob);
-  });
-  await tx('readwrite', (s) => s.put({ buffer, type: blob.type } as StoredBlob, id));
+  const buffer = await blob.arrayBuffer();
+  await tx('readwrite', (s) => s.put({ buffer, type: blob.type }, id));
 }
 
 export async function getBlob(id: string): Promise<Blob | undefined> {
   const rec = await tx<StoredBlob | undefined>('readonly', (s) => s.get(id) as IDBRequest<StoredBlob | undefined>);
   if (!rec) return undefined;
-  const blob = new Blob([rec.buffer], { type: rec.type });
-  // Polyfill text() method for jsdom/fake-indexeddb environments
-  if (!blob.text) {
-    (blob as any).text = () =>
-      new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = () => reject(reader.error);
-        reader.readAsText(blob);
-      });
-  }
-  return blob;
+  return new Blob([rec.buffer], { type: rec.type });
 }
 
 export async function deleteBlob(id: string): Promise<void> {

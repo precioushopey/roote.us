@@ -26,4 +26,27 @@ if (!URL.createObjectURL) {
   URL.revokeObjectURL = vi.fn();
 }
 
+// Polyfill Blob.arrayBuffer() and Blob.text() for jsdom compat
+if (!Blob.prototype.arrayBuffer) {
+  Blob.prototype.arrayBuffer = function () {
+    return new Promise<ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as ArrayBuffer);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsArrayBuffer(this);
+    });
+  };
+}
+
+if (!Blob.prototype.text) {
+  Blob.prototype.text = function () {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsText(this);
+    });
+  };
+}
+
 window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
