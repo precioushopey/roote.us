@@ -2,6 +2,9 @@ import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import heroPeople from '@/assets/hero-people.png';
 import scanDevice from '@/assets/scan-device.jpg';
+import stepQuiz from '@/assets/step-quiz.jpg';
+import stepPhotoScan from '@/assets/step-photo-scan.jpg';
+import productLineup from '@/assets/product-lineup.jpg';
 
 const SERIF = "'Spectral', 'Libre Franklin', serif";
 
@@ -40,7 +43,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-2xl">
+        <div className="relative mx-auto w-full lg:-me-6 lg:w-[115%]">
           <img src={heroPeople} alt="" className="w-full object-contain" />
           <SealBadge line1={t('landing.hero.badgeLine1')} line2={t('landing.hero.badgeLine2')} />
         </div>
@@ -106,10 +109,10 @@ export function TrustStrip() {
 export function HowItWorks() {
   const t = useT();
   const steps = [
-    { title: t('landing.howItWorks.step1.title'), body: t('landing.howItWorks.step1.body') },
-    { title: t('landing.howItWorks.step2.title'), body: t('landing.howItWorks.step2.body') },
-    { title: t('landing.howItWorks.step3.title'), body: t('landing.howItWorks.step3.body') },
-    { title: t('landing.howItWorks.step4.title'), body: t('landing.howItWorks.step4.body') },
+    { photo: stepQuiz, body: t('landing.howItWorks.step1.body') },
+    { photo: stepPhotoScan, body: t('landing.howItWorks.step2.body') },
+    { photo: scanDevice, body: t('landing.howItWorks.step3.body') },
+    { photo: productLineup, body: t('landing.howItWorks.step4.body') },
   ];
   return (
     <section id="how-it-works" className="px-6 py-16">
@@ -119,13 +122,10 @@ export function HowItWorks() {
           <p className="mt-2 text-sm text-muted-foreground">{t('landing.howItWorks.subtitle')}</p>
         </div>
         <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step, i) => (
-            <li key={step.title} className="flex flex-col items-center gap-2 rounded-lg border border-border bg-card p-5 text-center">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-accent text-sm text-accent">
-                {i + 1}
-              </span>
-              <p className="text-sm font-medium">{step.title}</p>
-              <p className="text-xs text-muted-foreground">{step.body}</p>
+          {steps.map((step) => (
+            <li key={step.body} className="flex flex-col gap-3">
+              <img src={step.photo} alt="" className="aspect-square w-full rounded-xl object-cover" />
+              <p className="text-sm text-muted-foreground">{step.body}</p>
             </li>
           ))}
         </ol>
