@@ -71,6 +71,16 @@ describe('buildReport', () => {
     expect(model.meta.locale).toBe('he');
   });
 
+  it('never re-emits meta.scaleLine as hairLossType.title, nor paragraphs[0] as patternNote (I4)', () => {
+    for (const locale of ['en', 'he'] as const) {
+      for (const { gender, answers } of personas) {
+        const model = build(gender, answers, locale);
+        expect(model.hairLossType.title).not.toBe(model.meta.scaleLine);
+        expect(model.hairLossType.patternNote).not.toBe(model.currentSituation.paragraphs[0]);
+      }
+    }
+  });
+
   it('renders unresolved pricing/claims as PENDING, never invents a number', () => {
     const model = build('male', mildMaleHairline);
     expect(isPending(model.pricing.price)).toBe(true);

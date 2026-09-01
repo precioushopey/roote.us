@@ -89,11 +89,11 @@ export function buildReport(input: {
 
   const areaLabels = ALL_ZONES.filter((z) => flaggedZoneSet.has(z)).map((z) => t(locale, `zone.${z}`));
   const hairLossType = {
-    // I4/R24: a composed *type label* from already-localized tokens (severity band + affected areas),
-    // not the scale line (which meta.scaleLine already carries).
+    // I4/R24: a composed *type label* from the already-localized severity band, not the scale
+    // line (which meta.scaleLine already carries). The affected areas are shown once, as the
+    // structured `areaLabels` element below — not concatenated in here as well.
     title: t(locale, 'report.hairLossType.typeLabel', {
       band: t(locale, `severity.${analysis.severityBand}`),
-      areas: areaLabels.join(', '),
     }),
     areaLabels,
     // I4/R26 (option A): prior-treatment + family-history context, distinct from

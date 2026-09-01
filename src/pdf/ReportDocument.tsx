@@ -152,6 +152,7 @@ export function ReportDocument({ model }: { model: ReportModel }) {
           {model.plan.supporting.map((tr, i) => (
             <View key={i} style={styles.card}>
               <TextOrPending value={tr.name} />
+              <T style={styles.muted}>{tr.usage}</T>
               <T style={styles.muted}>{model.plan.labels.applicationFrequency}: {tr.frequency}</T>
             </View>
           ))}

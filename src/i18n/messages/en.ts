@@ -124,7 +124,7 @@ export const en = {
   'report.section.duration.title': 'Recommended Program Duration',
   'report.section.pricing.title': 'Pricing',
   'report.section.claims.title': 'Effectiveness & Expectations',
-  'report.hairLossType.typeLabel': '{band} pattern — {areas}',
+  'report.hairLossType.typeLabel': '{band} pattern',
   'report.cta.label': 'Start My Program',
   'report.duration.label': '{days} Days',
   'report.duration.rationale': '{severity} pattern, {emphasis} goal',

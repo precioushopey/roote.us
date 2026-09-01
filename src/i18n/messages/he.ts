@@ -127,7 +127,7 @@ export const he: Record<MessageKey, string> = {
   'report.section.duration.title': 'משך התוכנית המומלץ',
   'report.section.pricing.title': 'מחיר',
   'report.section.claims.title': 'יעילות וציפיות',
-  'report.hairLossType.typeLabel': 'דפוס {band} — {areas}',
+  'report.hairLossType.typeLabel': 'דפוס {band}',
   'report.cta.label': 'התחל את התוכנית שלי',
   'report.duration.label': '{days} ימים',
   'report.duration.rationale': 'דפוס {severity}, מטרת {emphasis}',
