@@ -38,7 +38,7 @@ describe('PhotoUpload', () => {
     const onAdd = vi.fn();
     wrap(<PhotoUpload angleKey="front" onAdd={onAdd} onRemove={vi.fn()} />);
     const input = screen.getByLabelText(/front|קדמי/i) as HTMLInputElement;
-    await userEvent.upload(input, new File(['x'], 'notes.txt', { type: 'text/plain' }));
+    await userEvent.setup({ applyAccept: false }).upload(input, new File(['x'], 'notes.txt', { type: 'text/plain' }));
     expect(onAdd).not.toHaveBeenCalled();
     expect(screen.getByRole('alert')).toBeInTheDocument();
   });
