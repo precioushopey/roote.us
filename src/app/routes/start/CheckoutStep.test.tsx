@@ -49,7 +49,7 @@ describe('CheckoutStep', () => {
   it('submits valid contact + payment details and advances to success on stub success', async () => {
     seedSession();
     renderAt();
-    const user = userEvent.setup();
+    const user = userEvent.setup({ delay: null });
     await user.type(screen.getByLabelText(/full name/i), 'Jane Doe');
     await user.clear(screen.getByLabelText(/^email/i));
     await user.type(screen.getByLabelText(/^email/i), 'jane@example.com');
@@ -68,7 +68,7 @@ describe('CheckoutStep', () => {
     localStorage.setItem('roote.debug.forceCheckoutFailure', '1');
     seedSession();
     renderAt();
-    const user = userEvent.setup();
+    const user = userEvent.setup({ delay: null });
     await user.type(screen.getByLabelText(/full name/i), 'Jane Doe');
     await user.clear(screen.getByLabelText(/^email/i));
     await user.type(screen.getByLabelText(/^email/i), 'jane@example.com');
