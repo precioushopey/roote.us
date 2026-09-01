@@ -60,6 +60,17 @@ export const en = {
   'diagnosis.gender.title': 'What is your gender?',
   'diagnosis.gender.male': 'Male',
   'diagnosis.gender.female': 'Female',
+
+  'photo.angle.front': 'Front',
+  'photo.angle.top': 'Top',
+  'photo.angle.crown': 'Crown',
+  'photo.angle.hairline': 'Hairline',
+  'photo.add': 'Add photo',
+  'photo.uploading': 'Processing…',
+  'common.remove': 'Remove',
+  'photo.error.type': 'Please choose an image file.',
+  'photo.error.size': 'That image is too large (max 15 MB).',
+  'photo.error.generic': 'Could not process that image. Try another.',
 } as const;
 
 export type MessageKey = keyof typeof en;

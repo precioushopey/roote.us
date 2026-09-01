@@ -63,4 +63,15 @@ export const he: Record<MessageKey, string> = {
   'diagnosis.gender.title': 'מה המין שלך?',
   'diagnosis.gender.male': 'גבר',
   'diagnosis.gender.female': 'אישה',
+
+  'photo.angle.front': 'קדמי',
+  'photo.angle.top': 'עליון',
+  'photo.angle.crown': 'קודקוד',
+  'photo.angle.hairline': 'קו שיער',
+  'photo.add': 'הוספת תמונה',
+  'photo.uploading': 'מעבד…',
+  'common.remove': 'הסרה',
+  'photo.error.type': 'יש לבחור קובץ תמונה.',
+  'photo.error.size': 'התמונה גדולה מדי (עד 15MB).',
+  'photo.error.generic': 'לא ניתן לעבד את התמונה. נסו אחרת.',
 };
