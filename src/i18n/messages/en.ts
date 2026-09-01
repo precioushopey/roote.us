@@ -157,6 +157,12 @@ export const en = {
   'frequency.weekly': 'Weekly',
   'usage.cleanse': 'Use in place of your regular shampoo',
   'frequency.daily': 'Daily',
+
+  'start.rail.account': 'Account',
+  'start.rail.plan': 'Plan',
+  'start.rail.payment': 'Payment',
+  'start.noReport.body': 'We need a completed hair analysis before you can create your program.',
+  'start.noReport.devSeedCta': 'Load a demo report (dev only)',
 } as const;
 
 export type MessageKey = keyof typeof en;

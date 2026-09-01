@@ -160,4 +160,10 @@ export const he: Record<MessageKey, string> = {
   'frequency.weekly': 'שבועי',
   'usage.cleanse': 'להשתמש במקום שמפו רגיל',
   'frequency.daily': 'יומי',
+
+  'start.rail.account': 'חשבון',
+  'start.rail.plan': 'תוכנית',
+  'start.rail.payment': 'תשלום',
+  'start.noReport.body': 'עליך להשלים ניתוח שיער לפני יצירת התוכנית שלך.',
+  'start.noReport.devSeedCta': 'טעינת דוח הדגמה (למפתחים בלבד)',
 };
