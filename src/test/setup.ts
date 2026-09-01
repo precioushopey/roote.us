@@ -50,3 +50,24 @@ if (!Blob.prototype.text) {
 }
 
 window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
+
+// Mock Request to bypass AbortSignal validation for react-router compatibility
+const OriginalRequest = global.Request;
+if (OriginalRequest) {
+  global.Request = class MockRequest extends OriginalRequest {
+    constructor(input: RequestInfo | URL, init?: RequestInit) {
+      try {
+        super(input, init);
+      } catch (e: any) {
+        if (e.message?.includes('AbortSignal')) {
+          // Bypass AbortSignal validation and create request without signal
+          const initWithoutSignal = { ...init };
+          delete initWithoutSignal.signal;
+          super(input, initWithoutSignal);
+        } else {
+          throw e;
+        }
+      }
+    }
+  } as any;
+}

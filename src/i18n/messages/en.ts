@@ -51,6 +51,11 @@ export const en = {
   'diagnosis.rail.photos': 'Photos',
   'diagnosis.rail.analysis': 'Analysis',
   'diagnosis.rail.results': 'Results',
+
+  'diagnosis.intro.title': 'Your free hair diagnosis',
+  'diagnosis.intro.point1': 'Takes just a few minutes',
+  'diagnosis.intro.point2': 'AI analysis of your hair',
+  'diagnosis.intro.point3': 'A personalized treatment plan',
 } as const;
 
 export type MessageKey = keyof typeof en;

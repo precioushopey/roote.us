@@ -54,4 +54,9 @@ export const he: Record<MessageKey, string> = {
   'diagnosis.rail.photos': 'תמונות',
   'diagnosis.rail.analysis': 'ניתוח',
   'diagnosis.rail.results': 'תוצאות',
+
+  'diagnosis.intro.title': 'האבחון החינמי שלך',
+  'diagnosis.intro.point1': 'לוקח רק כמה דקות',
+  'diagnosis.intro.point2': 'ניתוח שיער מבוסס AI',
+  'diagnosis.intro.point3': 'תוכנית טיפול אישית',
 };
