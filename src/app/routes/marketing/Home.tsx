@@ -56,11 +56,15 @@ function Hero() {
             src={heroPeople}
             alt=""
             className="img-editorial w-full rounded-2xl object-cover"
-            style={{ aspectRatio: '16 / 10' }}
+            style={{
+              aspectRatio: '16 / 10',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 62%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, black 62%, transparent 100%)',
+            }}
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent"
+            className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-ink/60 via-ink/25 to-transparent"
           />
           {/* Overlay copy group: nudge vertical position with the bottom-* utilities below. */}
           <div className="absolute inset-x-0 -bottom-12 flex flex-col items-center gap-2 px-4 text-center sm:-bottom-6 sm:gap-3 sm:px-10 md:bottom-0 md:gap-4 lg:bottom-4">
