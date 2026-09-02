@@ -83,10 +83,7 @@ function FeaturedFormula() {
             alt=""
             className="img-editorial mt-6 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14"
           />
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="text-2xl text-accent">01</span>
-            <span>{t('marketing.home.featured.item1.label')}</span>
-          </div>
+          <Prose>{t('marketing.home.featured.item1.label')}</Prose>
           <ArrowLink to="/how-it-works">{t('marketing.home.featured.item1.cta')}</ArrowLink>
         </div>
 
@@ -99,8 +96,7 @@ function FeaturedFormula() {
         </div>
 
         <div className="flex flex-col items-start gap-3 md:items-end md:text-end">
-          <span className="text-2xl text-accent">02</span>
-          <p className="font-display text-lg font-medium">{t('marketing.home.featured.item2.label')}</p>
+          <Prose className="md:ms-auto">{t('marketing.home.featured.item2.label')}</Prose>
           <img
             src={objectiveMeasurement4}
             alt=""
@@ -137,6 +133,18 @@ function HowItWorksSteps() {
       </ol>
       <div className="mt-10 flex justify-center">
         <ArrowLink to="/how-it-works">{t('marketing.home.how.cta')}</ArrowLink>
+      </div>
+
+      <div className="relative mt-16 flex items-center justify-center overflow-hidden">
+        <p
+          className="select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+          style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+        >
+          {t('marketing.home.how.title')}
+        </p>
+        <div className="absolute">
+          <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
+        </div>
       </div>
     </Section>
   );
