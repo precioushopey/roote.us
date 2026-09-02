@@ -2,9 +2,9 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { SessionProvider } from '@/store/sessionStore';
 import { AuthProvider } from '@/store/auth';
-import { Landing } from './routes/landing/Landing';
 import { ReportPage } from './routes/report/ReportPage';
 import { FunnelShell } from './components/shell/FunnelShell';
+import { marketingRoutes } from './routes/marketing/marketingRoutes';
 import { DiagnosisLayout } from './routes/diagnosis/DiagnosisLayout';
 import { IntroStep } from './routes/diagnosis/IntroStep';
 import { GenderStep } from './routes/diagnosis/GenderStep';
@@ -18,7 +18,7 @@ import { CheckoutStep } from './routes/start/CheckoutStep';
 import { SuccessStep } from './routes/start/SuccessStep';
 
 const router = createBrowserRouter([
-  { path: '/', element: <Landing /> },
+  marketingRoutes,
   {
     element: <FunnelShell />,
     children: [
