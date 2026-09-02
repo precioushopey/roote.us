@@ -64,7 +64,7 @@ export const rooteContent = {
   disclaimers: {
     medical:        { en: 'This report is a preliminary, photo-based visual assessment. It is not a medical diagnosis.', he: '' } as LocalizedText, // TODO: legal + HE review
     notADiagnosis:  { en: 'An AI visual estimate, not a medical diagnosis.', he: '' } as LocalizedText,
-    demo:           { en: 'Demo — analysis figures are illustrative; production integrates hairhealth.ai.', he: 'הדגמה — הנתונים להמחשה בלבד.' } as LocalizedText,
+    demo:           { en: 'Demo: analysis figures are illustrative; production integrates hairhealth.ai.', he: 'הדגמה: הנתונים להמחשה בלבד.' } as LocalizedText,
     formulaPending: { en: 'Formulation under evaluation, pending regulatory review.', he: 'הפורמולה בבחינה, בכפוף לאישור רגולטורי.' } as LocalizedText,
   },
 } as const;

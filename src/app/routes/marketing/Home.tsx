@@ -88,17 +88,17 @@ function FeaturedFormula() {
         {t('marketing.home.featured.title')}
       </h2>
 
-      <div className="relative mt-8 grid grid-cols-1 items-center gap-8 md:-mt-6 md:grid-cols-[0.8fr_1.2fr_0.8fr] md:gap-6">
+      <div className="relative mt-8 grid grid-cols-1 items-center gap-8 md:mt-4 md:grid-cols-[0.8fr_1.2fr_0.8fr] md:gap-6">
         <div className="flex flex-col items-start gap-3">
           <img
             src={bannerSquare}
             alt=""
-            className="img-editorial mt-4 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-6 md:mt-6"
+            className="img-editorial mt-6 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14"
           />
           <Prose>{t('marketing.home.featured.item1.label')}</Prose>
         </div>
 
-        <div className="relative z-10 -mt-6 sm:-mt-10 md:-mt-20">
+        <div className="relative z-10 -mt-6 sm:-mt-10 md:-mt-16">
           <img
             src={productLineup}
             alt=""
@@ -158,9 +158,9 @@ function HowItWorksSteps() {
 }
 
 const BEFORE_AFTER_PAIRS = [
-  { before: afterResult, after: beforeResult },
-  { before: afterResult1, after: beforeResult1 },
-  { before: afterResult2, after: beforeResult2 },
+  { before: beforeResult, after: afterResult },
+  { before: beforeResult1, after: afterResult1 },
+  { before: beforeResult2, after: afterResult2 },
 ];
 
 function ClinicalResults() {
@@ -315,7 +315,7 @@ function Research() {
           {t('marketing.home.research.title')}
         </h2>
       </div>
-      <div className="relative z-10 mt-4 grid grid-cols-1 items-center gap-8 lg:-mt-16 lg:grid-cols-2">
+      <div className="relative z-10 mt-8 grid grid-cols-1 items-center gap-8 lg:-mt-6 lg:grid-cols-2">
         <div className="flex flex-col items-start gap-4">
           <Prose size="l" className="max-w-md">{t('marketing.home.research.body')}</Prose>
           <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>

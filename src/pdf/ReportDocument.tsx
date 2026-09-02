@@ -102,7 +102,7 @@ export function ReportDocument({ model }: { model: ReportModel }) {
           {model.analysis.flagged.map((f, i) => (
             <View key={i} style={styles.card}>
               <T style={{ fontWeight: 700 }}>{f.zoneLabel}</T>
-              <T style={styles.muted}>{f.severityLabel} — {f.note}</T>
+              <T style={styles.muted}>{f.severityLabel}: {f.note}</T>
             </View>
           ))}
           {model.analysis.densityMap.map((d, i) => (
@@ -161,7 +161,7 @@ export function ReportDocument({ model }: { model: ReportModel }) {
             <View style={{ marginTop: 4 }}>
               {model.plan.formula.ingredients.map((ing, i) => (
                 <T key={i} style={styles.muted}>
-                  {ing.name} — {ing.roleLabel}{ing.percentage != null ? ` (${ing.percentage}%)` : ''}
+                  {ing.name}: {ing.roleLabel}{ing.percentage != null ? ` (${ing.percentage}%)` : ''}
                 </T>
               ))}
               <View style={{ marginTop: 2 }}>

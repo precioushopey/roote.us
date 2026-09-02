@@ -64,7 +64,7 @@ export function ReportAnalysis({ model }: { model: ReportModel }) {
         {a.flagged.map((f) => (
           <div key={f.zoneLabel} className="rounded-lg border border-border p-3 text-sm">
             <p className="font-medium">{f.zoneLabel}</p>
-            <p className="text-xs text-muted-foreground">{f.severityLabel} — {f.note}</p>
+            <p className="text-xs text-muted-foreground">{f.severityLabel}: {f.note}</p>
           </div>
         ))}
       </div>

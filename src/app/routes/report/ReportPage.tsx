@@ -51,7 +51,7 @@ export function ReportPage() {
       a.remove();
       URL.revokeObjectURL(url);
     } catch {
-      setPdfError(t('report.downloadPdf') + ' — failed. The web report is still available below.');
+      setPdfError(t('report.downloadPdf') + ' failed. The web report is still available below.');
     } finally {
       setGenerating(false);
     }

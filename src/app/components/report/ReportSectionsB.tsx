@@ -41,7 +41,7 @@ export function ReportPlan({ model }: { model: ReportModel }) {
 
       {p.formula && (
         <div className="text-xs text-muted-foreground">
-          <p>{p.formula.ingredients.map((i) => `${i.name} — ${i.roleLabel}`).join(' · ')}</p>
+          <p>{p.formula.ingredients.map((i) => `${i.name}: ${i.roleLabel}`).join(' · ')}</p>
           <p className="mt-1"><TextOrPending value={p.formula.statusLabel} /></p>
         </div>
       )}

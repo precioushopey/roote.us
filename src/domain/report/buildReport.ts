@@ -143,12 +143,12 @@ export function buildReport(input: {
 
   function priceFor(days: number): Money | PendingMarker {
     const row = content.programDurations.find((d) => d.days === days);
-    if (!row || row.price === null) return PENDING(`pricing — ${days} days`);
+    if (!row || row.price === null) return PENDING(`pricing: ${days} days`);
     return formatMoney(row.price, content.currency, locale);
   }
   function perDayFor(days: number): Money | PendingMarker {
     const row = content.programDurations.find((d) => d.days === days);
-    if (!row || row.perDayFrom === null) return PENDING(`per-day pricing — ${days} days`);
+    if (!row || row.perDayFrom === null) return PENDING(`per-day pricing: ${days} days`);
     return formatMoney(row.perDayFrom, content.currency, locale);
   }
 
