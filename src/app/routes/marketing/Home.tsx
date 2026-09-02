@@ -7,7 +7,6 @@ import { Prose } from '@/app/components/marketing/Prose';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { PendingChip } from '@/app/components/brand/PendingChip';
 import { rooteContent } from '@/content/roote.config';
 import heroPeople from '@/assets/hero-people.png';
 import stepQuiz from '@/assets/step-quiz.jpg';
@@ -122,10 +121,13 @@ function HowItWorksSteps() {
   ];
   return (
     <Section>
-      <div className="text-center">
-        <DisplayHeading as="h2" size="m" text={t('marketing.home.how.title')} />
-      </div>
-      <ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <h2
+        className="select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+      >
+        {t('marketing.home.how.title')}
+      </h2>
+      <ol className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((step, i) => (
           <li key={step.title} className="flex flex-col gap-3">
             <img src={step.photo} alt="" className="img-editorial aspect-square w-full rounded-xl object-cover" />
@@ -151,11 +153,29 @@ function ClinicalResults() {
         ghost={t('marketing.home.clinical.titleGhost')}
       />
       <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
-      <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3">
-        <PendingChip label="clinical improvement %" />
-        <PendingChip label="time to visible results" />
-        <PendingChip label="study attribution" />
+      <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-4">
+        <div className="relative">
+          <img
+            src={scalpBefore}
+            alt={t('marketing.home.research.beforeLabel')}
+            className="img-editorial aspect-square w-full rounded-xl object-cover"
+          />
+          <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
+            {t('marketing.home.research.beforeLabel')}
+          </span>
+        </div>
+        <div className="relative">
+          <img
+            src={scalpAfter}
+            alt={t('marketing.home.research.afterLabel')}
+            className="img-editorial aspect-square w-full rounded-xl object-cover"
+          />
+          <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
+            {t('marketing.home.research.afterLabel')}
+          </span>
+        </div>
       </div>
+      <p className="mt-4 text-xs text-ink-foreground/70">{t('marketing.home.research.caption')}</p>
     </Section>
   );
 }
