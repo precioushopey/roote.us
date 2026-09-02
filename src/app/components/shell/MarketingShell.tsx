@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router';
+import { Header } from './Header';
 
 export function MarketingShell() {
   return (
@@ -9,7 +10,7 @@ export function MarketingShell() {
       >
         Skip to content
       </a>
-      {/* Header — Task 6 */}
+      <Header />
       <main id="main">
         <Outlet />
       </main>

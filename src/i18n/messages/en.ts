@@ -276,6 +276,19 @@ export const en = {
   'start.success.point2': 'We will remind you when to apply each step.',
   'start.success.point3': 'Track your progress with photos as you go.',
   'start.success.cta': 'Go to my program',
+
+  'marketing.nav.howItWorks': 'How It Works',
+  'marketing.nav.science': 'Science',
+  'marketing.nav.products': 'Products',
+  'marketing.nav.results': 'Results',
+  'marketing.nav.about': 'About',
+  'marketing.nav.more': 'More',
+  'marketing.nav.faq': 'FAQ',
+  'marketing.nav.blog': 'Blog',
+  'marketing.nav.support': 'Support',
+  'marketing.nav.cta': 'Start free analysis',
+  'marketing.nav.openMenu': 'Open menu',
+  'marketing.nav.closeMenu': 'Close menu',
 } as const;
 
 export type MessageKey = keyof typeof en;

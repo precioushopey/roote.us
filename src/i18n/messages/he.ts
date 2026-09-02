@@ -279,4 +279,17 @@ export const he: Record<MessageKey, string> = {
   'start.success.point2': 'נזכיר לך מתי ליישם כל שלב.',
   'start.success.point3': 'עקבו אחרי ההתקדמות שלכם עם תמונות תוך כדי.',
   'start.success.cta': 'למעבר לתוכנית שלי',
+
+  'marketing.nav.howItWorks': 'איך זה עובד',
+  'marketing.nav.science': 'המדע',
+  'marketing.nav.products': 'המוצרים',
+  'marketing.nav.results': 'תוצאות',
+  'marketing.nav.about': 'אודות',
+  'marketing.nav.more': 'עוד',
+  'marketing.nav.faq': 'שאלות נפוצות',
+  'marketing.nav.blog': 'בלוג',
+  'marketing.nav.support': 'תמיכה',
+  'marketing.nav.cta': 'התחלת אבחון חינם',
+  'marketing.nav.openMenu': 'פתיחת תפריט',
+  'marketing.nav.closeMenu': 'סגירת תפריט',
 };
