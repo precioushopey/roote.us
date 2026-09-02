@@ -301,4 +301,8 @@ export const he: Record<MessageKey, string> = {
   'marketing.footer.terms': 'תנאים',
   'marketing.footer.privacy': 'פרטיות',
   'marketing.footer.rights': 'כל הזכויות שמורות.',
+
+  'marketing.cta.default.title': 'התוכנית שלך מתחילה באבחון אחד חינם.',
+  'marketing.cta.default.body':
+    'עונים על כמה שאלות, מוסיפים תמונת קרקפת, ומקבלים תוכנית שמותאמת לדפוס שלך.',
 };

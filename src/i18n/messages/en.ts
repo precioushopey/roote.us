@@ -298,6 +298,10 @@ export const en = {
   'marketing.footer.terms': 'Terms',
   'marketing.footer.privacy': 'Privacy',
   'marketing.footer.rights': 'All rights reserved.',
+
+  'marketing.cta.default.title': 'Your plan starts with one free analysis.',
+  'marketing.cta.default.body':
+    'Answer a few questions, add a scalp photo, and get a regimen matched to your pattern.',
 } as const;
 
 export type MessageKey = keyof typeof en;
