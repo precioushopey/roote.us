@@ -157,9 +157,9 @@ function HowItWorksSteps() {
 }
 
 const BEFORE_AFTER_PAIRS = [
-  { before: beforeResult, after: afterResult },
-  { before: beforeResult1, after: afterResult1 },
-  { before: beforeResult2, after: afterResult2 },
+  { before: afterResult, after: beforeResult },
+  { before: afterResult1, after: beforeResult1 },
+  { before: afterResult2, after: beforeResult2 },
 ];
 
 function ClinicalResults() {
@@ -305,12 +305,15 @@ function Research() {
   const t = useT();
   return (
     <Section className="overflow-hidden border-t border-border">
-      <h2
-        className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
-      >
-        {t('marketing.home.research.title')}
-      </h2>
+      <div className="flex items-baseline gap-4">
+        <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">05</span>
+        <h2
+          className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+          style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+        >
+          {t('marketing.home.research.title')}
+        </h2>
+      </div>
       <div className="mt-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
         <div className="flex flex-col items-start gap-4">
           <Prose size="l" className="max-w-md">{t('marketing.home.research.body')}</Prose>
