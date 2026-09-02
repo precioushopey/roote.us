@@ -5,7 +5,6 @@ import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { PendingChip } from '@/app/components/brand/PendingChip';
 import heroPeople from '@/assets/hero-people.png';
 
 export function About() {
@@ -59,16 +58,6 @@ export function About() {
               <Prose onInk className="mt-2">{v.body}</Prose>
             </div>
           ))}
-        </div>
-      </Section>
-
-      <Section className="pt-0">
-        <SectionHeading index="03" clamp="clamp(1.75rem, 7vw, 5rem)">
-          {t('marketing.about.careers.title')}
-        </SectionHeading>
-        <Prose size="l" className="mt-4 max-w-xl">{t('marketing.about.careers.body')}</Prose>
-        <div className="mt-4">
-          <PendingChip label="careers link" />
         </div>
       </Section>
 

@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
+import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
 export function MarketingShell() {
   const t = useT();
+  useRevealOnRoute();
   return (
     <div className="min-h-screen bg-background font-body text-foreground">
       <a

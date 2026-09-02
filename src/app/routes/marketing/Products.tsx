@@ -9,10 +9,29 @@ import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
 import { PendingChip } from '@/app/components/brand/PendingChip';
+import { rooteContent } from '@/content/roote.config';
 import productPhoto from '@/assets/product.png';
 import productBg from '@/assets/product_bg.jpg';
 import scanDevice from '@/assets/scan-device.jpg';
 import productLineup from '@/assets/product-lineup.png';
+import minoxidilPhoto from '@/assets/PRODUCTS/minoxidil_roote_product_image_2026.png';
+import finasteridePhoto from '@/assets/PRODUCTS/finaesteride_roote_product_image_2026.png';
+import azelaicPhoto from '@/assets/PRODUCTS/azelaic acid_roote_product_image_2026.png';
+import abnPhoto from '@/assets/PRODUCTS/ABN Complex_roote_product_image_2026.png';
+
+const INGREDIENT_PHOTOS: Record<string, string> = {
+  minoxidil: minoxidilPhoto,
+  finasteride: finasteridePhoto,
+  azelaic: azelaicPhoto,
+  abn: abnPhoto,
+};
+
+const ROLE_KEYS = {
+  'regrowth-stimulant': 'marketing.home.products.role.regrowth-stimulant',
+  'dht-blocker': 'marketing.home.products.role.dht-blocker',
+  'dht-support': 'marketing.home.products.role.dht-support',
+  'proprietary-support': 'marketing.home.products.role.proprietary-support',
+} as const;
 
 export function Products() {
   const t = useT();
@@ -68,10 +87,36 @@ export function Products() {
         </div>
       </Section>
 
+      <Section className="border-t border-border">
+        <SectionHeading index="02" clamp="clamp(1.75rem, 6.5vw, 4.5rem)">
+          {t('marketing.science.ingredients.title')}
+        </SectionHeading>
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {rooteContent.formula.ingredients.map((ing) => (
+            <div key={ing.key} className="overflow-hidden rounded-xl border border-border bg-background text-start">
+              <img
+                src={INGREDIENT_PHOTOS[ing.key]}
+                alt=""
+                className="img-editorial aspect-square w-full object-cover"
+              />
+              <div className="p-6">
+                <p className="font-display text-lg font-medium">{ing.name}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                  {t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}
+                </p>
+                {ing.percentage != null && (
+                  <p className="mt-2 text-sm text-foreground">{ing.percentage}%</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       <Section tone="ink" className="overflow-hidden">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="02" onInk clamp="clamp(1.75rem, 6.5vw, 4.5rem)">
+            <SectionHeading index="03" onInk clamp="clamp(1.75rem, 6.5vw, 4.5rem)">
               {t('marketing.products.customized.title')}
             </SectionHeading>
             <Prose size="l" onInk className="max-w-xl">{t('marketing.products.customized.body')}</Prose>
@@ -84,7 +129,7 @@ export function Products() {
       </Section>
 
       <Section className="pt-0">
-        <SectionHeading index="03" align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
+        <SectionHeading index="04" align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
           {t('marketing.products.subscription.title')}
         </SectionHeading>
         <Prose size="l" className="ms-auto mt-4 max-w-xl text-end">{t('marketing.products.subscription.body')}</Prose>

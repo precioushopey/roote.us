@@ -8,6 +8,9 @@ import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 
+const FIELD_CLASS =
+  'rounded-md border border-input bg-input-background px-3 py-2 text-sm outline-none focus:border-accent';
+
 // TODO: wire to support backend
 function ContactForm() {
   const t = useT();
@@ -15,7 +18,7 @@ function ContactForm() {
 
   return (
     <form
-      className="flex max-w-lg flex-col gap-4 text-start"
+      className="flex w-full flex-col gap-4 text-start"
       onSubmit={(e) => {
         e.preventDefault();
         setSubmitted(true);
@@ -23,15 +26,15 @@ function ContactForm() {
     >
       <label className="flex flex-col gap-1 text-sm">
         {t('marketing.support.form.nameLabel')}
-        <input type="text" required className="rounded-md border border-input bg-input-background px-3 py-2 text-sm" />
+        <input type="text" required className={FIELD_CLASS} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         {t('marketing.support.form.emailLabel')}
-        <input type="email" required className="rounded-md border border-input bg-input-background px-3 py-2 text-sm" />
+        <input type="email" required className={FIELD_CLASS} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         {t('marketing.support.form.topicLabel')}
-        <select className="rounded-md border border-input bg-input-background px-3 py-2 text-sm">
+        <select className={FIELD_CLASS}>
           <option>{t('marketing.support.form.topic1')}</option>
           <option>{t('marketing.support.form.topic2')}</option>
           <option>{t('marketing.support.form.topic3')}</option>
@@ -40,11 +43,11 @@ function ContactForm() {
       </label>
       <label className="flex flex-col gap-1 text-sm">
         {t('marketing.support.form.messageLabel')}
-        <textarea required rows={4} className="rounded-md border border-input bg-input-background px-3 py-2 text-sm" />
+        <textarea required rows={5} className={FIELD_CLASS} />
       </label>
       <button
         type="submit"
-        className="inline-flex w-full items-center justify-center rounded-full bg-primary px-8 py-4 text-sm tracking-wide text-primary-foreground sm:w-auto"
+        className="mt-1 inline-flex w-full items-center justify-center rounded-full bg-primary px-8 py-4 text-sm tracking-wide text-primary-foreground sm:w-auto sm:self-start"
       >
         {t('marketing.support.form.submit')}
       </button>
@@ -81,20 +84,25 @@ export function Support() {
         </div>
       </Section>
 
-      <Section tone="ink">
-        <SectionHeading index="02" onInk align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
-          {t('marketing.support.form.title')}
-        </SectionHeading>
-        <div className="mt-10 flex justify-end">
-          <ContactForm />
+      <Section className="border-t border-border">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="flex flex-col items-start gap-4">
+            <SectionHeading index="02" clamp="clamp(1.75rem, 6vw, 4rem)">
+              {t('marketing.support.form.title')}
+            </SectionHeading>
+            <Prose size="l" className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
+          </div>
+          <div className="rounded-2xl border border-border bg-background p-6 sm:p-8">
+            <ContactForm />
+          </div>
         </div>
       </Section>
 
-      <Section className="pt-0">
-        <SectionHeading index="03" clamp="clamp(1.75rem, 7vw, 5rem)">
+      <Section className="border-t border-border">
+        <SectionHeading index="03" align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
           {t('marketing.support.help.title')}
         </SectionHeading>
-        <div className="mt-6">
+        <div className="mt-6 flex justify-end">
           <ArrowLink to="/faq">{t('marketing.support.help.cta')}</ArrowLink>
         </div>
       </Section>

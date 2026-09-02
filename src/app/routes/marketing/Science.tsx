@@ -120,18 +120,6 @@ export function Science() {
         </div>
       </Section>
 
-      <Section className="pt-0">
-        <SectionHeading index="04" clamp="clamp(1.75rem, 7vw, 5rem)">
-          {t('marketing.science.advisory.title')}
-        </SectionHeading>
-        <Prose size="l" className="mt-4 max-w-xl">{t('marketing.science.advisory.body')}</Prose>
-        <div className="mt-8 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3">
-          <PendingChip label="advisor 1" />
-          <PendingChip label="advisor 2" />
-          <PendingChip label="advisor 3" />
-        </div>
-      </Section>
-
       <CtaBand headingKey="marketing.science.cta.title" />
     </>
   );
