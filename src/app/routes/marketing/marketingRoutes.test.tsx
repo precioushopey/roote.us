@@ -12,10 +12,18 @@ function renderAt(path: string) {
 
 describe('marketing routes', () => {
   it.each([
-    ['/', 'Home'], ['/how-it-works', 'How It Works'], ['/science', 'Science'],
-    ['/products', 'Products'], ['/results', 'Results'], ['/about', 'About'],
-    ['/faq', 'FAQ'], ['/support', 'Support'], ['/blog', 'Blog'],
-    ['/blog/understanding-the-norwood-scale', 'Post'], ['/terms', 'Terms'], ['/privacy', 'Privacy'],
+    ['/', 'Regrowth, built around'],
+    ['/how-it-works', 'How ROOTÉ works'],
+    ['/science', 'The science behind your plan'],
+    ['/products', 'Your regimen'],
+    ['/results', 'Results & reviews'],
+    ['/about', 'About ROOTÉ'],
+    ['/faq', 'Frequently asked questions'],
+    ['/support', 'Support'],
+    ['/blog', 'From the ROOTÉ journal'],
+    ['/blog/understanding-the-norwood-scale', 'Understanding the Norwood scale'],
+    ['/terms', 'Terms of Service'],
+    ['/privacy', 'Privacy Policy'],
   ])('renders %s', (path, heading) => {
     renderAt(path);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(heading);
