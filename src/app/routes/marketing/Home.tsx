@@ -173,13 +173,14 @@ function ClinicalResults() {
     <Section tone="ink">
       <div className="flex items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">01</span>
+          <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">03</span>
           <DisplayHeading
             as="h2"
             size="s"
             onInk
             text={t('marketing.home.clinical.title')}
             ghost={t('marketing.home.clinical.titleGhost')}
+            className="uppercase leading-none tracking-[-0.02em]"
           />
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -187,7 +188,7 @@ function ClinicalResults() {
             type="button"
             onClick={prev}
             aria-label={t('marketing.home.clinical.prev')}
-            className="rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-foreground/30 text-ink-foreground transition-colors hover:border-ink-foreground"
           >
             ‹
           </button>
@@ -195,7 +196,7 @@ function ClinicalResults() {
             type="button"
             onClick={next}
             aria-label={t('marketing.home.clinical.next')}
-            className="rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-foreground/30 text-ink-foreground transition-colors hover:border-ink-foreground"
           >
             ›
           </button>
