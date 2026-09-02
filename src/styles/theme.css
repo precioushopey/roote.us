@@ -3,7 +3,8 @@
 :root {
   --font-size: 16px;
   --font-sans: 'Libre Franklin', 'Heebo', system-ui, sans-serif;
-  --font-secondary: 'DM Sans', 'Heebo', sans-serif;
+  --font-display: 'Playfair Display', 'Frank Ruhl Libre', Georgia, serif;
+  --font-body: 'Montserrat', 'Heebo', system-ui, sans-serif;
 
   --background: #f9f6ef;
   --foreground: #2a2320;
@@ -17,7 +18,7 @@
   --secondary-foreground: #2a2320;
   --muted: #efe7da;
   --muted-foreground: #6e635a;
-  --accent: #8d7766;
+  --accent: #a97b45;
   --accent-foreground: #f9f6ef;
   --destructive: #b3261e;
   --destructive-foreground: #ffffff;
@@ -27,7 +28,11 @@
   --switch-background: #cbbfae;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #8d7766;
+  --ring: #a97b45;
+  --ink: #201812;
+  --ink-foreground: #f4efe4;
+  --accent-ghost: #d8ccb9;
+  --ink-ghost: #4a3f34;
   --chart-1: #8d7766;
   --chart-2: #745f50;
   --chart-3: #a89a86;
@@ -108,6 +113,12 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-accent-ghost: var(--accent-ghost);
+  --color-ink-ghost: var(--ink-ghost);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
