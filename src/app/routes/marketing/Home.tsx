@@ -6,7 +6,6 @@ import { Eyebrow } from '@/app/components/marketing/Eyebrow';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
-import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
 import { rooteContent } from '@/content/roote.config';
 import heroPeople from '@/assets/hero-people.png';
@@ -203,7 +202,7 @@ function ClinicalResults() {
           </button>
         </div>
       </div>
-      <Prose size="l" onInk className="mt-4 line-clamp-2 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
+      <Prose size="l" onInk className="mt-4 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
 
       <div className="relative mt-10">
         <div className="grid grid-cols-2 gap-3 sm:gap-6">
@@ -323,7 +322,12 @@ function Research() {
   const t = useT();
   return (
     <Section className="overflow-hidden border-t border-border pt-0">
-      <div className="flex items-baseline justify-between gap-6">
+      <div className="flex justify-end">
+        <Link to="/science">
+          <Eyebrow>{t('marketing.nav.science')}</Eyebrow>
+        </Link>
+      </div>
+      <div className="mt-3 flex items-baseline justify-between gap-6">
         <span aria-hidden className="shrink-0 text-2xl tracking-[0.18em] text-accent">05</span>
         <h2
           className="select-none whitespace-nowrap text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
@@ -335,7 +339,6 @@ function Research() {
       <div className="relative z-10 mt-8 grid grid-cols-1 items-center gap-8 lg:-mt-6 lg:grid-cols-2">
         <div className="flex flex-col items-start gap-4">
           <Prose size="l" className="max-w-md">{t('marketing.home.research.body')}</Prose>
-          <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>
         </div>
         <img
           src={hairCuticle}
