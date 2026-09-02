@@ -260,7 +260,7 @@ function ProductComponents() {
       <Prose size="l" className="mx-auto mt-4 max-w-xl">{t('marketing.home.products.body')}</Prose>
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {rooteContent.formula.ingredients.map((ing) => (
-          <div key={ing.key} className="rounded-xl border border-border p-6 text-start">
+          <div key={ing.key} className="rounded-xl border border-border bg-background p-6 text-start">
             <p className="font-display text-lg font-medium">{ing.name}</p>
             <p className="mt-1 text-xs uppercase tracking-[0.1em] text-muted-foreground">
               {t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}
@@ -271,7 +271,7 @@ function ProductComponents() {
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {profiles.map((label) => (
-          <div key={label} className="rounded-xl border border-border p-6 text-start">
+          <div key={label} className="rounded-xl border border-border bg-background p-6 text-start">
             <p className="font-display text-base font-medium">{label}</p>
             <p className="mt-3 text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">
               {t('marketing.home.rootCause.addresses')}
