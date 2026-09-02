@@ -17,6 +17,8 @@ import objectiveMeasurement4 from '@/assets/OBJECTIVE MEASUREMENT/OBJECTIVE MEAS
 import productLineup from '@/assets/product-lineup.png';
 import scalpBefore from '@/assets/scalp-before.jpg';
 import scalpAfter from '@/assets/scalp-after.jpg';
+import beforeResult2 from '@/assets/BEFORE AND AFTER RESULT/BEFORE 2.png';
+import afterResult2 from '@/assets/BEFORE AND AFTER RESULT/AFTER 2.png';
 
 const ROLE_KEYS = {
   'regrowth-stimulant': 'marketing.home.products.role.regrowth-stimulant',
@@ -122,7 +124,7 @@ function HowItWorksSteps() {
   return (
     <Section>
       <h2
-        className="select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+        className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
         style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
       >
         {t('marketing.home.how.title')}
@@ -156,7 +158,7 @@ function ClinicalResults() {
       <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-4">
         <div className="relative">
           <img
-            src={scalpBefore}
+            src={beforeResult2}
             alt={t('marketing.home.research.beforeLabel')}
             className="img-editorial aspect-square w-full rounded-xl object-cover"
           />
@@ -166,7 +168,7 @@ function ClinicalResults() {
         </div>
         <div className="relative">
           <img
-            src={scalpAfter}
+            src={afterResult2}
             alt={t('marketing.home.research.afterLabel')}
             className="img-editorial aspect-square w-full rounded-xl object-cover"
           />
