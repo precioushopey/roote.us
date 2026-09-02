@@ -3,8 +3,6 @@ import { Navigate, Outlet, useLocation, useSearchParams } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { Wordmark } from '@/app/components/brand/Wordmark';
-import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
 import { ProgressRail } from '@/app/components/brand/ProgressRail';
 import { redirectForStartStep, START_STEPS, type StartStep } from './guards';
 import { seedDiagnosisAndReport } from '@/store/devSeed';
@@ -28,7 +26,7 @@ export function StartLayout() {
 
   if (!resolved) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4 px-6 text-center">
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-12 text-center">
         <p className="text-sm text-muted-foreground">{t('start.noReport.body')}</p>
         {import.meta.env.DEV && (
           <button
@@ -53,17 +51,13 @@ export function StartLayout() {
   const labels = [t('start.rail.account'), t('start.rail.plan'), t('start.rail.payment')];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <header className="flex items-center justify-between px-6 py-4">
-        <Wordmark />
-        <LocaleToggle />
-      </header>
+    <>
       <div className="px-6 pb-2">
         <ProgressRail steps={labels} current={Math.max(0, Math.min(2, current))} />
       </div>
       <main className="flex-1 px-6 py-6">
         <Outlet />
       </main>
-    </div>
+    </>
   );
 }

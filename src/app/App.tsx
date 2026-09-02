@@ -4,6 +4,7 @@ import { SessionProvider } from '@/store/sessionStore';
 import { AuthProvider } from '@/store/auth';
 import { Landing } from './routes/landing/Landing';
 import { ReportPage } from './routes/report/ReportPage';
+import { FunnelShell } from './components/shell/FunnelShell';
 import { DiagnosisLayout } from './routes/diagnosis/DiagnosisLayout';
 import { IntroStep } from './routes/diagnosis/IntroStep';
 import { GenderStep } from './routes/diagnosis/GenderStep';
@@ -19,28 +20,33 @@ import { SuccessStep } from './routes/start/SuccessStep';
 const router = createBrowserRouter([
   { path: '/', element: <Landing /> },
   {
-    path: '/diagnosis',
-    element: <DiagnosisLayout />,
+    element: <FunnelShell />,
     children: [
-      { index: true, element: <IntroStep /> },
-      { path: 'intro', element: <IntroStep /> },
-      { path: 'gender', element: <GenderStep /> },
-      { path: 'photos', element: <PhotosStep /> },
-      { path: 'analyzing', element: <AnalyzingStep /> },
-      { path: 'ready', element: <ReadyStep /> },
+      {
+        path: '/diagnosis',
+        element: <DiagnosisLayout />,
+        children: [
+          { index: true, element: <IntroStep /> },
+          { path: 'intro', element: <IntroStep /> },
+          { path: 'gender', element: <GenderStep /> },
+          { path: 'photos', element: <PhotosStep /> },
+          { path: 'analyzing', element: <AnalyzingStep /> },
+          { path: 'ready', element: <ReadyStep /> },
+        ],
+      },
+      {
+        path: '/start',
+        element: <StartLayout />,
+        children: [
+          { index: true, element: <AccountStep /> },
+          { path: 'plan', element: <PlanStep /> },
+          { path: 'checkout', element: <CheckoutStep /> },
+          { path: 'success', element: <SuccessStep /> },
+        ],
+      },
     ],
   },
   { path: '/report/:reportId', element: <ReportPage /> },
-  {
-    path: '/start',
-    element: <StartLayout />,
-    children: [
-      { index: true, element: <AccountStep /> },
-      { path: 'plan', element: <PlanStep /> },
-      { path: 'checkout', element: <CheckoutStep /> },
-      { path: 'success', element: <SuccessStep /> },
-    ],
-  },
   { path: '*', element: <Navigate to="/" replace /> },
 ]);
 
