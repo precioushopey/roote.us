@@ -16,7 +16,7 @@ export function Terms() {
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
           <DisplayHeading as="h1" size="l" onInk text={t('marketing.legal.terms.title')} className="mx-auto max-w-3xl" />
-          <p className="mt-3 flex items-center gap-2 text-xs text-ink-foreground/60">
+          <p className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-ink-foreground/60">
             {t('marketing.legal.updated')}: <PendingChip label="terms last-updated date" />
           </p>
         </div>

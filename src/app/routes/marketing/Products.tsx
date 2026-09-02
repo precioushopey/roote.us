@@ -88,7 +88,7 @@ export function Products() {
           {t('marketing.products.subscription.title')}
         </SectionHeading>
         <Prose size="l" className="ms-auto mt-4 max-w-xl text-end">{t('marketing.products.subscription.body')}</Prose>
-        <div className="mt-6 flex items-center justify-end gap-3">
+        <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
           <PendingChip label="reorder cadence" />
           <PendingChip label="reorder price" />
         </div>
