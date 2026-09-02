@@ -2,7 +2,7 @@ export function ArcMotif() {
   return (
     <svg
       aria-hidden="true"
-      className="pointer-events-none absolute"
+      className="pointer-events-none absolute -z-10"
       viewBox="0 0 200 200"
       width={200}
       height={200}
