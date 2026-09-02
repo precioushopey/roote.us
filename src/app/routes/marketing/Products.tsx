@@ -25,13 +25,6 @@ export function Products() {
         </div>
       </Section>
 
-      <Section className="text-center">
-        <DisplayHeading as="h2" size="m" text={t('marketing.products.kit.title')} />
-        <div className="mx-auto mt-4">
-          <PendingChip label="kit price" />
-        </div>
-      </Section>
-
       {components.map((c) => (
         <Section key={c.id} id={c.id} className="border-t border-border">
           <DisplayHeading as="h2" size="s" text={c.title} />
@@ -56,13 +49,6 @@ export function Products() {
         </div>
         <div className="mt-6">
           <ArrowLink to="/start">{t('marketing.nav.cta')}</ArrowLink>
-        </div>
-      </Section>
-
-      <Section className="border-t border-border text-center">
-        <DisplayHeading as="h2" size="m" text={t('marketing.products.guarantee.title')} />
-        <div className="mt-4">
-          <PendingChip label="guarantee terms" />
         </div>
       </Section>
 

@@ -3,7 +3,6 @@ import { Section } from '@/app/components/marketing/Section';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
 import { ArrowLink } from '@/app/components/marketing/ArrowLink';
-import { PendingChip } from '@/app/components/brand/PendingChip';
 
 function QaGroup({ title, items }: { title: string; items: { q: string; a: string }[] }) {
   return (
@@ -48,12 +47,6 @@ export function Faq() {
             title={t('marketing.faq.category.ingredients')}
             items={[{ q: t('marketing.faq.ingredients.q1'), a: t('marketing.faq.ingredients.a1') }]}
           />
-          <div>
-            <p className="font-display text-lg font-medium">{t('marketing.faq.category.billing')}</p>
-            <div className="mt-4">
-              <PendingChip label="billing & shipping FAQ" />
-            </div>
-          </div>
         </div>
       </Section>
 

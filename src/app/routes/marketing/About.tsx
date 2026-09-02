@@ -26,17 +26,6 @@ export function About() {
       </Section>
 
       <Section className="border-t border-border">
-        <DisplayHeading as="h2" size="m" text={t('marketing.about.team.title')} />
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[1, 2, 3, 4].map((n) => (
-            <div key={n} className="rounded-xl border border-border p-6 text-center">
-              <PendingChip label={`team member ${n}`} />
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="border-t border-border">
         <DisplayHeading as="h2" size="m" text={t('marketing.about.values.title')} className="text-center" />
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {values.map((v) => (
@@ -44,15 +33,6 @@ export function About() {
               <p className="font-display text-lg font-medium">{v.title}</p>
               <Prose className="mt-2">{v.body}</Prose>
             </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="border-t border-border text-center">
-        <DisplayHeading as="h2" size="m" text={t('marketing.about.press.title')} />
-        <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-4">
-          {[1, 2, 3, 4, 5].map((n) => (
-            <PendingChip key={n} label={`press logo ${n}`} />
           ))}
         </div>
       </Section>

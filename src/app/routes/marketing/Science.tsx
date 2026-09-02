@@ -82,17 +82,6 @@ export function Science() {
         </div>
       </Section>
 
-      <Section className="border-t border-border">
-        <DisplayHeading as="h2" size="m" text={t('marketing.science.references.title')} />
-        <ol className="mt-6 flex flex-col gap-2">
-          {[1, 2, 3, 4].map((n) => (
-            <li key={n}>
-              <PendingChip label={`reference ${n}`} />
-            </li>
-          ))}
-        </ol>
-      </Section>
-
       <CtaBand headingKey="marketing.science.cta.title" />
     </>
   );

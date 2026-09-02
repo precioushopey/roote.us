@@ -63,22 +63,6 @@ function ValueProp() {
   );
 }
 
-function SocialProof() {
-  const t = useT();
-  return (
-    <Section className="border-y border-border">
-      <div className="grid grid-cols-1 gap-8 text-center sm:grid-cols-2">
-        <div>
-          <PendingChip label={t('marketing.home.social.clinicians')} />
-        </div>
-        <div>
-          <PendingChip label={t('marketing.home.social.customers')} />
-        </div>
-      </div>
-    </Section>
-  );
-}
-
 function QuizIntro() {
   const t = useT();
   const steps = [t('marketing.home.quiz.step1'), t('marketing.home.quiz.step2'), t('marketing.home.quiz.step3')];
@@ -242,7 +226,6 @@ export function Home() {
     <>
       <Hero />
       <ValueProp />
-      <SocialProof />
       <QuizIntro />
       <HowItWorksSteps />
       <ClinicalResults />
