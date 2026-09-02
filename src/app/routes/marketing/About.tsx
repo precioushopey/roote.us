@@ -1,9 +1,12 @@
 import { useT } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
+import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
+import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
 import { PendingChip } from '@/app/components/brand/PendingChip';
+import heroPeople from '@/assets/hero-people.png';
 
 export function About() {
   const t = useT();
@@ -15,31 +18,55 @@ export function About() {
 
   return (
     <>
-      <Section tone="ink" className="pt-28 text-center md:pt-32">
-        <DisplayHeading as="h1" size="l" onInk text={t('marketing.about.hero.title')} className="mx-auto max-w-3xl" />
-        <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.about.mission.body')}</Prose>
+      <Section tone="ink" className="overflow-hidden pt-28 text-center md:pt-32">
+        <div className="relative flex flex-col items-center">
+          <div
+            aria-hidden
+            className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
+          />
+          <DisplayHeading as="h1" size="l" onInk text={t('marketing.about.hero.title')} className="mx-auto max-w-3xl" />
+          <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.about.mission.body')}</Prose>
+          <div className="mt-8">
+            <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
+          </div>
+        </div>
       </Section>
 
-      <Section>
-        <DisplayHeading as="h2" size="m" text={t('marketing.about.story.title')} />
-        <Prose size="l" className="mt-4 max-w-2xl">{t('marketing.about.story.body')}</Prose>
+      <Section className="overflow-hidden">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+          <div className="flex flex-col items-start gap-4">
+            <SectionHeading index="01" clamp="clamp(1.75rem, 7vw, 5rem)">
+              {t('marketing.about.story.title')}
+            </SectionHeading>
+            <Prose size="l" className="max-w-xl">{t('marketing.about.story.body')}</Prose>
+          </div>
+          <img
+            src={heroPeople}
+            alt=""
+            className="img-editorial w-full rounded-2xl object-cover shadow-lg lg:ms-auto lg:max-w-md"
+          />
+        </div>
       </Section>
 
-      <Section className="border-t border-border">
-        <DisplayHeading as="h2" size="m" text={t('marketing.about.values.title')} className="text-center" />
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <Section tone="ink">
+        <SectionHeading index="02" onInk align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
+          {t('marketing.about.values.title')}
+        </SectionHeading>
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {values.map((v) => (
-            <div key={v.title} className="text-start">
-              <p className="font-display text-lg font-medium">{v.title}</p>
-              <Prose className="mt-2">{v.body}</Prose>
+            <div key={v.title} className="rounded-xl border border-ink-foreground/15 bg-ink-foreground/5 p-6 text-start">
+              <p className="font-display text-lg font-medium text-ink-foreground">{v.title}</p>
+              <Prose onInk className="mt-2">{v.body}</Prose>
             </div>
           ))}
         </div>
       </Section>
 
-      <Section className="border-t border-border text-center">
-        <DisplayHeading as="h2" size="m" text={t('marketing.about.careers.title')} />
-        <Prose size="l" className="mx-auto mt-4 max-w-xl">{t('marketing.about.careers.body')}</Prose>
+      <Section className="pt-0">
+        <SectionHeading index="03" clamp="clamp(1.75rem, 7vw, 5rem)">
+          {t('marketing.about.careers.title')}
+        </SectionHeading>
+        <Prose size="l" className="mt-4 max-w-xl">{t('marketing.about.careers.body')}</Prose>
         <div className="mt-4">
           <PendingChip label="careers link" />
         </div>
