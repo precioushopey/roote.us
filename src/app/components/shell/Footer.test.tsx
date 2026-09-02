@@ -21,14 +21,8 @@ describe('Footer', () => {
     expect(within(footer).getByText(new RegExp(String(new Date().getFullYear())))).toBeInTheDocument();
   });
 
-  it('shows the real medical disclaimer text at en', () => {
+  it('does not render the report medical disclaimer', () => {
     const footer = renderFooter('en');
-    expect(within(footer).getByText(/preliminary, photo-based visual assessment/i)).toBeInTheDocument();
-    expect(within(footer).queryByText(/\[PENDING:/)).not.toBeInTheDocument();
-  });
-
-  it('falls back to a pending chip for the medical disclaimer at he (he value is empty)', () => {
-    const footer = renderFooter('he');
-    expect(within(footer).getByText(/\[PENDING:/)).toBeInTheDocument();
+    expect(within(footer).queryByText(/preliminary, photo-based visual assessment/i)).not.toBeInTheDocument();
   });
 });

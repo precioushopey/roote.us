@@ -66,7 +66,9 @@ function Hero() {
             <Prose size="l" onInk className="max-w-md text-xs sm:text-base md:text-[1.0625rem]">
               {t('marketing.home.hero.body')}
             </Prose>
-            <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
+            <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">
+              {t('marketing.nav.cta')}
+            </CtaButton>
           </div>
         </div>
       </div>
@@ -329,11 +331,11 @@ function Research() {
           <Eyebrow>{t('marketing.nav.science')}</Eyebrow>
         </Link>
       </div>
-      <div className="mt-3 flex items-baseline justify-between gap-6">
+      <div className="mt-3 flex items-baseline justify-between gap-2">
         <span aria-hidden className="shrink-0 text-2xl tracking-[0.18em] text-accent">05</span>
         <h2
           className="select-none whitespace-nowrap text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-          style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+          style={{ fontSize: 'clamp(1.75rem, 8.5vw, 7.125rem)' }}
         >
           {t('marketing.home.research.title')}
         </h2>

@@ -1,12 +1,8 @@
 import { Link } from 'react-router';
-import { useT, useLocale } from '@/i18n/LocaleProvider';
+import { useT } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
-import { PendingChip } from '@/app/components/brand/PendingChip';
-import { isPending } from '@/content/pending';
-import { resolveLocalized } from '@/content/resolveLocalized';
-import { rooteContent } from '@/content/roote.config';
 
 type LinkColumn = {
   title: MessageKey;
@@ -41,13 +37,7 @@ const LINK_COLUMNS: LinkColumn[] = [
 
 export function Footer() {
   const t = useT();
-  const { locale } = useLocale();
   const year = new Date().getFullYear();
-  const disclaimer = resolveLocalized(
-    rooteContent.disclaimers.medical,
-    locale,
-    'footer medical disclaimer',
-  );
 
   return (
     <footer className="border-t border-border px-6 py-16 md:px-10">
@@ -92,11 +82,6 @@ export function Footer() {
           <p>
             © {year} ROOTÉ · {t('marketing.footer.rights')}
           </p>
-          {isPending(disclaimer) ? (
-            <PendingChip label={disclaimer.label} />
-          ) : (
-            <p className="max-w-xl">{disclaimer}</p>
-          )}
         </div>
       </div>
     </footer>
