@@ -8,9 +8,12 @@ export function redirectForStartStep(step: StartStep, s: SessionState, authEmail
     case 'account':
       return authEmail ? '/start/plan' : null;
     case 'plan':
-      return authEmail ? null : '/start';
+      if (!authEmail) return '/start';
+      if (s.program) return '/start/success';
+      return null;
     case 'checkout':
       if (!authEmail) return '/start';
+      if (s.program) return '/start/success';
       return s.draftDurationDays ? null : '/start/plan';
     case 'success':
       if (!authEmail) return '/start';

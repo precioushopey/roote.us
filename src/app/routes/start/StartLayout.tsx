@@ -21,9 +21,12 @@ export function StartLayout() {
   const current = START_STEPS.indexOf(step);
 
   const queryReportId = searchParams.get('report');
-  const reportId = queryReportId ?? session.reportId;
+  const resolved =
+    !!session.reportId &&
+    !!session.analysis &&
+    (!queryReportId || queryReportId === session.reportId);
 
-  if (!reportId) {
+  if (!resolved) {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4 px-6 text-center">
         <p className="text-sm text-muted-foreground">{t('start.noReport.body')}</p>

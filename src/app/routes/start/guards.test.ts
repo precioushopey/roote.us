@@ -27,6 +27,16 @@ describe('redirectForStartStep', () => {
   it('checkout: no redirect once a duration is selected', () => {
     expect(redirectForStartStep('checkout', { ...base, draftDurationDays: 180 }, 'a@b.com')).toBeNull();
   });
+  it('checkout: redirects to success once a program has been created', () => {
+    expect(
+      redirectForStartStep('checkout', { ...base, draftDurationDays: 180, program: { orderId: 'ord-1' } as SessionState['program'] }, 'a@b.com'),
+    ).toBe('/start/success');
+  });
+  it('plan: redirects to success once a program has been created', () => {
+    expect(
+      redirectForStartStep('plan', { ...base, program: { orderId: 'ord-1' } as SessionState['program'] }, 'a@b.com'),
+    ).toBe('/start/success');
+  });
   it('success: redirects to start when there is no program', () => {
     expect(redirectForStartStep('success', base, 'a@b.com')).toBe('/start');
   });

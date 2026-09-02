@@ -57,10 +57,12 @@ describe('PlanStep', () => {
   });
 
   it('advances to checkout with the selected duration stored as the draft', async () => {
-    seedSession();
+    const analysis = seedSession();
     renderAt();
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', { name: /continue/i }));
     expect(await screen.findByText('checkout-step')).toBeInTheDocument();
+    const stored = JSON.parse(localStorage.getItem('roote.session')!);
+    expect(stored.draftDurationDays).toBe(analysis.recommendedDurationDays);
   });
 });

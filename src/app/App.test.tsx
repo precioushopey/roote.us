@@ -1,9 +1,18 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, afterEach } from 'vitest';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('App shell', () => {
+  afterEach(() => {
+    // Restore history for the module-scoped browser router so tests in this file are order-independent.
+    // Wrapped in act() because the still-mounted RouterProvider updates in response to the popstate.
+    act(() => {
+      window.history.pushState({}, '', '/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+  });
+
   it('renders the landing route with localized CTA and a working language toggle', async () => {
     render(<App />);
     expect(screen.getByRole('heading', { name: /ROOTÉ/ })).toBeInTheDocument();

@@ -95,6 +95,10 @@ export function CheckoutStep() {
           <span>{t('start.checkout.shipping')}</span>
           <PendingChip label="shipping" />
         </div>
+        <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
+          <span>{t('start.checkout.total')}</span>
+          <PendingChip label="total" />
+        </div>
       </section>
 
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>

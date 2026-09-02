@@ -46,6 +46,13 @@ function renderAt() {
 afterEach(() => localStorage.removeItem('roote.debug.forceCheckoutFailure'));
 
 describe('CheckoutStep', () => {
+  it('renders a pending total row in the order summary', () => {
+    seedSession();
+    renderAt();
+    expect(screen.getByText(/^total$/i)).toBeInTheDocument();
+    expect(screen.getByText('[PENDING: total]')).toBeInTheDocument();
+  });
+
   it('submits valid contact + payment details and advances to success on stub success', async () => {
     seedSession();
     renderAt();

@@ -198,6 +198,7 @@ export const he: Record<MessageKey, string> = {
   'start.checkout.error.expiry': 'נא להזין תוקף בפורמט MM/YY.',
   'start.checkout.error.cvc': 'נא להזין CVC תקין.',
   'start.checkout.error.payment': 'התשלום נכשל — נא לנסות שוב.',
+  'start.checkout.total': 'סה"כ',
   'start.success.title': 'הכל מוכן',
   'start.success.point1': 'התוכנית שלך מתחילה היום.',
   'start.success.point2': 'נזכיר לך מתי ליישם כל שלב.',
