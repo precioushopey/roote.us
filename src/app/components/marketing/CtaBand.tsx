@@ -38,7 +38,7 @@ export function CtaBand({ headingKey, bodyKey, checklistKeys, image }: CtaBandPr
                 </li>
               ))}
             </ul>
-            <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
+            <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
           </div>
           <div className="relative mx-auto w-full max-w-md">
             <div
@@ -61,7 +61,7 @@ export function CtaBand({ headingKey, bodyKey, checklistKeys, image }: CtaBandPr
         </Prose>
       )}
       <div className="mt-8">
-        <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
+        <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
       </div>
     </Section>
   );

@@ -60,7 +60,7 @@ export function Footer() {
             </nav>
           ))}
 
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h2 className="text-sm font-medium tracking-wide text-foreground">
               {t('marketing.footer.startTitle')}
             </h2>
@@ -69,7 +69,7 @@ export function Footer() {
             </p>
             <Link
               to="/diagnosis"
-              className="mt-3 inline-flex items-center rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground"
+              className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground sm:w-auto"
             >
               {t('marketing.nav.cta')}
             </Link>
