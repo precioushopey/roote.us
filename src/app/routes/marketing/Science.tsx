@@ -12,6 +12,10 @@ import { rooteContent } from '@/content/roote.config';
 import hairCuticle from '@/assets/hair-cuticle.jpg';
 import scalpBefore from '@/assets/scalp-before.jpg';
 import scalpAfter from '@/assets/scalp-after.jpg';
+import minoxidilPhoto from '@/assets/PRODUCTS/minoxidil_roote_product_image_2026.png';
+import finasteridePhoto from '@/assets/PRODUCTS/finaesteride_roote_product_image_2026.png';
+import azelaicPhoto from '@/assets/PRODUCTS/azelaic acid_roote_product_image_2026.png';
+import abnPhoto from '@/assets/PRODUCTS/ABN Complex_roote_product_image_2026.png';
 
 const ROLE_KEYS = {
   'regrowth-stimulant': 'marketing.science.ingredients.evidence.regrowth-stimulant',
@@ -19,6 +23,13 @@ const ROLE_KEYS = {
   'dht-support': 'marketing.science.ingredients.evidence.dht-support',
   'proprietary-support': 'marketing.science.ingredients.evidence.proprietary-support',
 } as const;
+
+const INGREDIENT_PHOTOS: Record<string, string> = {
+  minoxidil: minoxidilPhoto,
+  finasteride: finasteridePhoto,
+  azelaic: azelaicPhoto,
+  abn: abnPhoto,
+};
 
 export function Science() {
   const t = useT();
@@ -49,7 +60,7 @@ export function Science() {
           <img
             src={hairCuticle}
             alt={t('marketing.science.evidence.caption')}
-            className="img-editorial w-full rounded-2xl object-cover shadow-lg lg:ms-auto lg:max-w-md"
+            className="img-editorial w-full rounded-2xl object-cover lg:ms-auto lg:max-w-md"
           />
         </div>
       </Section>
@@ -64,11 +75,18 @@ export function Science() {
         </SectionHeading>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {rooteContent.formula.ingredients.map((ing) => (
-            <div key={ing.key} className="rounded-xl border border-border bg-background p-6 text-start">
-              <p className="font-display text-lg font-medium">{ing.name}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}</p>
-              <div className="mt-3">
-                <PendingChip label={`${ing.key} dose`} />
+            <div key={ing.key} className="overflow-hidden rounded-xl border border-border bg-background text-start">
+              <img
+                src={INGREDIENT_PHOTOS[ing.key]}
+                alt=""
+                className="img-editorial aspect-square w-full object-cover"
+              />
+              <div className="p-6">
+                <p className="font-display text-lg font-medium">{ing.name}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}</p>
+                <div className="mt-3">
+                  <PendingChip label={`${ing.key} dose`} />
+                </div>
               </div>
             </div>
           ))}

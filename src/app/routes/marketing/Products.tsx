@@ -54,7 +54,7 @@ export function Products() {
                 <img
                   src={c.photo}
                   alt=""
-                  className={`img-editorial w-full rounded-2xl object-cover shadow-lg lg:max-w-md ${flipped ? 'lg:order-2 lg:ms-auto' : ''}`}
+                  className={`img-editorial w-full rounded-2xl object-cover lg:max-w-md ${flipped ? 'lg:order-2 lg:ms-auto' : ''}`}
                 />
                 <div className={`flex flex-col items-start gap-3 ${flipped ? 'lg:order-1' : ''}`}>
                   <span className="text-xs font-medium tracking-[0.18em] text-accent">0{i + 1}</span>

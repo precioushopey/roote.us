@@ -8,9 +8,7 @@ import { Eyebrow } from '@/app/components/marketing/Eyebrow';
 import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { PendingChip } from '@/app/components/brand/PendingChip';
 import { rooteContent } from '@/content/roote.config';
-import heroPeople from '@/assets/hero-people.png';
 import stepQuiz from '@/assets/step-quiz.jpg';
 import stepPhotoScan from '@/assets/step-photo-scan.jpg';
 import scanDevice from '@/assets/scan-device.jpg';
@@ -77,39 +75,7 @@ export function HowItWorks() {
         </div>
       </Section>
 
-      <Section className="pt-0">
-        <SectionHeading index="03" clamp="clamp(1.75rem, 7vw, 5rem)">
-          {t('marketing.howItWorks.timeline.title')}
-        </SectionHeading>
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {[t('marketing.howItWorks.timeline.m1'), t('marketing.howItWorks.timeline.m3'), t('marketing.howItWorks.timeline.m6')].map((label) => (
-            <div key={label} className="flex flex-col items-start gap-3 rounded-xl border border-border bg-background p-6">
-              <span className="h-2 w-2 rounded-full bg-accent" />
-              <p className="font-display text-lg font-medium">{label}</p>
-              <PendingChip label={`outcome at ${label}`} />
-            </div>
-          ))}
-        </div>
-        <Prose className="mt-8 max-w-xl">{t('marketing.howItWorks.timeline.shedding')}</Prose>
-      </Section>
-
-      <Section className="border-t border-border">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
-          <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="04" clamp="clamp(1.75rem, 7vw, 5rem)">
-              {t('marketing.howItWorks.support.title')}
-            </SectionHeading>
-            <Prose size="l" className="max-w-xl">{t('marketing.howItWorks.support.body')}</Prose>
-          </div>
-          <img
-            src={heroPeople}
-            alt=""
-            className="img-editorial w-full rounded-2xl object-cover shadow-lg lg:ms-auto lg:max-w-md"
-          />
-        </div>
-      </Section>
-
-      <Section className="border-t border-border">
+      <Section>
         <DisplayHeading as="h2" size="m" text={t('marketing.howItWorks.faq.title')} />
         <div className="mt-8 flex max-w-2xl flex-col gap-6 text-start">
           <div className="border-b border-border pb-4">

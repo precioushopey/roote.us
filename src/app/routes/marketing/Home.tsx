@@ -18,6 +18,10 @@ import productLineup from '@/assets/product-lineup.png';
 import hairCuticle from '@/assets/hair-cuticle.jpg';
 import productPhoto from '@/assets/product.png';
 import productBg from '@/assets/product_bg.jpg';
+import minoxidilPhoto from '@/assets/PRODUCTS/minoxidil_roote_product_image_2026.png';
+import finasteridePhoto from '@/assets/PRODUCTS/finaesteride_roote_product_image_2026.png';
+import azelaicPhoto from '@/assets/PRODUCTS/azelaic acid_roote_product_image_2026.png';
+import abnPhoto from '@/assets/PRODUCTS/ABN Complex_roote_product_image_2026.png';
 import beforeResult from '@/assets/BEFORE AND AFTER RESULT/BEFORE.png';
 import afterResult from '@/assets/BEFORE AND AFTER RESULT/AFTER.png';
 import beforeResult1 from '@/assets/BEFORE AND AFTER RESULT/BEFORE 1.png';
@@ -31,6 +35,13 @@ const ROLE_KEYS = {
   'dht-support': 'marketing.home.products.role.dht-support',
   'proprietary-support': 'marketing.home.products.role.proprietary-support',
 } as const;
+
+const INGREDIENT_PHOTOS: Record<string, string> = {
+  minoxidil: minoxidilPhoto,
+  finasteride: finasteridePhoto,
+  azelaic: azelaicPhoto,
+  abn: abnPhoto,
+};
 
 function Hero() {
   const t = useT();
@@ -306,11 +317,18 @@ function ProductComponents() {
       <Prose size="l" className="ms-auto mt-4 max-w-xl text-end">{t('marketing.home.products.body')}</Prose>
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {rooteContent.formula.ingredients.map((ing) => (
-          <div key={ing.key} className="rounded-xl border border-border bg-background p-6 text-start">
-            <p className="font-display text-lg font-medium">{ing.name}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.1em] text-muted-foreground">
-              {t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}
-            </p>
+          <div key={ing.key} className="overflow-hidden rounded-xl border border-border bg-background text-start">
+            <img
+              src={INGREDIENT_PHOTOS[ing.key]}
+              alt=""
+              className="img-editorial aspect-square w-full object-cover"
+            />
+            <div className="p-6">
+              <p className="font-display text-lg font-medium">{ing.name}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                {t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}
+              </p>
+            </div>
           </div>
         ))}
       </div>

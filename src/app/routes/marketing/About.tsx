@@ -43,7 +43,7 @@ export function About() {
           <img
             src={heroPeople}
             alt=""
-            className="img-editorial w-full rounded-2xl object-cover shadow-lg lg:ms-auto lg:max-w-md"
+            className="img-editorial w-full rounded-2xl object-cover lg:ms-auto lg:max-w-md"
           />
         </div>
       </Section>
