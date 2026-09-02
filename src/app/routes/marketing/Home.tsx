@@ -128,24 +128,27 @@ function HowItWorksSteps() {
     { photo: productBg, title: t('marketing.home.how.step4.title'), body: t('marketing.home.how.step4.body') },
   ];
   return (
-    <Section index="02" className="pt-0">
-      <div className="flex items-end justify-between gap-6">
-        <h2
-          className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-          style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
-        >
-          {t('marketing.home.how.title')}
-        </h2>
-        <Link to="/how-it-works" className="mb-2 shrink-0">
+    <Section className="pt-0">
+      <div className="flex items-center justify-between gap-4">
+        <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">02</span>
+        <Link to="/how-it-works" className="shrink-0">
           <Eyebrow>{t('marketing.home.how.cta')}</Eyebrow>
         </Link>
       </div>
+      <h2
+        className="mt-4 select-none whitespace-normal text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground sm:whitespace-nowrap"
+        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+      >
+        {t('marketing.home.how.title')}
+      </h2>
       <ol className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((step, i) => (
           <li key={step.title} className="flex flex-col gap-3">
             <img src={step.photo} alt="" className="img-editorial aspect-square w-full rounded-xl object-cover" />
-            <span className="text-xs font-medium tracking-[0.18em] text-accent">0{i + 1}</span>
-            <p className="font-display text-lg font-medium">{step.title}</p>
+            <div className="flex flex-row items-baseline gap-2 sm:flex-col sm:gap-1">
+              <span className="text-xs font-medium tracking-[0.18em] text-accent">0{i + 1}</span>
+              <p className="font-display text-lg font-medium">{step.title}</p>
+            </div>
             <Prose>{step.body}</Prose>
           </li>
         ))}
