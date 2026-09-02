@@ -37,7 +37,9 @@ function Hero() {
   return (
     <Section tone="ink" className="overflow-hidden pt-20 md:pt-24">
       <div className="flex flex-col items-center">
-        <Eyebrow onInk>{t('marketing.home.hero.eyebrow')}</Eyebrow>
+        <Eyebrow onInk className="text-[0.625rem] tracking-[0.12em] sm:text-xs sm:tracking-[0.18em]">
+          {t('marketing.home.hero.eyebrow')}
+        </Eyebrow>
         <h1
           className="mt-2 select-none text-center font-display font-medium uppercase leading-[0.9] tracking-[-0.02em] text-ink-foreground"
           style={{ fontSize: 'clamp(3.5rem, 13vw, 11rem)' }}
@@ -110,7 +112,7 @@ function FeaturedFormula() {
           />
         </div>
 
-        <div className="flex flex-col items-start gap-3 md:items-end md:text-end">
+        <div className="flex flex-col-reverse items-start gap-3 md:flex-col md:items-end md:text-end">
           <Prose className="md:ms-auto">{t('marketing.home.featured.item2.label')}</Prose>
           <img
             src={objectiveMeasurement4}
