@@ -52,7 +52,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border px-6 py-16 md:px-10">
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-10 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           {LINK_COLUMNS.map((column) => (
             <nav key={column.title} aria-label={t(column.title)}>
               <h2 className="text-sm font-medium tracking-wide text-foreground">
