@@ -307,7 +307,7 @@ export const en = {
   'marketing.nav.menuLabel': 'Menu',
   'marketing.nav.primaryLabel': 'Primary',
 
-  'marketing.home.hero.eyebrow': 'Personalized hair growth',
+  'marketing.home.hero.eyebrow': 'Made for your pattern',
   'marketing.home.hero.title': 'Regrowth',
   'marketing.home.hero.titleGhost': 'built around your scalp',
   'marketing.home.hero.body':
@@ -368,7 +368,7 @@ export const en = {
   'marketing.home.rootCause.profile3.label': 'Established · Full scalp',
   'marketing.home.rootCause.addresses': 'Addresses',
 
-  'marketing.home.research.title': 'Down to the strand',
+  'marketing.home.research.title': 'To the strand',
   'marketing.home.research.body':
     'Every strand is protected by overlapping cuticle scales — the structure that keeps hair strong and reflective. Our formula is built to support that structure, not just what grows from the follicle.',
   'marketing.home.research.cta': 'Read the science',

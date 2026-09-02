@@ -20,14 +20,12 @@ const LINK_COLUMNS: LinkColumn[] = [
       ['/how-it-works', 'marketing.nav.howItWorks'],
       ['/science', 'marketing.nav.science'],
       ['/products', 'marketing.nav.products'],
-      ['/results', 'marketing.nav.results'],
     ],
   },
   {
     title: 'marketing.footer.company',
     links: [
       ['/about', 'marketing.nav.about'],
-      ['/blog', 'marketing.nav.blog'],
       ['/support', 'marketing.nav.support'],
       ['/faq', 'marketing.nav.faq'],
     ],

@@ -16,7 +16,6 @@ describe('Footer', () => {
     expect(within(footer).getByRole('link', { name: 'How It Works' })).toHaveAttribute('href', '/how-it-works');
     expect(within(footer).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/science');
     expect(within(footer).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about');
-    expect(within(footer).getByRole('link', { name: 'Blog' })).toHaveAttribute('href', '/blog');
     expect(within(footer).getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy');
     expect(within(footer).getByRole('link', { name: 'Start free analysis' })).toHaveAttribute('href', '/diagnosis');
     expect(within(footer).getByText(new RegExp(String(new Date().getFullYear())))).toBeInTheDocument();

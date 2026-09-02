@@ -7,10 +7,8 @@ const MENU_LINKS: Array<[key: string, to: string]> = [
   ['marketing.nav.howItWorks', '/how-it-works'],
   ['marketing.nav.science', '/science'],
   ['marketing.nav.products', '/products'],
-  ['marketing.nav.results', '/results'],
   ['marketing.nav.about', '/about'],
   ['marketing.nav.faq', '/faq'],
-  ['marketing.nav.blog', '/blog'],
   ['marketing.nav.support', '/support'],
 ];
 

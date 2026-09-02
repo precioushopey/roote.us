@@ -310,7 +310,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.nav.menuLabel': 'תפריט',
   'marketing.nav.primaryLabel': 'ניווט ראשי',
 
-  'marketing.home.hero.eyebrow': 'צמיחת שיער מותאמת אישית',
+  'marketing.home.hero.eyebrow': 'מותאם לדפוס שלך',
   'marketing.home.hero.title': 'צמיחה מחדש',
   'marketing.home.hero.titleGhost': 'שנבנתה סביב הקרקפת שלך',
   'marketing.home.hero.body':
@@ -371,7 +371,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.rootCause.profile3.label': 'מבוסס · קרקפת מלאה',
   'marketing.home.rootCause.addresses': 'מטפל ב',
 
-  'marketing.home.research.title': 'עד לעומק הסיב',
+  'marketing.home.research.title': 'עד הסיב',
   'marketing.home.research.body':
     'כל סיב שיער מוגן על ידי קשקשי קוטיקולה חופפים — המבנה ששומר על השיער חזק ומבריק. הפורמולה שלנו בנויה לתמוך במבנה הזה, לא רק במה שצומח מהזקיק.',
   'marketing.home.research.cta': 'קריאה על המדע',

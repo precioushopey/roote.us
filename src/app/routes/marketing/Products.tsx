@@ -52,12 +52,6 @@ export function Products() {
         </div>
       </Section>
 
-      <Section className="border-t border-border text-center">
-        <DisplayHeading as="h2" size="m" text={t('marketing.products.reviews.title')} />
-        <div className="mt-6">
-          <ArrowLink to="/results">{t('marketing.products.reviews.cta')}</ArrowLink>
-        </div>
-      </Section>
 
       <CtaBand headingKey="marketing.products.cta.title" />
     </>

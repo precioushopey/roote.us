@@ -96,7 +96,7 @@ function FeaturedFormula() {
           <Prose>{t('marketing.home.featured.item1.label')}</Prose>
         </div>
 
-        <div className="relative z-10 -mt-14 sm:-mt-24 md:-mt-36">
+        <div className="relative z-10 -mt-6 sm:-mt-10 md:-mt-14">
           <img
             src={productLineup}
             alt=""
@@ -256,7 +256,9 @@ function ProductComponents() {
   return (
     <Section className="text-center">
       <div className="flex items-start justify-between gap-6">
-        <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
+        <div className="shrink-0 whitespace-nowrap">
+          <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
+        </div>
         <div className="flex flex-col items-end text-end">
           <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
           <h2
@@ -303,12 +305,12 @@ function Research() {
   return (
     <Section className="overflow-hidden border-t border-border">
       <h2
-        className="select-none text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+        className="select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
         style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
       >
         {t('marketing.home.research.title')}
       </h2>
-      <div className="relative -mt-10 flex justify-end sm:-mt-16 md:-mt-24">
+      <div className="relative -mt-6 flex justify-end sm:-mt-10 md:-mt-14">
         <img
           src={hairCuticle}
           alt={t('marketing.home.research.imageAlt')}

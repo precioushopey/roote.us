@@ -11,13 +11,11 @@ const PRIMARY_LINKS: Array<[key: string, to: string]> = [
   ['marketing.nav.howItWorks', '/how-it-works'],
   ['marketing.nav.science', '/science'],
   ['marketing.nav.products', '/products'],
-  ['marketing.nav.results', '/results'],
   ['marketing.nav.about', '/about'],
 ];
 
 const MORE_LINKS: Array<[key: string, to: string]> = [
   ['marketing.nav.faq', '/faq'],
-  ['marketing.nav.blog', '/blog'],
   ['marketing.nav.support', '/support'],
 ];
 

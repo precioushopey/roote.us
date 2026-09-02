@@ -16,12 +16,9 @@ describe('marketing routes', () => {
     ['/how-it-works', 'How ROOTÉ works'],
     ['/science', 'The science behind your plan'],
     ['/products', 'Your regimen'],
-    ['/results', 'Results & reviews'],
     ['/about', 'About ROOTÉ'],
     ['/faq', 'Frequently asked questions'],
     ['/support', 'Support'],
-    ['/blog', 'From the ROOTÉ journal'],
-    ['/blog/understanding-the-norwood-scale', 'Understanding the Norwood scale'],
     ['/terms', 'Terms of Service'],
     ['/privacy', 'Privacy Policy'],
   ])('renders %s', (path, heading) => {

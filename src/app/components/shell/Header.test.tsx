@@ -25,7 +25,6 @@ describe('Header', () => {
     expect(within(nav).getByRole('link', { name: 'How It Works' })).toHaveAttribute('href', '/how-it-works');
     expect(within(nav).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/science');
     expect(within(nav).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/products');
-    expect(within(nav).getByRole('link', { name: 'Results' })).toHaveAttribute('href', '/results');
     expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about');
     expect(screen.getByRole('link', { name: 'Start free analysis' })).toHaveAttribute('href', '/diagnosis');
   });
@@ -44,12 +43,11 @@ describe('Header', () => {
     await user.click(moreBtn);
     expect(moreBtn).toHaveAttribute('aria-expanded', 'true');
     expect(screen.getByRole('link', { name: 'FAQ' })).toHaveAttribute('href', '/faq');
-    expect(screen.getByRole('link', { name: 'Blog' })).toHaveAttribute('href', '/blog');
     expect(screen.getByRole('link', { name: 'Support' })).toHaveAttribute('href', '/support');
 
     await user.keyboard('{Escape}');
     expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
-    expect(screen.queryByRole('link', { name: 'Blog' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'FAQ' })).not.toBeInTheDocument();
   });
 
   it('opens and closes the mobile menu', async () => {
