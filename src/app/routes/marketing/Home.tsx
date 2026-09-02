@@ -254,8 +254,16 @@ function ProductComponents() {
   ];
   const roles = rooteContent.formula.ingredients.map((ing) => t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS]));
   return (
-    <Section index="04" className="text-center">
-      <DisplayHeading as="h2" size="m" text={t('marketing.home.products.title')} />
+    <Section className="text-center">
+      <div className="flex flex-col items-end text-end">
+        <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
+        <h2
+          className="mt-2 select-none text-end font-display font-medium uppercase leading-[0.95] tracking-[-0.02em] text-foreground"
+          style={{ fontSize: 'clamp(2rem, 8vw, 5.5rem)' }}
+        >
+          {t('marketing.home.products.title')}
+        </h2>
+      </div>
       <Prose size="l" className="mx-auto mt-4 max-w-xl">{t('marketing.home.products.body')}</Prose>
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {rooteContent.formula.ingredients.map((ing) => (
@@ -294,18 +302,23 @@ function ProductComponents() {
 function Research() {
   const t = useT();
   return (
-    <Section className="border-t border-border">
-      <div className="grid items-center gap-10 lg:grid-cols-2">
-        <div className="flex flex-col items-start gap-5">
-          <DisplayHeading as="h2" size="m" text={t('marketing.home.research.title')} />
-          <Prose size="l">{t('marketing.home.research.body')}</Prose>
-          <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>
-        </div>
+    <Section className="overflow-hidden border-t border-border">
+      <h2
+        className="select-none text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+      >
+        {t('marketing.home.research.title')}
+      </h2>
+      <div className="relative -mt-10 flex justify-end sm:-mt-16 md:-mt-24">
         <img
           src={hairCuticle}
           alt={t('marketing.home.research.imageAlt')}
-          className="img-editorial mx-auto w-full max-w-md rounded-2xl object-cover shadow-lg"
+          className="img-editorial w-1/2 min-w-[240px] rounded-2xl object-cover shadow-lg"
         />
+      </div>
+      <div className="mt-8 flex flex-col items-start gap-4">
+        <Prose size="l" className="max-w-xl">{t('marketing.home.research.body')}</Prose>
+        <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>
       </div>
     </Section>
   );
