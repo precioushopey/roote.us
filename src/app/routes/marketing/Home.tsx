@@ -36,7 +36,11 @@ function Hero() {
   const t = useT();
   return (
     <Section tone="ink" className="overflow-hidden pt-20 md:pt-24">
-      <div className="flex flex-col items-center">
+      <div className="relative flex flex-col items-center">
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
+        />
         <Eyebrow onInk className="text-[0.625rem] tracking-[0.12em] sm:text-xs sm:tracking-[0.18em]">
           {t('marketing.home.hero.eyebrow')}
         </Eyebrow>
@@ -188,7 +192,7 @@ function ClinicalResults() {
     <Section tone="ink">
       <div className="flex items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">03</span>
+          <span aria-hidden className="text-2xl leading-none tracking-[0.18em] text-accent">03</span>
           <DisplayHeading
             as="h2"
             size="m"
