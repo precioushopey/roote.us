@@ -170,25 +170,40 @@ function ClinicalResults() {
   const next = () => setActive((i) => (i + 1) % BEFORE_AFTER_PAIRS.length);
 
   return (
-    <Section tone="ink" index="01" className="text-center">
-      <DisplayHeading
-        as="h2"
-        size="m"
-        onInk
-        text={t('marketing.home.clinical.title')}
-        ghost={t('marketing.home.clinical.titleGhost')}
-      />
-      <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
+    <Section tone="ink">
+      <div className="flex items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">01</span>
+          <DisplayHeading
+            as="h2"
+            size="s"
+            onInk
+            text={t('marketing.home.clinical.title')}
+            ghost={t('marketing.home.clinical.titleGhost')}
+          />
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={prev}
+            aria-label={t('marketing.home.clinical.prev')}
+            className="rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label={t('marketing.home.clinical.next')}
+            className="rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+      <Prose size="l" onInk className="mt-4 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
 
       <div className="relative mt-10">
-        <button
-          type="button"
-          onClick={prev}
-          aria-label={t('marketing.home.clinical.prev')}
-          className="absolute start-0 top-1/2 z-10 -translate-y-1/2 p-2 text-2xl text-ink-foreground/70 transition-colors hover:text-ink-foreground sm:-start-6 md:-start-10"
-        >
-          ‹
-        </button>
         <div className="grid grid-cols-2 gap-3 sm:gap-6">
           <div className="relative">
             <img
@@ -211,14 +226,6 @@ function ClinicalResults() {
             </span>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={next}
-          aria-label={t('marketing.home.clinical.next')}
-          className="absolute end-0 top-1/2 z-10 -translate-y-1/2 p-2 text-2xl text-ink-foreground/70 transition-colors hover:text-ink-foreground sm:-end-6 md:-end-10"
-        >
-          ›
-        </button>
       </div>
 
       <div className="mt-6 flex justify-center gap-3">
