@@ -77,8 +77,10 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-border pt-8 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <Wordmark className="w-20" />
-          <LocaleToggle />
+          <div className="flex items-center justify-between gap-3 md:contents">
+            <Wordmark className="w-20" />
+            <LocaleToggle />
+          </div>
           <p>
             © {year} ROOTÉ · {t('marketing.footer.rights')}
           </p>
