@@ -53,7 +53,12 @@ function Hero() {
             className="img-editorial w-full rounded-2xl object-cover"
             style={{ aspectRatio: '16 / 10' }}
           />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 rounded-b-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent px-4 pb-5 pt-16 text-center sm:gap-3 sm:px-10 sm:pb-8 sm:pt-32 md:gap-4 md:pb-10 md:pt-48">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent"
+          />
+          {/* Overlay copy group: nudge vertical position with the bottom-* utilities below. */}
+          <div className="absolute inset-x-0 bottom-4 flex flex-col items-center gap-2 px-4 text-center sm:bottom-8 sm:gap-3 sm:px-10 md:bottom-12 md:gap-4">
             <p className="font-display text-base font-medium uppercase tracking-wide text-ink-foreground sm:text-2xl md:text-3xl">
               {t('marketing.home.hero.titleGhost')}
             </p>
@@ -166,6 +171,9 @@ const BEFORE_AFTER_PAIRS = [
   { before: beforeResult2, after: afterResult2 },
 ];
 
+const ARROW_CLASS =
+  'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-foreground/30 text-ink-foreground transition-colors hover:border-ink-foreground';
+
 function ClinicalResults() {
   const t = useT();
   const [active, setActive] = useState(0);
@@ -186,21 +194,11 @@ function ClinicalResults() {
             className="uppercase leading-none tracking-[-0.02em]"
           />
         </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <button
-            type="button"
-            onClick={prev}
-            aria-label={t('marketing.home.clinical.prev')}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-foreground/30 text-ink-foreground transition-colors hover:border-ink-foreground"
-          >
+        <div className="hidden shrink-0 items-center gap-2 sm:flex">
+          <button type="button" onClick={prev} aria-label={t('marketing.home.clinical.prev')} className={ARROW_CLASS}>
             ‹
           </button>
-          <button
-            type="button"
-            onClick={next}
-            aria-label={t('marketing.home.clinical.next')}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-foreground/30 text-ink-foreground transition-colors hover:border-ink-foreground"
-          >
+          <button type="button" onClick={next} aria-label={t('marketing.home.clinical.next')} className={ARROW_CLASS}>
             ›
           </button>
         </div>
@@ -232,7 +230,15 @@ function ClinicalResults() {
         </div>
       </div>
 
-      <div className="mt-6 flex justify-center gap-3">
+      <div className="mt-6 flex items-center justify-center gap-3">
+        <button
+          type="button"
+          onClick={prev}
+          aria-label={t('marketing.home.clinical.prev')}
+          className={`${ARROW_CLASS} sm:hidden`}
+        >
+          ‹
+        </button>
         {BEFORE_AFTER_PAIRS.map((p, i) => (
           <button
             key={i}
@@ -245,6 +251,14 @@ function ClinicalResults() {
             <img src={p.before} alt="" className="img-editorial h-full w-full object-cover" />
           </button>
         ))}
+        <button
+          type="button"
+          onClick={next}
+          aria-label={t('marketing.home.clinical.next')}
+          className={`${ARROW_CLASS} sm:hidden`}
+        >
+          ›
+        </button>
       </div>
     </Section>
   );
@@ -269,8 +283,8 @@ function ProductComponents() {
         <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
       </div>
       <h2
-        className="mt-4 select-none whitespace-nowrap text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 8.2vw, 5.9rem)' }}
+        className="mt-4 select-none whitespace-normal text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground sm:whitespace-nowrap"
+        style={{ fontSize: 'clamp(1.5rem, 7.2vw, 5.9rem)' }}
       >
         {t('marketing.home.products.title')}
       </h2>

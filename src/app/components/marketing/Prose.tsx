@@ -10,8 +10,8 @@ interface ProseProps {
 
 export function Prose({ children, size = 'm', onInk = false, className }: ProseProps) {
   const sizeClasses = {
-    l: 'text-[1.0625rem] leading-[1.7]',
-    m: 'text-[0.9375rem] leading-[1.65]',
+    l: 'text-[0.9375rem] leading-[1.6] sm:text-[1.0625rem] sm:leading-[1.7]',
+    m: 'text-[0.875rem] leading-[1.6] sm:text-[0.9375rem] sm:leading-[1.65]',
   }[size];
 
   const tone = onInk ? 'text-ink-foreground/85' : 'text-muted-foreground';
