@@ -105,7 +105,7 @@ function FeaturedFormula() {
           <img
             src={objectiveMeasurement4}
             alt=""
-            className="img-editorial mt-4 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm md:mt-16"
+            className="img-editorial aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm"
           />
         </div>
       </div>
@@ -122,13 +122,18 @@ function HowItWorksSteps() {
     { photo: productLineup, title: t('marketing.home.how.step4.title'), body: t('marketing.home.how.step4.body') },
   ];
   return (
-    <Section>
-      <h2
-        className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
-      >
-        {t('marketing.home.how.title')}
-      </h2>
+    <Section index="02">
+      <div className="flex items-end justify-between gap-6">
+        <h2
+          className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+          style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+        >
+          {t('marketing.home.how.title')}
+        </h2>
+        <Link to="/how-it-works" className="mb-2 shrink-0">
+          <Eyebrow>{t('marketing.home.how.cta')}</Eyebrow>
+        </Link>
+      </div>
       <ol className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((step, i) => (
           <li key={step.title} className="flex flex-col gap-3">

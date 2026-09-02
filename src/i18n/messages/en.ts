@@ -334,7 +334,7 @@ export const en = {
   'marketing.home.quiz.cta': 'Start free analysis',
 
   'marketing.home.how.title': 'How it works',
-  'marketing.home.how.cta': 'See the full process',
+  'marketing.home.how.cta': 'See more',
   'marketing.home.how.step1.title': 'Take the quiz',
   'marketing.home.how.step1.body': 'A few questions about your goals, history, and hair loss pattern.',
   'marketing.home.how.step2.title': 'Scan your scalp',

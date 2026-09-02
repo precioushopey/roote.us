@@ -337,7 +337,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.quiz.cta': 'התחלת אבחון חינם',
 
   'marketing.home.how.title': 'איך זה עובד',
-  'marketing.home.how.cta': 'לתהליך המלא',
+  'marketing.home.how.cta': 'לפרטים נוספים',
   'marketing.home.how.step1.title': 'עונים על השאלון',
   'marketing.home.how.step1.body': 'כמה שאלות על המטרות, ההיסטוריה ודפוס נשירת השיער שלך.',
   'marketing.home.how.step2.title': 'סורקים את הקרקפת',
