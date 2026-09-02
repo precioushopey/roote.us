@@ -316,8 +316,8 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.hero.body':
     'תוכנית טיפול מבוססת-רפואת עור שמותאמת לדפוס שלך, להיסטוריה שלך ולתמונת הקרקפת שלך — עם מעקב לאורך הדרך.',
 
-  'marketing.home.featured.eyebrowLeft': 'לגלות עוד',
-  'marketing.home.featured.eyebrowRight': 'הפורמולה שלנו',
+  'marketing.home.featured.eyebrowLeft': 'מוצרים',
+  'marketing.home.featured.eyebrowRight': 'מדע',
   'marketing.home.featured.title': 'מוצרים בשבילך',
   'marketing.home.featured.item1.label': 'גלו את התוכנית האישית שלכם',
   'marketing.home.featured.item1.cta': 'לצפייה איך זה עובד',

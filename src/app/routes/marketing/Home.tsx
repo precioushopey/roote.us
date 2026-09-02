@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
 import { Eyebrow } from '@/app/components/marketing/Eyebrow';
@@ -65,9 +66,13 @@ function FeaturedFormula() {
   return (
     <Section className="overflow-hidden">
       <div className="grid grid-cols-3 items-center">
-        <Eyebrow>{t('marketing.home.featured.eyebrowLeft')}</Eyebrow>
+        <Link to="/products" className="justify-self-start">
+          <Eyebrow>{t('marketing.home.featured.eyebrowLeft')}</Eyebrow>
+        </Link>
         <span aria-hidden className="text-center text-2xl tracking-[0.18em] text-accent">01</span>
-        <Eyebrow className="text-end">{t('marketing.home.featured.eyebrowRight')}</Eyebrow>
+        <Link to="/science" className="justify-self-end">
+          <Eyebrow className="text-end">{t('marketing.home.featured.eyebrowRight')}</Eyebrow>
+        </Link>
       </div>
       <h2
         className="mt-4 select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
@@ -84,7 +89,6 @@ function FeaturedFormula() {
             className="img-editorial mt-6 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14"
           />
           <Prose>{t('marketing.home.featured.item1.label')}</Prose>
-          <ArrowLink to="/how-it-works">{t('marketing.home.featured.item1.cta')}</ArrowLink>
         </div>
 
         <div className="relative z-10 -mt-14 sm:-mt-24 md:-mt-36">
@@ -96,12 +100,12 @@ function FeaturedFormula() {
         </div>
 
         <div className="flex flex-col items-start gap-3 md:items-end md:text-end">
-          <Prose className="md:ms-auto">{t('marketing.home.featured.item2.label')}</Prose>
           <img
             src={objectiveMeasurement4}
             alt=""
             className="img-editorial mt-4 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm md:mt-16"
           />
+          <Prose className="md:ms-auto">{t('marketing.home.featured.item2.label')}</Prose>
         </div>
       </div>
     </Section>

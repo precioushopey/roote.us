@@ -313,8 +313,8 @@ export const en = {
   'marketing.home.hero.body':
     'A dermatologist-informed regimen matched to your pattern, your history, and a photo of your scalp — reviewed as you go.',
 
-  'marketing.home.featured.eyebrowLeft': 'Discover more',
-  'marketing.home.featured.eyebrowRight': 'Our formula',
+  'marketing.home.featured.eyebrowLeft': 'Products',
+  'marketing.home.featured.eyebrowRight': 'Science',
   'marketing.home.featured.title': 'Products for you',
   'marketing.home.featured.item1.label': 'Discover your personalized plan',
   'marketing.home.featured.item1.cta': 'See how it works',
