@@ -235,8 +235,6 @@ function ClinicalResults() {
           </button>
         ))}
       </div>
-
-      <p className="mt-4 text-xs text-ink-foreground/70">{t('marketing.home.research.caption')}</p>
     </Section>
   );
 }
