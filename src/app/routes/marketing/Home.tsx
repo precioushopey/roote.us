@@ -113,7 +113,7 @@ function FeaturedFormula() {
           <img
             src={bannerSquare}
             alt=""
-            className="img-editorial mt-6 aspect-[4/5] w-full rounded-xl object-cover shadow-sm sm:mt-10 sm:max-w-[220px] md:mt-14"
+            className="img-editorial mt-6 aspect-[4/5] w-full rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14 lg:max-w-[220px]"
           />
           <Prose>{t('marketing.home.featured.item1.label')}</Prose>
         </div>
@@ -131,7 +131,7 @@ function FeaturedFormula() {
           <img
             src={objectiveMeasurement4}
             alt=""
-            className="img-editorial aspect-[4/5] w-full rounded-xl object-cover shadow-sm sm:max-w-[220px]"
+            className="img-editorial aspect-[4/5] w-full rounded-xl object-cover shadow-sm lg:max-w-[220px]"
           />
         </div>
       </div>
