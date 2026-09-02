@@ -82,5 +82,16 @@ describe('sessionStore', () => {
     };
     act(() => api.setProgram(program));
     expect(api.program?.orderId).toBe('ord-1');
+
+    // program mutations used by the post-purchase app
+    act(() => api.toggleProgramTask('2026-09-05', 'core:0'));
+    expect(api.program?.completionLog['2026-09-05']).toEqual(['core:0']);
+    act(() => api.toggleProgramTask('2026-09-05', 'core:0'));
+    expect(api.program?.completionLog['2026-09-05']).toEqual([]);
+
+    act(() =>
+      api.addProgramPhoto({ id: 'ph1', isoDate: '2026-09-05', angleKey: 'front', blobId: 'b1', thumb: 't' }),
+    );
+    expect(api.program?.progressPhotos).toHaveLength(1);
   });
 });

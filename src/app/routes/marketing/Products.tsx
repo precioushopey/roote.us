@@ -8,6 +8,7 @@ import { Eyebrow } from '@/app/components/marketing/Eyebrow';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
+import { VideoBlock } from '@/app/components/marketing/VideoBlock';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { rooteContent } from '@/content/roote.config';
 import productPhoto from '@/assets/product.png';
@@ -85,6 +86,12 @@ export function Products() {
             );
           })}
         </div>
+        <VideoBlock
+          className="mx-auto mt-16 max-w-3xl"
+          poster={productLineup}
+          titleKey="marketing.video.plan.title"
+          captionKey="marketing.video.plan.caption"
+        />
       </Section>
 
       <Section className="border-t border-border">
@@ -104,7 +111,9 @@ export function Products() {
                 <p className="mt-1 text-xs uppercase tracking-[0.1em] text-muted-foreground">
                   {t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}
                 </p>
-                {ing.percentage != null && (
+                {/* Concentrations are a regulated claim; only shown publicly once the client
+                    confirms via rooteContent.formula.displayPercentagesPublicly. */}
+                {rooteContent.formula.displayPercentagesPublicly && ing.percentage != null && (
                   <p className="mt-2 text-sm text-foreground">{ing.percentage}%</p>
                 )}
               </div>

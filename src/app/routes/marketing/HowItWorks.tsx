@@ -8,6 +8,7 @@ import { Eyebrow } from '@/app/components/marketing/Eyebrow';
 import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
+import { VideoBlock } from '@/app/components/marketing/VideoBlock';
 import { rooteContent } from '@/content/roote.config';
 import stepQuiz from '@/assets/step-quiz.jpg';
 import stepPhotoScan from '@/assets/step-photo-scan.jpg';
@@ -41,6 +42,15 @@ export function HowItWorks() {
       </Section>
 
       <Section>
+        <VideoBlock
+          className="mx-auto max-w-3xl"
+          poster={scanDevice}
+          titleKey="marketing.video.diagnosis.title"
+          captionKey="marketing.video.diagnosis.caption"
+        />
+      </Section>
+
+      <Section className="pt-0">
         <SectionHeading
           index="01"
           clamp="clamp(1.75rem, 7vw, 5rem)"

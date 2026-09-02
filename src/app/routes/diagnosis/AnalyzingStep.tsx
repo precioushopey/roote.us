@@ -1,14 +1,33 @@
 import { useMemo, useRef, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
+import { useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { redirectForStep } from './guards';
 import { QUESTIONS } from '@/app/components/diagnosis/questions';
 import { QuestionCard } from '@/app/components/diagnosis/QuestionCard';
 import { AnalyzingStrip } from '@/app/components/diagnosis/AnalyzingStrip';
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
+import { analyzeHair } from '@/domain/analysis/analyzeHair';
+import { isHairhealthConfigured } from '@/domain/analysis/hairhealthAdapter';
+import { getBlob } from '@/store/persistence';
 import type { Answers } from '@/domain/analysis/types';
+import type { PhotoRef } from '@/store/sessionStore';
+
+async function loadPhotoBlobs(photos: PhotoRef[]): Promise<{ angleKey: string; blob: Blob }[]> {
+  const out: { angleKey: string; blob: Blob }[] = [];
+  for (const p of photos) {
+    try {
+      const blob = await getBlob(p.blobId);
+      if (blob) out.push({ angleKey: p.angleKey, blob });
+    } catch {
+      /* skip unreadable blob */
+    }
+  }
+  return out;
+}
 
 export function AnalyzingStep() {
+  const t = useT();
   const navigate = useNavigate();
   const session = useSession();
   const [step, setStep] = useState(0);
@@ -39,10 +58,28 @@ export function AnalyzingStep() {
     const d = latest.current;
     if (!d.gender) return;
     finishedRef.current = true;
-    const analysis = deriveAnalysis({ gender: d.gender, answers: d.answers as Answers });
-    session.setAnalysis(analysis);
+    const gender = d.gender;
+    const answers = d.answers as Answers;
     session.setReportId(crypto.randomUUID());
-    navigate('/diagnosis/ready');
+
+    // Local/demo path stays synchronous. Only reach for hairhealth.ai when it is
+    // actually configured, then navigate once the result (or fallback) is in.
+    if (!isHairhealthConfigured()) {
+      session.setAnalysis(deriveAnalysis({ gender, answers }));
+      navigate('/diagnosis/ready');
+      return;
+    }
+    void (async () => {
+      let analysis;
+      try {
+        const photos = await loadPhotoBlobs(d.photos);
+        analysis = (await analyzeHair({ gender, answers, photos })).analysis;
+      } catch {
+        analysis = deriveAnalysis({ gender, answers });
+      }
+      session.setAnalysis(analysis);
+      navigate('/diagnosis/ready');
+    })();
   };
 
   return (
@@ -57,7 +94,7 @@ export function AnalyzingStep() {
           onSelect={onSelect}
         />
       ) : (
-        <p className="text-center text-sm text-muted-foreground">{/* finalizing */}</p>
+        <p className="text-center text-sm text-muted-foreground">{t('analysis.finalizing')}</p>
       )}
     </section>
   );

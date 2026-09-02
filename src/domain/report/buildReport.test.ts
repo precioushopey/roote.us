@@ -103,12 +103,11 @@ describe('buildReport', () => {
     for (const s of model.plan.supporting) {
       expect(isPending(s.name)).toBe(true);
     }
-    // disclaimers.medical / notADiagnosis also have he: '' today.
-    expect(isPending(model.disclaimers.medical)).toBe(true);
-    expect(isPending(model.disclaimers.notADiagnosis)).toBe(true);
-    // demo and formulaPending ARE fully populated in both languages — must resolve to real strings.
-    expect(typeof model.disclaimers.demo).toBe('string');
-    expect(model.disclaimers.demo.length).toBeGreaterThan(0);
+    // All four disclaimers now have real HE strings — they must resolve, not fall back to PENDING.
+    for (const key of ['medical', 'notADiagnosis', 'demo', 'formulaPending'] as const) {
+      expect(typeof model.disclaimers[key]).toBe('string');
+      expect((model.disclaimers[key] as string).length).toBeGreaterThan(0);
+    }
   });
 
   it('hides formula percentages when displayPercentagesPublicly is false', () => {

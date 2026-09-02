@@ -7,6 +7,7 @@ import { Prose } from '@/app/components/marketing/Prose';
 import { Eyebrow } from '@/app/components/marketing/Eyebrow';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
+import { VideoBlock } from '@/app/components/marketing/VideoBlock';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { rooteContent } from '@/content/roote.config';
 import hairCuticle from '@/assets/hair-cuticle.jpg';
@@ -91,6 +92,12 @@ export function Science() {
             </div>
           ))}
         </div>
+        <VideoBlock
+          className="mx-auto mt-14 max-w-3xl"
+          poster={hairCuticle}
+          titleKey="marketing.video.ingredients.title"
+          captionKey="marketing.video.ingredients.caption"
+        />
       </Section>
 
       <Section tone="ink">

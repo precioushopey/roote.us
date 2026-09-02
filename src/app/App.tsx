@@ -16,6 +16,12 @@ import { AccountStep } from './routes/start/AccountStep';
 import { PlanStep } from './routes/start/PlanStep';
 import { CheckoutStep } from './routes/start/CheckoutStep';
 import { SuccessStep } from './routes/start/SuccessStep';
+import { AppShell } from './routes/app/AppShell';
+import { AppToday } from './routes/app/AppToday';
+import { AppPlan } from './routes/app/AppPlan';
+import { AppProgress } from './routes/app/AppProgress';
+import { AppCare } from './routes/app/AppCare';
+import { AppRescan } from './routes/app/AppRescan';
 
 const router = createBrowserRouter([
   marketingRoutes,
@@ -44,6 +50,17 @@ const router = createBrowserRouter([
           { path: 'success', element: <SuccessStep /> },
         ],
       },
+    ],
+  },
+  {
+    path: '/app',
+    element: <AppShell />,
+    children: [
+      { index: true, element: <AppToday /> },
+      { path: 'plan', element: <AppPlan /> },
+      { path: 'progress', element: <AppProgress /> },
+      { path: 'care', element: <AppCare /> },
+      { path: 'rescan', element: <AppRescan /> },
     ],
   },
   { path: '/report/:reportId', element: <ReportPage /> },

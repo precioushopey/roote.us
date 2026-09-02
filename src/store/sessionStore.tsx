@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
 import { lsGet, lsSet } from './persistence';
 import type { HairAnalysis, Gender, Answers } from '@/domain/analysis/types';
-import type { Program, ProgramDurationDays } from '@/domain/program/types';
+import type { Program, ProgramDurationDays, ProgressPhoto, Reminder } from '@/domain/program/types';
 
 export type AngleKey = 'front' | 'top' | 'crown' | 'hairline';
 export type PhotoRef = { id: string; angleKey: AngleKey; thumb: string; blobId: string };
@@ -35,6 +35,9 @@ type Action =
   | { type: 'SET_EMAIL'; email: string }
   | { type: 'SET_DRAFT_DURATION'; days: ProgramDurationDays }
   | { type: 'SET_PROGRAM'; program: Program }
+  | { type: 'TOGGLE_PROGRAM_TASK'; isoDate: string; taskKey: string }
+  | { type: 'ADD_PROGRAM_PHOTO'; photo: ProgressPhoto }
+  | { type: 'SET_PROGRAM_REMINDERS'; reminders: Reminder[] }
   | { type: 'RESET' };
 
 function reducer(state: SessionState, action: Action): SessionState {
@@ -74,6 +77,31 @@ function reducer(state: SessionState, action: Action): SessionState {
       return { ...state, draftDurationDays: action.days };
     case 'SET_PROGRAM':
       return { ...state, program: action.program };
+    case 'TOGGLE_PROGRAM_TASK': {
+      if (!state.program) return state;
+      const done = state.program.completionLog[action.isoDate] ?? [];
+      const next = done.includes(action.taskKey)
+        ? done.filter((k) => k !== action.taskKey)
+        : [...done, action.taskKey];
+      return {
+        ...state,
+        program: {
+          ...state.program,
+          completionLog: { ...state.program.completionLog, [action.isoDate]: next },
+        },
+      };
+    }
+    case 'ADD_PROGRAM_PHOTO': {
+      if (!state.program) return state;
+      return {
+        ...state,
+        program: { ...state.program, progressPhotos: [...state.program.progressPhotos, action.photo] },
+      };
+    }
+    case 'SET_PROGRAM_REMINDERS': {
+      if (!state.program) return state;
+      return { ...state, program: { ...state.program, reminders: action.reminders } };
+    }
     case 'RESET':
       return EMPTY;
     default:
@@ -92,6 +120,9 @@ const SessionContext = createContext<
     setEmail: (email: string) => void;
     setDraftDurationDays: (days: ProgramDurationDays) => void;
     setProgram: (program: Program) => void;
+    toggleProgramTask: (isoDate: string, taskKey: string) => void;
+    addProgramPhoto: (photo: ProgressPhoto) => void;
+    setProgramReminders: (reminders: Reminder[]) => void;
     reset: () => void;
   }) | null
 >(null);
@@ -118,6 +149,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setEmail: (email: string) => dispatch({ type: 'SET_EMAIL', email }),
       setDraftDurationDays: (days: ProgramDurationDays) => dispatch({ type: 'SET_DRAFT_DURATION', days }),
       setProgram: (program: Program) => dispatch({ type: 'SET_PROGRAM', program }),
+      toggleProgramTask: (isoDate: string, taskKey: string) =>
+        dispatch({ type: 'TOGGLE_PROGRAM_TASK', isoDate, taskKey }),
+      addProgramPhoto: (photo: ProgressPhoto) => dispatch({ type: 'ADD_PROGRAM_PHOTO', photo }),
+      setProgramReminders: (reminders: Reminder[]) =>
+        dispatch({ type: 'SET_PROGRAM_REMINDERS', reminders }),
       reset: () => dispatch({ type: 'RESET' }),
     }),
     [state],
