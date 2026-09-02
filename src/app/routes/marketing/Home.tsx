@@ -202,7 +202,7 @@ function ClinicalResults() {
           </button>
         </div>
       </div>
-      <Prose size="l" onInk className="mt-4 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
+      <Prose size="l" onInk className="mt-4 line-clamp-2 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
 
       <div className="relative mt-10">
         <div className="grid grid-cols-2 gap-3 sm:gap-6">

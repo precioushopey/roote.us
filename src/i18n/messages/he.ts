@@ -354,7 +354,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.clinical.title': 'מבוסס על',
   'marketing.home.clinical.titleGhost': 'ראיות',
   'marketing.home.clinical.body':
-    'כל רכיב בפורמולה מתועד למנגנון פעולה מפורסם. אנחנו מפרסמים נתוני מחקר אמיתיים ברגע שהם זמינים, לעולם לא מספר placeholder.',
+    'כל רכיב בפורמולה מתועד למנגנון פעולה מפורסם, מגובה בנתוני מחקר אמיתיים, לעולם לא מספר placeholder.',
   'marketing.home.clinical.prev': 'תוצאה קודמת',
   'marketing.home.clinical.next': 'תוצאה הבאה',
   'marketing.home.clinical.goTo': 'הצגת תוצאה',

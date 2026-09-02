@@ -351,7 +351,7 @@ export const en = {
   'marketing.home.clinical.title': 'Backed by',
   'marketing.home.clinical.titleGhost': 'evidence',
   'marketing.home.clinical.body':
-    'Every formula ingredient traces to a published mechanism of action. We publish real study data as it becomes available, never a placeholder number.',
+    'Every formula ingredient traces to a published mechanism of action, backed by real study data, never a placeholder number.',
   'marketing.home.clinical.prev': 'Previous result',
   'marketing.home.clinical.next': 'Next result',
   'marketing.home.clinical.goTo': 'Show result',
