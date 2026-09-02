@@ -128,7 +128,7 @@ function HowItWorksSteps() {
     { photo: productBg, title: t('marketing.home.how.step4.title'), body: t('marketing.home.how.step4.body') },
   ];
   return (
-    <Section index="02">
+    <Section index="02" className="pt-0">
       <div className="flex items-end justify-between gap-6">
         <h2
           className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
@@ -305,7 +305,7 @@ function ProductComponents() {
 function Research() {
   const t = useT();
   return (
-    <Section className="overflow-hidden border-t border-border">
+    <Section className="overflow-hidden border-t border-border pt-0">
       <div className="flex items-baseline justify-between gap-6">
         <span aria-hidden className="shrink-0 text-2xl tracking-[0.18em] text-accent">05</span>
         <h2
