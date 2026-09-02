@@ -338,6 +338,7 @@ export const he: Record<MessageKey, string> = {
 
   'marketing.home.how.title': 'איך זה עובד',
   'marketing.home.how.cta': 'לפרטים נוספים',
+  'marketing.home.how.getStarted': 'להתחיל',
   'marketing.home.how.step1.title': 'עונים על השאלון',
   'marketing.home.how.step1.body': 'כמה שאלות על המטרות, ההיסטוריה ודפוס נשירת השיער שלך.',
   'marketing.home.how.step2.title': 'סורקים את הקרקפת',
@@ -351,6 +352,9 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.clinical.titleGhost': 'ראיות',
   'marketing.home.clinical.body':
     'כל רכיב בפורמולה מתועד למנגנון פעולה מפורסם. אנחנו מפרסמים נתוני מחקר אמיתיים ברגע שהם זמינים — לעולם לא מספר placeholder.',
+  'marketing.home.clinical.prev': 'תוצאה קודמת',
+  'marketing.home.clinical.next': 'תוצאה הבאה',
+  'marketing.home.clinical.goTo': 'הצגת תוצאה',
 
   'marketing.home.products.title': 'פורמולה אחת, ארבעה תפקידים פעילים',
   'marketing.home.products.body': 'התוכנית שלך מתמקדת בתרחיף משולב אחד — בלי בקבוקים נפרדים לנהל.',

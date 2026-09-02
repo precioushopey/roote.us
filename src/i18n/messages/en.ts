@@ -335,6 +335,7 @@ export const en = {
 
   'marketing.home.how.title': 'How it works',
   'marketing.home.how.cta': 'See more',
+  'marketing.home.how.getStarted': 'Get started',
   'marketing.home.how.step1.title': 'Take the quiz',
   'marketing.home.how.step1.body': 'A few questions about your goals, history, and hair loss pattern.',
   'marketing.home.how.step2.title': 'Scan your scalp',
@@ -348,6 +349,9 @@ export const en = {
   'marketing.home.clinical.titleGhost': 'evidence',
   'marketing.home.clinical.body':
     'Every formula ingredient traces to a published mechanism of action. We publish real study data as it becomes available — never a placeholder number.',
+  'marketing.home.clinical.prev': 'Previous result',
+  'marketing.home.clinical.next': 'Next result',
+  'marketing.home.clinical.goTo': 'Show result',
 
   'marketing.home.products.title': 'One formula, four active roles',
   'marketing.home.products.body': 'Your plan centers on a single combined topical — no separate bottles to juggle.',

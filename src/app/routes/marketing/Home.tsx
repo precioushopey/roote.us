@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
@@ -17,6 +18,10 @@ import objectiveMeasurement4 from '@/assets/OBJECTIVE MEASUREMENT/OBJECTIVE MEAS
 import productLineup from '@/assets/product-lineup.png';
 import scalpBefore from '@/assets/scalp-before.jpg';
 import scalpAfter from '@/assets/scalp-after.jpg';
+import beforeResult from '@/assets/BEFORE AND AFTER RESULT/BEFORE.png';
+import afterResult from '@/assets/BEFORE AND AFTER RESULT/AFTER.png';
+import beforeResult1 from '@/assets/BEFORE AND AFTER RESULT/BEFORE 1.png';
+import afterResult1 from '@/assets/BEFORE AND AFTER RESULT/AFTER 1.png';
 import beforeResult2 from '@/assets/BEFORE AND AFTER RESULT/BEFORE 2.png';
 import afterResult2 from '@/assets/BEFORE AND AFTER RESULT/AFTER 2.png';
 
@@ -144,12 +149,26 @@ function HowItWorksSteps() {
           </li>
         ))}
       </ol>
+      <div className="mt-12 flex justify-center">
+        <CtaButton to="/diagnosis" size="lg">{t('marketing.home.how.getStarted')}</CtaButton>
+      </div>
     </Section>
   );
 }
 
+const BEFORE_AFTER_PAIRS = [
+  { before: beforeResult, after: afterResult },
+  { before: beforeResult1, after: afterResult1 },
+  { before: beforeResult2, after: afterResult2 },
+];
+
 function ClinicalResults() {
   const t = useT();
+  const [active, setActive] = useState(0);
+  const pair = BEFORE_AFTER_PAIRS[active];
+  const prev = () => setActive((i) => (i - 1 + BEFORE_AFTER_PAIRS.length) % BEFORE_AFTER_PAIRS.length);
+  const next = () => setActive((i) => (i + 1) % BEFORE_AFTER_PAIRS.length);
+
   return (
     <Section tone="ink" index="01" className="text-center">
       <DisplayHeading
@@ -160,28 +179,66 @@ function ClinicalResults() {
         ghost={t('marketing.home.clinical.titleGhost')}
       />
       <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
-      <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-4">
-        <div className="relative">
-          <img
-            src={beforeResult2}
-            alt={t('marketing.home.research.beforeLabel')}
-            className="img-editorial aspect-square w-full rounded-xl object-cover"
-          />
-          <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
-            {t('marketing.home.research.beforeLabel')}
-          </span>
+
+      <div className="relative mx-auto mt-10 flex max-w-2xl items-center gap-3">
+        <button
+          type="button"
+          onClick={prev}
+          aria-label={t('marketing.home.clinical.prev')}
+          className="hidden shrink-0 rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground sm:flex"
+        >
+          ←
+        </button>
+        <div className="grid flex-1 grid-cols-2 gap-4">
+          <div className="relative">
+            <img
+              src={pair.before}
+              alt={t('marketing.home.research.beforeLabel')}
+              className="img-editorial aspect-square w-full rounded-xl object-cover"
+            />
+            <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
+              {t('marketing.home.research.beforeLabel')}
+            </span>
+          </div>
+          <div className="relative">
+            <img
+              src={pair.after}
+              alt={t('marketing.home.research.afterLabel')}
+              className="img-editorial aspect-square w-full rounded-xl object-cover"
+            />
+            <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
+              {t('marketing.home.research.afterLabel')}
+            </span>
+          </div>
         </div>
-        <div className="relative">
-          <img
-            src={afterResult2}
-            alt={t('marketing.home.research.afterLabel')}
-            className="img-editorial aspect-square w-full rounded-xl object-cover"
-          />
-          <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
-            {t('marketing.home.research.afterLabel')}
-          </span>
-        </div>
+        <button
+          type="button"
+          onClick={next}
+          aria-label={t('marketing.home.clinical.next')}
+          className="hidden shrink-0 rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground sm:flex"
+        >
+          →
+        </button>
       </div>
+
+      <div className="mt-6 flex items-center justify-center gap-4 sm:hidden">
+        <button type="button" onClick={prev} aria-label={t('marketing.home.clinical.prev')} className="text-ink-foreground">←</button>
+        <button type="button" onClick={next} aria-label={t('marketing.home.clinical.next')} className="text-ink-foreground">→</button>
+      </div>
+
+      <div className="mt-4 flex justify-center gap-2">
+        {BEFORE_AFTER_PAIRS.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setActive(i)}
+            aria-label={`${t('marketing.home.clinical.goTo')} ${i + 1}`}
+            aria-current={i === active}
+            className={`h-1.5 w-1.5 rounded-full transition-colors ${i === active ? 'bg-accent' : 'bg-ink-foreground/30'}`}
+          />
+        ))}
+      </div>
+
       <p className="mt-4 text-xs text-ink-foreground/70">{t('marketing.home.research.caption')}</p>
     </Section>
   );
