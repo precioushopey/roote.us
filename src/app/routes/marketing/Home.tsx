@@ -248,6 +248,12 @@ function ClinicalResults() {
 
 function ProductComponents() {
   const t = useT();
+  const profiles = [
+    t('marketing.home.rootCause.profile1.label'),
+    t('marketing.home.rootCause.profile2.label'),
+    t('marketing.home.rootCause.profile3.label'),
+  ];
+  const roles = rooteContent.formula.ingredients.map((ing) => t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS]));
   return (
     <Section index="02" className="text-center">
       <DisplayHeading as="h2" size="m" text={t('marketing.home.products.title')} />
@@ -262,24 +268,8 @@ function ProductComponents() {
           </div>
         ))}
       </div>
-      <div className="mt-10">
-        <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
-      </div>
-    </Section>
-  );
-}
 
-function RootCause() {
-  const t = useT();
-  const profiles = [
-    t('marketing.home.rootCause.profile1.label'),
-    t('marketing.home.rootCause.profile2.label'),
-    t('marketing.home.rootCause.profile3.label'),
-  ];
-  const roles = rooteContent.formula.ingredients.map((ing) => t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS]));
-  return (
-    <Section className="text-center">
-      <DisplayHeading as="h2" size="m" text={t('marketing.home.rootCause.title')} className="mx-auto max-w-2xl" />
+      <DisplayHeading as="h3" size="m" text={t('marketing.home.rootCause.title')} className="mx-auto mt-16 max-w-2xl" />
       <Prose size="l" className="mx-auto mt-4 max-w-xl">{t('marketing.home.rootCause.body')}</Prose>
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {profiles.map((label) => (
@@ -295,6 +285,10 @@ function RootCause() {
             </ul>
           </div>
         ))}
+      </div>
+
+      <div className="mt-10">
+        <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
       </div>
     </Section>
   );
@@ -338,7 +332,6 @@ export function Home() {
       <HowItWorksSteps />
       <ClinicalResults />
       <ProductComponents />
-      <RootCause />
       <Research />
       <CtaBand headingKey="marketing.cta.default.title" bodyKey="marketing.cta.default.body" />
     </>
