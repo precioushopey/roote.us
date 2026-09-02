@@ -1,31 +1,42 @@
 import type { ReportModel } from '@/domain/report/types';
 import { Wordmark } from '@/app/components/brand/Wordmark';
+import { PendingChip } from '@/app/components/brand/PendingChip';
+import { isPending } from '@/content/pending';
+
+function TextOrPending({ value }: { value: string | { __pending: true; label: string } }) {
+  return isPending(value) ? <PendingChip label={value.label} /> : <span>{value}</span>;
+}
 
 export function ReportHeader({ model }: { model: ReportModel }) {
   return (
     <header className="flex flex-col items-center gap-2 py-6 text-center">
-      <Wordmark className="w-28" />
-      <h1 className="text-lg font-medium">Personalized Hair Report</h1>
+      <Wordmark className="text-2xl" />
+      <h1 className="text-lg font-medium">{model.titles.header}</h1>
       <p className="text-xs text-muted-foreground">
         {model.meta.scaleLine}
       </p>
       <p className="text-[11px] text-muted-foreground">
         #{model.meta.reportId} · {new Date(model.meta.generatedAt).toLocaleDateString(model.meta.locale === 'he' ? 'he-IL' : 'en-US')}
       </p>
-      <p className="rounded border border-dashed border-accent px-2 py-1 text-[11px] text-accent">{model.meta.demoDisclaimer}</p>
+      <p className="rounded border border-dashed border-accent px-2 py-1 text-[11px] text-accent">
+        <TextOrPending value={model.meta.demoDisclaimer} />
+      </p>
     </header>
   );
 }
 
 export function ReportPhotos({ model }: { model: ReportModel }) {
   return (
-    <section className="grid grid-cols-2 gap-3 px-4 py-4">
-      {model.photos.map((p) => (
-        <figure key={p.angleKey} className="flex flex-col gap-1">
-          <img src={p.dataUrl} alt={p.caption} className="h-28 w-full rounded-lg object-cover" />
-          <figcaption className="text-center text-xs text-muted-foreground">{p.caption}</figcaption>
-        </figure>
-      ))}
+    <section className="px-4 py-4">
+      <h2 className="mb-3 text-base font-medium">{model.titles.photos}</h2>
+      <div className="grid grid-cols-2 gap-3">
+        {model.photos.map((p) => (
+          <figure key={p.angleKey} className="flex flex-col gap-1">
+            <img src={p.dataUrl} alt={p.caption} className="h-28 w-full rounded-lg object-cover" />
+            <figcaption className="text-center text-xs text-muted-foreground">{p.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
     </section>
   );
 }
@@ -34,6 +45,7 @@ export function ReportAnalysis({ model }: { model: ReportModel }) {
   const a = model.analysis;
   return (
     <section className="flex flex-col gap-4 px-4 py-4">
+      <h2 className="text-base font-medium">{model.titles.analysis}</h2>
       <p className="text-xs text-muted-foreground">{a.scaleLabel}</p>
       <div className="flex flex-wrap gap-1">
         {a.scaleStrip.map((s) => (
@@ -79,7 +91,8 @@ export function ReportAnalysis({ model }: { model: ReportModel }) {
 export function ReportHairLossType({ model }: { model: ReportModel }) {
   return (
     <section className="px-4 py-4">
-      <h2 className="text-base font-medium">{model.hairLossType.title}</h2>
+      <h2 className="text-base font-medium">{model.titles.hairLossType}</h2>
+      <p className="mt-1 font-medium">{model.hairLossType.title}</p>
       <div className="mt-2 flex flex-wrap gap-1">
         {model.hairLossType.areaLabels.map((label) => (
           <span key={label} className="rounded-full bg-secondary px-2 py-1 text-xs">{label}</span>
@@ -93,6 +106,7 @@ export function ReportHairLossType({ model }: { model: ReportModel }) {
 export function ReportCurrentSituation({ model }: { model: ReportModel }) {
   return (
     <section className="flex flex-col gap-2 px-4 py-4">
+      <h2 className="text-base font-medium">{model.titles.currentSituation}</h2>
       {model.currentSituation.paragraphs.map((p, i) => (
         <p key={i} className="text-sm text-muted-foreground">{p}</p>
       ))}

@@ -43,4 +43,13 @@ describe('ReportSectionsA', () => {
     expect(screen.getByText(model.currentSituation.paragraphs[0])).toBeInTheDocument();
     expect(screen.getByText(model.currentSituation.paragraphs[1])).toBeInTheDocument();
   });
+
+  it('renders section titles from model.titles as headings, resolved per-locale not hardcoded (I3)', () => {
+    const heModel = buildReport({ diagnosis, analysis, content: rooteContent, locale: 'he', reportId: 'rep-1' });
+    render(<ReportAnalysis model={heModel} />);
+    expect(screen.getByRole('heading', { name: heModel.titles.analysis })).toBeInTheDocument();
+    // proves the heading is the model's resolved value, not a hardcoded English literal
+    expect(heModel.titles.analysis).not.toBe('AI Analysis');
+    expect(heModel.titles.analysis).toBe('ניתוח AI');
+  });
 });

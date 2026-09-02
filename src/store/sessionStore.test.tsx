@@ -51,4 +51,36 @@ describe('sessionStore', () => {
     act(() => api.reset());
     expect(api.diagnosis.gender).toBeNull();
   });
+
+  it('stores a draft duration and, separately, a full program', () => {
+    setup();
+    act(() => api.setDraftDurationDays(180));
+    expect(api.draftDurationDays).toBe(180);
+
+    const program = {
+      orderId: 'ord-1',
+      reportId: 'rep-1',
+      analysisSnapshot: {
+        scale: 'norwood' as const,
+        stage: 3,
+        severityBand: 'moderate' as const,
+        flaggedZones: [{ zone: 'crown-vertex' as const, severity: 'moderate' as const, noteKey: 'zone-note.crown-vertex' }],
+        densityByZone: [{ zone: 'crown-vertex' as const, level: 'medium' as const }],
+        metrics: [{ key: 'pattern-stage' as const, level: 'medium' as const }],
+        notes: [],
+        planEmphasis: 'stabilize-regrow' as const,
+        summaryPlainKey: 'summary.norwood.moderate',
+        recommendedDurationDays: 270,
+      },
+      durationDays: 180 as const,
+      startDate: '2026-09-02',
+      endDate: '2027-03-01',
+      plan: { core: [], supporting: [] },
+      completionLog: {},
+      progressPhotos: [],
+      reminders: [],
+    };
+    act(() => api.setProgram(program));
+    expect(api.program?.orderId).toBe('ord-1');
+  });
 });

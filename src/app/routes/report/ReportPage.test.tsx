@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { SessionProvider } from '@/store/sessionStore';
@@ -52,7 +51,7 @@ describe('ReportPage', () => {
     expect(screen.getByRole('link', { name: 'Start My Program' })).toBeInTheDocument();
   });
 
-  it('shows a Download PDF button that is enabled once the report is built', async () => {
+  it('shows a Download PDF button that is enabled once the report is built', () => {
     seedSession('rep-abc');
     renderAt('/report/rep-abc');
     const btn = screen.getByRole('button', { name: 'Download PDF' });
