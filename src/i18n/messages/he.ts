@@ -361,7 +361,7 @@ export const he: Record<MessageKey, string> = {
 
   'marketing.home.products.title': 'פורמולה אחת בשבילך',
   'marketing.home.products.body': 'תרחיף משולב אחד עם ארבעה תפקידים פעילים — ממופה לחומרת הסריקה שלך ולאזורים המושפעים, לעולם לא ניחוש.',
-  'marketing.home.products.cta': 'לתוכנית המלאה',
+  'marketing.home.products.cta': 'התוכנית המלאה',
   'marketing.home.products.role.regrowth-stimulant': 'ממריץ צמיחה',
   'marketing.home.products.role.dht-blocker': 'חוסם DHT',
   'marketing.home.products.role.dht-support': 'תמיכה בחסימת DHT',

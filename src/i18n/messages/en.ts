@@ -358,7 +358,7 @@ export const en = {
 
   'marketing.home.products.title': 'One formula for you',
   'marketing.home.products.body': 'A single combined topical with four active roles — mapped to your scan’s severity and affected zones, never a guess.',
-  'marketing.home.products.cta': 'See the full regimen',
+  'marketing.home.products.cta': 'Full regimen',
   'marketing.home.products.role.regrowth-stimulant': 'Regrowth stimulant',
   'marketing.home.products.role.dht-blocker': 'DHT blocker',
   'marketing.home.products.role.dht-support': 'DHT support',

@@ -258,7 +258,9 @@ function ProductComponents() {
     <Section className="text-center">
       <div className="flex items-center justify-between gap-6">
         <div className="shrink-0 whitespace-nowrap">
-          <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
+          <Link to="/products">
+            <Eyebrow>{t('marketing.home.products.cta')}</Eyebrow>
+          </Link>
         </div>
         <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
       </div>
@@ -305,7 +307,7 @@ function Research() {
     <Section className="overflow-hidden border-t border-border">
       <h2
         className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 8vw, 5.5rem)' }}
+        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
       >
         {t('marketing.home.research.title')}
       </h2>
