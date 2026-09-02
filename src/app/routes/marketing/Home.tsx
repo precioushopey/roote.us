@@ -57,7 +57,7 @@ function Hero() {
             className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent"
           />
           {/* Overlay copy group: nudge vertical position with the bottom-* utilities below. */}
-          <div className="absolute inset-x-0 bottom-4 flex flex-col items-center gap-2 px-4 text-center sm:bottom-8 sm:gap-3 sm:px-10 md:bottom-12 md:gap-4">
+          <div className="absolute inset-x-0 -bottom-12 flex flex-col items-center gap-2 px-4 text-center sm:-bottom-6 sm:gap-3 sm:px-10 md:bottom-0 md:gap-4 lg:bottom-4">
             <p className="font-display text-base font-medium uppercase tracking-wide text-ink-foreground sm:text-2xl md:text-3xl">
               {t('marketing.home.hero.titleGhost')}
             </p>
