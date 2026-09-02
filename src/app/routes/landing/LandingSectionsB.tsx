@@ -5,7 +5,7 @@ import { Wordmark } from '@/app/components/brand/Wordmark';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { isPending, PENDING, type PendingMarker } from '@/content/pending';
 import { rooteContent, type LocalizedText } from '@/content/roote.config';
-import productLineup from '@/assets/product-lineup.jpg';
+import productLineup from '@/assets/product-lineup.png';
 import scalpBefore from '@/assets/scalp-before.jpg';
 import scalpAfter from '@/assets/scalp-after.jpg';
 import hairCuticle from '@/assets/hair-cuticle.jpg';

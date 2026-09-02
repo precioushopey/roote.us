@@ -4,7 +4,7 @@ import heroPeople from '@/assets/hero-people.png';
 import scanDevice from '@/assets/scan-device.jpg';
 import stepQuiz from '@/assets/step-quiz.jpg';
 import stepPhotoScan from '@/assets/step-photo-scan.jpg';
-import productLineup from '@/assets/product-lineup.jpg';
+import productLineup from '@/assets/product-lineup.png';
 
 const SERIF = "'Spectral', 'Libre Franklin', serif";
 
