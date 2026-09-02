@@ -53,11 +53,11 @@ function Hero() {
             className="img-editorial w-full rounded-2xl object-cover"
             style={{ aspectRatio: '16 / 10' }}
           />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 rounded-b-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent px-6 pb-10 pt-40 text-center sm:px-10 sm:pt-48">
-            <p className="font-display text-2xl font-medium uppercase tracking-wide text-ink-foreground sm:text-3xl">
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 rounded-b-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent px-4 pb-5 pt-16 text-center sm:gap-3 sm:px-10 sm:pb-8 sm:pt-32 md:gap-4 md:pb-10 md:pt-48">
+            <p className="font-display text-base font-medium uppercase tracking-wide text-ink-foreground sm:text-2xl md:text-3xl">
               {t('marketing.home.hero.titleGhost')}
             </p>
-            <Prose size="l" onInk className="max-w-md">
+            <Prose size="l" onInk className="max-w-md text-xs sm:text-base md:text-[1.0625rem]">
               {t('marketing.home.hero.body')}
             </Prose>
             <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
@@ -82,8 +82,8 @@ function FeaturedFormula() {
         </Link>
       </div>
       <h2
-        className="mt-4 select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+        className="mt-4 select-none whitespace-normal text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground sm:whitespace-nowrap"
+        style={{ fontSize: 'clamp(1.5rem, 8.5vw, 7.125rem)' }}
       >
         {t('marketing.home.featured.title')}
       </h2>
@@ -93,7 +93,7 @@ function FeaturedFormula() {
           <img
             src={bannerSquare}
             alt=""
-            className="img-editorial mt-6 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14"
+            className="img-editorial mt-6 aspect-[4/5] w-full rounded-xl object-cover shadow-sm sm:mt-10 sm:max-w-[220px] md:mt-14"
           />
           <Prose>{t('marketing.home.featured.item1.label')}</Prose>
         </div>
@@ -111,7 +111,7 @@ function FeaturedFormula() {
           <img
             src={objectiveMeasurement4}
             alt=""
-            className="img-editorial aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm"
+            className="img-editorial aspect-[4/5] w-full rounded-xl object-cover shadow-sm sm:max-w-[220px]"
           />
         </div>
       </div>
