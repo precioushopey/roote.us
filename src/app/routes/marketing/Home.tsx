@@ -263,7 +263,7 @@ function ProductComponents() {
       </div>
       <h2
         className="mt-4 select-none whitespace-nowrap text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+        style={{ fontSize: 'clamp(2rem, 9vw, 6.375rem)' }}
       >
         {t('marketing.home.products.title')}
       </h2>
