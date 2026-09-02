@@ -353,8 +353,8 @@ export const en = {
   'marketing.home.clinical.next': 'Next result',
   'marketing.home.clinical.goTo': 'Show result',
 
-  'marketing.home.products.title': 'One formula, four active roles',
-  'marketing.home.products.body': 'Your plan centers on a single combined topical — no separate bottles to juggle.',
+  'marketing.home.products.title': 'One formula, matched to your pattern',
+  'marketing.home.products.body': 'A single combined topical with four active roles — mapped to your scan’s severity and affected zones, never a guess.',
   'marketing.home.products.cta': 'See the full regimen',
   'marketing.home.products.role.regrowth-stimulant': 'Regrowth stimulant',
   'marketing.home.products.role.dht-blocker': 'DHT blocker',
