@@ -316,9 +316,9 @@ export const en = {
   'marketing.home.featured.eyebrowLeft': 'Discover more',
   'marketing.home.featured.eyebrowRight': 'Our formula',
   'marketing.home.featured.title': 'Products for you',
-  'marketing.home.featured.item1.label': 'AI-guided scan',
+  'marketing.home.featured.item1.label': 'Discover your personalized plan',
   'marketing.home.featured.item1.cta': 'See how it works',
-  'marketing.home.featured.item2.label': 'The ROOTÉ formula',
+  'marketing.home.featured.item2.label': 'Personalized hair growth for your needs',
 
   'marketing.home.valueProp.title': 'Effective hair regrowth, tailored to you.',
   'marketing.home.valueProp.body':

@@ -121,7 +121,7 @@ function HowItWorksSteps() {
     { photo: productLineup, title: t('marketing.home.how.step4.title'), body: t('marketing.home.how.step4.body') },
   ];
   return (
-    <Section index="01">
+    <Section>
       <div className="text-center">
         <DisplayHeading as="h2" size="m" text={t('marketing.home.how.title')} />
       </div>
@@ -145,7 +145,7 @@ function HowItWorksSteps() {
 function ClinicalResults() {
   const t = useT();
   return (
-    <Section tone="ink" index="02" className="text-center">
+    <Section tone="ink" index="01" className="text-center">
       <DisplayHeading
         as="h2"
         size="m"
@@ -166,7 +166,7 @@ function ClinicalResults() {
 function ProductComponents() {
   const t = useT();
   return (
-    <Section index="03" className="text-center">
+    <Section index="02" className="text-center">
       <DisplayHeading as="h2" size="m" text={t('marketing.home.products.title')} />
       <Prose size="l" className="mx-auto mt-4 max-w-xl">{t('marketing.home.products.body')}</Prose>
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

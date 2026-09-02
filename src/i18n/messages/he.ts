@@ -319,9 +319,9 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.featured.eyebrowLeft': 'לגלות עוד',
   'marketing.home.featured.eyebrowRight': 'הפורמולה שלנו',
   'marketing.home.featured.title': 'מוצרים בשבילך',
-  'marketing.home.featured.item1.label': 'סריקה מודרכת בינה מלאכותית',
+  'marketing.home.featured.item1.label': 'גלו את התוכנית האישית שלכם',
   'marketing.home.featured.item1.cta': 'לצפייה איך זה עובד',
-  'marketing.home.featured.item2.label': 'הפורמולה של ROOTÉ',
+  'marketing.home.featured.item2.label': 'צמיחת שיער אישית לפי הצרכים שלך',
 
   'marketing.home.valueProp.title': 'צמיחת שיער אפקטיבית, מותאמת אישית עבורך.',
   'marketing.home.valueProp.body':
