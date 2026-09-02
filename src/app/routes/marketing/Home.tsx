@@ -43,7 +43,7 @@ function Hero() {
             className="img-editorial w-full rounded-2xl object-cover"
             style={{ aspectRatio: '16 / 10' }}
           />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 rounded-b-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent px-6 pb-8 pt-24 text-center sm:px-10">
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 rounded-b-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent px-6 pb-10 pt-40 text-center sm:px-10 sm:pt-48">
             <p className="font-display text-2xl font-medium text-ink-foreground sm:text-3xl">
               {t('marketing.home.hero.titleGhost')}
             </p>
@@ -52,6 +52,52 @@ function Hero() {
             </Prose>
             <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
           </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function FeaturedFormula() {
+  const t = useT();
+  return (
+    <Section className="overflow-hidden">
+      <div className="flex items-center justify-between">
+        <Eyebrow>{t('marketing.home.featured.eyebrowLeft')}</Eyebrow>
+        <Eyebrow className="text-end">{t('marketing.home.featured.eyebrowRight')}</Eyebrow>
+      </div>
+      <h2
+        className="mt-4 select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground sm:text-start"
+        style={{ fontSize: 'clamp(2rem, 8vw, 6.5rem)' }}
+      >
+        {t('marketing.home.featured.title')}
+      </h2>
+
+      <div className="relative mt-8 grid grid-cols-1 items-center gap-8 md:mt-0 md:grid-cols-[0.8fr_1.2fr_0.8fr] md:gap-6">
+        <div className="flex flex-col items-start gap-3">
+          <img
+            src={scanDevice}
+            alt=""
+            className="img-editorial aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm"
+          />
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="text-2xl text-accent">01</span>
+            <span>{t('marketing.home.featured.item1.label')}</span>
+          </div>
+          <ArrowLink to="/how-it-works">{t('marketing.home.featured.item1.cta')}</ArrowLink>
+        </div>
+
+        <div className="relative z-10 md:-my-10">
+          <img
+            src={productLineup}
+            alt=""
+            className="img-editorial mx-auto w-full max-w-lg rounded-2xl object-cover shadow-lg"
+          />
+        </div>
+
+        <div className="flex flex-col items-start gap-2 md:items-end md:text-end">
+          <span className="text-2xl text-accent">02</span>
+          <p className="font-display text-lg font-medium">{t('marketing.home.featured.item2.label')}</p>
         </div>
       </div>
     </Section>
@@ -230,6 +276,7 @@ export function Home() {
   return (
     <>
       <Hero />
+      <FeaturedFormula />
       <ValueProp />
       <QuizIntro />
       <HowItWorksSteps />

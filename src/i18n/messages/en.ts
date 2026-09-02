@@ -313,6 +313,13 @@ export const en = {
   'marketing.home.hero.body':
     'A dermatologist-informed regimen matched to your pattern, your history, and a photo of your scalp — reviewed as you go.',
 
+  'marketing.home.featured.eyebrowLeft': 'Discover more',
+  'marketing.home.featured.eyebrowRight': 'Our formula',
+  'marketing.home.featured.title': 'Featured formula',
+  'marketing.home.featured.item1.label': 'AI-guided scan',
+  'marketing.home.featured.item1.cta': 'See how it works',
+  'marketing.home.featured.item2.label': 'The ROOTÉ formula',
+
   'marketing.home.valueProp.title': 'Effective hair regrowth, tailored to you.',
   'marketing.home.valueProp.body':
     'Every ROOTÉ plan starts with your own scan, not a guess — a formula and duration matched to what your scalp is actually doing.',

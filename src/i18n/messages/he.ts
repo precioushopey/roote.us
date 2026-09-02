@@ -316,6 +316,13 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.hero.body':
     'תוכנית טיפול מבוססת-רפואת עור שמותאמת לדפוס שלך, להיסטוריה שלך ולתמונת הקרקפת שלך — עם מעקב לאורך הדרך.',
 
+  'marketing.home.featured.eyebrowLeft': 'לגלות עוד',
+  'marketing.home.featured.eyebrowRight': 'הפורמולה שלנו',
+  'marketing.home.featured.title': 'פורמולה נבחרת',
+  'marketing.home.featured.item1.label': 'סריקה מודרכת בינה מלאכותית',
+  'marketing.home.featured.item1.cta': 'לצפייה איך זה עובד',
+  'marketing.home.featured.item2.label': 'הפורמולה של ROOTÉ',
+
   'marketing.home.valueProp.title': 'צמיחת שיער אפקטיבית, מותאמת אישית עבורך.',
   'marketing.home.valueProp.body':
     'כל תוכנית ROOTÉ מתחילה מהסריקה שלך, לא מניחוש — פורמולה ומשך שמותאמים למה שקורה בפועל בקרקפת שלך.',
