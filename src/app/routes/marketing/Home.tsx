@@ -176,10 +176,9 @@ function ClinicalResults() {
           <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">03</span>
           <DisplayHeading
             as="h2"
-            size="s"
+            size="m"
             onInk
-            text={t('marketing.home.clinical.title')}
-            ghost={t('marketing.home.clinical.titleGhost')}
+            text={`${t('marketing.home.clinical.title')} ${t('marketing.home.clinical.titleGhost')}`}
             className="uppercase leading-none tracking-[-0.02em]"
           />
         </div>
