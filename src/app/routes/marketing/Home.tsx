@@ -180,23 +180,23 @@ function ClinicalResults() {
       />
       <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.home.clinical.body')}</Prose>
 
-      <div className="relative mx-auto mt-10 flex max-w-2xl items-center gap-3">
+      <div className="relative mt-10">
         <button
           type="button"
           onClick={prev}
           aria-label={t('marketing.home.clinical.prev')}
-          className="hidden shrink-0 rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground sm:flex"
+          className="absolute start-0 top-1/2 z-10 -translate-y-1/2 p-2 text-2xl text-ink-foreground/70 transition-colors hover:text-ink-foreground sm:-start-6 md:-start-10"
         >
-          ←
+          ‹
         </button>
-        <div className="grid flex-1 grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6">
           <div className="relative">
             <img
               src={pair.before}
               alt={t('marketing.home.research.beforeLabel')}
-              className="img-editorial aspect-square w-full rounded-xl object-cover"
+              className="img-editorial aspect-[4/3] w-full rounded-xl object-cover"
             />
-            <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
+            <span className="absolute bottom-4 end-4 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
               {t('marketing.home.research.beforeLabel')}
             </span>
           </div>
@@ -204,9 +204,9 @@ function ClinicalResults() {
             <img
               src={pair.after}
               alt={t('marketing.home.research.afterLabel')}
-              className="img-editorial aspect-square w-full rounded-xl object-cover"
+              className="img-editorial aspect-[4/3] w-full rounded-xl object-cover"
             />
-            <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
+            <span className="absolute bottom-4 end-4 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
               {t('marketing.home.research.afterLabel')}
             </span>
           </div>
@@ -215,27 +215,24 @@ function ClinicalResults() {
           type="button"
           onClick={next}
           aria-label={t('marketing.home.clinical.next')}
-          className="hidden shrink-0 rounded-full border border-ink-foreground/30 p-2 text-ink-foreground transition-colors hover:border-ink-foreground sm:flex"
+          className="absolute end-0 top-1/2 z-10 -translate-y-1/2 p-2 text-2xl text-ink-foreground/70 transition-colors hover:text-ink-foreground sm:-end-6 md:-end-10"
         >
-          →
+          ›
         </button>
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-4 sm:hidden">
-        <button type="button" onClick={prev} aria-label={t('marketing.home.clinical.prev')} className="text-ink-foreground">←</button>
-        <button type="button" onClick={next} aria-label={t('marketing.home.clinical.next')} className="text-ink-foreground">→</button>
-      </div>
-
-      <div className="mt-4 flex justify-center gap-2">
-        {BEFORE_AFTER_PAIRS.map((_, i) => (
+      <div className="mt-6 flex justify-center gap-3">
+        {BEFORE_AFTER_PAIRS.map((p, i) => (
           <button
             key={i}
             type="button"
             onClick={() => setActive(i)}
             aria-label={`${t('marketing.home.clinical.goTo')} ${i + 1}`}
             aria-current={i === active}
-            className={`h-1.5 w-1.5 rounded-full transition-colors ${i === active ? 'bg-accent' : 'bg-ink-foreground/30'}`}
-          />
+            className={`h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 transition-colors ${i === active ? 'ring-accent' : 'ring-transparent'}`}
+          >
+            <img src={p.before} alt="" className="img-editorial h-full w-full object-cover" />
+          </button>
         ))}
       </div>
 
