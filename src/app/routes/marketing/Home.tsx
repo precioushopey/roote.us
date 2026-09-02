@@ -7,7 +7,6 @@ import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { VideoBlock } from '@/app/components/marketing/VideoBlock';
 import { rooteContent } from '@/content/roote.config';
 import heroPeople from '@/assets/hero-people.png';
 import stepQuiz from '@/assets/step-quiz.jpg';
@@ -185,12 +184,6 @@ function HowItWorksSteps() {
           </li>
         ))}
       </ol>
-      <VideoBlock
-        className="mx-auto mt-14 max-w-3xl"
-        poster={stepPhotoScan}
-        titleKey="marketing.video.process.title"
-        captionKey="marketing.video.process.caption"
-      />
       <div className="mt-12 flex justify-center">
         <CtaButton to="/diagnosis" size="lg">{t('marketing.home.how.getStarted')}</CtaButton>
       </div>

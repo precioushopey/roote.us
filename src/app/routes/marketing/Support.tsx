@@ -4,8 +4,6 @@ import { Section } from '@/app/components/marketing/Section';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
-import { ArrowLink } from '@/app/components/marketing/ArrowLink';
-import { CtaBand } from '@/app/components/marketing/CtaBand';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 
 const FIELD_CLASS =
@@ -68,7 +66,7 @@ export function Support() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.support.hero.title')} className="mx-auto max-w-3xl" />
+          <DisplayHeading as="h1" size="l" onInk text={t('marketing.support.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.support.hero.body')}</Prose>
         </div>
       </Section>
@@ -84,30 +82,19 @@ export function Support() {
         </div>
       </Section>
 
-      <Section className="border-t border-border">
+      <Section tone="ink">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="02" clamp="clamp(1.75rem, 6vw, 4rem)">
+            <SectionHeading index="02" onInk clamp="clamp(1.75rem, 6vw, 4rem)">
               {t('marketing.support.form.title')}
             </SectionHeading>
-            <Prose size="l" className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
+            <Prose size="l" onInk className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
           </div>
-          <div className="rounded-2xl border border-border bg-background p-6 sm:p-8">
+          <div className="rounded-2xl border border-ink-foreground/15 bg-background p-6 sm:p-8">
             <ContactForm />
           </div>
         </div>
       </Section>
-
-      <Section className="border-t border-border">
-        <SectionHeading index="03" align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
-          {t('marketing.support.help.title')}
-        </SectionHeading>
-        <div className="mt-6 flex justify-end">
-          <ArrowLink to="/faq">{t('marketing.support.help.cta')}</ArrowLink>
-        </div>
-      </Section>
-
-      <CtaBand headingKey="marketing.support.cta.title" />
     </>
   );
 }

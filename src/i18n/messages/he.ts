@@ -548,17 +548,6 @@ export const he: Record<MessageKey, string> = {
 
   'analysis.finalizing': 'מסיימים את הניתוח…',
 
-  'marketing.video.process.title': 'צפו: איך זה עובד',
-  'marketing.video.process.caption': 'סקירה של שתי דקות על הסריקה, הניתוח והתוכנית שלכם.',
-  'marketing.video.diagnosis.title': 'צפו: האבחון',
-  'marketing.video.diagnosis.caption': 'מה קורה מהתמונה הראשונה שלכם ועד לדוח האישי.',
-  'marketing.video.ingredients.title': 'צפו: הרכיבים',
-  'marketing.video.ingredients.caption': 'כל רכיב פעיל בפורמולה ומה הוא עושה, בשפה פשוטה.',
-  'marketing.video.plan.title': 'צפו: התוכנית שלכם',
-  'marketing.video.plan.caption': 'איך הסריקה שלכם הופכת לטיפול שמותאם לדפוס שלכם.',
-  'marketing.video.followup.title': 'צפו: המעקב שלכם',
-  'marketing.video.followup.caption': 'איך האפליקציה עוקבת אחרי ההתקדמות שלכם מחודש לחודש.',
-
   'app.nav.label': 'תוכנית',
   'app.nav.today': 'היום',
   'app.nav.plan': 'התוכנית שלי',

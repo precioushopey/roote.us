@@ -7,7 +7,6 @@ import { Prose } from '@/app/components/marketing/Prose';
 import { Eyebrow } from '@/app/components/marketing/Eyebrow';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { VideoBlock } from '@/app/components/marketing/VideoBlock';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { rooteContent } from '@/content/roote.config';
 import hairCuticle from '@/assets/hair-cuticle.jpg';
@@ -42,7 +41,7 @@ export function Science() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.science.hero.title')} className="mx-auto max-w-3xl" />
+          <DisplayHeading as="h1" size="l" onInk text={t('marketing.science.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.science.hero.body')}</Prose>
           <div className="mt-8">
             <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
@@ -66,25 +65,29 @@ export function Science() {
         </div>
       </Section>
 
-      <Section className="border-t border-border">
+      <Section tone="ink">
         <SectionHeading
           index="02"
+          onInk
           clamp="clamp(1.75rem, 7vw, 5rem)"
-          trailing={<Link to="/products"><Eyebrow>{t('marketing.nav.products')}</Eyebrow></Link>}
+          trailing={<Link to="/products"><Eyebrow onInk>{t('marketing.nav.products')}</Eyebrow></Link>}
         >
           {t('marketing.science.ingredients.title')}
         </SectionHeading>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {rooteContent.formula.ingredients.map((ing) => (
-            <div key={ing.key} className="overflow-hidden rounded-xl border border-border bg-background text-start">
+            <div
+              key={ing.key}
+              className="overflow-hidden rounded-xl border border-ink-foreground/15 bg-ink-foreground/5 text-start"
+            >
               <img
                 src={INGREDIENT_PHOTOS[ing.key]}
                 alt=""
                 className="img-editorial aspect-square w-full object-cover"
               />
               <div className="p-6">
-                <p className="font-display text-lg font-medium">{ing.name}</p>
-                <p className="mt-2 text-sm text-muted-foreground">{t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}</p>
+                <p className="font-display text-lg font-medium text-ink-foreground">{ing.name}</p>
+                <p className="mt-2 text-sm text-ink-foreground/70">{t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}</p>
                 <div className="mt-3">
                   <PendingChip label={`${ing.key} dose`} />
                 </div>
@@ -92,19 +95,13 @@ export function Science() {
             </div>
           ))}
         </div>
-        <VideoBlock
-          className="mx-auto mt-14 max-w-3xl"
-          poster={hairCuticle}
-          titleKey="marketing.video.ingredients.title"
-          captionKey="marketing.video.ingredients.caption"
-        />
       </Section>
 
-      <Section tone="ink">
-        <SectionHeading index="03" onInk align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
+      <Section className="border-t border-border">
+        <SectionHeading index="03" align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
           {t('marketing.science.evidence.title')}
         </SectionHeading>
-        <Prose size="l" onInk className="ms-auto mt-4 max-w-xl text-end">{t('marketing.science.evidence.body')}</Prose>
+        <Prose size="l" className="ms-auto mt-4 max-w-xl text-end">{t('marketing.science.evidence.body')}</Prose>
         <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6">
           <div className="relative">
             <img src={scalpBefore} alt={t('marketing.science.evidence.beforeLabel')} className="img-editorial aspect-[4/3] w-full rounded-xl object-cover" />
@@ -118,12 +115,6 @@ export function Science() {
               {t('marketing.science.evidence.afterLabel')}
             </span>
           </div>
-        </div>
-        <p className="mt-3 text-[11px] text-ink-foreground/60">{t('marketing.science.evidence.caption')}</p>
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <PendingChip label="participant count (n)" />
-          <PendingChip label="improvement %" />
-          <PendingChip label="study duration" />
         </div>
       </Section>
 

@@ -1,8 +1,6 @@
 import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { VideoBlock } from '@/app/components/marketing/VideoBlock';
-import followUpPoster from '@/assets/hero-people.png';
 import {
   adherencePct,
   dailyTasks,
@@ -109,12 +107,6 @@ export function AppToday() {
         <p className="font-display text-lg font-medium">{t('app.today.reminders.title')}</p>
         <p className="text-sm text-muted-foreground">{t('app.today.reminders.body')}</p>
       </section>
-
-      <VideoBlock
-        poster={followUpPoster}
-        titleKey="marketing.video.followup.title"
-        captionKey="marketing.video.followup.caption"
-      />
 
       <div className="flex flex-wrap gap-3">
         <Link to="/app/progress" className="text-sm text-accent underline">

@@ -4,7 +4,6 @@ import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
-import { CtaBand } from '@/app/components/marketing/CtaBand';
 import heroPeople from '@/assets/hero-people.png';
 
 export function About() {
@@ -23,7 +22,7 @@ export function About() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.about.hero.title')} className="mx-auto max-w-3xl" />
+          <DisplayHeading as="h1" size="l" onInk text={t('marketing.about.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.about.mission.body')}</Prose>
           <div className="mt-8">
             <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
@@ -59,9 +58,10 @@ export function About() {
             </div>
           ))}
         </div>
+        <div className="mt-12 flex justify-center">
+          <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.home.how.getStarted')}</CtaButton>
+        </div>
       </Section>
-
-      <CtaBand headingKey="marketing.about.cta.title" />
     </>
   );
 }

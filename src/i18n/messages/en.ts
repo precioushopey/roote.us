@@ -545,17 +545,6 @@ export const en = {
 
   'analysis.finalizing': 'Finalizing your analysis…',
 
-  'marketing.video.process.title': 'Watch: how it works',
-  'marketing.video.process.caption': 'A two-minute walkthrough of the scan, the analysis, and your plan.',
-  'marketing.video.diagnosis.title': 'Watch: the diagnosis',
-  'marketing.video.diagnosis.caption': 'What happens from your first photo to your personalized report.',
-  'marketing.video.ingredients.title': 'Watch: the ingredients',
-  'marketing.video.ingredients.caption': 'Each active in the formula and what it does, in plain terms.',
-  'marketing.video.plan.title': 'Watch: your plan',
-  'marketing.video.plan.caption': 'How your scan becomes a regimen matched to your pattern.',
-  'marketing.video.followup.title': 'Watch: your follow-up',
-  'marketing.video.followup.caption': 'How the app tracks your progress month over month.',
-
   'app.nav.label': 'Program',
   'app.nav.today': 'Today',
   'app.nav.plan': 'My Plan',

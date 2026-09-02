@@ -8,10 +8,8 @@ import { Eyebrow } from '@/app/components/marketing/Eyebrow';
 import { CtaButton } from '@/app/components/marketing/CtaButton';
 import { ArrowLink } from '@/app/components/marketing/ArrowLink';
 import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { VideoBlock } from '@/app/components/marketing/VideoBlock';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { rooteContent } from '@/content/roote.config';
-import productPhoto from '@/assets/product.png';
 import productBg from '@/assets/product_bg.jpg';
 import scanDevice from '@/assets/scan-device.jpg';
 import productLineup from '@/assets/product-lineup.png';
@@ -39,7 +37,6 @@ export function Products() {
   const components = [
     { id: 'topical', photo: productBg, title: t('marketing.products.topical.title'), body: t('marketing.products.topical.body') },
     { id: 'routine', photo: scanDevice, title: t('marketing.products.supplement.title'), body: t('marketing.products.supplement.body') },
-    { id: 'cleanser', photo: productPhoto, title: t('marketing.products.shampoo.title'), body: t('marketing.products.shampoo.body') },
   ];
 
   return (
@@ -50,7 +47,7 @@ export function Products() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.products.hero.title')} className="mx-auto max-w-3xl" />
+          <DisplayHeading as="h1" size="l" onInk text={t('marketing.products.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.products.hero.body')}</Prose>
           <div className="mt-8">
             <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
@@ -80,18 +77,11 @@ export function Products() {
                   <span className="text-xs font-medium tracking-[0.18em] text-accent">0{i + 1}</span>
                   <p className="font-display text-2xl font-medium">{c.title}</p>
                   <Prose size="l" className="max-w-xl">{c.body}</Prose>
-                  <PendingChip label={`${c.id} unit price`} />
                 </div>
               </div>
             );
           })}
         </div>
-        <VideoBlock
-          className="mx-auto mt-16 max-w-3xl"
-          poster={productLineup}
-          titleKey="marketing.video.plan.title"
-          captionKey="marketing.video.plan.caption"
-        />
       </Section>
 
       <Section className="border-t border-border">

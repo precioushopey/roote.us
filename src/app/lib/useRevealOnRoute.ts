@@ -16,6 +16,13 @@ if (typeof document !== 'undefined') {
 export function useRevealOnRoute() {
   const { pathname } = useLocation();
 
+  // Every route change (nav item, footer link, CTA) lands at the top of the page,
+  // unless the URL targets an in-page anchor.
+  useEffect(() => {
+    if (typeof window === 'undefined' || window.location.hash) return;
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   useEffect(() => {
     if (typeof IntersectionObserver !== 'function') return;
 
