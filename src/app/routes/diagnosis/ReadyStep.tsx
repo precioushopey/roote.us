@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import { useLocale, useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
+import { funnelField, funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 import { redirectForStep } from './guards';
 import { rooteContent } from '@/content/roote.config';
 
@@ -29,8 +30,8 @@ export function ReadyStep() {
   }
 
   return (
-    <section className="mx-auto max-w-md text-center flex flex-col gap-6">
-      <h1 className="text-2xl">{t('ready.title')}</h1>
+    <section data-animate className="mx-auto flex max-w-md flex-col gap-6 text-center">
+      <h1 className={funnelHeading}>{t('ready.title')}</h1>
       <p className="text-sm text-muted-foreground">
         {t('ready.teaser', {
           scale: t(`scale.${a.scale}.label` as never),
@@ -45,10 +46,10 @@ export function ReadyStep() {
           value={email}
           onChange={(e) => setEmailValue(e.target.value)}
           placeholder={t('ready.email.placeholder')}
-          className="rounded-md border border-input bg-input-background px-4 py-3 text-sm"
+          className={`${funnelField} text-center`}
           aria-label={t('ready.email.placeholder')}
         />
-        <button type="submit" className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm tracking-wide">
+        <button type="submit" className={funnelPrimaryBtn}>
           {t('ready.email.submit')}
         </button>
         {error && <p role="alert" className="text-xs text-destructive">{error}</p>}

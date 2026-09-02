@@ -7,6 +7,7 @@ import { buildReport } from '@/domain/report/buildReport';
 import { rooteContent } from '@/content/roote.config';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { isPending } from '@/content/pending';
+import { funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 import type { ProgramDurationDays } from '@/domain/program/types';
 
 export function PlanStep() {
@@ -83,7 +84,7 @@ export function PlanStep() {
         ))}
       </fieldset>
 
-      <button type="button" onClick={handleContinue} className="rounded-md bg-primary px-6 py-3 text-sm text-primary-foreground">
+      <button type="button" onClick={handleContinue} className={funnelPrimaryBtn}>
         {t('start.plan.continue')}
       </button>
     </div>

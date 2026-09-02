@@ -90,7 +90,7 @@ export function Support() {
             </SectionHeading>
             <Prose size="l" onInk className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
           </div>
-          <div className="rounded-2xl border border-ink-foreground/15 bg-background p-6 sm:p-8">
+          <div className="rounded-2xl border border-ink-foreground/15 bg-background p-6 text-foreground sm:p-8">
             <ContactForm />
           </div>
         </div>

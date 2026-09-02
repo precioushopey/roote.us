@@ -83,7 +83,7 @@ export function AnalyzingStep() {
   };
 
   return (
-    <section className="mx-auto max-w-md flex flex-col gap-6">
+    <section data-animate className="mx-auto flex max-w-md flex-col gap-8">
       <AnalyzingStrip running gateReady={allAnswered} onComplete={finish} />
       {step < QUESTIONS.length ? (
         <QuestionCard

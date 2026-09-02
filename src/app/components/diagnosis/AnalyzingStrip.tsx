@@ -34,18 +34,23 @@ export function AnalyzingStrip({
   const pct = Math.min(100, Math.round((done / FACETS.length) * 100) || (running ? 8 : 0));
 
   return (
-    <div className="rounded-lg border border-border bg-card p-4">
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>{t('analysis.title')}</span>
-        <span>{gateReady || done < FACETS.length - 1 ? `${pct}%` : `92%`}</span>
+    <div className="rounded-xl border border-border bg-background p-5">
+      <div className="flex items-center justify-between">
+        <span className="font-body text-xs font-medium uppercase tracking-[0.18em] text-accent">
+          {t('analysis.title')}
+        </span>
+        <span className="text-xs text-muted-foreground">
+          {gateReady || done < FACETS.length - 1 ? `${pct}%` : `92%`}
+        </span>
       </div>
-      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-        <div className="h-full bg-accent transition-all" style={{ width: `${gateReady ? pct : Math.min(pct, 92)}%` }} />
+      <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+        <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${gateReady ? pct : Math.min(pct, 92)}%` }} />
       </div>
-      <ul className="mt-3 grid gap-1 text-xs">
+      <ul className="mt-4 grid gap-1.5 text-sm">
         {FACETS.map((f, i) => (
           <li key={f} className={i < done ? 'text-foreground' : 'text-muted-foreground'}>
-            {i < done ? '✓ ' : '• '}{t(`analysis.facet.${f}` as never)}
+            <span className={i < done ? 'text-accent' : ''}>{i < done ? '✓ ' : '• '}</span>
+            {t(`analysis.facet.${f}` as never)}
           </li>
         ))}
       </ul>

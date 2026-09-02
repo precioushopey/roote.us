@@ -51,13 +51,13 @@ export function StartLayout() {
   const labels = [t('start.rail.account'), t('start.rail.plan'), t('start.rail.payment')];
 
   return (
-    <>
-      <div className="px-6 pb-2">
+    <div className="mx-auto w-full max-w-3xl px-6">
+      <div className="py-6">
         <ProgressRail steps={labels} current={Math.max(0, Math.min(2, current))} />
       </div>
-      <main className="flex-1 px-6 py-6">
+      <main className="flex-1 pb-16 pt-4">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }

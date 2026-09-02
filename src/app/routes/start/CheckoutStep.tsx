@@ -9,6 +9,7 @@ import { PendingChip } from '@/app/components/brand/PendingChip';
 import { isPending } from '@/content/pending';
 import { submitPayment, type Order } from '@/store/checkout';
 import { buildProgram } from '@/store/program';
+import { funnelField, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 import type { ProgramDurationDays } from '@/domain/program/types';
 
 const CARD_RE = /^\d{13,19}$/;
@@ -105,43 +106,43 @@ export function CheckoutStep() {
         <h2 className="text-sm font-medium">{t('start.checkout.contactTitle')}</h2>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.checkout.name')}
-          <input required value={name} onChange={(e) => setName(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+          <input required value={name} onChange={(e) => setName(e.target.value)} className={funnelField} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.account.emailLabel')}
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={funnelField} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.checkout.phone')}
-          <input required value={phone} onChange={(e) => setPhone(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+          <input required value={phone} onChange={(e) => setPhone(e.target.value)} className={funnelField} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.checkout.city')}
-          <input required value={city} onChange={(e) => setCity(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+          <input required value={city} onChange={(e) => setCity(e.target.value)} className={funnelField} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.checkout.postal')}
-          <input required value={postal} onChange={(e) => setPostal(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+          <input required value={postal} onChange={(e) => setPostal(e.target.value)} className={funnelField} />
         </label>
 
         <h2 className="mt-2 text-sm font-medium">{t('start.checkout.paymentTitle')}</h2>
         <p className="text-xs text-muted-foreground">{t('start.checkout.testNotice')}</p>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.checkout.cardName')}
-          <input required value={cardName} onChange={(e) => setCardName(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+          <input required value={cardName} onChange={(e) => setCardName(e.target.value)} className={funnelField} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.checkout.cardNumber')}
-          <input required value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+          <input required value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className={funnelField} />
         </label>
         <div className="flex gap-3">
           <label className="flex flex-1 flex-col gap-1 text-sm">
             {t('start.checkout.expiry')}
-            <input required placeholder="MM/YY" value={expiry} onChange={(e) => setExpiry(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+            <input required placeholder="MM/YY" value={expiry} onChange={(e) => setExpiry(e.target.value)} className={funnelField} />
           </label>
           <label className="flex flex-1 flex-col gap-1 text-sm">
             {t('start.checkout.cvc')}
-            <input required value={cvc} onChange={(e) => setCvc(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
+            <input required value={cvc} onChange={(e) => setCvc(e.target.value)} className={funnelField} />
           </label>
         </div>
         {/* TODO: confirm with client — which alternate payment methods to actually offer */}
@@ -150,7 +151,7 @@ export function CheckoutStep() {
         </button>
 
         {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-        <button type="submit" disabled={submitting} className="rounded-md bg-primary px-6 py-3 text-sm text-primary-foreground disabled:opacity-50">
+        <button type="submit" disabled={submitting} className={funnelPrimaryBtn}>
           {submitting ? t('start.checkout.submitting') : t('start.checkout.submit')}
         </button>
       </form>

@@ -2,6 +2,7 @@
 import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
+import { funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 
 export function SuccessStep() {
   const t = useT();
@@ -11,7 +12,7 @@ export function SuccessStep() {
 
   return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-4 text-center">
-      <h1 className="text-xl font-medium">{t('start.success.title')}</h1>
+      <h1 className={funnelHeading}>{t('start.success.title')}</h1>
       <p className="text-sm text-muted-foreground">#{program.orderId}</p>
       <p className="text-sm">{t('report.duration.label', { days: program.durationDays })} · {program.startDate}</p>
       <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
@@ -19,7 +20,7 @@ export function SuccessStep() {
         <li>{t('start.success.point2')}</li>
         <li>{t('start.success.point3')}</li>
       </ul>
-      <Link to="/app" className="rounded-md bg-primary px-8 py-4 text-sm text-primary-foreground">
+      <Link to="/app" className={funnelPrimaryBtn}>
         {t('start.success.cta')}
       </Link>
     </div>

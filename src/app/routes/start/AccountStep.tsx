@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
+import { funnelField, funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 
 const ERROR_KEYS: Record<string, string> = {
   'invalid-email': 'start.account.error.invalidEmail',
@@ -33,7 +34,7 @@ export function AccountStep() {
 
   return (
     <div className="mx-auto flex max-w-sm flex-col gap-4">
-      <h1 className="text-xl font-medium">{t('start.account.title')}</h1>
+      <h1 className={funnelHeading}>{t('start.account.title')}</h1>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.account.emailLabel')}
@@ -42,7 +43,7 @@ export function AccountStep() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-md border border-border bg-input-background px-3 py-2"
+            className={funnelField}
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -52,11 +53,11 @@ export function AccountStep() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-border bg-input-background px-3 py-2"
+            className={funnelField}
           />
         </label>
         {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-        <button type="submit" className="rounded-md bg-primary px-6 py-3 text-sm text-primary-foreground">
+        <button type="submit" className={funnelPrimaryBtn}>
           {t('start.account.submit')}
         </button>
         {/* TODO: confirm with client — magic-link sign-in as an alternative to password auth */}

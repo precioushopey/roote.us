@@ -2,6 +2,7 @@ import { Navigate, useNavigate } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { PhotoUpload } from '@/app/components/diagnosis/PhotoUpload';
+import { funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 import { redirectForStep } from './guards';
 import type { AngleKey } from '@/store/sessionStore';
 
@@ -18,10 +19,10 @@ export function PhotosStep() {
   const canContinue = session.diagnosis.photos.length >= 1;
 
   return (
-    <section className="mx-auto max-w-lg flex flex-col gap-6">
+    <section data-animate className="mx-auto flex max-w-lg flex-col gap-6">
       <div className="text-center">
-        <h1 className="text-2xl">{t('diagnosis.photos.title')}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{t('diagnosis.photos.howto')}</p>
+        <h1 className={funnelHeading}>{t('diagnosis.photos.title')}</h1>
+        <p className="mt-3 text-sm text-muted-foreground">{t('diagnosis.photos.howto')}</p>
       </div>
       <div className="grid grid-cols-2 gap-4">
         {ANGLES.map((a) => (
@@ -40,7 +41,7 @@ export function PhotosStep() {
         type="button"
         disabled={!canContinue}
         onClick={() => navigate('/diagnosis/analyzing')}
-        className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm tracking-wide disabled:opacity-40"
+        className={funnelPrimaryBtn}
       >
         {t('common.continue')}
       </button>
