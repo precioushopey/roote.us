@@ -12,7 +12,7 @@ function renderAt(path: string) {
 
 describe('marketing routes', () => {
   it.each([
-    ['/', 'Regrowth, built around'],
+    ['/', 'Regrowth'],
     ['/how-it-works', 'How ROOTÉ works'],
     ['/science', 'The science behind your plan'],
     ['/products', 'Your regimen'],

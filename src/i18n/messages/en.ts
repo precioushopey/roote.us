@@ -308,11 +308,10 @@ export const en = {
   'marketing.nav.primaryLabel': 'Primary',
 
   'marketing.home.hero.eyebrow': 'Personalized hair growth',
-  'marketing.home.hero.title': 'Regrowth, built around',
-  'marketing.home.hero.titleGhost': 'your scalp',
+  'marketing.home.hero.title': 'Regrowth',
+  'marketing.home.hero.titleGhost': 'built around your scalp',
   'marketing.home.hero.body':
     'A dermatologist-informed regimen matched to your pattern, your history, and a photo of your scalp — reviewed as you go.',
-  'marketing.home.hero.trust': 'Informed by dermatology practice',
 
   'marketing.home.valueProp.title': 'Effective hair regrowth, tailored to you.',
   'marketing.home.valueProp.body':

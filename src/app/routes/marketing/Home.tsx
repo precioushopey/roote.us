@@ -26,28 +26,33 @@ const ROLE_KEYS = {
 function Hero() {
   const t = useT();
   return (
-    <Section tone="ink" className="pt-28 md:pt-32">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        <div className="flex flex-col items-start gap-6">
-          <Eyebrow onInk>{t('marketing.home.hero.eyebrow')}</Eyebrow>
-          <DisplayHeading
-            as="h1"
-            size="xl"
-            onInk
-            text={t('marketing.home.hero.title')}
-            ghost={t('marketing.home.hero.titleGhost')}
+    <Section tone="ink" className="overflow-hidden pt-20 md:pt-24">
+      <div className="flex flex-col items-center">
+        <Eyebrow onInk>{t('marketing.home.hero.eyebrow')}</Eyebrow>
+        <h1
+          className="mt-2 select-none text-center font-display font-medium uppercase leading-[0.9] tracking-[-0.02em] text-ink-foreground"
+          style={{ fontSize: 'clamp(3.5rem, 13vw, 11rem)' }}
+        >
+          {t('marketing.home.hero.title')}
+        </h1>
+
+        <div className="relative -mt-10 w-full max-w-4xl sm:-mt-16 md:-mt-24">
+          <img
+            src={heroPeople}
+            alt=""
+            className="img-editorial w-full rounded-2xl object-cover"
+            style={{ aspectRatio: '16 / 10' }}
           />
-          <Prose size="l" onInk className="max-w-md">
-            {t('marketing.home.hero.body')}
-          </Prose>
-          <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
-          <p className="text-xs text-ink-foreground/70">{t('marketing.home.hero.trust')}</p>
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 rounded-b-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent px-6 pb-8 pt-24 text-center sm:px-10">
+            <p className="font-display text-2xl font-medium text-ink-foreground sm:text-3xl">
+              {t('marketing.home.hero.titleGhost')}
+            </p>
+            <Prose size="l" onInk className="max-w-md">
+              {t('marketing.home.hero.body')}
+            </Prose>
+            <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
+          </div>
         </div>
-        <img
-          src={heroPeople}
-          alt=""
-          className="img-editorial mx-auto w-full max-w-md rounded-2xl object-contain lg:max-w-none"
-        />
       </div>
     </Section>
   );

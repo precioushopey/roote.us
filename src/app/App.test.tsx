@@ -16,7 +16,7 @@ describe('App shell', () => {
   it('mounts the marketing shell at / with the real homepage', () => {
     localStorage.setItem('roote.locale', 'en');
     render(<App />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Regrowth, built around');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Regrowth');
     expect(screen.getAllByRole('link', { name: 'Start free analysis' }).length).toBeGreaterThan(0);
   });
 

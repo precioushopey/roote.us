@@ -311,11 +311,10 @@ export const he: Record<MessageKey, string> = {
   'marketing.nav.primaryLabel': 'ניווט ראשי',
 
   'marketing.home.hero.eyebrow': 'צמיחת שיער מותאמת אישית',
-  'marketing.home.hero.title': 'צמיחה מחדש, שנבנתה סביב',
-  'marketing.home.hero.titleGhost': 'הקרקפת שלך',
+  'marketing.home.hero.title': 'צמיחה מחדש',
+  'marketing.home.hero.titleGhost': 'שנבנתה סביב הקרקפת שלך',
   'marketing.home.hero.body':
     'תוכנית טיפול מבוססת-רפואת עור שמותאמת לדפוס שלך, להיסטוריה שלך ולתמונת הקרקפת שלך — עם מעקב לאורך הדרך.',
-  'marketing.home.hero.trust': 'מבוסס על ניסיון קליני בתחום העור',
 
   'marketing.home.valueProp.title': 'צמיחת שיער אפקטיבית, מותאמת אישית עבורך.',
   'marketing.home.valueProp.body':
