@@ -318,7 +318,7 @@ export const he: Record<MessageKey, string> = {
 
   'marketing.home.featured.eyebrowLeft': 'לגלות עוד',
   'marketing.home.featured.eyebrowRight': 'הפורמולה שלנו',
-  'marketing.home.featured.title': 'פורמולה נבחרת',
+  'marketing.home.featured.title': 'מוצרים בשבילך',
   'marketing.home.featured.item1.label': 'סריקה מודרכת בינה מלאכותית',
   'marketing.home.featured.item1.cta': 'לצפייה איך זה עובד',
   'marketing.home.featured.item2.label': 'הפורמולה של ROOTÉ',

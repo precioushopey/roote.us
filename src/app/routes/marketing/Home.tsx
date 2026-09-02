@@ -87,7 +87,7 @@ function FeaturedFormula() {
           <ArrowLink to="/how-it-works">{t('marketing.home.featured.item1.cta')}</ArrowLink>
         </div>
 
-        <div className="relative z-10 md:-my-10">
+        <div className="relative z-10 -mt-6 sm:-mt-12 md:-mt-20">
           <img
             src={productLineup}
             alt=""
