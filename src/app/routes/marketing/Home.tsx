@@ -12,7 +12,7 @@ import heroPeople from '@/assets/hero-people.png';
 import stepQuiz from '@/assets/step-quiz.jpg';
 import stepPhotoScan from '@/assets/step-photo-scan.jpg';
 import scanDevice from '@/assets/scan-device.jpg';
-import bannerSquare from '@/assets/BANNERS/BANNER SQUARE SIZE 1.png';
+import bannerSquare from '@/assets/BANNERS/BANNER SQUARE SIZE.png';
 import objectiveMeasurement4 from '@/assets/OBJECTIVE MEASUREMENT/OBJECTIVE MEASUREMENT 4.png';
 import productLineup from '@/assets/product-lineup.png';
 import scalpBefore from '@/assets/scalp-before.jpg';
@@ -64,8 +64,9 @@ function FeaturedFormula() {
   const t = useT();
   return (
     <Section className="overflow-hidden">
-      <div className="flex items-center justify-between">
+      <div className="grid grid-cols-3 items-center">
         <Eyebrow>{t('marketing.home.featured.eyebrowLeft')}</Eyebrow>
+        <span aria-hidden className="text-center text-2xl tracking-[0.18em] text-accent">01</span>
         <Eyebrow className="text-end">{t('marketing.home.featured.eyebrowRight')}</Eyebrow>
       </div>
       <h2
@@ -111,29 +112,6 @@ function FeaturedFormula() {
   );
 }
 
-function QuizIntro() {
-  const t = useT();
-  const steps = [t('marketing.home.quiz.step1'), t('marketing.home.quiz.step2'), t('marketing.home.quiz.step3')];
-  return (
-    <Section index="01" className="text-center">
-      <DisplayHeading as="h2" size="m" text={t('marketing.home.quiz.title')} className="mx-auto max-w-2xl" />
-      <ol className="mx-auto mt-8 flex max-w-xl flex-col gap-4 text-start">
-        {steps.map((label, i) => (
-          <li key={label} className="flex items-center gap-3 text-sm text-foreground">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
-              {i + 1}
-            </span>
-            {label}
-          </li>
-        ))}
-      </ol>
-      <div className="mt-8">
-        <CtaButton to="/diagnosis">{t('marketing.home.quiz.cta')}</CtaButton>
-      </div>
-    </Section>
-  );
-}
-
 function HowItWorksSteps() {
   const t = useT();
   const steps = [
@@ -143,7 +121,7 @@ function HowItWorksSteps() {
     { photo: productLineup, title: t('marketing.home.how.step4.title'), body: t('marketing.home.how.step4.body') },
   ];
   return (
-    <Section index="02">
+    <Section index="01">
       <div className="text-center">
         <DisplayHeading as="h2" size="m" text={t('marketing.home.how.title')} />
       </div>
@@ -167,7 +145,7 @@ function HowItWorksSteps() {
 function ClinicalResults() {
   const t = useT();
   return (
-    <Section tone="ink" index="03" className="text-center">
+    <Section tone="ink" index="02" className="text-center">
       <DisplayHeading
         as="h2"
         size="m"
@@ -188,7 +166,7 @@ function ClinicalResults() {
 function ProductComponents() {
   const t = useT();
   return (
-    <Section index="04" className="text-center">
+    <Section index="03" className="text-center">
       <DisplayHeading as="h2" size="m" text={t('marketing.home.products.title')} />
       <Prose size="l" className="mx-auto mt-4 max-w-xl">{t('marketing.home.products.body')}</Prose>
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -274,7 +252,6 @@ export function Home() {
     <>
       <Hero />
       <FeaturedFormula />
-      <QuizIntro />
       <HowItWorksSteps />
       <ClinicalResults />
       <ProductComponents />
