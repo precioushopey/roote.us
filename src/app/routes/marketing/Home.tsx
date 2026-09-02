@@ -122,7 +122,7 @@ function FeaturedFormula() {
           <img
             src={productLineup}
             alt=""
-            className="img-editorial mx-auto w-full max-w-lg rounded-2xl object-cover shadow-lg"
+            className="img-editorial mx-auto w-full rounded-2xl object-cover shadow-lg lg:max-w-lg"
           />
         </div>
 
