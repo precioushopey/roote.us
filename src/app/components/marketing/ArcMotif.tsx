@@ -1,8 +1,10 @@
-export function ArcMotif() {
+import { cn } from '@/app/components/ui/utils';
+
+export function ArcMotif({ className }: { className?: string }) {
   return (
     <svg
       aria-hidden="true"
-      className="pointer-events-none absolute -z-10"
+      className={cn('pointer-events-none absolute -z-10', className)}
       viewBox="0 0 200 200"
       width={200}
       height={200}

@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { ArcMotif } from './ArcMotif';
+import { cn } from '@/app/components/ui/utils';
 
 interface SectionProps {
   children: ReactNode;
@@ -24,15 +25,11 @@ export function Section({
       : 'py-20 md:py-28';
 
   return (
-    <section
-      id={id}
-      data-animate="section"
-      className={`${toneClasses} ${className || ''}`}
-    >
-      <div className="relative mx-auto max-w-6xl px-6 md:px-10">
+    <section id={id} data-animate="section" className={cn(toneClasses, className)}>
+      <div className="relative isolate mx-auto max-w-6xl px-6 md:px-10">
         {motif && <ArcMotif />}
         {index && (
-          <span aria-hidden className="mb-4 block font-body text-xs tracking-[0.18em] text-accent">
+          <span aria-hidden className="mb-4 block font-body text-2xl tracking-[0.18em] text-accent">
             {index}
           </span>
         )}

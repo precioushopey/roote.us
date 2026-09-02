@@ -11,7 +11,7 @@ export function CtaBand({ headingKey, bodyKey }: { headingKey: MessageKey; bodyK
     <Section tone="ink" className="text-center">
       <DisplayHeading as="h2" size="m" onInk text={t(headingKey)} />
       {bodyKey && (
-        <Prose size="l" className="mx-auto max-w-xl text-ink-foreground/85">
+        <Prose size="l" onInk className="mx-auto max-w-xl">
           {t(bodyKey)}
         </Prose>
       )}

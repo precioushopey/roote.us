@@ -71,7 +71,7 @@ export function Header() {
           <Wordmark className="w-28" />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+        <nav aria-label={t('marketing.nav.primaryLabel')} className="hidden items-center gap-8 lg:flex">
           {PRIMARY_LINKS.map(([key, to]) => (
             <Link key={to} to={to} className="text-sm tracking-wide text-foreground">
               {t(key)}

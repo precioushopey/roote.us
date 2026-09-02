@@ -302,6 +302,10 @@ export const en = {
   'marketing.cta.default.title': 'Your plan starts with one free analysis.',
   'marketing.cta.default.body':
     'Answer a few questions, add a scalp photo, and get a regimen matched to your pattern.',
+
+  'marketing.a11y.skipToContent': 'Skip to content',
+  'marketing.nav.menuLabel': 'Menu',
+  'marketing.nav.primaryLabel': 'Primary',
 } as const;
 
 export type MessageKey = keyof typeof en;

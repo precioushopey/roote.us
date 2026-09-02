@@ -60,7 +60,7 @@ export function MobileMenu({ onClose }: { onClose: () => void }) {
       ref={dialogRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Menu"
+      aria-label={t('marketing.nav.menuLabel')}
       className="fixed inset-0 z-50 flex flex-col bg-background px-6 py-4"
     >
       <div className="flex items-center justify-end">

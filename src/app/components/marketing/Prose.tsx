@@ -4,16 +4,17 @@ import { cn } from '@/app/components/ui/utils';
 interface ProseProps {
   children: ReactNode;
   size?: 'l' | 'm';
+  onInk?: boolean;
   className?: string;
 }
 
-export function Prose({ children, size = 'm', className }: ProseProps) {
+export function Prose({ children, size = 'm', onInk = false, className }: ProseProps) {
   const sizeClasses = {
     l: 'text-[1.0625rem] leading-[1.7]',
     m: 'text-[0.9375rem] leading-[1.65]',
   }[size];
 
-  const base = 'font-body text-muted-foreground max-w-prose';
+  const tone = onInk ? 'text-ink-foreground/85' : 'text-muted-foreground';
 
-  return <p className={cn(sizeClasses, base, className)}>{children}</p>;
+  return <p className={cn(sizeClasses, 'font-body max-w-prose', tone, className)}>{children}</p>;
 }

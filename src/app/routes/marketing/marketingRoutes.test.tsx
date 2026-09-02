@@ -5,6 +5,7 @@ import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { marketingRoutes } from './marketingRoutes';
 
 function renderAt(path: string) {
+  localStorage.setItem('roote.locale', 'en');
   const router = createMemoryRouter([marketingRoutes], { initialEntries: [path] });
   render(<LocaleProvider><RouterProvider router={router} /></LocaleProvider>);
 }
