@@ -22,7 +22,7 @@ export function Section({
   const toneClasses =
     tone === 'ink'
       ? 'py-24 md:py-32 bg-ink text-ink-foreground'
-      : 'py-20 md:py-28';
+      : 'bg-grid-lines py-20 md:py-28';
 
   return (
     <section id={id} data-animate="section" className={cn(toneClasses, className)}>

@@ -44,7 +44,7 @@ function Hero() {
             style={{ aspectRatio: '16 / 10' }}
           />
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 rounded-b-2xl bg-gradient-to-t from-ink via-ink/70 to-transparent px-6 pb-10 pt-40 text-center sm:px-10 sm:pt-48">
-            <p className="font-display text-2xl font-medium text-ink-foreground sm:text-3xl">
+            <p className="font-display text-2xl font-medium uppercase tracking-wide text-ink-foreground sm:text-3xl">
               {t('marketing.home.hero.titleGhost')}
             </p>
             <Prose size="l" onInk className="max-w-md">

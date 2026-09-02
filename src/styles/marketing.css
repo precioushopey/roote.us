@@ -1,0 +1,15 @@
+/* Marketing site visual treatments — kept separate from theme.css tokens. */
+
+.img-editorial {
+  filter: saturate(0.92) contrast(1.04) sepia(0.1);
+}
+
+/* Faint editorial grid overlay for light (cream) sections, matching the reference's
+   graph-paper panel treatment. Uses the sand border token, so it tracks the palette. */
+.bg-grid-lines {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 33.333% 100%, 100% 8rem;
+  background-position: center top;
+}
