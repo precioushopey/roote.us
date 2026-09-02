@@ -356,7 +356,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.clinical.next': 'תוצאה הבאה',
   'marketing.home.clinical.goTo': 'הצגת תוצאה',
 
-  'marketing.home.products.title': 'פורמולה אחת, מותאמת לדפוס שלך',
+  'marketing.home.products.title': 'פורמולה אחת בשבילך',
   'marketing.home.products.body': 'תרחיף משולב אחד עם ארבעה תפקידים פעילים — ממופה לחומרת הסריקה שלך ולאזורים המושפעים, לעולם לא ניחוש.',
   'marketing.home.products.cta': 'לתוכנית המלאה',
   'marketing.home.products.role.regrowth-stimulant': 'ממריץ צמיחה',

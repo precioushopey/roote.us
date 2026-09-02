@@ -255,16 +255,19 @@ function ProductComponents() {
   const roles = rooteContent.formula.ingredients.map((ing) => t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS]));
   return (
     <Section className="text-center">
-      <div className="flex flex-col items-end text-end">
-        <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
-        <h2
-          className="mt-2 select-none text-end font-display font-medium uppercase leading-[0.95] tracking-[-0.02em] text-foreground"
-          style={{ fontSize: 'clamp(2rem, 8vw, 5.5rem)' }}
-        >
-          {t('marketing.home.products.title')}
-        </h2>
+      <div className="flex items-end justify-between gap-6">
+        <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
+        <div className="flex flex-col items-end text-end">
+          <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
+          <h2
+            className="mt-2 select-none whitespace-nowrap text-end font-display font-medium uppercase leading-[0.95] tracking-[-0.02em] text-foreground"
+            style={{ fontSize: 'clamp(2rem, 8vw, 5.5rem)' }}
+          >
+            {t('marketing.home.products.title')}
+          </h2>
+        </div>
       </div>
-      <Prose size="l" className="mx-auto mt-4 max-w-xl">{t('marketing.home.products.body')}</Prose>
+      <Prose size="l" className="ms-auto mt-4 max-w-xl text-end">{t('marketing.home.products.body')}</Prose>
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {rooteContent.formula.ingredients.map((ing) => (
           <div key={ing.key} className="rounded-xl border border-border bg-background p-6 text-start">
@@ -290,10 +293,6 @@ function ProductComponents() {
             </ul>
           </div>
         ))}
-      </div>
-
-      <div className="mt-10">
-        <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
       </div>
     </Section>
   );
