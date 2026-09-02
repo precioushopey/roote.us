@@ -289,6 +289,15 @@ export const en = {
   'marketing.nav.cta': 'Start free analysis',
   'marketing.nav.openMenu': 'Open menu',
   'marketing.nav.closeMenu': 'Close menu',
+
+  'marketing.footer.explore': 'Explore',
+  'marketing.footer.company': 'Company',
+  'marketing.footer.legal': 'Legal',
+  'marketing.footer.startTitle': 'Start today',
+  'marketing.footer.startBody': 'One free analysis. A plan built for your scalp.',
+  'marketing.footer.terms': 'Terms',
+  'marketing.footer.privacy': 'Privacy',
+  'marketing.footer.rights': 'All rights reserved.',
 } as const;
 
 export type MessageKey = keyof typeof en;

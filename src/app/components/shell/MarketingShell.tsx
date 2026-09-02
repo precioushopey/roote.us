@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
 import { Header } from './Header';
+import { Footer } from './Footer';
 
 export function MarketingShell() {
   return (
@@ -14,7 +15,7 @@ export function MarketingShell() {
       <main id="main">
         <Outlet />
       </main>
-      {/* Footer — Task 7 */}
+      <Footer />
     </div>
   );
 }

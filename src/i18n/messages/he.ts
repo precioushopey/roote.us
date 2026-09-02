@@ -292,4 +292,13 @@ export const he: Record<MessageKey, string> = {
   'marketing.nav.cta': 'התחלת אבחון חינם',
   'marketing.nav.openMenu': 'פתיחת תפריט',
   'marketing.nav.closeMenu': 'סגירת תפריט',
+
+  'marketing.footer.explore': 'לחקור',
+  'marketing.footer.company': 'החברה',
+  'marketing.footer.legal': 'משפטי',
+  'marketing.footer.startTitle': 'להתחיל היום',
+  'marketing.footer.startBody': 'אבחון אחד חינם. תוכנית שנבנתה לקרקפת שלך.',
+  'marketing.footer.terms': 'תנאים',
+  'marketing.footer.privacy': 'פרטיות',
+  'marketing.footer.rights': 'כל הזכויות שמורות.',
 };
