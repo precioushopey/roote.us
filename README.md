@@ -1,11 +1,28 @@
+# ROOTÉ.US
 
-  # Design Etsy Shop Branding
+Personalized hair-growth system: marketing site → free AI hair diagnosis →
+personalized report/PDF → account & checkout → post-purchase program app.
+Hebrew/RTL first, English available. React 18 + React Router 7 + Tailwind v4 + Vite.
 
-  This is a code bundle for Design Etsy Shop Branding. The original project is available at https://www.figma.com/design/qG4F8BzrhyBE1RwU2LVNYx/Design-Etsy-Shop-Branding.
+## Running
 
-  ## Running the code
+```bash
+pnpm install
+pnpm dev     # dev server
+pnpm build   # production build -> dist/
+pnpm test    # vitest
+```
 
-  Run `npm i` to install the dependencies.
+## Layout
 
-  Run `npm run dev` to start the development server.
-  
+- `src/app/routes/marketing` — public site (Home, How It Works, Science, Products, About, FAQ, Support, legal)
+- `src/app/routes/diagnosis` — the free diagnosis funnel (intro → gender → photos → analysis + questionnaire → report handoff)
+- `src/app/routes/report` — the personalized hair report (web + downloadable PDF via `src/pdf`)
+- `src/app/routes/start` — account → plan → checkout → success
+- `src/app/routes/app` — post-purchase program (Today, My Plan, Progress, Care Team)
+- `src/domain` — analysis / report / program logic; `src/i18n` — en/he message dictionaries
+- `src/content/roote.config.ts` — brand facts; unresolved values render as `[PENDING: …]` chips (see `src/content/pending.ts`)
+
+hairhealth.ai is wired through `src/domain/analysis/analyzeHair.ts` and used when
+`VITE_HAIRHEALTH_API_URL` is set (see `.env.example`); otherwise a local
+questionnaire model produces the analysis.
