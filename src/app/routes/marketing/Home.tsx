@@ -12,6 +12,8 @@ import heroPeople from '@/assets/hero-people.png';
 import stepQuiz from '@/assets/step-quiz.jpg';
 import stepPhotoScan from '@/assets/step-photo-scan.jpg';
 import scanDevice from '@/assets/scan-device.jpg';
+import bannerSquare from '@/assets/BANNERS/BANNER SQUARE SIZE 1.png';
+import objectiveMeasurement4 from '@/assets/OBJECTIVE MEASUREMENT/OBJECTIVE MEASUREMENT 4.png';
 import productLineup from '@/assets/product-lineup.png';
 import scalpBefore from '@/assets/scalp-before.jpg';
 import scalpAfter from '@/assets/scalp-after.jpg';
@@ -76,7 +78,7 @@ function FeaturedFormula() {
       <div className="relative mt-8 grid grid-cols-1 items-center gap-8 md:mt-0 md:grid-cols-[0.8fr_1.2fr_0.8fr] md:gap-6">
         <div className="flex flex-col items-start gap-3">
           <img
-            src={stepPhotoScan}
+            src={bannerSquare}
             alt=""
             className="img-editorial mt-6 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14"
           />
@@ -87,7 +89,7 @@ function FeaturedFormula() {
           <ArrowLink to="/how-it-works">{t('marketing.home.featured.item1.cta')}</ArrowLink>
         </div>
 
-        <div className="relative z-10 -mt-6 sm:-mt-12 md:-mt-20">
+        <div className="relative z-10 -mt-14 sm:-mt-24 md:-mt-36">
           <img
             src={productLineup}
             alt=""
@@ -99,22 +101,12 @@ function FeaturedFormula() {
           <span className="text-2xl text-accent">02</span>
           <p className="font-display text-lg font-medium">{t('marketing.home.featured.item2.label')}</p>
           <img
-            src={scanDevice}
+            src={objectiveMeasurement4}
             alt=""
             className="img-editorial mt-4 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm md:mt-16"
           />
         </div>
       </div>
-    </Section>
-  );
-}
-
-function ValueProp() {
-  const t = useT();
-  return (
-    <Section className="text-center">
-      <DisplayHeading as="h2" size="l" text={t('marketing.home.valueProp.title')} className="mx-auto max-w-3xl" />
-      <Prose size="l" className="mx-auto mt-4 max-w-2xl">{t('marketing.home.valueProp.body')}</Prose>
     </Section>
   );
 }
@@ -282,7 +274,6 @@ export function Home() {
     <>
       <Hero />
       <FeaturedFormula />
-      <ValueProp />
       <QuizIntro />
       <HowItWorksSteps />
       <ClinicalResults />
