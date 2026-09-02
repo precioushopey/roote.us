@@ -1,0 +1,43 @@
+import { ReactNode } from 'react';
+import { ArcMotif } from './ArcMotif';
+
+interface SectionProps {
+  children: ReactNode;
+  id?: string;
+  index?: string;
+  tone?: 'light' | 'ink';
+  motif?: boolean;
+  className?: string;
+}
+
+export function Section({
+  children,
+  id,
+  index,
+  tone = 'light',
+  motif = false,
+  className,
+}: SectionProps) {
+  const toneClasses =
+    tone === 'ink'
+      ? 'py-24 md:py-32 bg-ink text-ink-foreground'
+      : 'py-20 md:py-28';
+
+  return (
+    <section
+      id={id}
+      data-animate="section"
+      className={`${toneClasses} ${className || ''}`}
+    >
+      <div className="relative mx-auto max-w-6xl px-6 md:px-10">
+        {motif && <ArcMotif />}
+        {index && (
+          <span aria-hidden className="mb-4 block font-body text-xs tracking-[0.18em] text-accent">
+            {index}
+          </span>
+        )}
+        {children}
+      </div>
+    </section>
+  );
+}
