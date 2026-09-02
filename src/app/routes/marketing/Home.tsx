@@ -68,7 +68,7 @@ function FeaturedFormula() {
       </div>
       <h2
         className="mt-4 select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 7.5vw, 5.5rem)' }}
+        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
       >
         {t('marketing.home.featured.title')}
       </h2>
@@ -78,7 +78,7 @@ function FeaturedFormula() {
           <img
             src={stepPhotoScan}
             alt=""
-            className="img-editorial aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm"
+            className="img-editorial mt-6 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14"
           />
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="text-2xl text-accent">01</span>
