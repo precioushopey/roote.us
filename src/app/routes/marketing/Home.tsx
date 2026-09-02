@@ -359,7 +359,7 @@ function Research() {
         <img
           src={hairCuticle}
           alt={t('marketing.home.research.imageAlt')}
-          className="img-editorial mx-auto w-full max-w-md rounded-2xl object-cover shadow-lg lg:ms-auto"
+          className="img-editorial mx-auto w-full rounded-2xl object-cover shadow-lg lg:ms-auto lg:max-w-md"
         />
       </div>
     </Section>
