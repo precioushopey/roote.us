@@ -255,7 +255,7 @@ function ProductComponents() {
   const roles = rooteContent.formula.ingredients.map((ing) => t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS]));
   return (
     <Section className="text-center">
-      <div className="flex items-end justify-between gap-6">
+      <div className="flex items-start justify-between gap-6">
         <ArrowLink to="/products">{t('marketing.home.products.cta')}</ArrowLink>
         <div className="flex flex-col items-end text-end">
           <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
