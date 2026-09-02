@@ -305,6 +305,9 @@ export const he: Record<MessageKey, string> = {
   'marketing.cta.default.title': 'התוכנית שלך מתחילה באבחון אחד חינם.',
   'marketing.cta.default.body':
     'עונים על כמה שאלות, מוסיפים תמונת קרקפת, ומקבלים תוכנית שמותאמת לדפוס שלך.',
+  'marketing.cta.default.item1': 'קבלו את התוכנית האישית שלכם תוך דקות',
+  'marketing.cta.default.item2': 'נבחן מול הנחיות מבוססות-רפואת עור',
+  'marketing.cta.default.item3': 'עקבו אחרי ההתקדמות שלכם עם השוואות תמונות',
 
   'marketing.a11y.skipToContent': 'דילוג לתוכן',
   'marketing.nav.menuLabel': 'תפריט',

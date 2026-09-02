@@ -302,6 +302,9 @@ export const en = {
   'marketing.cta.default.title': 'Your plan starts with one free analysis.',
   'marketing.cta.default.body':
     'Answer a few questions, add a scalp photo, and get a regimen matched to your pattern.',
+  'marketing.cta.default.item1': 'Get your personalized plan in minutes',
+  'marketing.cta.default.item2': 'Reviewed against dermatology-informed guidance',
+  'marketing.cta.default.item3': 'Track your progress with photo comparisons',
 
   'marketing.a11y.skipToContent': 'Skip to content',
   'marketing.nav.menuLabel': 'Menu',

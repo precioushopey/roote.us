@@ -17,6 +17,7 @@ import bannerSquare from '@/assets/BANNERS/BANNER SQUARE SIZE.png';
 import objectiveMeasurement4 from '@/assets/OBJECTIVE MEASUREMENT/OBJECTIVE MEASUREMENT 4.png';
 import productLineup from '@/assets/product-lineup.png';
 import hairCuticle from '@/assets/hair-cuticle.jpg';
+import productPhoto from '@/assets/product.png';
 import beforeResult from '@/assets/BEFORE AND AFTER RESULT/BEFORE.png';
 import afterResult from '@/assets/BEFORE AND AFTER RESULT/AFTER.png';
 import beforeResult1 from '@/assets/BEFORE AND AFTER RESULT/BEFORE 1.png';
@@ -263,7 +264,7 @@ function ProductComponents() {
       </div>
       <h2
         className="mt-4 select-none whitespace-nowrap text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 9vw, 6.375rem)' }}
+        style={{ fontSize: 'clamp(2rem, 8.2vw, 5.9rem)' }}
       >
         {t('marketing.home.products.title')}
       </h2>
@@ -332,7 +333,11 @@ export function Home() {
       <ClinicalResults />
       <ProductComponents />
       <Research />
-      <CtaBand headingKey="marketing.cta.default.title" bodyKey="marketing.cta.default.body" />
+      <CtaBand
+        headingKey="marketing.cta.default.title"
+        checklistKeys={['marketing.cta.default.item1', 'marketing.cta.default.item2', 'marketing.cta.default.item3']}
+        image={productPhoto}
+      />
     </>
   );
 }
