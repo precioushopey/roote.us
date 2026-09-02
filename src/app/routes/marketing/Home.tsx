@@ -18,6 +18,7 @@ import objectiveMeasurement4 from '@/assets/OBJECTIVE MEASUREMENT/OBJECTIVE MEAS
 import productLineup from '@/assets/product-lineup.png';
 import hairCuticle from '@/assets/hair-cuticle.jpg';
 import productPhoto from '@/assets/product.png';
+import productBg from '@/assets/product_bg.jpg';
 import beforeResult from '@/assets/BEFORE AND AFTER RESULT/BEFORE.png';
 import afterResult from '@/assets/BEFORE AND AFTER RESULT/AFTER.png';
 import beforeResult1 from '@/assets/BEFORE AND AFTER RESULT/BEFORE 1.png';
@@ -87,17 +88,17 @@ function FeaturedFormula() {
         {t('marketing.home.featured.title')}
       </h2>
 
-      <div className="relative mt-8 grid grid-cols-1 items-center gap-8 md:mt-0 md:grid-cols-[0.8fr_1.2fr_0.8fr] md:gap-6">
+      <div className="relative mt-8 grid grid-cols-1 items-center gap-8 md:-mt-6 md:grid-cols-[0.8fr_1.2fr_0.8fr] md:gap-6">
         <div className="flex flex-col items-start gap-3">
           <img
             src={bannerSquare}
             alt=""
-            className="img-editorial mt-6 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-10 md:mt-14"
+            className="img-editorial mt-4 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm sm:mt-6 md:mt-6"
           />
           <Prose>{t('marketing.home.featured.item1.label')}</Prose>
         </div>
 
-        <div className="relative z-10 -mt-6 sm:-mt-10 md:-mt-14">
+        <div className="relative z-10 -mt-6 sm:-mt-10 md:-mt-20">
           <img
             src={productLineup}
             alt=""
@@ -124,7 +125,7 @@ function HowItWorksSteps() {
     { photo: stepQuiz, title: t('marketing.home.how.step1.title'), body: t('marketing.home.how.step1.body') },
     { photo: stepPhotoScan, title: t('marketing.home.how.step2.title'), body: t('marketing.home.how.step2.body') },
     { photo: scanDevice, title: t('marketing.home.how.step3.title'), body: t('marketing.home.how.step3.body') },
-    { photo: productLineup, title: t('marketing.home.how.step4.title'), body: t('marketing.home.how.step4.body') },
+    { photo: productBg, title: t('marketing.home.how.step4.title'), body: t('marketing.home.how.step4.body') },
   ];
   return (
     <Section index="02">
@@ -305,16 +306,16 @@ function Research() {
   const t = useT();
   return (
     <Section className="overflow-hidden border-t border-border">
-      <div className="flex items-baseline gap-4">
-        <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">05</span>
+      <div className="flex items-baseline justify-between gap-6">
+        <span aria-hidden className="shrink-0 text-2xl tracking-[0.18em] text-accent">05</span>
         <h2
-          className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+          className="select-none whitespace-nowrap text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
           style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
         >
           {t('marketing.home.research.title')}
         </h2>
       </div>
-      <div className="mt-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
+      <div className="relative z-10 mt-4 grid grid-cols-1 items-center gap-8 lg:-mt-16 lg:grid-cols-2">
         <div className="flex flex-col items-start gap-4">
           <Prose size="l" className="max-w-md">{t('marketing.home.research.body')}</Prose>
           <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>
