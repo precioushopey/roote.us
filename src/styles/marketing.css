@@ -10,6 +10,6 @@
   background-image:
     linear-gradient(to right, var(--border) 1px, transparent 1px),
     linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 33.333% 100%, 100% 8rem;
+  background-size: 50% 100%, 100% 20rem;
   background-position: center top;
 }

@@ -67,8 +67,8 @@ function FeaturedFormula() {
         <Eyebrow className="text-end">{t('marketing.home.featured.eyebrowRight')}</Eyebrow>
       </div>
       <h2
-        className="mt-4 select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground sm:text-start"
-        style={{ fontSize: 'clamp(2rem, 8vw, 6.5rem)' }}
+        className="mt-4 select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+        style={{ fontSize: 'clamp(2rem, 7.5vw, 5.5rem)' }}
       >
         {t('marketing.home.featured.title')}
       </h2>
@@ -76,7 +76,7 @@ function FeaturedFormula() {
       <div className="relative mt-8 grid grid-cols-1 items-center gap-8 md:mt-0 md:grid-cols-[0.8fr_1.2fr_0.8fr] md:gap-6">
         <div className="flex flex-col items-start gap-3">
           <img
-            src={scanDevice}
+            src={stepPhotoScan}
             alt=""
             className="img-editorial aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm"
           />
@@ -95,9 +95,14 @@ function FeaturedFormula() {
           />
         </div>
 
-        <div className="flex flex-col items-start gap-2 md:items-end md:text-end">
+        <div className="flex flex-col items-start gap-3 md:items-end md:text-end">
           <span className="text-2xl text-accent">02</span>
           <p className="font-display text-lg font-medium">{t('marketing.home.featured.item2.label')}</p>
+          <img
+            src={scanDevice}
+            alt=""
+            className="img-editorial mt-4 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm md:mt-16"
+          />
         </div>
       </div>
     </Section>
