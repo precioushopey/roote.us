@@ -317,7 +317,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.hero.title': 'צמיחה מחדש',
   'marketing.home.hero.titleGhost': 'שנבנתה סביב הקרקפת שלך',
   'marketing.home.hero.body':
-    'תוכנית טיפול מבוססת-רפואת עור שמותאמת לדפוס שלך, להיסטוריה שלך ולתמונת הקרקפת שלך, עם מעקב לאורך הדרך.',
+    'תוכנית טיפול מבוססת-רפואת עור שמותאמת לדפוס שלך, להיסטוריה שלך ולתמונת הקרקפת שלך.',
 
   'marketing.home.featured.eyebrowLeft': 'מוצרים',
   'marketing.home.featured.eyebrowRight': 'מדע',

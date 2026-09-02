@@ -314,7 +314,7 @@ export const en = {
   'marketing.home.hero.title': 'Regrowth',
   'marketing.home.hero.titleGhost': 'built around your scalp',
   'marketing.home.hero.body':
-    'A dermatologist-informed regimen matched to your pattern, your history, and a photo of your scalp, reviewed as you go.',
+    'A dermatologist-informed regimen matched to your pattern, history, and scalp photo.',
 
   'marketing.home.featured.eyebrowLeft': 'Products',
   'marketing.home.featured.eyebrowRight': 'Science',

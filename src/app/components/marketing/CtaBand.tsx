@@ -28,9 +28,9 @@ export function CtaBand({ headingKey, bodyKey, checklistKeys, image }: CtaBandPr
     return (
       <Section tone="ink">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
-          <div className="flex flex-col items-start gap-6">
+          <div className="flex flex-col items-start gap-8">
             <DisplayHeading as="h2" size="m" onInk text={t(headingKey)} />
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-4">
               {checklistKeys.map((key) => (
                 <li key={key} className="flex items-center gap-3 text-sm text-ink-foreground/85">
                   <CheckIcon />
