@@ -263,7 +263,7 @@ function ProductComponents() {
           <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">04</span>
           <h2
             className="mt-2 select-none whitespace-nowrap text-end font-display font-medium uppercase leading-[0.95] tracking-[-0.02em] text-foreground"
-            style={{ fontSize: 'clamp(2rem, 8vw, 5.5rem)' }}
+            style={{ fontSize: 'clamp(2rem, 6.5vw, 4.5rem)' }}
           >
             {t('marketing.home.products.title')}
           </h2>
@@ -305,21 +305,21 @@ function Research() {
   return (
     <Section className="overflow-hidden border-t border-border">
       <h2
-        className="select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-        style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
+        className="select-none whitespace-nowrap text-start font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
+        style={{ fontSize: 'clamp(2rem, 8vw, 5.5rem)' }}
       >
         {t('marketing.home.research.title')}
       </h2>
-      <div className="relative -mt-6 flex justify-end sm:-mt-10 md:-mt-14">
+      <div className="mt-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
+        <div className="flex flex-col items-start gap-4">
+          <Prose size="l" className="max-w-md">{t('marketing.home.research.body')}</Prose>
+          <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>
+        </div>
         <img
           src={hairCuticle}
           alt={t('marketing.home.research.imageAlt')}
-          className="img-editorial w-1/2 min-w-[240px] rounded-2xl object-cover shadow-lg"
+          className="img-editorial mx-auto w-full max-w-md rounded-2xl object-cover shadow-lg lg:ms-auto"
         />
-      </div>
-      <div className="mt-8 flex flex-col items-start gap-4">
-        <Prose size="l" className="max-w-xl">{t('marketing.home.research.body')}</Prose>
-        <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>
       </div>
     </Section>
   );
