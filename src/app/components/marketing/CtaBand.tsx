@@ -40,7 +40,13 @@ export function CtaBand({ headingKey, bodyKey, checklistKeys, image }: CtaBandPr
             </ul>
             <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
           </div>
-          <img src={image} alt="" className="img-editorial mx-auto w-full max-w-md rounded-2xl object-cover shadow-lg" />
+          <div className="relative mx-auto w-full max-w-md">
+            <div
+              aria-hidden
+              className="absolute inset-0 -z-10 scale-90 rounded-full bg-accent/40 blur-3xl"
+            />
+            <img src={image} alt="" className="img-editorial w-full rounded-2xl object-cover" />
+          </div>
         </div>
       </Section>
     );
