@@ -321,7 +321,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.featured.title': 'מוצרים בשבילך',
   'marketing.home.featured.item1.label': 'גלו את התוכנית האישית שלכם',
   'marketing.home.featured.item1.cta': 'לצפייה איך זה עובד',
-  'marketing.home.featured.item2.label': 'צמיחת שיער אישית לפי הצרכים שלך',
+  'marketing.home.featured.item2.label': 'טיפול שמתאים את עצמו ככל שאת/ה מתקדם/ת',
 
   'marketing.home.valueProp.title': 'צמיחת שיער אפקטיבית, מותאמת אישית עבורך.',
   'marketing.home.valueProp.body':

@@ -100,12 +100,12 @@ function FeaturedFormula() {
         </div>
 
         <div className="flex flex-col items-start gap-3 md:items-end md:text-end">
+          <Prose className="md:ms-auto">{t('marketing.home.featured.item2.label')}</Prose>
           <img
             src={objectiveMeasurement4}
             alt=""
             className="img-editorial mt-4 aspect-[4/5] w-full max-w-[220px] rounded-xl object-cover shadow-sm md:mt-16"
           />
-          <Prose className="md:ms-auto">{t('marketing.home.featured.item2.label')}</Prose>
         </div>
       </div>
     </Section>
@@ -135,21 +135,6 @@ function HowItWorksSteps() {
           </li>
         ))}
       </ol>
-      <div className="mt-10 flex justify-center">
-        <ArrowLink to="/how-it-works">{t('marketing.home.how.cta')}</ArrowLink>
-      </div>
-
-      <div className="relative mt-16 flex items-center justify-center overflow-hidden">
-        <p
-          className="select-none whitespace-nowrap text-center font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
-          style={{ fontSize: 'clamp(2rem, 10vw, 7.125rem)' }}
-        >
-          {t('marketing.home.how.title')}
-        </p>
-        <div className="absolute">
-          <CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>
-        </div>
-      </div>
     </Section>
   );
 }
