@@ -371,13 +371,14 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.rootCause.profile3.label': 'מבוסס · קרקפת מלאה',
   'marketing.home.rootCause.addresses': 'מטפל ב',
 
-  'marketing.home.research.title': 'בנוי על רכיבים מחקריים מבוססים',
+  'marketing.home.research.title': 'עד לעומק הסיב',
   'marketing.home.research.body':
-    'מינוקסידיל ופינסטריד הם בין התרכובות הנחקרות ביותר לנשירת שיער מדפוס; חומצה אזלאית היא רכיב מוכר לתמיכה בחסימת DHT. קראו על המנגנון המלא.',
+    'כל סיב שיער מוגן על ידי קשקשי קוטיקולה חופפים — המבנה ששומר על השיער חזק ומבריק. הפורמולה שלנו בנויה לתמוך במבנה הזה, לא רק במה שצומח מהזקיק.',
   'marketing.home.research.cta': 'קריאה על המדע',
   'marketing.home.research.beforeLabel': 'לפני',
   'marketing.home.research.afterLabel': 'אחרי',
   'marketing.home.research.caption': 'תצוגת השוואה להמחשה — לא תוצאות מוצר ROOTÉ.',
+  'marketing.home.research.imageAlt': 'תצוגה מוגדלת של קוטיקולת שיער',
 
   'marketing.howItWorks.hero.title': 'איך ROOTÉ עובד',
   'marketing.howItWorks.hero.body': 'מהתמונה הראשונה שלך ועד לתוכנית המתמשכת — כך בדיוק נראה כל שלב.',

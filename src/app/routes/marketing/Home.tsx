@@ -16,8 +16,7 @@ import scanDevice from '@/assets/scan-device.jpg';
 import bannerSquare from '@/assets/BANNERS/BANNER SQUARE SIZE.png';
 import objectiveMeasurement4 from '@/assets/OBJECTIVE MEASUREMENT/OBJECTIVE MEASUREMENT 4.png';
 import productLineup from '@/assets/product-lineup.png';
-import scalpBefore from '@/assets/scalp-before.jpg';
-import scalpAfter from '@/assets/scalp-after.jpg';
+import hairCuticle from '@/assets/hair-cuticle.jpg';
 import beforeResult from '@/assets/BEFORE AND AFTER RESULT/BEFORE.png';
 import afterResult from '@/assets/BEFORE AND AFTER RESULT/AFTER.png';
 import beforeResult1 from '@/assets/BEFORE AND AFTER RESULT/BEFORE 1.png';
@@ -302,22 +301,12 @@ function Research() {
           <Prose size="l">{t('marketing.home.research.body')}</Prose>
           <ArrowLink to="/science">{t('marketing.home.research.cta')}</ArrowLink>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="relative">
-            <img src={scalpBefore} alt={t('marketing.home.research.beforeLabel')} className="img-editorial aspect-square w-full rounded-xl object-cover" />
-            <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide shadow-sm">
-              {t('marketing.home.research.beforeLabel')}
-            </span>
-          </div>
-          <div className="relative">
-            <img src={scalpAfter} alt={t('marketing.home.research.afterLabel')} className="img-editorial aspect-square w-full rounded-xl object-cover" />
-            <span className="absolute bottom-3 start-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide shadow-sm">
-              {t('marketing.home.research.afterLabel')}
-            </span>
-          </div>
-        </div>
+        <img
+          src={hairCuticle}
+          alt={t('marketing.home.research.imageAlt')}
+          className="img-editorial mx-auto w-full max-w-md rounded-2xl object-cover shadow-lg"
+        />
       </div>
-      <p className="mt-4 text-center text-[11px] text-muted-foreground">{t('marketing.home.research.caption')}</p>
     </Section>
   );
 }

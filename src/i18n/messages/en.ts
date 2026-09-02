@@ -368,13 +368,14 @@ export const en = {
   'marketing.home.rootCause.profile3.label': 'Established · Full scalp',
   'marketing.home.rootCause.addresses': 'Addresses',
 
-  'marketing.home.research.title': 'Built on well-studied ingredients',
+  'marketing.home.research.title': 'Down to the strand',
   'marketing.home.research.body':
-    'Minoxidil and Finasteride are among the most studied compounds for pattern hair loss; Azelaic Acid is a recognized DHT-support ingredient. See the full mechanism.',
+    'Every strand is protected by overlapping cuticle scales — the structure that keeps hair strong and reflective. Our formula is built to support that structure, not just what grows from the follicle.',
   'marketing.home.research.cta': 'Read the science',
   'marketing.home.research.beforeLabel': 'Before',
   'marketing.home.research.afterLabel': 'After',
   'marketing.home.research.caption': 'Illustrative comparison view — not ROOTÉ product results.',
+  'marketing.home.research.imageAlt': 'Magnified view of a hair shaft cuticle',
 
   'marketing.howItWorks.hero.title': 'How ROOTÉ works',
   'marketing.howItWorks.hero.body': 'From your first photo to your ongoing plan — here is exactly what happens at each step.',
