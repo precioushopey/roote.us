@@ -405,7 +405,7 @@ Each capability has a UI that already "talks to" a typed stub. A development tea
 - `pnpm build` → static `dist/` (Vite). Single JS chunk ~640 kB (gzip ~188 kB) → Vite chunk-size warning. Route-level code-splitting is a documented option, not done (NFR-001).
 - No deployment config in the repo (`Dockerfile`, `netlify.toml`, `vercel.json`, CI workflow — **none present**). `TBD` deployment target.
 - `.gitignore`: `node_modules/`, `dist/`, `.vite/`, `coverage/`, `*.log`, `.superpowers/`, `.worktrees/`, OS cruft.
-- Git: remote `github.com/precioushopey/roote.us`; branches `main` (== `origin/main` `64a94ae`), `roote/p0-p1`, `roote/p2b` (worktree), `roote/website` (worktree). **The working tree on `main` carries a large uncommitted change set** (~60 modified, 7 deleted, 32 untracked) — confirm the intended branch/commit strategy before resuming development (OQ-TECH-7).
+- Git: remote `github.com/precioushopey/roote.us`; branches `main` (== `origin/main` `09f68e4`, pushed 2026-09-03), `roote/p0-p1`, `roote/p2b` (worktree), `roote/website` (worktree). The working tree is clean (all committed + pushed as `09f68e4` on 2026-09-03; OQ-TECH-7 resolved).
 
 ---
 
@@ -413,7 +413,6 @@ Each capability has a UI that already "talks to" a typed stub. A development tea
 
 | Item | Impact | Ref |
 |---|---|---|
-| Large uncommitted tree on `main` | Unclear starting point for new work | OQ-TECH-7 |
 | No lint/format tooling | Style drift; some classes of bug uncaught | OQ-TECH-6 |
 | hairhealth.ai contract is a guess | Integration will need rework | OQ-TECH-1 |
 | Single large JS bundle | First-load weight | NFR-001 |

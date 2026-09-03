@@ -210,7 +210,7 @@ pnpm typecheck   # tsc --noEmit (strict) — 0 diagnostics
 - Program-day math is UTC-only (off-by-one for non-UTC users late in their day).
 - Orphaned i18n keys: `landing.*` (~60), `marketing.blog.*`.
 - Single ~640 kB JS bundle; no code-splitting. `favicon.png` is ~590 kB.
-- The working tree on `main` carries a large uncommitted change set — confirm the branch strategy before new work.
+- *(Resolved 2026-09-03: the working tree was committed + pushed as `09f68e4`; `main` == `origin/main`.)*
 
 ## Open Questions
 
@@ -218,12 +218,13 @@ pnpm typecheck   # tsc --noEmit (strict) — 0 diagnostics
 
 ## Development Readiness
 
-**READY WITH CONDITIONS.** The codebase is coherent, tested (206), and typechecks clean; every screen in the journey exists and is navigable, with clear backend seams. Blocked area: anything touching product/legal **content** until the three blocker questions are answered. Confirm the branch/commit strategy before the first new commit. Full checklist: [`docs/DESIGN-SPECIFICATION.md` §22](docs/DESIGN-SPECIFICATION.md#22-development-readiness).
+**READY WITH CONDITIONS.** The codebase is coherent, tested (206), and typechecks clean; every screen in the journey exists and is navigable, with clear backend seams. Blocked area: anything touching product/legal **content** until the three blocker questions are answered. Full checklist: [`docs/DESIGN-SPECIFICATION.md` §22](docs/DESIGN-SPECIFICATION.md#22-development-readiness).
 
 ## Change Log
 
 | Date | Change |
 |---|---|
+| 2026-09-03 | **Committed + pushed** the entire working tree (prior P2a/P2b/marketing/shop integration + this session's work) as `09f68e4` on `main` (`64a94ae..09f68e4`). OQ-TECH-7 resolved. |
 | 2026-09-03 | *(follow-up 3)* OQ-BIZ-7 direction: **keep the à-la-carte shop as a secondary refills/add-ons surface.** Made it discoverable — a bag icon + count badge in the marketing header (→ `/bag`) and a "Shop products" link in the `/app` sidebar (→ `/products`). |
 | 2026-09-03 | *(follow-up 2)* Consolidated the program + bag checkouts: one `Order` discriminated union + `submitPayment`, one shared `CheckoutFields` form, one order-id scheme, order history (`store/orders.ts`) shown on `/app/profile`; removed `store/bagCheckout.ts`; unified the `checkout.*` i18n namespace. |
 | 2026-09-03 | *(follow-up 1)* Filled the Privacy Policy bodies (preview-build data handling, production TODOs); added a "you agree to the Terms of Sale" line above both checkout submit buttons; fixed RTL bidi on the legal-entity name / phone in the Hebrew company block, Support page, and footer. |

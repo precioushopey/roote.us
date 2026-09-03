@@ -182,7 +182,7 @@ via `motion`; every effect needs a `prefers-reduced-motion` static fallback (`us
 ## Other notes
 
 - `guidelines/Guidelines.md` is the untouched Figma Make placeholder — ignore it.
-- The working tree on `main` currently carries a large uncommitted change set. Confirm the intended
-  branch/commit strategy before starting new work (`docs/…` OQ-TECH-7). Commit/push only when asked.
+- `main` == `origin/main` == `09f68e4` (pushed 2026-09-03); working tree starts clean. Commit/push
+  only when the user asks.
 - `docs/superpowers/specs/*` + `plans/*` are the original phase design intent; parts are superseded —
   the "Implementation vs. intent" table in `docs/DESIGN-SPECIFICATION.md` lists the deltas.

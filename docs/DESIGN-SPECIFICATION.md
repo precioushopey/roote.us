@@ -100,7 +100,7 @@ Companion documents (this file links to them; it does not duplicate them):
 - `pnpm-workspace.yaml` pins `supportedArchitectures` to linux x64/arm64 glibc, which can complicate `pnpm install` on the Windows dev machine. `react`/`react-dom` are `dependencies` now (were optional peers historically).
 - `figma:asset/<file>` imports resolve to `src/assets/<file>` via a custom Vite plugin — must be preserved.
 - Tailwind **v4** (`@tailwindcss/vite`), no `tailwind.config`, no PostCSS plugins (`postcss.config.mjs` is intentionally empty).
-- The working tree currently carries a **large uncommitted change set on `main`** (≈60 modified, 7 deleted, 32 untracked files). See §22.
+- The working tree is clean as of 2026-09-03 (everything committed + pushed as `09f68e4`).
 
 ### 3.4 Assumptions
 
@@ -656,7 +656,7 @@ Blocking items first. `⛔` = blocks meaningful further development in that area
 - **OQ-TECH-4 `✅ RESOLVED` (2026-09-03)** `CLAUDE.md` previously described the original Figma Make Etsy template. It has been rewritten to describe ROOTÉ (project summary, commands, hard rules, architecture, gotchas, pointer to these docs).
 - **OQ-TECH-5 `ℹ️`** Remove orphaned i18n keys (`landing.*` ~60, `marketing.blog.*`) or keep them for the planned `/blog` + `/results` build?
 - **OQ-TECH-6 `ℹ️`** Add an ESLint config + `lint` script? (`tsc --noEmit` now exists; lint is the remaining gap.)
-- **OQ-TECH-7 `ℹ️`** The working tree on `main` has a large uncommitted change set. Confirm the intended branch/commit strategy before development resumes.
+- **OQ-TECH-7 `✅ RESOLVED` (2026-09-03)** The previously-large uncommitted working tree on `main` was committed and pushed as `09f68e4` (`64a94ae..09f68e4`, `github.com/precioushopey/roote.us`). `main` == `origin/main` == `09f68e4`; working tree clean. Future work starts from there.
 - **OQ-TECH-8 `ℹ️`** Was removing the PDF report intentional and permanent? (`@react-pdf/renderer` + `src/pdf/` deleted; the original spec treats the PDF as a core deliverable.)
 
 ---
@@ -706,11 +706,11 @@ Blocking items first. `⛔` = blocks meaningful further development in that area
 | README verified | ✅ | Rewritten 2026-09-03; see change log in README |
 | `CLAUDE.md` accurate | ✅ | Rewritten 2026-09-03 to describe ROOTÉ (was the Figma Make Etsy template). OQ-TECH-4 resolved. |
 | Lint/format tooling | ❌ | None. OQ-TECH-6. |
-| Branch/commit strategy for resuming work | ⚠️ | Large uncommitted tree on `main`. OQ-TECH-7. |
+| Branch/commit strategy for resuming work | ✅ | Working tree committed + pushed as `09f68e4` (2026-09-03); starts clean. OQ-TECH-7 resolved. |
 
 ### Verdict: **READY WITH CONDITIONS**
 
-The codebase is coherent, well-tested (206 tests), typechecks clean, and every screen in the intended journey exists and is navigable. A developer can start wiring backends against clear seams, and `CLAUDE.md` + this doc set now onboard a contributor accurately. **However**, development that touches product/legal content is **blocked** until the three `⛔` open questions are answered (OQ-BIZ-1 pricing, OQ-BIZ-2 substantiated claims, OQ-LEG-1 medical/consent/legal copy review). Confirm the branch strategy (OQ-TECH-7) before the first new commit.
+The codebase is coherent, well-tested (206 tests), typechecks clean, and every screen in the intended journey exists and is navigable. A developer can start wiring backends against clear seams, and `CLAUDE.md` + this doc set now onboard a contributor accurately. **However**, development that touches product/legal content is **blocked** until the three `⛔` open questions are answered (OQ-BIZ-1 pricing, OQ-BIZ-2 substantiated claims, OQ-LEG-1 medical/consent/legal copy review). (OQ-TECH-7 — the uncommitted tree — is resolved: committed + pushed as `09f68e4` on 2026-09-03.)
 
 ---
 
