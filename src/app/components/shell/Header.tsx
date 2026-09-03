@@ -1,26 +1,49 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
+import { useCart } from '@/store/cart';
 import { useScrollCondense } from '@/app/lib/useScrollCondense';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
 import { cn } from '@/app/components/ui/utils';
+import type { MessageKey } from '@/i18n/messages';
 import { MobileMenu } from './MobileMenu';
 
-const PRIMARY_LINKS: Array<[key: string, to: string]> = [
+function BagLink({ label, count }: { label: string; count: number }) {
+  return (
+    <Link
+      to="/bag"
+      aria-label={label}
+      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+        <path d="M6 8h12l-1 12H7L6 8Z" strokeLinejoin="round" />
+        <path d="M9 8V6a3 3 0 0 1 6 0v2" strokeLinecap="round" />
+      </svg>
+      {count > 0 && (
+        <span className="absolute -end-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-medium text-accent-foreground">
+          {count}
+        </span>
+      )}
+    </Link>
+  );
+}
+
+const PRIMARY_LINKS: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.howItWorks', '/how-it-works'],
   ['marketing.nav.science', '/science'],
   ['marketing.nav.products', '/products'],
   ['marketing.nav.about', '/about'],
 ];
 
-const MORE_LINKS: Array<[key: string, to: string]> = [
+const MORE_LINKS: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.faq', '/faq'],
   ['marketing.nav.support', '/support'],
 ];
 
 export function Header() {
   const t = useT();
+  const cart = useCart();
   const condensed = useScrollCondense();
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -56,6 +79,7 @@ export function Header() {
   }, []);
 
   return (
+    <>
     <header
       className={cn(
         'sticky top-0 z-40 w-full transition-colors',
@@ -111,7 +135,8 @@ export function Header() {
           </div>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <BagLink label={t('cart.open')} count={cart.count} />
           <LocaleToggle />
           <Link
             to="/diagnosis"
@@ -143,7 +168,10 @@ export function Header() {
         </div>
       </div>
 
-      {menuOpen && <MobileMenu onClose={closeMenu} />}
     </header>
+    {/* Rendered outside <header>: the header's `backdrop-blur` would otherwise trap this
+        position:fixed overlay to the header's box instead of the viewport. */}
+    {menuOpen && <MobileMenu onClose={closeMenu} />}
+    </>
   );
 }

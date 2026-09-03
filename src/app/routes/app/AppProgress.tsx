@@ -35,13 +35,13 @@ export function AppProgress() {
   return (
     <div data-animate className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-medium">{t('app.progress.title')}</h1>
+        <h1 className="font-display text-3xl font-medium lg:text-4xl">{t('app.progress.title')}</h1>
         <p className="text-sm text-muted-foreground">{t('app.progress.subtitle')}</p>
       </header>
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-xl font-medium">{t('app.progress.add.title')}</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {ANGLES.map((angle) => (
             <PhotoUpload
               key={angle}
@@ -63,9 +63,9 @@ export function AppProgress() {
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-xl font-medium">{t('app.progress.compare.title')}</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {ANGLES.map((angle) => (
-            <div key={angle} className="rounded-xl border border-border p-3">
+            <div key={angle} className="rounded-xl border border-border bg-card p-3 shadow-sm">
               <p className="mb-2 text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">
                 {t(`photo.angle.${angle}` as never)}
               </p>

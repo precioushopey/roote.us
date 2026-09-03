@@ -1,8 +1,50 @@
 import { rooteContent } from '@/content/roote.config';
-import { isPending } from '@/content/pending';
 import type { Program } from '@/domain/program/types';
+import type { Locale, MessageKey } from '@/i18n/messages';
 
 const DAY_MS = 86_400_000;
+
+type Translate = (key: MessageKey, vars?: Record<string, string | number>) => string;
+
+export type ResolvedTreatment = {
+  key: string;
+  name: string;
+  usage: string;
+  frequency: string;
+  appliesToLabels: string[];
+};
+
+/**
+ * The post-purchase plan, resolved into the *current* locale from config.
+ *
+ * `program.plan` is a frozen snapshot of what was purchased, but the treatment
+ * set is config-derived and identical for every user, so the app renders the
+ * canonical `rooteContent.treatments` list — this way "My Plan" and "Today"
+ * localize when the language is switched instead of being stuck in the checkout
+ * locale. Names fall back to English where a Hebrew string is not yet in config.
+ */
+export function resolvePlanTreatments(t: Translate, locale: Locale): {
+  core: ResolvedTreatment[];
+  supporting: ResolvedTreatment[];
+} {
+  const one = (tr: {
+    key: string;
+    name: { en: string; he: string };
+    usageKey: MessageKey;
+    frequencyKey: MessageKey;
+    appliesToZones?: readonly string[];
+  }): ResolvedTreatment => ({
+    key: tr.key,
+    name: tr.name[locale] || tr.name.en,
+    usage: t(tr.usageKey),
+    frequency: t(tr.frequencyKey),
+    appliesToLabels: (tr.appliesToZones ?? []).map((z) => t(`zone.${z}` as MessageKey)),
+  });
+  return {
+    core: rooteContent.treatments.core.map(one),
+    supporting: rooteContent.treatments.supporting.map(one),
+  };
+}
 
 export function isoToday(now: Date = new Date()): string {
   return now.toISOString().slice(0, 10);
@@ -37,18 +79,18 @@ export function isReorderDue(program: Program, today: string = isoToday()): bool
 
 export type DailyTask = { key: string; name: string; usage: string; frequency: string };
 
-/** Flattens core + supporting treatments into one stable-keyed task list. */
-export function dailyTasks(program: Program, pendingName: string): DailyTask[] {
-  const rows = [
-    ...program.plan.core.map((tr, i) => ({ tr, key: `core:${i}` })),
-    ...program.plan.supporting.map((tr, i) => ({ tr, key: `support:${i}` })),
+/**
+ * Flattens the resolved core + supporting treatments into one stable-keyed task
+ * list. Keys (`core:N` / `support:N`) match the entries in `completionLog`.
+ */
+export function dailyTasks(resolved: {
+  core: ResolvedTreatment[];
+  supporting: ResolvedTreatment[];
+}): DailyTask[] {
+  return [
+    ...resolved.core.map((tr, i) => ({ key: `core:${i}`, name: tr.name, usage: tr.usage, frequency: tr.frequency })),
+    ...resolved.supporting.map((tr, i) => ({ key: `support:${i}`, name: tr.name, usage: tr.usage, frequency: tr.frequency })),
   ];
-  return rows.map(({ tr, key }) => ({
-    key,
-    name: isPending(tr.name) ? pendingName : tr.name,
-    usage: tr.usage,
-    frequency: tr.frequency,
-  }));
 }
 
 export function tasksDoneOn(program: Program, iso: string): Set<string> {

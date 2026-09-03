@@ -39,8 +39,10 @@ export function buildReport(input: {
   content: typeof rooteContent;
   locale: Locale;
   reportId: string;
+  /** Optional map of asset URLs keyed by treatment/ingredient key, for product photos. */
+  assets?: Record<string, string>;
 }): ReportModel {
-  const { diagnosis, analysis, content, locale, reportId } = input;
+  const { diagnosis, analysis, content, locale, reportId, assets = {} } = input;
   const dir: 'ltr' | 'rtl' = locale === 'he' ? 'rtl' : 'ltr';
 
   const scaleLabel = t(locale, `scale.${analysis.scale}.label`);
@@ -53,12 +55,15 @@ export function buildReport(input: {
 
   const titles = {
     header: t(locale, 'report.header.title'),
+    cover: t(locale, 'report.section.cover.title'),
+    scan: t(locale, 'report.section.scan.title'),
     photos: t(locale, 'report.section.photos.title'),
     analysis: t(locale, 'report.section.analysis.title'),
     hairLossType: t(locale, 'report.section.hairLossType.title'),
     currentSituation: t(locale, 'report.section.currentSituation.title'),
     plan: t(locale, 'report.section.plan.title'),
     duration: t(locale, 'report.section.duration.title'),
+    program: t(locale, 'report.section.program.title'),
     pricing: t(locale, 'report.section.pricing.title'),
     claims: t(locale, 'report.section.claims.title'),
   };
@@ -132,6 +137,60 @@ export function buildReport(input: {
     statusLabel: resolveLocalized(content.disclaimers.formulaPending, locale, 'formula status'),
   };
 
+  // --- Kit-style presentation groups (regimen blocks, active spotlights, expectations, FAQ) ---
+
+  const matchedBadge = t(locale, 'report.section.plan.matchedBadge');
+  const regimenBadges = t(locale, 'report.regimen.badges').split('|').filter(Boolean);
+
+  const coreItems = content.treatments.core.map((tr): ReportModel['regimen']['items'][number] => ({
+    key: tr.key,
+    kind: 'core',
+    name: resolveLocalized(tr.name, locale, `${tr.key} name (${locale})`),
+    form: t(locale, `report.treatment.${tr.key}.form`),
+    photo: assets[tr.key],
+    addressesLabels: t(locale, `report.treatment.${tr.key}.addresses`).split('|').filter(Boolean),
+    mechanism: [
+      t(locale, `report.treatment.${tr.key}.mechanism1`),
+      t(locale, `report.treatment.${tr.key}.mechanism2`),
+    ].filter((s) => s && !s.startsWith('report.treatment.')),
+    howToLabel: t(locale, 'report.regimen.howToApply', { frequency: t(locale, tr.frequencyKey) }),
+    appliesToLabel: tr.appliesToZones.map((z) => t(locale, `zone.${z}`)).join(', '),
+    badges: regimenBadges,
+  }));
+  const supportingItems = content.treatments.supporting.map((tr): ReportModel['regimen']['items'][number] => ({
+    key: tr.key,
+    kind: 'supporting',
+    name: resolveLocalized(tr.name, locale, `${tr.key} name (${locale})`),
+    form: t(locale, `report.treatment.${tr.key}.form`),
+    photo: assets[tr.key],
+    addressesLabels: t(locale, `report.treatment.${tr.key}.addresses`).split('|').filter(Boolean),
+    mechanism: [t(locale, `report.treatment.${tr.key}.mechanism1`)].filter(
+      (s) => s && !s.startsWith('report.treatment.'),
+    ),
+    howToLabel: t(locale, 'report.regimen.howToUse', { frequency: t(locale, tr.frequencyKey) }),
+    badges: regimenBadges,
+  }));
+
+  const regimen = {
+    badge: matchedBadge,
+    title: t(locale, 'report.regimen.title'),
+    items: [...coreItems, ...supportingItems],
+  };
+
+  const actives = {
+    title: t(locale, 'report.actives.title'),
+    note: t(locale, 'report.actives.note'),
+    items: content.formula.ingredients.map((ing): ReportModel['actives']['items'][number] => ({
+      key: ing.key,
+      name: ing.name,
+      roleLabel: t(locale, `role.${ing.role}`),
+      mechanism: t(locale, `marketing.science.ingredients.evidence.${ing.role}`),
+      photo: assets[ing.key],
+      percentageLabel:
+        content.formula.displayPercentagesPublicly && ing.percentage != null ? `${ing.percentage}%` : undefined,
+    })),
+  };
+
   const recommendedDuration = {
     days: analysis.recommendedDurationDays,
     label: t(locale, 'report.duration.label', { days: analysis.recommendedDurationDays }),
@@ -192,14 +251,41 @@ export function buildReport(input: {
     formulaPending: resolveLocalized(content.disclaimers.formulaPending, locale, 'formula-pending disclaimer'),
   };
 
+  const expect_ = {
+    title: t(locale, 'report.expect.title'),
+    intro: t(locale, 'report.expect.intro'),
+    stats: claims.map((c) => ({ label: c.label, value: c.valueLabel })),
+    note: t(locale, 'marketing.howItWorks.timeline.shedding'),
+    timeline: (['m1', 'm3', 'm6'] as const).map((k) => ({
+      label: t(locale, `marketing.howItWorks.timeline.${k}`),
+      outcome: PENDING(`reported change at ${k}`),
+    })),
+  };
+
+  const faq = {
+    title: t(locale, 'report.faq.title'),
+    items: [
+      { q: t(locale, 'marketing.howItWorks.faq.q1'), a: t(locale, 'marketing.howItWorks.faq.a1') },
+      { q: t(locale, 'marketing.faq.plan.q1'), a: t(locale, 'marketing.faq.plan.a1') },
+      { q: t(locale, 'marketing.howItWorks.faq.q2'), a: t(locale, 'marketing.howItWorks.faq.a2') },
+      { q: t(locale, 'marketing.faq.ingredients.q1'), a: t(locale, 'marketing.faq.ingredients.a1') },
+    ],
+  };
+
   const model: ReportModel = {
     meta: { reportId, generatedAt: new Date().toISOString(), locale, dir, scaleLine, demoDisclaimer },
     titles,
+    ribbon: t(locale, 'report.ribbon'),
+    intro: { greeting: t(locale, 'report.intro.greeting'), body: t(locale, 'report.intro.body') },
     photos,
     analysis: { scaleLabel, scaleStrip, flagged, densityMap, metrics },
     hairLossType,
     currentSituation,
-    plan: { matchedToScanBadge: t(locale, 'report.section.plan.matchedBadge'), labels: planLabels, core, supporting, formula },
+    plan: { matchedToScanBadge: matchedBadge, labels: planLabels, core, supporting, formula },
+    regimen,
+    actives,
+    expect: expect_,
+    faq,
     recommendedDuration,
     pricing,
     claims,

@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { motion } from 'motion/react';
+import { useT, useLocale } from '@/i18n/LocaleProvider';
+import { useReducedMotion } from '@/app/lib/useReducedMotion';
 import { useSession } from '@/store/sessionStore';
 import { redirectForStep } from './guards';
 import { QUESTIONS } from '@/app/components/diagnosis/questions';
@@ -28,10 +30,19 @@ async function loadPhotoBlobs(photos: PhotoRef[]): Promise<{ angleKey: string; b
 
 export function AnalyzingStep() {
   const t = useT();
+  const { locale } = useLocale();
+  const reduceMotion = useReducedMotion();
   const navigate = useNavigate();
   const session = useSession();
   const [step, setStep] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
   const finishedRef = useRef(false);
+
+  // Forward progression enters from the trailing edge (right in LTR, left in RTL);
+  // going back reverses it.
+  const baseEnterX = locale === 'he' ? -28 : 28;
+  const enterX = reduceMotion ? 0 : baseEnterX * direction;
+  const enterTransition = { duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] as const };
 
   // keep latest diagnosis data reachable from the strip's onComplete callback
   const latest = useRef(session.diagnosis);
@@ -50,7 +61,13 @@ export function AnalyzingStep() {
 
   const onSelect = (id: keyof Answers, value: string) => {
     session.setAnswer(id, value as Answers[typeof id]);
+    setDirection(1);
     setStep((s) => Math.min(s + 1, QUESTIONS.length));
+  };
+
+  const onBack = () => {
+    setDirection(-1);
+    setStep((s) => Math.max(0, s - 1));
   };
 
   const finish = () => {
@@ -84,17 +101,38 @@ export function AnalyzingStep() {
 
   return (
     <section data-animate className="mx-auto flex max-w-md flex-col gap-8">
-      <AnalyzingStrip running gateReady={allAnswered} onComplete={finish} />
+      {/* Hold the analysis until the user is actually on the finalizing screen, so
+          stepping back to review an answer doesn't complete + navigate away. */}
+      <AnalyzingStrip
+        running
+        gateReady={allAnswered && step >= QUESTIONS.length}
+        onComplete={finish}
+      />
       {step < QUESTIONS.length ? (
-        <QuestionCard
-          question={current}
-          index={step}
-          total={QUESTIONS.length}
-          value={answers[current.id] as string | undefined}
-          onSelect={onSelect}
-        />
+        <motion.div
+          key={step}
+          initial={reduceMotion ? false : { opacity: 0, x: enterX }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={enterTransition}
+        >
+          <QuestionCard
+            question={current}
+            index={step}
+            total={QUESTIONS.length}
+            value={answers[current.id] as string | undefined}
+            onSelect={onSelect}
+            onBack={step > 0 ? onBack : undefined}
+          />
+        </motion.div>
       ) : (
-        <p className="text-center text-sm text-muted-foreground">{t('analysis.finalizing')}</p>
+        <motion.p
+          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={enterTransition}
+          className="text-center text-sm text-muted-foreground"
+        >
+          {t('analysis.finalizing')}
+        </motion.p>
       )}
     </section>
   );

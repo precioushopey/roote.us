@@ -16,7 +16,8 @@ export function PhotosStep() {
   if (redirect) return <Navigate to={redirect} replace />;
 
   const byAngle = (a: AngleKey) => session.diagnosis.photos.find((p) => p.angleKey === a);
-  const canContinue = session.diagnosis.photos.length >= 1;
+  const haveCount = ANGLES.filter((a) => byAngle(a)).length;
+  const canContinue = haveCount === ANGLES.length;
 
   return (
     <section data-animate className="mx-auto flex max-w-lg flex-col gap-6">
@@ -36,7 +37,11 @@ export function PhotosStep() {
         ))}
       </div>
       <p className="text-xs text-muted-foreground">{t('diagnosis.photos.privacy')}</p>
-      {/* TODO: confirm with client — minimum required photo count (currently >= 1 of 4). */}
+      {!canContinue && (
+        <p className="text-xs text-muted-foreground">
+          {t('diagnosis.photos.needAll', { have: haveCount, total: ANGLES.length })}
+        </p>
+      )}
       <button
         type="button"
         disabled={!canContinue}

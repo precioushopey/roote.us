@@ -2,7 +2,9 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { SessionProvider } from '@/store/sessionStore';
 import { AuthProvider } from '@/store/auth';
+import { CartProvider } from '@/store/cart';
 import { ReportPage } from './routes/report/ReportPage';
+import { LoginPage } from './routes/auth/LoginPage';
 import { FunnelShell } from './components/shell/FunnelShell';
 import { marketingRoutes } from './routes/marketing/marketingRoutes';
 import { DiagnosisLayout } from './routes/diagnosis/DiagnosisLayout';
@@ -22,12 +24,14 @@ import { AppPlan } from './routes/app/AppPlan';
 import { AppProgress } from './routes/app/AppProgress';
 import { AppCare } from './routes/app/AppCare';
 import { AppRescan } from './routes/app/AppRescan';
+import { AppProfile } from './routes/app/AppProfile';
 
 const router = createBrowserRouter([
   marketingRoutes,
   {
     element: <FunnelShell />,
     children: [
+      { path: '/login', element: <LoginPage /> },
       {
         path: '/diagnosis',
         element: <DiagnosisLayout />,
@@ -61,6 +65,7 @@ const router = createBrowserRouter([
       { path: 'progress', element: <AppProgress /> },
       { path: 'care', element: <AppCare /> },
       { path: 'rescan', element: <AppRescan /> },
+      { path: 'profile', element: <AppProfile /> },
     ],
   },
   { path: '/report/:reportId', element: <ReportPage /> },
@@ -72,7 +77,9 @@ export default function App() {
     <LocaleProvider>
       <AuthProvider>
         <SessionProvider>
-          <RouterProvider router={router} />
+          <CartProvider>
+            <RouterProvider router={router} />
+          </CartProvider>
         </SessionProvider>
       </AuthProvider>
     </LocaleProvider>

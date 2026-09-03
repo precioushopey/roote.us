@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
+import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
@@ -39,7 +40,7 @@ export function HowItWorks() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.howItWorks.hero.title')} className="mx-auto max-w-3xl uppercase" />
+          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.howItWorks.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.howItWorks.hero.body')}</Prose>
           <div className="mt-8">
             <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
@@ -50,7 +51,7 @@ export function HowItWorks() {
       <Section>
         <SectionHeading
           index="01"
-          clamp="clamp(1.75rem, 7vw, 5rem)"
+          clamp={DISPLAY_CLAMP}
           trailing={<Link to="/products"><Eyebrow>{t('marketing.nav.products')}</Eyebrow></Link>}
         >
           {t('marketing.nav.howItWorks')}
@@ -70,7 +71,7 @@ export function HowItWorks() {
       </Section>
 
       <Section tone="ink">
-        <SectionHeading index="02" onInk align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
+        <SectionHeading index="02" onInk align="end" clamp={DISPLAY_CLAMP}>
           {t('marketing.howItWorks.kit.title')}
         </SectionHeading>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -91,7 +92,7 @@ export function HowItWorks() {
       </Section>
 
       <Section>
-        <SectionHeading index="03" clamp="clamp(1.75rem, 7vw, 5rem)">
+        <SectionHeading index="03" clamp={DISPLAY_CLAMP}>
           {t('marketing.howItWorks.faq.title')}
         </SectionHeading>
         <div className="mt-10 flex max-w-2xl flex-col gap-6 text-start">

@@ -357,12 +357,12 @@ function Research() {
   return (
     <Section className="overflow-hidden border-t border-border pt-0">
       <div className="flex justify-end">
-        <Link to="/science">
-          <Eyebrow>{t('marketing.nav.science')}</Eyebrow>
-        </Link>
+        <span aria-hidden className="text-2xl tracking-[0.18em] text-accent">05</span>
       </div>
       <div className="mt-3 flex items-baseline justify-between gap-2">
-        <span aria-hidden className="shrink-0 text-2xl tracking-[0.18em] text-accent">05</span>
+        <Link to="/science" className="shrink-0">
+          <Eyebrow>{t('marketing.nav.science')}</Eyebrow>
+        </Link>
         <h2
           className="select-none whitespace-nowrap text-end font-display font-medium uppercase leading-none tracking-[-0.02em] text-foreground"
           style={{ fontSize: 'clamp(1.75rem, 8.5vw, 7.125rem)' }}

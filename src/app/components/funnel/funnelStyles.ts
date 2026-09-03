@@ -15,7 +15,7 @@ export const funnelSecondaryBtn =
 
 /** Selectable option / answer card. Pairs with a visually-hidden radio or a plain button. */
 export const funnelOptionCard =
-  'rounded-xl border border-border bg-background p-4 text-start text-sm transition-colors hover:border-accent has-[:checked]:border-accent has-[:checked]:bg-accent/5';
+  'rounded-xl border border-border bg-card p-4 text-start text-sm shadow-sm transition-colors hover:border-accent has-[:checked]:border-accent has-[:checked]:bg-accent/5';
 
 export const funnelField =
   'rounded-md border border-input bg-input-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-accent';

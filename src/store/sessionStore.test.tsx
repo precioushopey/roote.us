@@ -70,7 +70,7 @@ describe('sessionStore', () => {
         notes: [],
         planEmphasis: 'stabilize-regrow' as const,
         summaryPlainKey: 'summary.norwood.moderate',
-        recommendedDurationDays: 270,
+        recommendedDurationDays: 270 as const,
       },
       durationDays: 180 as const,
       startDate: '2026-09-02',

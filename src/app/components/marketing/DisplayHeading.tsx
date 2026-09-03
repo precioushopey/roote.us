@@ -4,6 +4,8 @@ import { cn } from '@/app/components/ui/utils';
 interface DisplayHeadingProps {
   as?: 'h1' | 'h2' | 'h3' | 'h4';
   size?: 'xl' | 'l' | 'm' | 's';
+  /** CSS font-size expression (e.g. a clamp()); overrides `size` when set. */
+  clamp?: string;
   text: string;
   ghost?: string;
   onInk?: boolean;
@@ -13,6 +15,7 @@ interface DisplayHeadingProps {
 export function DisplayHeading({
   as: Tag = 'h2',
   size = 'm',
+  clamp,
   text,
   ghost,
   onInk = false,
@@ -29,7 +32,10 @@ export function DisplayHeading({
   const ghostClass = onInk ? 'text-ink-ghost' : 'text-accent-ghost';
 
   return (
-    <Tag className={cn(sizeClasses, base, className)}>
+    <Tag
+      className={cn(clamp ? 'leading-[0.95] tracking-[-0.02em]' : sizeClasses, base, className)}
+      style={clamp ? { fontSize: clamp } : undefined}
+    >
       {text}
       {ghost && (
         <span aria-hidden="true" className={ghostClass}>

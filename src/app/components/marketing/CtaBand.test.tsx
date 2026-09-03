@@ -10,5 +10,5 @@ it('renders a heading and a CTA linking to /diagnosis', () => {
     <CtaBand headingKey="marketing.cta.default.title" bodyKey="marketing.cta.default.body" />
   </MemoryRouter></LocaleProvider>);
   expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('one free analysis');
-  expect(screen.getByRole('link', { name: 'Start free analysis' })).toHaveAttribute('href', '/diagnosis');
+  expect(screen.getByRole('link', { name: 'Start Free Diagnosis' })).toHaveAttribute('href', '/diagnosis');
 });

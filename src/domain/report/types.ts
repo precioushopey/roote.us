@@ -3,6 +3,30 @@ import type { Money } from './money';
 
 export type Resolved<T extends string> = T | PendingMarker;
 
+/** One treatment presented as a product/regimen block (photo, tags, mechanism, how-to, badges). */
+export type ReportRegimenItem = {
+  key: string;
+  kind: 'core' | 'supporting';
+  name: Resolved<string>;
+  form: string;
+  photo?: string;
+  addressesLabels: string[];
+  mechanism: string[];
+  howToLabel: string;
+  appliesToLabel?: string;
+  badges: string[];
+};
+
+/** One active-ingredient spotlight. */
+export type ReportActive = {
+  key: string;
+  name: string;
+  roleLabel: string;
+  mechanism: string;
+  photo?: string;
+  percentageLabel?: string;
+};
+
 export type ReportModel = {
   meta: {
     reportId: string;
@@ -15,15 +39,20 @@ export type ReportModel = {
   // Section / header headings, resolved inside buildReport so no renderer touches i18n.
   titles: {
     header: string;
+    cover: string;
+    scan: string;
     photos: string;
     analysis: string;
     hairLossType: string;
     currentSituation: string;
     plan: string;
     duration: string;
+    program: string;
     pricing: string;
     claims: string;
   };
+  ribbon: string;
+  intro: { greeting: string; body: string };
   photos: { angleKey: 'front' | 'top' | 'crown' | 'hairline'; dataUrl: string; caption: string }[];
   analysis: {
     scaleLabel: string;
@@ -41,6 +70,16 @@ export type ReportModel = {
     supporting: { name: Resolved<string>; usage: string; frequency: string }[];
     formula: { ingredients: { name: string; percentage?: number; roleLabel: string }[]; statusLabel: Resolved<string> } | null;
   };
+  regimen: { badge: string; title: string; items: ReportRegimenItem[] };
+  actives: { title: string; note: string; items: ReportActive[] };
+  expect: {
+    title: string;
+    intro: string;
+    stats: { label: string; value: Resolved<string> }[];
+    note: string;
+    timeline: { label: string; outcome: PendingMarker }[];
+  };
+  faq: { title: string; items: { q: string; a: string }[] };
   recommendedDuration: { days: number; label: string; rationaleNote: string };
   pricing: {
     duration: { days: number; label: string };

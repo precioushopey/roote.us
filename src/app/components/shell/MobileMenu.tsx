@@ -2,8 +2,9 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
+import type { MessageKey } from '@/i18n/messages';
 
-const MENU_LINKS: Array<[key: string, to: string]> = [
+const MENU_LINKS: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.howItWorks', '/how-it-works'],
   ['marketing.nav.science', '/science'],
   ['marketing.nav.products', '/products'],

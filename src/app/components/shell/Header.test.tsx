@@ -3,6 +3,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
+import { CartProvider } from '@/store/cart';
 import { Header } from './Header';
 
 function renderHeader() {
@@ -13,7 +14,9 @@ function renderHeader() {
   );
   render(
     <LocaleProvider>
-      <RouterProvider router={router} />
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
     </LocaleProvider>,
   );
 }
@@ -26,7 +29,7 @@ describe('Header', () => {
     expect(within(nav).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/science');
     expect(within(nav).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/products');
     expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about');
-    expect(screen.getByRole('link', { name: 'Start free analysis' })).toHaveAttribute('href', '/diagnosis');
+    expect(screen.getByRole('link', { name: 'Start Free Diagnosis' })).toHaveAttribute('href', '/diagnosis');
   });
 
   it('links the wordmark home', () => {
@@ -61,7 +64,7 @@ describe('Header', () => {
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(within(dialog).getByRole('link', { name: 'How It Works' })).toHaveAttribute('href', '/how-it-works');
     expect(within(dialog).getByRole('link', { name: 'FAQ' })).toHaveAttribute('href', '/faq');
-    expect(within(dialog).getByRole('link', { name: 'Start free analysis' })).toHaveAttribute('href', '/diagnosis');
+    expect(within(dialog).getByRole('link', { name: 'Start Free Diagnosis' })).toHaveAttribute('href', '/diagnosis');
 
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

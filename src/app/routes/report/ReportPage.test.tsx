@@ -1,13 +1,10 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { SessionProvider } from '@/store/sessionStore';
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { ReportPage } from './ReportPage';
-
-vi.mock('@react-pdf/renderer', () => ({ pdf: vi.fn() }));
-vi.mock('@/pdf/ReportDocument', () => ({ ReportDocument: () => null }));
 
 function seedSession(reportId: string | null) {
   localStorage.setItem('roote.locale', 'en');
@@ -43,18 +40,19 @@ describe('ReportPage', () => {
     expect(screen.getByText('Report not found')).toBeInTheDocument();
   });
 
-  it('renders the full report when the reportId matches a completed session', () => {
+  it('renders the branded plan when the reportId matches a completed session', () => {
     seedSession('rep-abc');
     renderAt('/report/rep-abc');
-    expect(screen.getByText('Personalized Hair Report')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Your personalized plan is ready.');
     expect(screen.getByText('MATCHED TO YOUR SCAN')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Start My Program' })).toBeInTheDocument();
+    expect(screen.getByText('Your regimen')).toBeInTheDocument();
+    const cta = screen.getByRole('link', { name: 'Start My Program' });
+    expect(cta).toHaveAttribute('href', '/start?report=rep-abc');
   });
 
-  it('shows a Download PDF button that is enabled once the report is built', () => {
+  it('renders unresolved figures as PENDING chips, not invented numbers', () => {
     seedSession('rep-abc');
     renderAt('/report/rep-abc');
-    const btn = screen.getByRole('button', { name: 'Download PDF' });
-    expect(btn).toBeEnabled();
+    expect(screen.getAllByText(/\[PENDING:/).length).toBeGreaterThan(0);
   });
 });

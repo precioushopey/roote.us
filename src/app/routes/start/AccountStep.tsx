@@ -1,6 +1,6 @@
 // src/app/routes/start/AccountStep.tsx
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
@@ -65,6 +65,10 @@ export function AccountStep() {
           {t('start.account.magicLink')}
         </button>
       </form>
+      <p className="text-xs text-muted-foreground">
+        {t('start.account.haveAccount')}{' '}
+        <Link to="/login" className="text-accent underline">{t('start.account.signInCta')}</Link>
+      </p>
     </div>
   );
 }

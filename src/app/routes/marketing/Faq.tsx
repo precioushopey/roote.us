@@ -1,5 +1,6 @@
 import { useT } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
+import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
@@ -35,7 +36,7 @@ export function Faq() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.faq.hero.title')} className="mx-auto max-w-3xl uppercase" />
+          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.faq.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.faq.hero.body')}</Prose>
         </div>
       </Section>
@@ -64,7 +65,7 @@ export function Faq() {
       </Section>
 
       <Section tone="ink">
-        <SectionHeading index="04" onInk align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
+        <SectionHeading index="04" onInk align="end" clamp={DISPLAY_CLAMP}>
           {t('marketing.faq.support.title')}
         </SectionHeading>
         <div className="mt-8 flex justify-end">

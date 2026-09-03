@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import type { Program } from '@/domain/program/types';
+import { rooteContent } from '@/content/roote.config';
 import {
   adherencePct,
   dailyTasks,
@@ -7,6 +8,7 @@ import {
   isReorderDue,
   programDay,
   reorderDate,
+  resolvePlanTreatments,
 } from './programProgress';
 
 function makeProgram(over: Partial<Program> = {}): Program {
@@ -19,7 +21,7 @@ function makeProgram(over: Partial<Program> = {}): Program {
     endDate: '2026-06-30',
     plan: {
       core: [{ name: 'Topical', usage: 'apply', frequency: 'twice daily', appliesToLabels: ['crown'] }],
-      supporting: [{ name: 'Cleanser', usage: 'wash', frequency: 'daily', appliesToLabels: [] }],
+      supporting: [{ name: 'Cleanser', usage: 'wash', frequency: 'daily' }],
     },
     completionLog: {},
     progressPhotos: [],
@@ -50,10 +52,25 @@ describe('programProgress', () => {
     expect(isReorderDue(p, '2026-06-15')).toBe(true);
   });
 
-  it('dailyTasks flattens core + supporting with stable keys', () => {
-    const tasks = dailyTasks(makeProgram(), 'Your treatment');
+  it('dailyTasks flattens the resolved core + supporting plan with stable keys', () => {
+    const tasks = dailyTasks({
+      core: [{ key: 'roote-topical', name: 'Topical', usage: 'apply', frequency: 'twice daily', appliesToLabels: ['crown'] }],
+      supporting: [{ key: 'cleanser', name: 'Cleanser', usage: 'wash', frequency: 'daily', appliesToLabels: [] }],
+    });
     expect(tasks.map((t) => t.key)).toEqual(['core:0', 'support:0']);
     expect(tasks[0].name).toBe('Topical');
+  });
+
+  it('resolvePlanTreatments renders names in the active locale and resolves usage/frequency via t', () => {
+    const he = resolvePlanTreatments((k) => `t:${k}`, 'he');
+    const en = resolvePlanTreatments((k) => `t:${k}`, 'en');
+    expect(he.core[0].name).toBe(rooteContent.treatments.core[0].name.he);
+    expect(en.core[0].name).toBe(rooteContent.treatments.core[0].name.en);
+    expect(he.core[0].name).not.toBe(en.core[0].name);
+    expect(he.supporting[0].name).toBe(rooteContent.treatments.supporting[0].name.he);
+    expect(he.supporting[0].name).not.toBe(en.supporting[0].name);
+    expect(he.core[0].usage).toBe('t:usage.apply-scalp-affected');
+    expect(he.core[0].frequency).toBe('t:frequency.twice-daily');
   });
 
   it('adherencePct is a rolling completion rate over the window', () => {

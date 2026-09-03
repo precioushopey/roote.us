@@ -17,7 +17,7 @@ describe('App shell', () => {
     localStorage.setItem('roote.locale', 'en');
     render(<App />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Regrowth');
-    expect(screen.getAllByRole('link', { name: 'Start free analysis' }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('link', { name: 'Start Free Diagnosis' }).length).toBeGreaterThan(0);
   });
 
   it('reaches /start and can sign up to advance to the plan step', async () => {

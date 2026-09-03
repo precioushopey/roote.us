@@ -4,7 +4,7 @@ import type { SessionState } from '@/store/sessionStore';
 
 const empty: SessionState = {
   diagnosis: { gender: null, photos: [], answers: {} },
-  analysis: null, reportId: null, account: { email: null }, program: null,
+  analysis: null, reportId: null, account: { email: null }, draftDurationDays: null, program: null,
 };
 const withGender: SessionState = { ...empty, diagnosis: { ...empty.diagnosis, gender: 'male' } };
 const withPhoto: SessionState = {

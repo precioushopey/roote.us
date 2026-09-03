@@ -3,8 +3,11 @@ import type { ReportModel } from '@/domain/report/types';
 
 export type ProgramDurationDays = 90 | 120 | 180 | 270 | 360;
 
-/** Same shape as one row of ReportModel.plan.core/supporting — frozen at checkout time. */
+/** One row of ReportModel.plan.core — frozen at checkout time (carries per-zone `appliesToLabels`). */
 export type Treatment = ReportModel['plan']['core'][number];
+
+/** One row of ReportModel.plan.supporting — like Treatment but without per-zone targeting. */
+export type SupportingTreatment = ReportModel['plan']['supporting'][number];
 
 export type ProgressPhoto = {
   id: string;
@@ -27,7 +30,7 @@ export type Program = {
   durationDays: ProgramDurationDays;
   startDate: string; // YYYY-MM-DD
   endDate: string;   // YYYY-MM-DD, startDate + durationDays
-  plan: { core: Treatment[]; supporting: Treatment[] };
+  plan: { core: Treatment[]; supporting: SupportingTreatment[] };
   completionLog: Record<string, string[]>; // isoDate -> taskKey[]
   progressPhotos: ProgressPhoto[];
   reminders: Reminder[];

@@ -1,5 +1,6 @@
 import { useT } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
+import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
@@ -22,7 +23,7 @@ export function About() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.about.hero.title')} className="mx-auto max-w-3xl uppercase" />
+          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.about.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.about.mission.body')}</Prose>
           <div className="mt-8">
             <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
@@ -33,7 +34,7 @@ export function About() {
       <Section className="overflow-hidden">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="01" clamp="clamp(1.75rem, 7vw, 5rem)">
+            <SectionHeading index="01" clamp={DISPLAY_CLAMP}>
               {t('marketing.about.story.title')}
             </SectionHeading>
             <Prose size="l" className="max-w-xl">{t('marketing.about.story.body')}</Prose>
@@ -47,7 +48,7 @@ export function About() {
       </Section>
 
       <Section tone="ink">
-        <SectionHeading index="02" onInk align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
+        <SectionHeading index="02" onInk align="end" clamp={DISPLAY_CLAMP}>
           {t('marketing.about.values.title')}
         </SectionHeading>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">

@@ -2,6 +2,7 @@ import { it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
+import { CartProvider } from '@/store/cart';
 import { MarketingShell } from './MarketingShell';
 
 function renderShell() {
@@ -10,7 +11,7 @@ function renderShell() {
     [{ element: <MarketingShell />, children: [{ path: '/', element: <p>child content</p> }] }],
     { initialEntries: ['/'] },
   );
-  render(<LocaleProvider><RouterProvider router={router} /></LocaleProvider>);
+  render(<LocaleProvider><CartProvider><RouterProvider router={router} /></CartProvider></LocaleProvider>);
 }
 
 it('has a localized, non-empty skip link that targets #main', () => {

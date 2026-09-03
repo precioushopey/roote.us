@@ -45,13 +45,19 @@ describe('PhotosStep', () => {
     expect(screen.getByText('gender page')).toBeInTheDocument();
   });
 
-  it('enables Continue after one photo and advances to analyzing', async () => {
+  it('requires all four angles before Continue enables, then advances to analyzing', async () => {
     seedGender('male');
     renderPhotos();
     const cta = screen.getByRole('button', { name: /continue|המשך/i });
     expect(cta).toBeDisabled();
-    const input = screen.getAllByLabelText(/front|top|crown|hairline|קדמי|עליון|קודקוד|קו שיער/i)[0];
-    await userEvent.upload(input, new File(['b'], 'f.jpg', { type: 'image/jpeg' }));
+    const inputs = screen.getAllByLabelText(/front|top|crown|hairline|קדמי|עליון|קודקוד|קו שיער/i);
+    expect(inputs).toHaveLength(4);
+    // still disabled after 3 of 4
+    for (const input of inputs.slice(0, 3)) {
+      await userEvent.upload(input, new File(['b'], 'p.jpg', { type: 'image/jpeg' }));
+    }
+    expect(cta).toBeDisabled();
+    await userEvent.upload(inputs[3], new File(['b'], 'p.jpg', { type: 'image/jpeg' }));
     await waitFor(() => expect(cta).toBeEnabled());
     await userEvent.click(cta);
     expect(screen.getByText('analyzing page')).toBeInTheDocument();

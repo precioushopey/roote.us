@@ -8,7 +8,11 @@ import { About } from './About';
 import { Faq } from './Faq';
 import { Support } from './Support';
 import { Terms } from './Terms';
+import { TermsOfSale } from './TermsOfSale';
 import { Privacy } from './Privacy';
+import { BagPage } from '@/app/routes/bag/BagPage';
+import { BagCheckout } from '@/app/routes/bag/BagCheckout';
+import { BagSuccess } from '@/app/routes/bag/BagSuccess';
 
 export const marketingRoutes: RouteObject = {
   element: <MarketingShell />,
@@ -21,6 +25,10 @@ export const marketingRoutes: RouteObject = {
     { path: 'faq', element: <Faq /> },
     { path: 'support', element: <Support /> },
     { path: 'terms', element: <Terms /> },
+    { path: 'terms-of-sale', element: <TermsOfSale /> },
     { path: 'privacy', element: <Privacy /> },
+    { path: 'bag', element: <BagPage /> },
+    { path: 'bag/checkout', element: <BagCheckout /> },
+    { path: 'bag/success', element: <BagSuccess /> },
   ],
 };

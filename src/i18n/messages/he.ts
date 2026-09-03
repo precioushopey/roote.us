@@ -3,8 +3,10 @@ import type { MessageKey } from './en';
 export const he: Record<MessageKey, string> = {
   'common.continue': 'המשך',
   'common.back': 'חזרה',
+  'meta.title': 'ROOTÉ — אבחון שיער חינם',
   'common.next': 'הבא',
   'common.start': 'התחלה',
+  'common.progressLabel': 'התקדמות',
   'brand.tagline': 'מערכת אישית לצמיחת שיער',
   'locale.toggle.toHe': 'עברית',
   'locale.toggle.toEn': 'English',
@@ -78,6 +80,7 @@ export const he: Record<MessageKey, string> = {
   'diagnosis.photos.title': 'הוספת תמונות של האזור',
   'diagnosis.photos.howto': 'תאורה טובה, שיער יבש, מצלמה ישרה. קדמי, עליון, קודקוד, קו שיער.',
   'diagnosis.photos.privacy': 'התמונות משמשות אך ורק לאבחון שלך.',
+  'diagnosis.photos.needAll': 'הוספת {have} מתוך {total} תמונות. יש להוסיף את כל ארבע הזוויות כדי להמשיך.',
 
   'q.counter': 'שאלה {index} מתוך {total}',
   'q.area.prompt': 'איפה אתה/ת חווה/ת נשירת שיער?',
@@ -111,9 +114,9 @@ export const he: Record<MessageKey, string> = {
   'ready.title': 'אבחון השיער שלך הושלם בהצלחה',
   'ready.teaser': '{scale} · דפוס {severity} · {zones} אזורים מסומנים',
   'ready.email.placeholder': 'כתובת אימייל',
-  'ready.email.submit': 'שליחת התוצאות האישיות שלי',
+  'ready.email.submit': 'לצפייה בתוצאות האישיות שלי',
   'ready.email.invalid': 'נא להזין כתובת אימייל תקינה.',
-  'ready.consent': 'נשלח לך את הדוח ונוכל ליצור קשר בנוגע לתוכנית.',
+  'ready.consent': 'התוצאות ייפתחו במסך הבא. ייתכן שנפנה אליך במייל בנוגע לתוכנית.',
 
   'report.header.title': 'דוח שיער אישי',
   'report.header.reportIdLabel': 'מזהה דוח',
@@ -149,10 +152,40 @@ export const he: Record<MessageKey, string> = {
   'report.notFound.title': 'הדוח לא נמצא',
   'report.notFound.body': 'קישור הדוח פג תוקף, או שיש להתחיל את האבחון מחדש.',
   'report.notFound.cta': 'התחל אבחון חדש',
-  'report.downloadPdf': 'הורדת PDF',
   'report.emailPreview.subject': 'דוח ניתוח השיער שלך מבית ROOTÉ',
   'report.emailPreview.intro': 'הדוח האישי שלך מוכן.',
   'report.emailPreview.openOnSite': 'לצפייה בדוח המלא',
+  'report.ribbon': 'מבוסס רפואת עור',
+  'report.section.cover.title': 'התוכנית שלך',
+  'report.section.scan.title': 'הסריקה שלך',
+  'report.section.program.title': 'התוכנית שלך',
+  'report.intro.greeting': 'התוכנית האישית שלך מוכנה.',
+  'report.intro.body':
+    'נבנתה מהסריקה שלך: הדפוס שלך, האזורים שסומנו, והמקום שבו השיער שלך נמצא במחזור הצמיחה. למטה מופיע הטיפול שמותאם לכך, ומה לצפות לאורך הדרך.',
+  'report.regimen.title': 'הטיפול שלך',
+  'report.regimen.howToApply': 'למרוח {frequency}',
+  'report.regimen.howToUse': 'לשימוש {frequency}',
+  'report.regimen.badges': 'ללא בושם|מבוסס רפואת עור|שגרה אחת, לא ארון מלא',
+  'report.treatment.roote-topical.form': 'תרחיף משולב אחד',
+  'report.treatment.roote-topical.addresses': 'צמיחה מחדש|מסלול ה-DHT|אזורים מושפעים',
+  'report.treatment.roote-topical.mechanism1':
+    'DHT ממזער בהדרגה זקיקים רגישים ומקצר כל מחזור צמיחה. התרחיף שלך משלב ממריץ צמיחה עם רכיבים פעילים ממוקדי-DHT כדי לפעול על שניהם במקביל.',
+  'report.treatment.roote-topical.mechanism2':
+    'הוא נמרח רק היכן שהסריקה שלך סימנה דילול, בעוצמה שרמת החומרה שלך דורשת. פורמולה אחת, לא בקבוקים נפרדים לשכבות.',
+  'report.treatment.derma-stim.form': 'שגרת קרקפת שבועית',
+  'report.treatment.derma-stim.addresses': 'זרימת דם|תמיכה בזקיק',
+  'report.treatment.derma-stim.mechanism1':
+    'שגרת קרקפת קצרה ומודרכת פעם בשבוע שתומכת בזרימת הדם לזקיק לצד התרחיף.',
+  'report.treatment.cleanser.form': 'תכשיר ניקוי יומי',
+  'report.treatment.cleanser.addresses': 'מצב הקרקפת|שמירת הטיפול',
+  'report.treatment.cleanser.mechanism1':
+    'תכשיר ניקוי יומי עדין שמפותח כדי לא לשטוף את הטיפול המקומי או לייבש את הקרקפת.',
+  'report.actives.title': 'הרכיבים הפעילים בפורמולה שלך',
+  'report.actives.note': 'כל רכיב פעיל מתועד למנגנון פעולה מפורסם.',
+  'report.expect.title': 'מה לצפות',
+  'report.expect.intro':
+    'אנחנו מפרסמים נתוני מחקר אמיתיים עבור הפורמולה הזו ברגע שהם זמינים, לעולם לא מספר placeholder.',
+  'report.faq.title': 'שאלות נפוצות',
   'level.low': 'נמוך',
   'level.medium': 'בינוני',
   'level.high': 'גבוה',
@@ -246,6 +279,14 @@ export const he: Record<MessageKey, string> = {
   'start.account.passwordLabel': 'סיסמה',
   'start.account.submit': 'יצירת חשבון',
   'start.account.magicLink': 'שליחת קישור כניסה למייל במקום (בקרוב)',
+  'start.account.haveAccount': 'כבר יש לך חשבון?',
+  'start.account.signInCta': 'כניסה',
+  'auth.login.title': 'כניסה',
+  'auth.login.submit': 'כניסה',
+  'auth.login.noAccount': 'עדיין אין לך חשבון?',
+  'auth.login.startCta': 'התחילו אבחון חינם',
+  'auth.login.error.notFound': 'לא נמצא חשבון עבור כתובת האימייל הזו.',
+  'auth.login.error.wrongPassword': 'הסיסמה אינה תואמת.',
   'start.account.error.invalidEmail': 'נא להזין כתובת אימייל תקינה.',
   'start.account.error.weakPassword': 'יש להשתמש בלפחות 8 תווים.',
   'start.account.error.duplicateEmail': 'קיים כבר חשבון עם כתובת אימייל זו.',
@@ -255,25 +296,29 @@ export const he: Record<MessageKey, string> = {
   'start.checkout.summaryTitle': 'סיכום הזמנה',
   'start.checkout.change': 'שינוי',
   'start.checkout.shipping': 'משלוח',
-  'start.checkout.contactTitle': 'פרטי קשר ומשלוח',
-  'start.checkout.name': 'שם מלא',
-  'start.checkout.phone': 'טלפון',
-  'start.checkout.city': 'עיר',
-  'start.checkout.postal': 'מיקוד',
-  'start.checkout.paymentTitle': 'תשלום',
-  'start.checkout.testNotice': 'ממשק בדיקה: לא מתבצע תשלום אמיתי.',
-  'start.checkout.cardName': 'שם בעל הכרטיס',
-  'start.checkout.cardNumber': 'מספר כרטיס',
-  'start.checkout.expiry': 'בתוקף עד',
-  'start.checkout.cvc': 'CVC',
-  'start.checkout.altPayment': 'PayPal / ביט / Apple Pay (בקרוב)',
-  'start.checkout.submit': 'ביצוע הזמנה',
-  'start.checkout.submitting': 'מבצע הזמנה…',
-  'start.checkout.error.card': 'נא להזין מספר כרטיס תקין.',
-  'start.checkout.error.expiry': 'נא להזין תוקף בפורמט MM/YY.',
-  'start.checkout.error.cvc': 'נא להזין CVC תקין.',
-  'start.checkout.error.payment': 'התשלום נכשל. נא לנסות שוב.',
   'start.checkout.total': 'סה"כ',
+  'start.checkout.error.payment': 'התשלום נכשל. נא לנסות שוב.',
+
+  // טופס התשלום המשותף — בשימוש /start/checkout ו-/bag/checkout דרך <CheckoutFields>.
+  'checkout.contactTitle': 'פרטי קשר ומשלוח',
+  'checkout.name': 'שם מלא',
+  'checkout.email': 'אימייל',
+  'checkout.phone': 'טלפון',
+  'checkout.city': 'עיר',
+  'checkout.postal': 'מיקוד',
+  'checkout.paymentTitle': 'תשלום',
+  'checkout.testNotice': 'ממשק בדיקה: לא מתבצע תשלום אמיתי. אין להזין כרטיס אמיתי.',
+  'checkout.cardName': 'שם בעל הכרטיס',
+  'checkout.cardNumber': 'מספר כרטיס',
+  'checkout.expiry': 'תוקף',
+  'checkout.cvc': 'CVC',
+  'checkout.altPayment': 'PayPal / ביט / Apple Pay (בקרוב)',
+  'checkout.submit': 'ביצוע הזמנה',
+  'checkout.submitting': 'מבצע הזמנה…',
+  'checkout.termsAgree': 'ביצוע ההזמנה מהווה הסכמה ל',
+  'checkout.error.card': 'נא להזין מספר כרטיס תקין.',
+  'checkout.error.expiry': 'נא להזין תוקף בפורמט MM/YY.',
+  'checkout.error.cvc': 'נא להזין CVC תקין.',
   'start.success.title': 'הכל מוכן',
   'start.success.point1': 'התוכנית שלך מתחילה היום.',
   'start.success.point2': 'נזכיר לך מתי ליישם כל שלב.',
@@ -432,22 +477,76 @@ export const he: Record<MessageKey, string> = {
 
   'marketing.products.hero.title': 'התוכנית שלך',
   'marketing.products.hero.body': 'פורמולה אחת, בנויה מרכיבים פעילים המותאמים לסריקה שלך, יחד עם השגרה התומכת בה.',
-  'marketing.products.kit.title': 'מה כלול בערכה שלך',
-  'marketing.products.topical.title': 'תרחיף לקרקפת',
-  'marketing.products.topical.body': 'מיושם ישירות על האזורים המושפעים, פעמיים ביום.',
-  'marketing.products.supplement.title': 'שגרת גירוי קרקפת',
-  'marketing.products.supplement.body': 'שגרה שבועית התומכת בזרימת דם לזקיק.',
   'marketing.products.shampoo.title': 'ניקוי עדין לקרקפת',
   'marketing.products.shampoo.body': 'ניקוי יומי שמעוצב כך שלא ישטוף את הטיפול הטופיקלי.',
   'marketing.products.customized.title': 'מותאם לסריקה שלך',
   'marketing.products.customized.body':
     'רמת החומרה והאזורים המושפעים שלך, ממופים מהתמונות שלך מול סולם קליני מוכר לנשירת שיער, קובעים אילו רכיבים פעילים ומשך זמן התוכנית שלך משתמשת בהם. שום דבר אינו גנרי.',
-  'marketing.products.subscription.title': 'הזמנה חוזרת',
-  'marketing.products.subscription.body': 'התוכנית שלך מתחדשת בקצב שהתוכנית שלך דורשת. ביטול או התאמה בכל עת.',
   'marketing.products.guarantee.title': 'האחריות שלנו',
   'marketing.products.reviews.title': 'ראו מה אנשים אומרים',
   'marketing.products.reviews.cta': 'לתוצאות וביקורות',
-  'marketing.products.cta.title': 'בנו את התוכנית שלכם',
+  'marketing.products.catalog.title': 'כל מוצרי ROOTÉ',
+  'marketing.products.range.viewAll': 'הצג הכול',
+  'marketing.products.catalog.body':
+    'כל מה שאנחנו מייצרים, מעבר לפורמולה האישית. לא בטוחים מאיפה להתחיל? התחילו באבחון חינם ונגיד לכם מה הקרקפת שלכם באמת צריכה.',
+  'marketing.products.cat.growth': 'צמיחת שיער',
+  'marketing.products.cat.wash': 'שמפו ומרכך',
+  'marketing.products.cat.supplements': 'תוספי תזונה',
+  'marketing.products.cat.lashBrow': 'ריסים וגבות',
+  'marketing.products.cat.shower': 'מסנני מקלחת',
+  'marketing.products.item.minoxidil5.desc': 'מינוקסידיל 5% מהמדף, למי שלא נמצא בתוכנית אישית.',
+  'marketing.products.item.peptideOil.desc': 'שמן קליל שמסייע לבנות מחדש את הקשרים הפנימיים של השערה.',
+  'marketing.products.item.bondShampoo.desc': 'תכשיר ניקוי מחזק שתומך במבנה הקשרים של השיער.',
+  'marketing.products.item.scalpShampoo.desc': 'שמפו יומי ששומר על קרקפת רגועה ומאוזנת.',
+  'marketing.products.item.conditioner.desc': 'מחזיר לחות והחלקה בלי להכביד על השיער.',
+  'marketing.products.item.growthCaps.desc': 'כמוסות יומיות עם המיקרו-נוטריאנטים שצמיחת השיער נשענת עליהם.',
+  'marketing.products.item.nutrientCaps.desc': 'משלים ברזל, אבץ וויטמיני B הקשורים לנשירה.',
+  'marketing.products.item.marineCollagen.desc': 'קולגן ימי מתמוסס עם חומצה היאלורונית וויטמין C.',
+  'marketing.products.item.browLash.desc': 'סרום מזין לגבות וריסים מלאים יותר למראה.',
+  'marketing.products.item.browDensity.desc': 'סרום ממוקד לגבות דלילות או שנמרטו יתר על המידה.',
+  'marketing.products.item.lashLength.desc': 'סרום לילי שמזין את קו הריסים.',
+  'marketing.products.item.showerHead.desc': 'ראש מקלחת קבוע שמסנן מינרלים של מים קשים וכלור.',
+  'marketing.products.item.showerHose.desc': 'ראש מקלחת נייד וצינור עם אותו סינון פנימי.',
+  'marketing.products.item.mountedCartridge.desc': 'מחסנית סינון חלופית לראש המקלחת הקבוע.',
+  'marketing.products.item.handheldCartridge.desc': 'מחסנית סינון חלופית לראש המקלחת הנייד.',
+
+  'cart.open': 'פתיחת הסל',
+  'cart.close': 'סגירה',
+  'cart.title': 'הסל שלך',
+  'cart.empty': 'הסל שלך ריק.',
+  'cart.browse': 'עיון במוצרים',
+  'cart.add': 'הוספה לסל',
+  'cart.added': 'נוסף',
+  'cart.decrease': 'הפחתת כמות',
+  'cart.increase': 'הגדלת כמות',
+  'cart.remove': 'הסרה',
+  'cart.subtotal': 'סכום ביניים',
+  'cart.checkout': 'למעבר לתשלום',
+  'cart.viewBag': 'הצגת הסל המלא',
+
+  'bag.title': 'הסל שלך',
+  'bag.summary': 'סיכום ההזמנה',
+  'bag.shipping': 'משלוח',
+  'bag.total': 'סה"כ',
+  'bag.checkout': 'מעבר לתשלום',
+  'bag.continue': 'המשך קנייה',
+
+  'bag.checkout.title': 'תשלום',
+  'bag.checkout.summaryTitle': 'סיכום ההזמנה',
+  'bag.checkout.edit': 'עריכת הסל',
+  'bag.checkout.qty': 'כמות {qty}',
+  'bag.checkout.back': 'חזרה לסל',
+  'bag.checkout.error.payment': 'לא הצלחנו לעבד את התשלום. יש לנסות שוב.',
+
+  'bag.success.title': 'ההזמנה התקבלה',
+  'bag.success.body': 'תודה. ההזמנה שלך התקבלה ואישור בדרך לאימייל שלך.',
+  'bag.success.orderId': 'מספר הזמנה',
+  'bag.success.next': 'מה קורה עכשיו',
+  'bag.success.next1': 'אישור יישלח לאימייל שלך בקרוב.',
+  'bag.success.next2': 'אנחנו אורזים ושולחים תוך שני ימי עסקים.',
+  'bag.success.next3': 'קישור מעקב יישלח לאימייל ברגע שההזמנה יוצאת לדרך.',
+  'bag.success.continue': 'המשך קנייה',
+  'bag.success.home': 'חזרה לדף הבית',
 
   'marketing.results.hero.title': 'תוצאות וביקורות',
   'marketing.results.hero.body': 'השוואות תמונות אמיתיות ומשוב מאנשים בתוכנית ROOTÉ.',
@@ -546,6 +645,107 @@ export const he: Record<MessageKey, string> = {
   'marketing.legal.privacy.s5': 'שיתוף עם צדדים שלישיים',
   'marketing.legal.privacy.s6': 'יצירת קשר',
 
+  // Privacy Policy — גוף הסעיפים (הכותרות הן marketing.legal.privacy.s1–s6 שלמעלה)
+  'marketing.legal.privacy.intro':
+    'מדיניות זו מסבירה איזה מידע ROOTÉ מנהל וכיצד. ROOTÉ הוא מותג המופעל על ידי 91 ENTERPRISE LLC (ראו את סעיף ״פרטי החברה״ בעמודי התנאים שלנו), שהיא בעלת השליטה במידע.',
+  'marketing.legal.privacy.s1.body':
+    'בעת השימוש ב-ROOTÉ אתם עשויים למסור: את התמונות שאתם מעלים להערכת השיער; את התשובות לשאלון ההערכה; את כתובת האימייל שלכם; ואם אתם יוצרים חשבון או מבצעים הזמנה — את שמכם, פרטי ההתקשרות והמסירה, וסימון חלקי של כרטיס התשלום (רק ארבע הספרות האחרונות ותאריך התוקף — לעולם לא מספר הכרטיס המלא או קוד האבטחה). מתוך מידע זה ROOTÉ מפיקה תוצאת הערכה, ולאחר רכישה — רשומת תוכנית.',
+  'marketing.legal.privacy.s2.body':
+    'התמונות והתשובות לשאלון משמשות אך ורק להפקת הערכת השיער והתוכנית האישית שלכם, ולהצגת השוואות ״לפני ואחרי״ לאורך זמן. בגרסת התצוגה הזו ההערכה מתבצעת כולה בדפדפן שלכם. אם ספק ניתוח קליני (hairhealth.ai) מופעל עבור הפעלתכם, התמונות והתשובות נשלחות לאותו ספק אך ורק לצורך הפקת ההערכה; אחרת הן אינן עוזבות את המכשיר שלכם. איננו משתמשים בתמונות שלכם לפרסום, לאימון מודלים, או לכל מטרה שלא הסכמתם לה.',
+  'marketing.legal.privacy.s3.body':
+    'בגרסת התצוגה הזו, כל מה שאתם מזינים — תמונות, תשובות, אימייל, חשבון, סל ותוכנית — נשמר רק בדפדפן שלכם (באחסון המקומי ובמסד הנתונים שלו) ונשאר במכשירכם עד שתמחקו אותו. דבר אינו נשמר בשרת של ROOTÉ. עם הכנסת חשבונות והזמנות אמיתיים, תקופת השמירה לכל סוג מידע תפורסם כאן.', // TODO: confirm retention periods with client once a backend exists
+  'marketing.legal.privacy.s4.body':
+    'תוכלו לצפות במידע השמור בדפדפן שלכם ולמחוק אותו בכל עת על ידי ניקוי נתוני האתר בהגדרות הדפדפן; פעולה זו מסירה מהמכשיר את ההערכה, החשבון והתוכנית שלכם. במקום שבו הדין החל מקנה לכם זכויות לעיין במידע אישי, לתקנו, לייצאו או למחקו, או להתנגד לעיבודו או להגבילו — תוכלו לממש אותן בפנייה אלינו בפרטים שלהלן.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
+  'marketing.legal.privacy.s5.body':
+    'איננו מוכרים את המידע האישי שלכם. בגרסת התצוגה הזו הצדדים השלישיים היחידים המעורבים הם Google Fonts, המספק את הגופנים של האתר, ו — אם מופעל עבור הפעלתכם — ספק הניתוח hairhealth.ai, המקבל את התמונות והתשובות שלכם לצורך הפקת ההערכה. שירותי הייצור לתשלום, משלוח, אימייל ואירוח יפורטו כאן עם הוספתם.', // TODO: confirm the production sub-processor list with client
+  'marketing.legal.privacy.s6.body':
+    'לכל שאלה או בקשה בנושא פרטיות, פנו אל ROOTÉ בכתובת support@roote.us או בטלפון ‎+1 (310) 651-7283‎.',
+
+  // Terms of Service — גוף הסעיפים (הכותרות הן marketing.legal.terms.s1–s6 שלמעלה)
+  'marketing.legal.terms.s1.body':
+    'בכניסה לאתר ROOTÉ או ביצירת חשבון, אתם מסכימים לתנאי השימוש האלה, לתנאי המכר שלנו ולמדיניות הפרטיות. אם אינכם מסכימים, אין להשתמש בשירות. אנו רשאים לעדכן את התנאים; שינויים מהותיים נכנסים לתוקף עם פרסומם ועדכון תאריך ״עודכן לאחרונה״.',
+  'marketing.legal.terms.s2.body':
+    'ROOTÉ מספקת הערכת שיער מבוססת-תמונות בסיוע בינה מלאכותית ומשלב מוצרים מותאם אישית. עליכם להיות בני 18 לפחות ולמסור מידע מדויק. אין לעשות שימוש לרעה בשירות, להעלות תמונות של אדם אחר מלבדכם, לנסות לבצע הנדסה לאחור של הניתוח, או למכור מחדש חלק כלשהו מהשירות.',
+  'marketing.legal.terms.s3.body':
+    'הניתוח והדוח הם הערכה חזותית ראשונית, אינם אבחון רפואי, ואינם מחליפים ייעוץ של רופא מוסמך. התייעצו עם רופא לפני התחלה, שינוי או הפסקה של טיפול — במיוחד אם אתם בהיריון או מניקות, נוטלים תרופות, או סובלים ממצב עורי או של הקרקפת. הפסיקו את השימוש ופנו לייעוץ רפואי אם מופיעה תגובה שלילית.',
+  'marketing.legal.terms.s4.body':
+    'רכישת מוצרים ומינויי תוכנית כפופים לתנאי המכר שלנו, המסדירים תמחור, תשלום, משלוח, החזרות, החזרים כספיים וחידוש אוטומטי של מינוי. אנא עיינו בתנאי המכר לפני הרכישה.',
+  'marketing.legal.terms.s5.body':
+    'במידה המרבית המותרת בחוק, ROOTÉ ו-91 ENTERPRISE LLC אינן אחראיות לנזקים עקיפים, מקריים או תוצאתיים הנובעים משימוש בשירות. אין באמור כדי לשלול אחריות שאינה ניתנת לשלילה לפי הדין החל. סך אחריותנו לכל תביעה מוגבל לסכום ששילמתם לנו בשנים-עשר החודשים שקדמו לתביעה.',
+  'marketing.legal.terms.s6.body':
+    'התנאים כפופים לדיני מדינת קליפורניה, ארה״ב, מבלי להתחשב בכללי ברירת הדין שלה. מחלוקות שלא ניתן ליישב באופן בלתי-פורמלי יידונו בבתי המשפט המדינתיים או הפדרליים במחוז לוס אנג׳לס, קליפורניה.',
+
+  // פרטי החברה / הישות המשפטית — משותף ל-/terms ול-/terms-of-sale (העובדות ב-roote.config company)
+  'marketing.legal.company.title': 'פרטי החברה',
+  'marketing.legal.company.intro': 'ROOTÉ הוא מותג המופעל על ידי החברה שלהלן.',
+  'marketing.legal.company.legalNameLabel': 'שם החברה הרשום',
+  'marketing.legal.company.entityTypeLabel': 'סוג הישות',
+  'marketing.legal.company.entityType': 'חברה בערבון מוגבל (LLC), ממוסה כ-S Corporation',
+  'marketing.legal.company.countryLabel': 'מדינת הרישום',
+  'marketing.legal.company.country': 'ארצות הברית — קליפורניה',
+  'marketing.legal.company.regNumberLabel': 'מספר רישום',
+  'marketing.legal.company.einLabel': 'מספר מס פדרלי (EIN)',
+  'marketing.legal.company.incorporatedLabel': 'תאריך ההתאגדות',
+  'marketing.legal.company.representativeLabel': 'מורשה חתימה',
+  'marketing.legal.company.addressLabel': 'כתובת רשומה',
+  'marketing.legal.company.emailLabel': 'אימייל',
+  'marketing.legal.company.phoneLabel': 'טלפון',
+  'marketing.legal.company.reviewNote':
+    'המידע מסופק לשם שקיפות. התנאים האלה הם תבנית סטנדרטית ונמצאים בבדיקה משפטית פורמלית.',
+
+  // תנאי מכר (/terms-of-sale)
+  'marketing.legalSale.title': 'תנאי מכר',
+  'marketing.legalSale.intro':
+    'תנאי מכר אלה מסדירים את רכישת מוצרי ROOTÉ ומינויי התוכנית מ-91 ENTERPRISE LLC (״ROOTÉ״, ״אנחנו״, ״אנו״). הם חלים יחד עם תנאי השימוש ומדיניות הפרטיות שלנו. אנא קראו אותם לפני ביצוע הזמנה.',
+  'marketing.legalSale.s1.title': 'הזמנות וקבלת הזמנה',
+  'marketing.legalSale.s1.body':
+    'ביצוע הזמנה מהווה הצעה לרכישה. ההזמנה מתקבלת, וחוזה נכרת, רק כאשר אנו שולחים אימייל אישור הזמנה או שולחים את המוצרים — לפי המוקדם. אנו רשאים לדחות או לבטל הזמנה — למשל אם פריט אינו במלאי, אם מחיר הוצג בטעות, או אם לא ניתן לאמת את פרטי התשלום או המסירה — ונחזיר כל סכום שכבר חויב.',
+  'marketing.legalSale.s2.title': 'מחירים, מסים ומטבע',
+  'marketing.legalSale.s2.body':
+    'המחירים מוצגים בעת התשלום במטבע המוצג ועשויים להשתנות בכל עת, אך המחיר שאושר בעת ההזמנה הוא המחיר שתשלמו. אלא אם צוין אחרת, המחירים אינם כוללים מסים, מכסים ודמי יבוא, המחושבים בעת התשלום או נגבים במסירה בהתאם ליעד.',
+  'marketing.legalSale.s3.title': 'תשלום',
+  'marketing.legalSale.s3.body':
+    'התשלום נגבה בעת ההזמנה, באמצעות ספק סליקה חיצוני, בשיטות המוצגות בעת התשלום. איננו שומרים מספרי כרטיס מלאים. אם תשלום מבוטל או מוחזר ללא הצדקה, אנו רשאים להשעות את חשבונכם וכל מינוי קשור.',
+  'marketing.legalSale.s4.title': 'משלוח ומסירה',
+  'marketing.legalSale.s4.body':
+    'אנו שולחים ליעדים המפורטים בעת התשלום. הזמנות נערכות למשלוח בדרך כלל בתוך 2–5 ימי עסקים; הערכות המסירה המוצגות בעת התשלום אינן מובטחות. סיכון האובדן עובר אליכם עם המסירה. אם הזמנה מגיעה פגומה או חסרה, פנו אלינו בתוך 14 יום ממועד המסירה.',
+  'marketing.legalSale.s5.title': 'החזרות וזכות הביטול',
+  'marketing.legalSale.s5.body':
+    'ניתן להחזיר מוצרים סגורים ובלתי-משומשים באריזתם המקורית בתוך 30 יום ממועד המסירה, לקבלת החזר של מחיר המוצר. לפתיחת החזרה, שלחו אימייל אל support@roote.us עם מספר ההזמנה. דמי משלוח ההחזרה חלים עליכם, אלא אם המוצר היה פגום, ניזוק או נשלח בטעות. מטעמי היגיינה ובטיחות, מוצרים מקומיים או לבליעה שנפתחו אינם ניתנים להחזרה אלא אם הם פגומים. ניתוח מותאם אישית שכבר סופק אינו ניתן להחזר כספי.',
+  'marketing.legalSale.s6.title': 'החזרים כספיים',
+  'marketing.legalSale.s6.body':
+    'החזרים שאושרו מבוצעים לאמצעי התשלום המקורי בתוך 14 יום מרגע שקיבלנו את הפריט המוחזר או הסכמנו להחזר. ההחזר מכסה את מחיר המוצר, ובמקרה שההחזרה נובעת מטעות שלנו או מפגם — גם את עלות המשלוח הרגיל המקורי. מסים ומכסים מוחזרים כנדרש בחוק.',
+  'marketing.legalSale.s7.title': 'תוכניות מינוי וחידוש אוטומטי',
+  'marketing.legalSale.s7.body':
+    'תוכנית ROOTÉ היא מינוי. בהרשמה אתם מאשרים חיובים חוזרים עבור תקופת התוכנית שבחרתם. אלא אם תבטלו לפני מועד החידוש, המינוי מתחדש אוטומטית לתקופה נוספת באותו אורך ובמחיר התקף באותה עת, ואנו שולחים תזכורת לפני כל חידוש כנדרש בחוק. כל חידוש שולח אספקה חדשה.',
+  'marketing.legalSale.s8.title': 'שינוי, השהיה או ביטול של מינוי',
+  'marketing.legalSale.s8.body':
+    'ניתן לבטל או לשנות את המינוי בכל עת מהחשבון או בפנייה לתמיכה, בתוקף מהחידוש הבא. ביטול עוצר חיובים ומשלוחים עתידיים; הוא אינו מזכה בהחזר עבור תקופה שכבר החלה או מוצרים שכבר נשלחו, למעט כנדרש בחוק או לפי סעיף ההחזרות לעיל. אנו רשאים לשנות את תמחור המינוי בהודעה מוקדמת של 30 יום לפחות לפני שהשינוי חל עליכם.',
+  'marketing.legalSale.s9.title': 'שימוש במוצר והבהרה רפואית',
+  'marketing.legalSale.s9.body':
+    'המוצרים הם פריטים קוסמטיים או ללא מרשם, לשימוש לפי ההוראות על התווית ובתוכנית שלכם. הניתוח של ROOTÉ הוא הערכה חזותית ראשונית, לא אבחון רפואי. התייעצו עם רופא לפני התחלה אם אתם בהיריון או מניקות, מתחת לגיל 18, נוטלים תרופות, או סובלים ממצב עורי או של הקרקפת, והפסיקו את השימוש אם מופיעה תגובה שלילית. התוצאות משתנות מאדם לאדם ואינן מובטחות.',
+  'marketing.legalSale.s10.title': 'אחריות למוצר ותלונות',
+  'marketing.legalSale.s10.body':
+    'אנו מתחייבים שהמוצרים נקיים מפגמים בחומרים ובעבודה בעת המסירה ותואמים לתיאורם. אם מוצר פגום או אינו כמתואר, שלחו אימייל אל support@roote.us בתוך זמן סביר, ואנו נחליף אותו או נחזיר את תמורתו. אין בכך כדי לפגוע בזכויותיכם על פי דין.',
+  'marketing.legalSale.s11.title': 'אחריותנו',
+  'marketing.legalSale.s11.body':
+    'במידה המרבית המותרת בחוק, אחריותנו לכל תביעה הקשורה לרכישה מוגבלת לסכום ששילמתם עבור ההזמנה הרלוונטית, או — במינוי — לסכום ששולם בשנים-עשר החודשים שקדמו לתביעה. איננו אחראים לנזקים עקיפים או תוצאתיים. אין באמור כדי להגביל אחריות למוות או לנזקי גוף שנגרמו ברשלנותנו, למרמה, או לכל דבר שאינו ניתן להגבלה לפי הדין החל.',
+  'marketing.legalSale.s12.title': 'דין חל ומחלוקות',
+  'marketing.legalSale.s12.body':
+    'תנאי מכר אלה כפופים לדיני מדינת קליפורניה, ארה״ב. תחילה ננסה ליישב כל תלונה באופן בלתי-פורמלי — שלחו אימייל אל support@roote.us. מחלוקות שלא ניתן ליישב כך יידונו בבתי המשפט המדינתיים או הפדרליים במחוז לוס אנג׳לס, קליפורניה, מבלי לגרוע מזכויות צרכניות מחייבות במדינת מגוריכם.',
+  'marketing.legalSale.contact':
+    'שאלות על הזמנה או החזרה? כתבו אל support@roote.us או חייגו ‎+1 (310) 651-7283‎.',
+
+  // עמוד התמיכה — פרטי יצירת קשר (מחליף את מצייני ה-pending)
+  'marketing.support.contact.emailLabel': 'אימייל',
+  'marketing.support.contact.phoneLabel': 'טלפון',
+  'marketing.support.contact.hoursLabel': 'שעות',
+  'marketing.support.contact.hours': 'ראשון–חמישי, 9:00–17:00',
+
+  // כותרת תחתונה — שורת הישות + קישור לתנאי מכר
+  'marketing.footer.brandOf': 'ROOTÉ הוא מותג של',
+  'marketing.footer.termsOfSale': 'תנאי מכר',
+
   'analysis.finalizing': 'מסיימים את הניתוח…',
 
   'app.nav.label': 'תוכנית',
@@ -553,6 +753,8 @@ export const he: Record<MessageKey, string> = {
   'app.nav.plan': 'התוכנית שלי',
   'app.nav.progress': 'התקדמות',
   'app.nav.care': 'צוות הליווי',
+  'app.nav.profile': 'פרופיל',
+  'app.nav.shop': 'חנות מוצרים',
   'app.task.pendingName': 'הטיפול שלך',
 
   'app.today.title': 'היום',
@@ -568,6 +770,7 @@ export const he: Record<MessageKey, string> = {
   'app.today.nextOrder.note': 'נזכיר לך לפני שהמלאי יאזל.',
   'app.today.reminders.title': 'תזכורות',
   'app.today.reminders.body': 'תזכורות לכל שלב נשלחות כאן באפליקציה בשעות הטיפול שלך.',
+  'app.today.reminders.comingSoon': 'תזכורות והתראות מתוזמנות יגיעו בקרוב.',
   'app.today.link.progress': 'הוספת תמונות השבוע',
   'app.today.link.care': 'שליחת הודעה לצוות הליווי',
 
@@ -597,4 +800,29 @@ export const he: Record<MessageKey, string> = {
   'app.rescan.locked': 'יהיה זמין בעוד {days} ימים, כשיהיה מספיק שינוי למדידה.',
   'app.rescan.cta': 'התחלת ניתוח חדש',
   'app.rescan.note': 'ניתוח חדש מפיק דוח מעודכן ועשוי להתאים את תוכנית הטיפול שלך.',
+  'app.rescan.compare.title': 'בהשוואה לסריקת הבסיס',
+  'app.rescan.compare.body': 'כשמבצעים סריקה חוזרת, התמונות החדשות מוצגות זו לצד זו עם הסריקה המקורית.',
+  'app.rescan.compare.baseline': 'בסיס',
+  'app.rescan.compare.latest': 'עדכני',
+  'app.profile.title': 'הפרופיל שלך',
+  'app.profile.account.title': 'חשבון',
+  'app.profile.email': 'אימייל',
+  'app.profile.memberSince': 'חבר/ה מאז',
+  'app.profile.program.title': 'התוכנית שלך',
+  'app.profile.orderId': 'מספר הזמנה',
+  'app.profile.duration': 'משך',
+  'app.profile.dates': 'תאריכים',
+  'app.profile.viewReport': 'צפייה בדוח שלי',
+  'app.profile.orders.title': 'הזמנות אחרונות',
+  'app.profile.orders.empty': 'אין הזמנות עדיין.',
+  'app.profile.orders.program': 'תוכנית',
+  'app.profile.orders.bag': 'חנות',
+  'app.profile.password.title': 'שינוי סיסמה',
+  'app.profile.password.currentLabel': 'סיסמה נוכחית',
+  'app.profile.password.newLabel': 'סיסמה חדשה',
+  'app.profile.password.submit': 'עדכון סיסמה',
+  'app.profile.password.success': 'הסיסמה עודכנה.',
+  'app.profile.password.error.wrong': 'הסיסמה הנוכחית שגויה.',
+  'app.profile.password.error.weak': 'יש להשתמש בלפחות 8 תווים.',
+  'app.profile.logout': 'התנתקות',
 };

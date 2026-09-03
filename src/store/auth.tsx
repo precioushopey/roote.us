@@ -6,6 +6,9 @@ type AuthSession = { email: string; since: string } | null;
 
 type SignUpResult = { ok: true } | { ok: false; error: 'invalid-email' | 'weak-password' | 'duplicate-email' };
 type SignInResult = { ok: true } | { ok: false; error: 'not-found' | 'wrong-password' };
+type ChangePasswordResult =
+  | { ok: true }
+  | { ok: false; error: 'not-signed-in' | 'wrong-password' | 'weak-password' };
 
 const ACCOUNTS_KEY = 'accounts';
 const SESSION_KEY = 'authSession';
@@ -43,6 +46,7 @@ type Ctx = {
   signUp: (email: string, password: string) => SignUpResult;
   signIn: (email: string, password: string) => SignInResult;
   signOut: () => void;
+  changePassword: (current: string, next: string) => ChangePasswordResult;
 };
 
 const AuthContext = createContext<Ctx | null>(null);
@@ -81,6 +85,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signOut() {
         writeSession(null);
         setSession(null);
+      },
+      changePassword(current, next) {
+        if (!session) return { ok: false, error: 'not-signed-in' };
+        const accounts = readAccounts();
+        const account = accounts[session.email];
+        if (!account || account.digest !== digestOf(current)) {
+          return { ok: false, error: 'wrong-password' };
+        }
+        if (next.length < 8) return { ok: false, error: 'weak-password' };
+        accounts[session.email] = { ...account, digest: digestOf(next) };
+        writeAccounts(accounts);
+        return { ok: true };
       },
     }),
     [session],

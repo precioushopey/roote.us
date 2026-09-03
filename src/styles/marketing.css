@@ -14,6 +14,30 @@
   background-position: center top;
 }
 
+/* On the graph-paper (cream) sections the grid lines can appear to cut through
+   glyphs. Give text a cream halo the colour of the section background so it
+   always sits clearly above the grid. The tight layers stack to a near-opaque
+   knockout right around each glyph; the wide ones fade it out so it does not
+   read as a hard outline. Uses --background so it tracks the palette. */
+.bg-grid-lines
+  :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption, span, a, strong, em) {
+  text-shadow:
+    0 0 2px var(--background),
+    0 0 2px var(--background),
+    0 0 3px var(--background),
+    0 0 4px var(--background),
+    0 0 8px var(--background),
+    0 0 14px var(--background);
+}
+
+/* Surfaces that already sit on top of the grid — cards, ink panels, filled
+   buttons, pills — don't need the halo and shouldn't get a wrong-coloured one. */
+.bg-grid-lines
+  :is(button, .bg-card, .bg-ink, [class*='bg-ink'], [class*='bg-card'], [class*='bg-primary'], [class*='bg-accent'], [class*='bg-background'], [class*='bg-secondary'])
+  :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption, span, a, strong, em) {
+  text-shadow: none;
+}
+
 /* Smooth rise-up entrance for sections and cards, replayed on every route change
    by useRevealOnRoute. The `reveal-enabled` gate is added by JS before first
    paint, so no-JS renders stay fully visible. Skipped entirely for

@@ -17,7 +17,7 @@ describe('Footer', () => {
     expect(within(footer).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/science');
     expect(within(footer).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about');
     expect(within(footer).getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy');
-    expect(within(footer).getByRole('link', { name: 'Start free analysis' })).toHaveAttribute('href', '/diagnosis');
+    expect(within(footer).getByRole('link', { name: 'Start Free Diagnosis' })).toHaveAttribute('href', '/diagnosis');
     expect(within(footer).getByText(new RegExp(String(new Date().getFullYear())))).toBeInTheDocument();
   });
 

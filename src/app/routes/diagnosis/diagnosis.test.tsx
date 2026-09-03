@@ -60,9 +60,11 @@ describe('diagnosis flow (end to end)', () => {
     await userEvent.click(screen.getByRole('button', { name: /start|התחלה/i }));
     await userEvent.click(screen.getByRole('button', { name: /^male$|^גבר$/i }));
 
-    // photos
-    const input = screen.getAllByLabelText(/front|top|crown|hairline|קדמי|עליון|קודקוד|קו שיער/i)[0];
-    await userEvent.upload(input, new File(['b'], 'f.jpg', { type: 'image/jpeg' }));
+    // photos — all four angles are required
+    const photoInputs = screen.getAllByLabelText(/front|top|crown|hairline|קדמי|עליון|קודקוד|קו שיער/i);
+    for (const input of photoInputs) {
+      await userEvent.upload(input, new File(['b'], 'p.jpg', { type: 'image/jpeg' }));
+    }
     const continueBtn = screen.getByRole('button', { name: /continue|המשך/i });
     await waitFor(() => expect(continueBtn).toBeEnabled());
     await userEvent.click(continueBtn);
@@ -74,7 +76,7 @@ describe('diagnosis flow (end to end)', () => {
 
     // ready → email → report
     await userEvent.type(screen.getByRole('textbox'), 'user@example.com');
-    await userEvent.click(screen.getByRole('button', { name: /send|שליחה/i }));
+    await userEvent.click(screen.getByRole('button', { name: /results|תוצאות/i }));
     expect(screen.getByText('REPORT')).toBeInTheDocument();
   });
 

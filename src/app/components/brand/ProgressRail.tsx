@@ -1,8 +1,10 @@
+import { useT } from '@/i18n/LocaleProvider';
 import { cn } from '@/app/components/ui/utils';
 
 export function ProgressRail({ steps, current }: { steps: string[]; current: number }) {
+  const t = useT();
   return (
-    <ol className="flex items-center gap-3" aria-label="progress">
+    <ol className="flex items-center gap-3" aria-label={t('common.progressLabel')}>
       {steps.map((label, i) => {
         const state = i < current ? 'done' : i === current ? 'current' : 'upcoming';
         return (

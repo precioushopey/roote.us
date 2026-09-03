@@ -34,7 +34,7 @@ export function AnalyzingStrip({
   const pct = Math.min(100, Math.round((done / FACETS.length) * 100) || (running ? 8 : 0));
 
   return (
-    <div className="rounded-xl border border-border bg-background p-5">
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
       <div className="flex items-center justify-between">
         <span className="font-body text-xs font-medium uppercase tracking-[0.18em] text-accent">
           {t('analysis.title')}

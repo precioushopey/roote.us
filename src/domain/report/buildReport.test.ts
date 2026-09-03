@@ -97,13 +97,13 @@ describe('buildReport', () => {
     expect(model.pricing.compareAll.filter((r) => r.isRecommended)).toHaveLength(1);
   });
 
-  it('treats an empty-string LocalizedText the same as null — PENDING, not a blank', () => {
+  it('resolves every localized plan string and disclaimer in Hebrew (no untranslated gaps)', () => {
     const model = build('male', mildMaleHairline, 'he');
-    // roote.config.ts's supporting-treatment names have he: '' today.
-    for (const s of model.plan.supporting) {
-      expect(isPending(s.name)).toBe(true);
+    // Core + supporting treatment names all have real HE strings in config.
+    for (const tr of [...model.plan.core, ...model.plan.supporting]) {
+      expect(typeof tr.name).toBe('string');
+      expect((tr.name as string).length).toBeGreaterThan(0);
     }
-    // All four disclaimers now have real HE strings — they must resolve, not fall back to PENDING.
     for (const key of ['medical', 'notADiagnosis', 'demo', 'formulaPending'] as const) {
       expect(typeof model.disclaimers[key]).toBe('string');
       expect((model.disclaimers[key] as string).length).toBeGreaterThan(0);

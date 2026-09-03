@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
+import { rooteContent } from '@/content/roote.config';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
 
@@ -30,6 +31,7 @@ const LINK_COLUMNS: LinkColumn[] = [
     title: 'marketing.footer.legal',
     links: [
       ['/terms', 'marketing.footer.terms'],
+      ['/terms-of-sale', 'marketing.footer.termsOfSale'],
       ['/privacy', 'marketing.footer.privacy'],
     ],
   },
@@ -38,6 +40,7 @@ const LINK_COLUMNS: LinkColumn[] = [
 export function Footer() {
   const t = useT();
   const year = new Date().getFullYear();
+  const { company } = rooteContent;
 
   return (
     <footer className="border-t border-border px-6 py-16 md:px-10">
@@ -81,9 +84,13 @@ export function Footer() {
             <Wordmark className="w-20" />
             <LocaleToggle />
           </div>
-          <p>
-            © {year} ROOTÉ · {t('marketing.footer.rights')}
-          </p>
+          <div className="flex flex-col gap-1 md:text-end">
+            <p>© {year} ROOTÉ · {t('marketing.footer.rights')}</p>
+            <p>
+              {t('marketing.footer.brandOf')}{' '}
+              <span dir="ltr">{company.legalName} · {company.address.join(', ')}</span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

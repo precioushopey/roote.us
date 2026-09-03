@@ -3,7 +3,9 @@ export const en = {
   'common.back': 'Back',
   'common.next': 'Next',
   'common.start': 'Start',
+  'common.progressLabel': 'Progress',
   'brand.tagline': 'Personalized Hair Growth System',
+  'meta.title': 'ROOTÉ — Free Hair Diagnosis',
   'locale.toggle.toHe': 'עברית',
   'locale.toggle.toEn': 'English',
 
@@ -75,6 +77,7 @@ export const en = {
   'diagnosis.photos.title': 'Add photos of the area',
   'diagnosis.photos.howto': 'Good lighting, hair dry, camera straight on. Front, top, crown, hairline.',
   'diagnosis.photos.privacy': 'Your photos are used only for your analysis.',
+  'diagnosis.photos.needAll': '{have} of {total} photos added. Add all four angles to continue.',
 
   'q.counter': 'Question {index} of {total}',
   'q.area.prompt': 'Where are you experiencing hair loss?',
@@ -108,9 +111,9 @@ export const en = {
   'ready.title': 'Your hair analysis is ready',
   'ready.teaser': '{scale} · {severity} pattern · {zones} area(s) flagged',
   'ready.email.placeholder': 'Email address',
-  'ready.email.submit': 'Send my personalized results',
+  'ready.email.submit': 'See my personalized results',
   'ready.email.invalid': 'Please enter a valid email address.',
-  'ready.consent': 'We\'ll email your report and may contact you about your plan.',
+  'ready.consent': 'Your results open on the next screen. We may email you about your plan.',
 
   'report.header.title': 'Personalized Hair Report',
   'report.header.reportIdLabel': 'Report ID',
@@ -146,10 +149,40 @@ export const en = {
   'report.notFound.title': 'Report not found',
   'report.notFound.body': 'This report link has expired, or the diagnosis needs to be restarted.',
   'report.notFound.cta': 'Start a new diagnosis',
-  'report.downloadPdf': 'Download PDF',
   'report.emailPreview.subject': 'Your ROOTÉ Hair Analysis Report',
   'report.emailPreview.intro': 'Your personalized hair report is ready.',
   'report.emailPreview.openOnSite': 'View my full report',
+  'report.ribbon': 'Dermatologist-informed',
+  'report.section.cover.title': 'Your Plan',
+  'report.section.scan.title': 'Your Scan',
+  'report.section.program.title': 'Your Program',
+  'report.intro.greeting': 'Your personalized plan is ready.',
+  'report.intro.body':
+    'Built from your scan: your pattern, the zones it flagged, and where your hair is in its growth cycle. Below is the regimen matched to it, and what to expect as you go.',
+  'report.regimen.title': 'Your regimen',
+  'report.regimen.howToApply': 'Apply {frequency}',
+  'report.regimen.howToUse': 'Use {frequency}',
+  'report.regimen.badges': 'Fragrance-free|Dermatologist-informed|One routine, not a cabinet',
+  'report.treatment.roote-topical.form': 'One combined topical',
+  'report.treatment.roote-topical.addresses': 'Regrowth|DHT pathway|Affected zones',
+  'report.treatment.roote-topical.mechanism1':
+    'DHT gradually miniaturizes sensitive follicles, shortening each growth cycle. Your topical pairs a regrowth stimulant with DHT-focused actives to work on both at once.',
+  'report.treatment.roote-topical.mechanism2':
+    'It is applied only where your scan flagged thinning, at the strength your severity band calls for. One formula, not separate bottles to layer.',
+  'report.treatment.derma-stim.form': 'Weekly scalp routine',
+  'report.treatment.derma-stim.addresses': 'Circulation|Follicle support',
+  'report.treatment.derma-stim.mechanism1':
+    'A short, guided scalp routine once a week that supports blood flow to the follicle alongside the topical.',
+  'report.treatment.cleanser.form': 'Daily cleanser',
+  'report.treatment.cleanser.addresses': 'Scalp condition|Treatment retention',
+  'report.treatment.cleanser.mechanism1':
+    'A gentle daily cleanser formulated not to strip the topical treatment or dry out the scalp.',
+  'report.actives.title': 'The actives in your formula',
+  'report.actives.note': 'Every active traces to a published mechanism of action.',
+  'report.expect.title': 'What to expect',
+  'report.expect.intro':
+    'We publish real study data for this formulation as it becomes available, never a placeholder number.',
+  'report.faq.title': 'Common questions',
   'level.low': 'Low',
   'level.medium': 'Medium',
   'level.high': 'High',
@@ -243,6 +276,14 @@ export const en = {
   'start.account.passwordLabel': 'Password',
   'start.account.submit': 'Create account',
   'start.account.magicLink': 'Email me a sign-in link instead (coming soon)',
+  'start.account.haveAccount': 'Already have an account?',
+  'start.account.signInCta': 'Sign in',
+  'auth.login.title': 'Sign in',
+  'auth.login.submit': 'Sign in',
+  'auth.login.noAccount': "Don't have an account yet?",
+  'auth.login.startCta': 'Start your free diagnosis',
+  'auth.login.error.notFound': 'No account was found for that email address.',
+  'auth.login.error.wrongPassword': 'That password does not match.',
   'start.account.error.invalidEmail': 'Enter a valid email address.',
   'start.account.error.weakPassword': 'Use at least 8 characters.',
   'start.account.error.duplicateEmail': 'An account with this email already exists.',
@@ -252,25 +293,29 @@ export const en = {
   'start.checkout.summaryTitle': 'Order summary',
   'start.checkout.change': 'Change',
   'start.checkout.shipping': 'Shipping',
-  'start.checkout.contactTitle': 'Contact & shipping',
-  'start.checkout.name': 'Full name',
-  'start.checkout.phone': 'Phone',
-  'start.checkout.city': 'City',
-  'start.checkout.postal': 'Postal code',
-  'start.checkout.paymentTitle': 'Payment',
-  'start.checkout.testNotice': 'Test UI: no real payment is processed.',
-  'start.checkout.cardName': 'Name on card',
-  'start.checkout.cardNumber': 'Card number',
-  'start.checkout.expiry': 'Expiry',
-  'start.checkout.cvc': 'CVC',
-  'start.checkout.altPayment': 'PayPal / Bit / Apple Pay (coming soon)',
-  'start.checkout.submit': 'Place order',
-  'start.checkout.submitting': 'Placing order…',
-  'start.checkout.error.card': 'Enter a valid card number.',
-  'start.checkout.error.expiry': 'Enter expiry as MM/YY.',
-  'start.checkout.error.cvc': 'Enter a valid CVC.',
-  'start.checkout.error.payment': 'Payment failed. Please try again.',
   'start.checkout.total': 'Total',
+  'start.checkout.error.payment': 'Payment failed. Please try again.',
+
+  // Shared checkout form — used by /start/checkout and /bag/checkout via <CheckoutFields>.
+  'checkout.contactTitle': 'Contact & shipping',
+  'checkout.name': 'Full name',
+  'checkout.email': 'Email',
+  'checkout.phone': 'Phone',
+  'checkout.city': 'City',
+  'checkout.postal': 'Postal code',
+  'checkout.paymentTitle': 'Payment',
+  'checkout.testNotice': 'Test UI: no real payment is processed. Do not enter a real card.',
+  'checkout.cardName': 'Name on card',
+  'checkout.cardNumber': 'Card number',
+  'checkout.expiry': 'Expiry',
+  'checkout.cvc': 'CVC',
+  'checkout.altPayment': 'PayPal / Bit / Apple Pay (coming soon)',
+  'checkout.submit': 'Place order',
+  'checkout.submitting': 'Placing order…',
+  'checkout.termsAgree': 'By placing this order you agree to our',
+  'checkout.error.card': 'Enter a valid card number.',
+  'checkout.error.expiry': 'Enter the expiry date as MM/YY.',
+  'checkout.error.cvc': 'Enter a valid CVC.',
   'start.success.title': "You're all set",
   'start.success.point1': 'Your plan starts today.',
   'start.success.point2': 'We will remind you when to apply each step.',
@@ -286,7 +331,7 @@ export const en = {
   'marketing.nav.faq': 'FAQ',
   'marketing.nav.blog': 'Blog',
   'marketing.nav.support': 'Support',
-  'marketing.nav.cta': 'Start free analysis',
+  'marketing.nav.cta': 'Start Free Diagnosis',
   'marketing.nav.openMenu': 'Open menu',
   'marketing.nav.closeMenu': 'Close menu',
 
@@ -334,7 +379,7 @@ export const en = {
   'marketing.home.quiz.step1': 'Answer a short quiz about your hair and history',
   'marketing.home.quiz.step2': 'Add a scalp photo for AI-guided analysis',
   'marketing.home.quiz.step3': 'Get a personalized plan recommendation',
-  'marketing.home.quiz.cta': 'Start free analysis',
+  'marketing.home.quiz.cta': 'Start Free Diagnosis',
 
   'marketing.home.how.title': 'How it works',
   'marketing.home.how.cta': 'See more',
@@ -429,22 +474,76 @@ export const en = {
 
   'marketing.products.hero.title': 'Your regimen',
   'marketing.products.hero.body': 'One formula, built from active ingredients matched to your scan, plus the routine that supports it.',
-  'marketing.products.kit.title': 'What comes in your kit',
-  'marketing.products.topical.title': 'Topical formula',
-  'marketing.products.topical.body': 'Applied directly to affected zones, twice daily.',
-  'marketing.products.supplement.title': 'Scalp stimulation routine',
-  'marketing.products.supplement.body': 'A weekly routine that supports circulation to the follicle.',
   'marketing.products.shampoo.title': 'Gentle scalp cleanser',
   'marketing.products.shampoo.body': 'A daily cleanser formulated not to strip the topical treatment.',
   'marketing.products.customized.title': 'Customized to your scan',
   'marketing.products.customized.body':
     'Your severity band and affected zones, mapped from your photos against a recognized hair-loss scale, determine which actives and duration your plan uses. Nothing is generic.',
-  'marketing.products.subscription.title': 'Reordering',
-  'marketing.products.subscription.body': 'Your plan renews on the cadence your program calls for. Cancel or adjust any time.',
   'marketing.products.guarantee.title': 'Our guarantee',
   'marketing.products.reviews.title': 'See what people are saying',
   'marketing.products.reviews.cta': 'Read results & reviews',
-  'marketing.products.cta.title': 'Build your regimen',
+  'marketing.products.catalog.title': 'The full ROOTÉ range',
+  'marketing.products.range.viewAll': 'View all',
+  'marketing.products.catalog.body':
+    'Everything we make, beyond the personalized formula. Not sure where to start? Begin with a free analysis and we will tell you what your scalp actually needs.',
+  'marketing.products.cat.growth': 'Hair growth',
+  'marketing.products.cat.wash': 'Shampoo & conditioner',
+  'marketing.products.cat.supplements': 'Supplements',
+  'marketing.products.cat.lashBrow': 'Lashes & brows',
+  'marketing.products.cat.shower': 'Shower filters',
+  'marketing.products.item.minoxidil5.desc': 'Off-the-shelf 5% minoxidil for anyone not on a personalized plan.',
+  'marketing.products.item.peptideOil.desc': 'A lightweight oil that helps rebuild the hair’s internal bonds.',
+  'marketing.products.item.bondShampoo.desc': 'Strengthening cleanser that supports the hair’s bond structure.',
+  'marketing.products.item.scalpShampoo.desc': 'Daily shampoo that keeps the scalp calm and balanced.',
+  'marketing.products.item.conditioner.desc': 'Restores moisture and slip without weighing hair down.',
+  'marketing.products.item.growthCaps.desc': 'Daily capsules with the micronutrients hair growth draws on.',
+  'marketing.products.item.nutrientCaps.desc': 'Replenishes the iron, zinc and B-vitamins tied to shedding.',
+  'marketing.products.item.marineCollagen.desc': 'Dissolvable marine collagen with hyaluronic acid and vitamin C.',
+  'marketing.products.item.browLash.desc': 'Conditioning serum for fuller-looking brows and lashes.',
+  'marketing.products.item.browDensity.desc': 'Targeted serum for sparse or over-plucked brows.',
+  'marketing.products.item.lashLength.desc': 'Nightly serum that conditions the lash line.',
+  'marketing.products.item.showerHead.desc': 'Wall-mount head that filters hard-water minerals and chlorine.',
+  'marketing.products.item.showerHose.desc': 'Handheld head and hose with the same in-line filtration.',
+  'marketing.products.item.mountedCartridge.desc': 'Replacement filter cartridge for the wall-mount head.',
+  'marketing.products.item.handheldCartridge.desc': 'Replacement filter cartridge for the handheld head.',
+
+  'cart.open': 'Open bag',
+  'cart.close': 'Close',
+  'cart.title': 'Your bag',
+  'cart.empty': 'Your bag is empty.',
+  'cart.browse': 'Browse products',
+  'cart.add': 'Add to bag',
+  'cart.added': 'Added',
+  'cart.decrease': 'Decrease quantity',
+  'cart.increase': 'Increase quantity',
+  'cart.remove': 'Remove',
+  'cart.subtotal': 'Subtotal',
+  'cart.checkout': 'Checkout',
+  'cart.viewBag': 'View full bag',
+
+  'bag.title': 'Your bag',
+  'bag.summary': 'Order summary',
+  'bag.shipping': 'Shipping',
+  'bag.total': 'Total',
+  'bag.checkout': 'Proceed to checkout',
+  'bag.continue': 'Continue shopping',
+
+  'bag.checkout.title': 'Checkout',
+  'bag.checkout.summaryTitle': 'Order summary',
+  'bag.checkout.edit': 'Edit bag',
+  'bag.checkout.qty': 'Qty {qty}',
+  'bag.checkout.back': 'Back to bag',
+  'bag.checkout.error.payment': 'We could not process that. Please try again.',
+
+  'bag.success.title': 'Order placed',
+  'bag.success.body': 'Thank you. We have your order and a confirmation is on its way to your email.',
+  'bag.success.orderId': 'Order reference',
+  'bag.success.next': 'What happens next',
+  'bag.success.next1': 'You will get an email confirmation shortly.',
+  'bag.success.next2': 'We pack and ship within two business days.',
+  'bag.success.next3': 'Tracking arrives by email once your order is on the way.',
+  'bag.success.continue': 'Continue shopping',
+  'bag.success.home': 'Back to home',
 
   'marketing.results.hero.title': 'Results & reviews',
   'marketing.results.hero.body': 'Real photo comparisons and feedback from people on a ROOTÉ plan.',
@@ -543,6 +642,108 @@ export const en = {
   'marketing.legal.privacy.s5': 'Third-party sharing',
   'marketing.legal.privacy.s6': 'Contact',
 
+  // Privacy Policy — section bodies (headings are marketing.legal.privacy.s1–s6 above).
+  // Describes the preview build's actual (client-only) data handling; production specifics are TODOs.
+  'marketing.legal.privacy.intro':
+    'This policy explains what information ROOTÉ handles and how. ROOTÉ is a brand operated by 91 ENTERPRISE LLC (see the “Company details” section on our Terms pages), which is the data controller.',
+  'marketing.legal.privacy.s1.body':
+    'When you use ROOTÉ you may provide: the photos you upload for your hair assessment; your answers to the assessment questionnaire; your email address; and, if you create an account or place an order, your name, contact and delivery details and a masked reference to your payment card (only the last four digits and expiry date — never the full card number or security code). From this, ROOTÉ generates an assessment result and, after a purchase, a program record.',
+  'marketing.legal.privacy.s2.body':
+    'Your photos and questionnaire answers are used only to produce your hair assessment and personalized plan, and to show you before/after comparisons over time. In this preview build the assessment runs entirely in your browser. If a clinical analysis provider (hairhealth.ai) is enabled for your session, your photos and answers are sent to that provider solely to generate the assessment; otherwise they never leave your device. We do not use your photos for advertising, model training, or any purpose you have not agreed to.',
+  'marketing.legal.privacy.s3.body':
+    'In this preview build, everything you enter — photos, answers, email, account, cart, and program — is stored only in your own browser (its local storage and database) and remains on your device until you clear it. Nothing is kept on a ROOTÉ server. Once real accounts and orders are introduced, the retention period for each type of data will be published here.', // TODO: confirm retention periods with client once a backend exists
+  'marketing.legal.privacy.s4.body':
+    'You can view and delete the information held in your browser at any time by clearing this site’s data in your browser settings; doing so removes your assessment, account, and program from this device. Where applicable law gives you rights to access, correct, export, or erase personal data, or to object to or restrict its processing, you can exercise them by contacting us using the details below.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
+  'marketing.legal.privacy.s5.body':
+    'We do not sell your personal data. In this preview build the only third parties involved are Google Fonts, which serves the site’s typefaces, and — if enabled for your session — the hairhealth.ai analysis provider, which receives your photos and answers to generate your assessment. Production services for payment, shipping, email, and hosting will be listed here as they are added.', // TODO: confirm the production sub-processor list with client
+  'marketing.legal.privacy.s6.body':
+    'For any privacy question or request, contact ROOTÉ at support@roote.us or +1 (310) 651-7283.',
+
+  // Terms of Service — section bodies (headings are marketing.legal.terms.s1–s6 above)
+  'marketing.legal.terms.s1.body':
+    'By accessing the ROOTÉ website or creating an account, you agree to these Terms of Service, our Terms of Sale, and our Privacy Policy. If you do not agree, do not use the service. We may update these terms; material changes take effect when posted with a new "last updated" date.',
+  'marketing.legal.terms.s2.body':
+    'ROOTÉ provides an AI-assisted, photo-based hair assessment and a personalized product regimen. You must be at least 18 years old and provide accurate information. You may not misuse the service, upload photos of anyone other than yourself, attempt to reverse-engineer the analysis, or resell any part of the service.',
+  'marketing.legal.terms.s3.body':
+    'The analysis and report are a preliminary visual estimate, not a medical diagnosis, and do not replace advice from a licensed physician. Consult a doctor before starting, changing, or stopping any treatment — especially if you are pregnant or nursing, take medication, or have a scalp or skin condition. Stop use and seek medical advice if you experience an adverse reaction.',
+  'marketing.legal.terms.s4.body':
+    'Purchases of products and program subscriptions are governed by our Terms of Sale, which cover pricing, payment, shipping, returns, refunds, and subscription auto-renewal. Please review the Terms of Sale before you buy.',
+  'marketing.legal.terms.s5.body':
+    'To the fullest extent permitted by law, ROOTÉ and 91 ENTERPRISE LLC are not liable for indirect, incidental, or consequential damages arising from use of the service. Nothing in these terms excludes liability that cannot be excluded under applicable law. Our total liability for any claim is limited to the amount you paid us in the twelve months before the claim.',
+  'marketing.legal.terms.s6.body':
+    'These terms are governed by the laws of the State of California, USA, without regard to its conflict-of-laws rules. Disputes that cannot be resolved informally will be brought before the state or federal courts located in Los Angeles County, California.',
+
+  // Company / legal-entity details — shared by /terms and /terms-of-sale (facts in roote.config company)
+  'marketing.legal.company.title': 'Company details',
+  'marketing.legal.company.intro': 'ROOTÉ is a brand operated by the company below.',
+  'marketing.legal.company.legalNameLabel': 'Registered company name',
+  'marketing.legal.company.entityTypeLabel': 'Entity type',
+  'marketing.legal.company.entityType': 'Limited Liability Company (LLC), taxed as an S Corporation',
+  'marketing.legal.company.countryLabel': 'Country of registration',
+  'marketing.legal.company.country': 'United States — California',
+  'marketing.legal.company.regNumberLabel': 'Registration number',
+  'marketing.legal.company.einLabel': 'Tax ID (EIN)',
+  'marketing.legal.company.incorporatedLabel': 'Date incorporated',
+  'marketing.legal.company.representativeLabel': 'Authorized representative',
+  'marketing.legal.company.addressLabel': 'Registered address',
+  'marketing.legal.company.emailLabel': 'Email',
+  'marketing.legal.company.phoneLabel': 'Phone',
+  'marketing.legal.company.reviewNote':
+    'This information is provided for transparency. These terms are a standard template and are pending formal legal review.',
+
+  // Terms of Sale (/terms-of-sale)
+  'marketing.legalSale.title': 'Terms of Sale',
+  'marketing.legalSale.intro':
+    "These Terms of Sale govern your purchase of ROOTÉ products and program subscriptions from 91 ENTERPRISE LLC (“ROOTÉ”, “we”, “us”). They apply together with our Terms of Service and Privacy Policy. Please read them before placing an order.",
+  'marketing.legalSale.s1.title': 'Orders and order acceptance',
+  'marketing.legalSale.s1.body':
+    'Placing an order is an offer to buy. Your order is accepted, and a contract is formed, only when we send an order-confirmation email or dispatch the products, whichever is first. We may decline or cancel an order — for example if an item is out of stock, a price is shown in error, or we cannot verify payment or delivery details — and will refund any amount already charged.',
+  'marketing.legalSale.s2.title': 'Prices, taxes, and currency',
+  'marketing.legalSale.s2.body':
+    'Prices are shown at checkout in the displayed currency and may change at any time, but the price confirmed when you order is the price you pay. Unless stated otherwise, prices exclude taxes, customs duties, and import fees, which are calculated at checkout or charged on delivery according to the destination.',
+  'marketing.legalSale.s3.title': 'Payment',
+  'marketing.legalSale.s3.body':
+    'Payment is taken when you order, through our third-party payment processor, using the methods shown at checkout. We do not store full card numbers. If a payment is reversed or charged back without cause, we may suspend your account and any related subscriptions.',
+  'marketing.legalSale.s4.title': 'Shipping and delivery',
+  'marketing.legalSale.s4.body':
+    'We ship to the destinations listed at checkout. Orders are usually prepared for dispatch within 2–5 business days; delivery estimates shown at checkout are not guaranteed. Risk of loss passes to you on delivery. If an order arrives damaged or incomplete, contact us within 14 days of delivery.',
+  'marketing.legalSale.s5.title': 'Returns and your right to cancel',
+  'marketing.legalSale.s5.body':
+    'You may return unopened, unused products in their original packaging within 30 days of delivery for a refund of the product price. To start a return, email support@roote.us with your order number. Return shipping is paid by you unless the item was defective, damaged, or sent in error. For hygiene and safety reasons, opened topical or oral products cannot be returned unless faulty. A personalized analysis already delivered is non-refundable.',
+  'marketing.legalSale.s6.title': 'Refunds',
+  'marketing.legalSale.s6.body':
+    'Approved refunds are issued to the original payment method within 14 days of us receiving the returned item or agreeing to the refund. A refund covers the product price and, where the return is due to our error or a defect, the original standard shipping cost. Taxes and duties are refunded where required by law.',
+  'marketing.legalSale.s7.title': 'Subscription programs and auto-renewal',
+  'marketing.legalSale.s7.body':
+    'A ROOTÉ program is a subscription. When you enroll, you authorize recurring charges for the program term you select. Unless you cancel before the renewal date, the subscription renews automatically for a further term of the same length at the then-current price, and we send a reminder before each renewal where required by law. Each renewal ships a new supply.',
+  'marketing.legalSale.s8.title': 'Changing, pausing, or cancelling a subscription',
+  'marketing.legalSale.s8.body':
+    'You can cancel or change your subscription at any time from your account or by contacting support, effective from the next renewal. Cancelling stops future charges and shipments; it does not refund a term already started or products already shipped, except where required by law or under the returns section above. We may change subscription pricing with at least 30 days’ notice before it applies to you.',
+  'marketing.legalSale.s9.title': 'Product use and medical disclaimer',
+  'marketing.legalSale.s9.body':
+    'Products are cosmetic or over-the-counter items to be used as directed on the label and in your plan. The ROOTÉ analysis is a preliminary visual estimate, not a medical diagnosis. Consult a physician before starting if you are pregnant or nursing, under 18, taking medication, or have a scalp or skin condition, and stop use if you have an adverse reaction. Results vary and are not guaranteed.',
+  'marketing.legalSale.s10.title': 'Product warranty and complaints',
+  'marketing.legalSale.s10.body':
+    'We warrant that products are free from defects in materials and workmanship at delivery and match their description. If a product is faulty or not as described, email support@roote.us within a reasonable time and we will replace or refund it. This does not affect your statutory rights.',
+  'marketing.legalSale.s11.title': 'Our liability',
+  'marketing.legalSale.s11.body':
+    'To the fullest extent permitted by law, our liability for any claim connected to a purchase is limited to the amount you paid for the affected order or, for a subscription, the amount paid in the twelve months before the claim. We are not liable for indirect or consequential losses. Nothing here limits liability for death or personal injury caused by our negligence, for fraud, or for anything that cannot be limited under applicable law.',
+  'marketing.legalSale.s12.title': 'Governing law and disputes',
+  'marketing.legalSale.s12.body':
+    'These Terms of Sale are governed by the laws of the State of California, USA. We will try to resolve any complaint informally first — email support@roote.us. Disputes that cannot be resolved that way will be subject to the state or federal courts located in Los Angeles County, California, without prejudice to any mandatory consumer-protection rights in your country of residence.',
+  'marketing.legalSale.contact':
+    'Questions about an order or a return? Email support@roote.us or call +1 (310) 651-7283.',
+
+  // Support page — contact block (replaces the pending placeholders)
+  'marketing.support.contact.emailLabel': 'Email',
+  'marketing.support.contact.phoneLabel': 'Phone',
+  'marketing.support.contact.hoursLabel': 'Hours',
+  'marketing.support.contact.hours': 'Sunday–Thursday, 9:00–17:00', // TODO: confirm hours + timezone with client
+
+  // Footer — entity line + Terms of Sale link
+  'marketing.footer.brandOf': 'ROOTÉ is a brand of',
+  'marketing.footer.termsOfSale': 'Terms of Sale',
+
   'analysis.finalizing': 'Finalizing your analysis…',
 
   'app.nav.label': 'Program',
@@ -550,6 +751,8 @@ export const en = {
   'app.nav.plan': 'My Plan',
   'app.nav.progress': 'Progress',
   'app.nav.care': 'Care Team',
+  'app.nav.profile': 'Profile',
+  'app.nav.shop': 'Shop products',
   'app.task.pendingName': 'Your treatment',
 
   'app.today.title': 'Today',
@@ -565,6 +768,7 @@ export const en = {
   'app.today.nextOrder.note': "We'll remind you before your supply runs low.",
   'app.today.reminders.title': 'Reminders',
   'app.today.reminders.body': 'Reminders for each step are delivered here in the app at your treatment times.',
+  'app.today.reminders.comingSoon': 'Scheduled notification reminders are coming soon.',
   'app.today.link.progress': 'Add this week’s photos',
   'app.today.link.care': 'Message your care team',
 
@@ -594,6 +798,31 @@ export const en = {
   'app.rescan.locked': 'Available in {days} days, once there is enough change to measure.',
   'app.rescan.cta': 'Start a new analysis',
   'app.rescan.note': 'A new analysis produces an updated report and may adjust your treatment plan.',
+  'app.rescan.compare.title': 'Compared to your baseline',
+  'app.rescan.compare.body': 'When you re-scan, your new photos are set side by side with your original scan.',
+  'app.rescan.compare.baseline': 'Baseline',
+  'app.rescan.compare.latest': 'Latest',
+  'app.profile.title': 'Your profile',
+  'app.profile.account.title': 'Account',
+  'app.profile.email': 'Email',
+  'app.profile.memberSince': 'Member since',
+  'app.profile.program.title': 'Your program',
+  'app.profile.orderId': 'Order reference',
+  'app.profile.duration': 'Duration',
+  'app.profile.dates': 'Dates',
+  'app.profile.viewReport': 'View my report',
+  'app.profile.orders.title': 'Recent orders',
+  'app.profile.orders.empty': 'No orders yet.',
+  'app.profile.orders.program': 'Program',
+  'app.profile.orders.bag': 'Shop',
+  'app.profile.password.title': 'Change password',
+  'app.profile.password.currentLabel': 'Current password',
+  'app.profile.password.newLabel': 'New password',
+  'app.profile.password.submit': 'Update password',
+  'app.profile.password.success': 'Your password has been updated.',
+  'app.profile.password.error.wrong': 'Your current password is incorrect.',
+  'app.profile.password.error.weak': 'Use at least 8 characters.',
+  'app.profile.logout': 'Log out',
 } as const;
 
 export type MessageKey = keyof typeof en;

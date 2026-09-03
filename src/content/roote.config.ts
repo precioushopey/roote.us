@@ -7,6 +7,27 @@ export const rooteContent = {
     tagline: { en: 'Personalized Hair Growth System', he: 'מערכת אישית לצמיחת שיער' } as LocalizedText,
   },
 
+  /**
+   * The legal entity that operates the ROOTÉ brand. Locale-invariant facts live here;
+   * the surrounding labels + legal prose are i18n keys (`marketing.legal.company.*`,
+   * `marketing.legalSale.*`). Rendered by <CompanyDetails> on /terms and /terms-of-sale,
+   * and as the entity line in the site footer.
+   */
+  company: {
+    legalName: '91 ENTERPRISE LLC',
+    representative: 'Asher Elimelech',
+    address: ['PO BOX 48112', 'Los Angeles, CA 90036', 'United States'] as readonly string[],
+    registrationNumber: '201403110138',
+    ein: '46-4692938',
+    incorporated: 'January 30, 2014', // TODO: confirm display format / HE localization with client
+    legalUpdated: 'September 3, 2026', // "last updated" date shown on the legal pages
+    support: {
+      email: 'support@roote.us',
+      phone: '+1 (310) 651-7283',
+      phoneHref: 'tel:+13106517283',
+    },
+  },
+
   currency: 'ILS', // TODO: confirm with client — ILS vs USD
 
   formula: {
@@ -32,9 +53,9 @@ export const rooteContent = {
       },
     ],
     supporting: [
-      // TODO: confirm with client — identity of the supporting treatment(s)
-      { key: 'derma-stim', name: { en: 'Scalp stimulation routine', he: '' } as LocalizedText, usageKey: 'usage.derma-stim', frequencyKey: 'frequency.weekly' },
-      { key: 'cleanser',   name: { en: 'Gentle scalp cleanser',     he: '' } as LocalizedText, usageKey: 'usage.cleanse',    frequencyKey: 'frequency.daily' },
+      // TODO: confirm with client — identity of the supporting treatment(s); HE names pending medical review
+      { key: 'derma-stim', name: { en: 'Scalp stimulation routine', he: 'שגרת גירוי קרקפת' } as LocalizedText, usageKey: 'usage.derma-stim', frequencyKey: 'frequency.weekly' },
+      { key: 'cleanser',   name: { en: 'Gentle scalp cleanser',     he: 'תכשיר ניקוי עדין לקרקפת' } as LocalizedText, usageKey: 'usage.cleanse', frequencyKey: 'frequency.daily' },
     ],
   },
 
@@ -65,7 +86,7 @@ export const rooteContent = {
     // HE strings are a plain translation of the EN liability disclaimers; still pending formal legal review.
     medical:        { en: 'This report is a preliminary, photo-based visual assessment. It is not a medical diagnosis.', he: 'הדוח הזה הוא הערכה חזותית ראשונית המבוססת על תמונות, ואינו מהווה אבחון רפואי.' } as LocalizedText, // TODO: legal review
     notADiagnosis:  { en: 'An AI visual estimate, not a medical diagnosis.', he: 'הערכה חזותית מבוססת בינה מלאכותית, לא אבחון רפואי.' } as LocalizedText,
-    demo:           { en: 'Demo: analysis figures are illustrative; production integrates hairhealth.ai.', he: 'הדגמה: הנתונים להמחשה בלבד.' } as LocalizedText,
+    demo:           { en: 'Demo: analysis figures are illustrative; production integrates hairhealth.ai.', he: 'הדגמה: הנתונים להמחשה בלבד; בגרסה המלאה משולבת מערכת hairhealth.ai.' } as LocalizedText,
     formulaPending: { en: 'Formulation under evaluation, pending regulatory review.', he: 'הפורמולה בבחינה, בכפוף לאישור רגולטורי.' } as LocalizedText,
   },
 } as const;

@@ -11,7 +11,7 @@ export function IntroStep() {
       <h1 className={funnelHeading}>{t('diagnosis.intro.title')}</h1>
       <ul className="grid gap-3 text-start">
         {points.map((p) => (
-          <li key={p} className="rounded-xl border border-border bg-background px-4 py-3.5 text-sm">
+          <li key={p} className="rounded-xl border border-border bg-card px-4 py-3.5 text-sm shadow-sm">
             {p}
           </li>
         ))}

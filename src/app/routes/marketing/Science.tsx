@@ -1,6 +1,7 @@
 import { useT } from '@/i18n/LocaleProvider';
 import { Link } from 'react-router';
 import { Section } from '@/app/components/marketing/Section';
+import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
@@ -41,7 +42,7 @@ export function Science() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.science.hero.title')} className="mx-auto max-w-3xl uppercase" />
+          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.science.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.science.hero.body')}</Prose>
           <div className="mt-8">
             <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
@@ -52,7 +53,7 @@ export function Science() {
       <Section className="overflow-hidden">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="01" clamp="clamp(1.75rem, 6.5vw, 4.5rem)">
+            <SectionHeading index="01" clamp={DISPLAY_CLAMP}>
               {t('marketing.science.mechanism.title')}
             </SectionHeading>
             <Prose size="l" className="max-w-xl">{t('marketing.science.mechanism.body')}</Prose>
@@ -69,7 +70,7 @@ export function Science() {
         <SectionHeading
           index="02"
           onInk
-          clamp="clamp(1.75rem, 7vw, 5rem)"
+          clamp={DISPLAY_CLAMP}
           trailing={<Link to="/products"><Eyebrow onInk>{t('marketing.nav.products')}</Eyebrow></Link>}
         >
           {t('marketing.science.ingredients.title')}
@@ -98,7 +99,7 @@ export function Science() {
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading index="03" align="end" clamp="clamp(1.75rem, 7vw, 5rem)">
+        <SectionHeading index="03" align="end" clamp={DISPLAY_CLAMP}>
           {t('marketing.science.evidence.title')}
         </SectionHeading>
         <Prose size="l" className="ms-auto mt-4 max-w-xl text-end">{t('marketing.science.evidence.body')}</Prose>

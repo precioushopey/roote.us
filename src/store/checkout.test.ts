@@ -1,12 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { submitPayment, type Order } from './checkout';
 
-const order: Order = {
-  reportId: 'rep-1',
-  durationDays: 180,
-  contact: { name: 'Jane Doe', email: 'jane@example.com', phone: '0500000000', country: 'IL', city: 'Tel Aviv', postal: '1234567' },
-  card: { last4: '4242', expiry: '12/29' },
-};
+const contact = { name: 'Jane Doe', email: 'jane@example.com', phone: '0500000000', country: 'IL', city: 'Tel Aviv', postal: '1234567' };
+const card = { last4: '4242', expiry: '12/29' };
+
+const order: Order = { kind: 'program', reportId: 'rep-1', durationDays: 180, contact, card };
+const bagOrder: Order = { kind: 'bag', lines: [{ sku: 'growth-capsules', qty: 2 }], contact, card };
 
 beforeEach(() => localStorage.removeItem('roote.debug.forceCheckoutFailure'));
 
@@ -20,6 +19,11 @@ describe('checkout stub', () => {
       const key = localStorage.key(i)!;
       expect(localStorage.getItem(key)).not.toMatch(/\d{13,19}/);
     }
+  });
+
+  it('prefixes the orderId by kind (ord- for program, bag- for bag)', async () => {
+    expect((await submitPayment(order)).orderId).toMatch(/^ord-/);
+    expect((await submitPayment(bagOrder)).orderId).toMatch(/^bag-/);
   });
 
   it('produces a different orderId on each call', async () => {

@@ -64,7 +64,7 @@ describe('ReadyStep', () => {
     seedReadyState();
     renderReady();
     await userEvent.type(screen.getByRole('textbox'), 'a@b.com');
-    await userEvent.click(screen.getByRole('button', { name: /send|שליחת/i }));
+    await userEvent.click(screen.getByRole('button', { name: /results|תוצאות/i }));
     expect(api.account.email).toBe('a@b.com');
     expect(screen.getByText('report page')).toBeInTheDocument();
   });

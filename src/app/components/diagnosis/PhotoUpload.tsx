@@ -59,16 +59,20 @@ export function PhotoUpload({
         {t(`photo.angle.${angleKey}` as never)}
       </label>
       {value ? (
-        <div className="relative">
-          <img src={value.thumb} alt={t(`photo.angle.${angleKey}` as never)} className="h-32 w-full rounded-lg object-cover" />
-          <button type="button" onClick={handleRemove} className="absolute end-2 top-2 rounded bg-background/80 px-2 py-1 text-xs">
+        <div className="relative overflow-hidden rounded-lg border border-border">
+          <img src={value.thumb} alt={t(`photo.angle.${angleKey}` as never)} className="h-32 w-full object-cover" />
+          <button
+            type="button"
+            onClick={handleRemove}
+            className="absolute end-2 top-2 rounded bg-card/90 px-2 py-1 text-xs backdrop-blur-sm"
+          >
             {t('common.remove')}
           </button>
         </div>
       ) : (
         <label
           htmlFor={inputId}
-          className="flex h-32 cursor-pointer items-center justify-center rounded-lg border border-dashed border-border text-xs text-muted-foreground"
+          className="flex h-32 cursor-pointer items-center justify-center rounded-lg border border-dashed border-border bg-card text-xs text-muted-foreground transition-colors hover:border-accent hover:bg-accent/5"
         >
           {busy ? t('photo.uploading') : t('photo.add')}
         </label>

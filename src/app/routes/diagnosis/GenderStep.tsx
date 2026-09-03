@@ -26,7 +26,7 @@ export function GenderStep() {
             key={g}
             type="button"
             onClick={() => choose(g)}
-            className="rounded-2xl border border-border bg-background px-4 py-12 font-display text-lg font-medium transition-colors hover:border-accent hover:bg-accent/5"
+            className="rounded-2xl border border-border bg-card px-4 py-12 font-display text-lg font-medium shadow-sm transition-colors hover:border-accent hover:bg-accent/5"
           >
             {t(`diagnosis.gender.${g}` as never)}
           </button>

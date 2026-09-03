@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useT } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
+import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
 import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
 import { Prose } from '@/app/components/marketing/Prose';
-import { PendingChip } from '@/app/components/brand/PendingChip';
+import { rooteContent } from '@/content/roote.config';
 
 const FIELD_CLASS =
   'rounded-md border border-input bg-input-background px-3 py-2 text-sm outline-none focus:border-accent';
@@ -58,6 +59,7 @@ function ContactForm() {
 
 export function Support() {
   const t = useT();
+  const { company } = rooteContent;
   return (
     <>
       <Section tone="ink" className="overflow-hidden pt-28 text-center md:pt-32">
@@ -66,26 +68,52 @@ export function Support() {
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
           />
-          <DisplayHeading as="h1" size="l" onInk text={t('marketing.support.hero.title')} className="mx-auto max-w-3xl uppercase" />
+          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.support.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.support.hero.body')}</Prose>
         </div>
       </Section>
 
       <Section>
-        <SectionHeading index="01" clamp="clamp(1.75rem, 7vw, 5rem)">
+        <SectionHeading index="01" clamp={DISPLAY_CLAMP}>
           {t('marketing.support.contact.title')}
         </SectionHeading>
-        <div className="mt-8 flex max-w-md flex-col items-start gap-3">
-          <PendingChip label="support email" />
-          <PendingChip label="support hours" />
-          <Prose className="mt-2">{t('marketing.support.contact.inApp')}</Prose>
+        <div className="mt-8 flex max-w-md flex-col items-start gap-4">
+          <dl className="flex flex-col gap-3 text-sm">
+            <div className="flex flex-col gap-0.5">
+              <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                {t('marketing.support.contact.emailLabel')}
+              </dt>
+              <dd dir="ltr">
+                <a href={`mailto:${company.support.email}`} className="text-accent underline">
+                  {company.support.email}
+                </a>
+              </dd>
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                {t('marketing.support.contact.phoneLabel')}
+              </dt>
+              <dd dir="ltr">
+                <a href={company.support.phoneHref} className="text-accent underline">
+                  {company.support.phone}
+                </a>
+              </dd>
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                {t('marketing.support.contact.hoursLabel')}
+              </dt>
+              <dd>{t('marketing.support.contact.hours')}</dd>
+            </div>
+          </dl>
+          <Prose className="mt-1">{t('marketing.support.contact.inApp')}</Prose>
         </div>
       </Section>
 
       <Section tone="ink">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="02" onInk clamp="clamp(1.75rem, 6vw, 4rem)">
+            <SectionHeading index="02" onInk clamp={DISPLAY_CLAMP}>
               {t('marketing.support.form.title')}
             </SectionHeading>
             <Prose size="l" onInk className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
