@@ -1,89 +1,155 @@
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --font-size: 16px;
-  --font-sans: 'Libre Franklin', 'Heebo', system-ui, sans-serif;
-  --font-display: 'Playfair Display', 'Frank Ruhl Libre', Georgia, serif;
-  --font-body: 'Montserrat', 'Heebo', system-ui, sans-serif;
+/* =========================================================================
+   ROOTÉ — Personalized Hair Growth System
+   Design tokens. Deep-emerald science surfaces, warm-cream "you" surfaces,
+   gold only at the seam. Glass for genuine depth only.
+   Source of truth for colour + radius. src/styles/tokens.ts mirrors the
+   palette for JS; src/styles/tokens.test.ts keeps them honest.
+   ========================================================================= */
 
-  --background: #f9f6ef;
-  --foreground: #2a2320;
+:root {
+  /* --- primitive scales (brief §6) ------------------------------------- */
+  --roote-emerald-950: #0a2a1c;
+  --roote-emerald-900: #123726;
+  --roote-emerald-800: #1b4b32;
+  --roote-emerald-700: #235e3f;
+  --roote-emerald-600: #34805a;
+
+  --roote-cream-50: #fcf9f3;
+  --roote-cream-100: #f6efe4;
+  --roote-cream-200: #ede1cf;
+  --roote-cream-300: #e6dac6;
+
+  --roote-gold-500: #c6a15a;
+  --roote-gold-600: #a98343;
+
+  --roote-ink: #172022;
+  --roote-body: #333a3c;
+  --roote-muted: #6f7676;
+  --roote-line: rgba(23, 32, 34, 0.14);
+
+  /* --- fonts --------------------------------------------------------------
+     Display: Bodoni Moda (Didot lineage). Body/UI: Montserrat.
+     Hebrew display: Frank Ruhl Libre; Hebrew/Arabic body: Noto. */
+  --font-size: 16px;
+  --font-display: 'Bodoni Moda', 'Frank Ruhl Libre', 'Didot', 'Bodoni 72', Georgia, serif;
+  --font-body: 'Montserrat', 'Heebo', 'Noto Sans Hebrew', 'Noto Sans Arabic', system-ui, sans-serif;
+  --font-sans: var(--font-body); /* legacy alias — was Libre Franklin */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+
+  /* Brief §6 display scale (28 36 48 64 80). Kept as bespoke tokens so the
+     Tailwind text-* utilities on not-yet-redesigned pages are untouched.
+     New display components consume these + displayScale.ts clamps. */
+  --display-sm: 1.75rem; /* 28 */
+  --display-md: 2.25rem; /* 36 */
+  --display-lg: 3rem; /* 48 */
+  --display-xl: 4rem; /* 64 */
+  --display-2xl: 5rem; /* 80 */
+
+  /* --- semantic surface tokens (shadcn var names — utilities depend on these) */
+  --background: var(--roote-cream-50);
+  --foreground: var(--roote-ink);
   --card: #ffffff;
-  --card-foreground: #2a2320;
+  --card-foreground: var(--roote-ink);
   --popover: #ffffff;
-  --popover-foreground: #2a2320;
-  --primary: #745f50;
-  --primary-foreground: #f9f6ef;
-  --secondary: #f0e3d3;
-  --secondary-foreground: #2a2320;
-  --muted: #efe7da;
-  --muted-foreground: #6e635a;
-  --accent: #a97b45;
-  --accent-foreground: #f9f6ef;
+  --popover-foreground: var(--roote-ink);
+
+  --primary: var(--roote-emerald-800);
+  --primary-foreground: var(--roote-cream-50);
+
+  --secondary: var(--roote-cream-100);
+  --secondary-foreground: var(--roote-ink);
+  --muted: var(--roote-cream-200);
+  --muted-foreground: var(--roote-muted);
+
+  /* Gold — rules, numerals, active state, the three-strand mark.
+     NON-TEXT or ≥24px only (contrast on cream is ~2.3:1). */
+  --accent: var(--roote-gold-500);
+  --accent-foreground: var(--roote-ink);
+
   --destructive: #b3261e;
   --destructive-foreground: #ffffff;
-  --border: #e4d9c8;
-  --input: #e4d9c8;
+  --success: #1f7a53;
+  --success-foreground: #ffffff;
+  --warning: #a8681c;
+  --warning-foreground: #ffffff;
+  --info: var(--roote-emerald-700);
+  --info-foreground: #ffffff;
+
+  --border: var(--roote-cream-300);
+  --input: var(--roote-cream-300);
   --input-background: #ffffff;
-  --switch-background: #cbbfae;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --ring: #a97b45;
-  --ink: #201812;
-  --ink-foreground: #f4efe4;
-  --accent-ghost: #d8ccb9;
-  --ink-ghost: #4a3f34;
-  --chart-1: #8d7766;
-  --chart-2: #745f50;
-  --chart-3: #a89a86;
-  --chart-4: #c4b8a4;
-  --chart-5: #5b4a3d;
-  --radius: 0.5rem;
-  --sidebar: #f4efe4;
-  --sidebar-foreground: #2a2320;
-  --sidebar-primary: #745f50;
-  --sidebar-primary-foreground: #f9f6ef;
-  --sidebar-accent: #efe7da;
-  --sidebar-accent-foreground: #2a2320;
-  --sidebar-border: #e4d9c8;
-  --sidebar-ring: #8d7766;
+  --switch-background: #cbc0ac;
+  --ring: var(--roote-gold-500);
+
+  /* Dark editorial band — now deep emerald (F6EFE4 on 0A2A1C ≈ 13.5:1). */
+  --ink: var(--roote-emerald-950);
+  --ink-foreground: var(--roote-cream-100);
+
+  /* Decorative two-tone "ghost" display words (aria-hidden). */
+  --accent-ghost: #e6d8bd;
+  --ink-ghost: #284a3a;
+
+  /* --- glass (genuine depth only) ------------------------------------- */
+  --surface-glass: rgba(255, 255, 255, 0.62);
+  --surface-glass-dark: rgba(10, 42, 28, 0.7);
+  --surface-glass-border: rgba(255, 255, 255, 0.18);
+  --surface-glass-border-dark: rgba(255, 255, 255, 0.1);
+  --glass-blur: 20px;
+
+  /* --- charts / data viz — emerald→gold→cream spectrum ------------------- */
+  --chart-1: #1b4b32;
+  --chart-2: #34805a;
+  --chart-3: #5fa97f;
+  --chart-4: #c6a15a;
+  --chart-5: #a98343;
+
+  /* --- radius (Liquid-Glass large radii) ---------------------------- */
+  --radius: 1rem;
+  --radius-2xl-px: 2rem;
+
+  /* --- layout maxima (brief §6) ------------------------------------- */
+  --width-marketing: 80rem; /* 1280 */
+  --width-content: 72.5rem; /* 1160 */
+  --width-readable: 45rem; /* 720 */
+
+  /* --- app sidebar (kept; repointed) ------------------------------- */
+  --sidebar: var(--roote-cream-100);
+  --sidebar-foreground: var(--roote-ink);
+  --sidebar-primary: var(--roote-emerald-800);
+  --sidebar-primary-foreground: var(--roote-cream-50);
+  --sidebar-accent: var(--roote-cream-200);
+  --sidebar-accent-foreground: var(--roote-ink);
+  --sidebar-border: var(--roote-cream-300);
+  --sidebar-ring: var(--roote-gold-500);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: var(--roote-emerald-950);
+  --foreground: var(--roote-cream-100);
+  --card: var(--roote-emerald-900);
+  --card-foreground: var(--roote-cream-100);
+  --popover: var(--roote-emerald-900);
+  --popover-foreground: var(--roote-cream-100);
+  --primary: var(--roote-cream-100);
+  --primary-foreground: var(--roote-emerald-950);
+  --secondary: var(--roote-emerald-800);
+  --secondary-foreground: var(--roote-cream-100);
+  --muted: var(--roote-emerald-800);
+  --muted-foreground: #9fb3b2;
+  --accent: var(--roote-gold-500);
+  --accent-foreground: var(--roote-emerald-950);
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.12);
+  --input-background: var(--roote-emerald-900);
+  --ring: var(--roote-gold-500);
+  --ink: var(--roote-emerald-950);
+  --ink-foreground: var(--roote-cream-100);
+  --sidebar: var(--roote-emerald-900);
+  --sidebar-foreground: var(--roote-cream-100);
+  --sidebar-border: rgba(255, 255, 255, 0.12);
 }
 
 @theme inline {
@@ -103,6 +169,12 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-input-background: var(--input-background);
@@ -113,16 +185,40 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
+
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
   --color-accent-ghost: var(--accent-ghost);
   --color-ink-ghost: var(--ink-ghost);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+
+  /* emerald / cream / gold primitives as Tailwind colours */
+  --color-deep-950: var(--roote-emerald-950);
+  --color-deep-900: var(--roote-emerald-900);
+  --color-deep-800: var(--roote-emerald-800);
+  --color-deep-700: var(--roote-emerald-700);
+  --color-deep-600: var(--roote-emerald-600);
+  --color-cream-50: var(--roote-cream-50);
+  --color-cream-100: var(--roote-cream-100);
+  --color-cream-200: var(--roote-cream-200);
+  --color-cream-300: var(--roote-cream-300);
+  --color-gold-500: var(--roote-gold-500);
+  --color-gold-600: var(--roote-gold-600);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+
+  --text-display-sm: var(--display-sm);
+  --text-display-md: var(--display-md);
+  --text-display-lg: var(--display-lg);
+  --text-display-xl: var(--display-xl);
+  --text-display-2xl: var(--display-2xl);
+
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: var(--radius-2xl-px);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -140,57 +236,28 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-
-  /**
-  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
-  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
-  */
 
   html {
     font-size: var(--font-size);
   }
 
-  h1 {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+  /* Base element sizes live in @layer base so Tailwind utilities always win.
+     Sizes match the pre-redesign base to avoid drift on pages pending a WP.
+     Display headings opt in via `font-display`. */
+  h1 { font-size: var(--text-2xl); font-weight: var(--font-weight-medium); line-height: 1.2; }
+  h2 { font-size: var(--text-xl); font-weight: var(--font-weight-medium); line-height: 1.25; }
+  h3 { font-size: var(--text-lg); font-weight: var(--font-weight-medium); line-height: 1.35; }
+  h4 { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.4; }
+  label { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  button { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  input, select, textarea { font-size: var(--text-base); font-weight: var(--font-weight-normal); line-height: 1.5; }
 
-  h2 {
-    font-size: var(--text-xl);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
-
-  h3 {
-    font-size: var(--text-lg);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
-
-  h4 {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
-
-  label {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
-
-  button {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
-
-  input {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-normal);
-    line-height: 1.5;
+  :where(.font-display) {
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    letter-spacing: -0.01em;
   }
 }

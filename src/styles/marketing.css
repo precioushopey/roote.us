@@ -1,11 +1,55 @@
-/* Marketing site visual treatments — kept separate from theme.css tokens. */
+/* Site-wide visual treatments — kept separate from the theme.css tokens. */
 
-.img-editorial {
-  filter: saturate(0.92) contrast(1.04) sepia(0.1);
+/* --- glass surfaces (genuine depth only: sticky nav, floating result card, modals) --- */
+.glass {
+  background: var(--surface-glass);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  border: 1px solid var(--surface-glass-border);
+}
+.glass-dark {
+  background: var(--surface-glass-dark);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  border: 1px solid var(--surface-glass-border-dark);
+  color: var(--ink-foreground);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: color-mix(in srgb, var(--roote-cream-50) 92%, transparent); }
+  .glass-dark { background: color-mix(in srgb, var(--roote-emerald-950) 94%, transparent); }
 }
 
-/* Faint editorial grid overlay for light (cream) sections, matching the reference's
-   graph-paper panel treatment. Uses the sand border token, so it tracks the palette. */
+/* --- i18n-safe caps -------------------------------------------------------
+   Latin locales render eyebrows / CTAs in caps via text-transform so the
+   stored string stays sentence-case. Hebrew and Arabic have no letter case,
+   so the transform (and its wide tracking) is switched off there. */
+.u-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+:root[lang='he'] .u-caps,
+:root[lang='ar'] .u-caps {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* --- display type helper ----------------------------------------------
+   Bodoni Moda reads light at 400–500; 600 gives the headline the presence
+   the high-contrast serif needs without tipping into the bold optical size. */
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+/* --- imagery -------------------------------------------------------------
+   Subtle unifying grade. No sepia (it fights the teal). */
+.img-editorial {
+  filter: saturate(0.96) contrast(1.03);
+}
+
+/* --- editorial grid overlay (cream sections) --------------------------- */
 .bg-grid-lines {
   background-image:
     linear-gradient(to right, var(--border) 1px, transparent 1px),
@@ -13,12 +57,6 @@
   background-size: 50% 100%, 100% 20rem;
   background-position: center top;
 }
-
-/* On the graph-paper (cream) sections the grid lines can appear to cut through
-   glyphs. Give text a cream halo the colour of the section background so it
-   always sits clearly above the grid. The tight layers stack to a near-opaque
-   knockout right around each glyph; the wide ones fade it out so it does not
-   read as a hard outline. Uses --background so it tracks the palette. */
 .bg-grid-lines
   :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption, span, a, strong, em) {
   text-shadow:
@@ -29,59 +67,37 @@
     0 0 8px var(--background),
     0 0 14px var(--background);
 }
-
-/* Surfaces that already sit on top of the grid — cards, ink panels, filled
-   buttons, pills — don't need the halo and shouldn't get a wrong-coloured one. */
 .bg-grid-lines
-  :is(button, .bg-card, .bg-ink, [class*='bg-ink'], [class*='bg-card'], [class*='bg-primary'], [class*='bg-accent'], [class*='bg-background'], [class*='bg-secondary'])
+  :is(button, .bg-card, .bg-ink, .glass, .glass-dark, [class*='bg-ink'], [class*='bg-card'], [class*='bg-primary'], [class*='bg-accent'], [class*='bg-background'], [class*='bg-secondary'])
   :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption, span, a, strong, em) {
   text-shadow: none;
 }
 
-/* Smooth rise-up entrance for sections and cards, replayed on every route change
-   by useRevealOnRoute. The `reveal-enabled` gate is added by JS before first
-   paint, so no-JS renders stay fully visible. Skipped entirely for
-   prefers-reduced-motion. */
+/* --- route-change rise-up reveal (single orchestrated moment) ---------
+   `reveal-enabled` is added by JS before first paint, so no-JS stays visible.
+   Skipped entirely for prefers-reduced-motion. */
 @media (prefers-reduced-motion: no-preference) {
   :root.reveal-enabled [data-animate] {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(24px);
     transition:
       opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
   }
-
   :root.reveal-enabled [data-animate].is-visible {
     opacity: 1;
     transform: none;
   }
-
-  /* Gentle stagger for the cards / blocks inside a revealed section. */
   :root.reveal-enabled [data-animate].is-visible [class*='grid'] > * {
     animation: roote-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
-  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(2) {
-    animation-delay: 0.07s;
-  }
-  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(3) {
-    animation-delay: 0.14s;
-  }
-  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(4) {
-    animation-delay: 0.21s;
-  }
-  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(n + 5) {
-    animation-delay: 0.28s;
-  }
+  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(2) { animation-delay: 0.07s; }
+  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(3) { animation-delay: 0.14s; }
+  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(4) { animation-delay: 0.21s; }
+  :root.reveal-enabled [data-animate].is-visible [class*='grid'] > *:nth-child(n + 5) { animation-delay: 0.28s; }
 }
-
 @keyframes roote-rise {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }
