@@ -66,4 +66,9 @@ describe('StartLayout', () => {
     renderAt('/start', completeSeed({ reportId: 'rep-789', analysis: null }));
     expect(screen.getByText(/completed hair analysis/i)).toBeInTheDocument();
   });
+
+  it('sets document.title from the route metadata (SEO-AUDIT.md H2)', () => {
+    renderAt('/start', completeSeed({ reportId: 'rep-456' }));
+    expect(document.title).toBe('ROOTÉ — Personalized Hair Growth System');
+  });
 });

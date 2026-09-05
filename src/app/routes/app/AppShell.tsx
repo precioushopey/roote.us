@@ -4,6 +4,7 @@ import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
 import { seedProgram } from '@/store/devSeed';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
+import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { useTrackingMigration } from './useTrackingMigration';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
@@ -36,6 +37,7 @@ export function AppShell() {
   const navigate = useNavigate();
   useRevealOnRoute();
   useTrackingMigration();
+  useDocumentMeta();
 
   if (!session.program) {
     if (import.meta.env.DEV) {

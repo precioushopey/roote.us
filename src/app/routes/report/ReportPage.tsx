@@ -6,6 +6,7 @@ import { buildReport } from '@/domain/report/buildReport';
 import { rooteContent } from '@/content/roote.config';
 import { ReportNotFound } from './ReportNotFound';
 import { ReportView } from '@/app/components/report/ReportView';
+import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import productBg from '@/assets/product_bg.jpg';
 import scanDevice from '@/assets/scan-device.jpg';
 import productPhoto from '@/assets/product.png';
@@ -29,6 +30,7 @@ export function ReportPage() {
   const { reportId } = useParams();
   const session = useSession();
   const { locale } = useLocale();
+  useDocumentMeta();
 
   const ready = !!reportId && reportId === session.reportId && !!session.analysis;
 

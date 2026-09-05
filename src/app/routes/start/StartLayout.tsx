@@ -6,6 +6,7 @@ import { useAuth } from '@/store/auth';
 import { ProgressRail } from '@/app/components/brand/ProgressRail';
 import { redirectForStartStep, START_STEPS, type StartStep } from './guards';
 import { seedDiagnosisAndReport } from '@/store/devSeed';
+import { useDocumentMeta } from '@/seo/useDocumentMeta';
 
 export function StartLayout() {
   const t = useT();
@@ -13,6 +14,7 @@ export function StartLayout() {
   const [searchParams] = useSearchParams();
   const session = useSession();
   const auth = useAuth();
+  useDocumentMeta();
 
   const seg = pathname.split('/')[2]; // undefined for /start, 'plan' | 'checkout' | 'success' otherwise
   const step: StartStep = (START_STEPS as readonly string[]).includes(seg ?? '') ? (seg as StartStep) : 'account';

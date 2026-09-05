@@ -55,4 +55,10 @@ describe('ReportPage', () => {
     renderAt('/report/rep-abc');
     expect(screen.getAllByText(/\[PENDING:/).length).toBeGreaterThan(0);
   });
+
+  it('sets document.title from the route metadata (SEO-AUDIT.md H2)', () => {
+    seedSession('rep-abc');
+    renderAt('/report/rep-abc');
+    expect(document.title).toBe('ROOTÉ — Personalized Hair Growth System');
+  });
 });
