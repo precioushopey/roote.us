@@ -24,6 +24,10 @@ type Ctx = {
   localeRegion: string;
   setLocale: (l: LocaleCode) => void;
   setCountry: (c: string) => void;
+  /** Sets both axes in a single navigation — use when changing locale and country together
+   *  (calling `setCountry` then `setLocale` back-to-back races: both read the same stale
+   *  `location.pathname`/`country`/`locale` closure, so the second `navigate()` clobbers the first). */
+  setLocaleRegion: (l: LocaleCode, c: string) => void;
   t: (key: MessageKey, vars?: Record<string, string | number>) => string;
 };
 
@@ -73,6 +77,11 @@ export function LocaleProvider({
     [locale, navigateToRegion],
   );
 
+  const setLocaleRegion = useCallback(
+    (l: LocaleCode, c: string) => navigateToRegion(formatLocaleRegion(l, c)),
+    [navigateToRegion],
+  );
+
   const t = useCallback(
     (key: MessageKey, vars?: Record<string, string | number>) => {
       const table = messages[locale] as Record<string, string>;
@@ -92,9 +101,10 @@ export function LocaleProvider({
       localeRegion,
       setLocale,
       setCountry,
+      setLocaleRegion,
       t,
     }),
-    [locale, dir, country, localeRegion, setLocale, setCountry, t],
+    [locale, dir, country, localeRegion, setLocale, setCountry, setLocaleRegion, t],
   );
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
@@ -106,8 +116,9 @@ function useCtx(): Ctx {
 }
 
 export function useLocale() {
-  const { locale, contentLocale, dir, country, currency, localeRegion, setLocale, setCountry } = useCtx();
-  return { locale, contentLocale, dir, country, currency, localeRegion, setLocale, setCountry };
+  const { locale, contentLocale, dir, country, currency, localeRegion, setLocale, setCountry, setLocaleRegion } =
+    useCtx();
+  return { locale, contentLocale, dir, country, currency, localeRegion, setLocale, setCountry, setLocaleRegion };
 }
 
 /** The en/he locale to feed content builders (`buildReport` etc). */

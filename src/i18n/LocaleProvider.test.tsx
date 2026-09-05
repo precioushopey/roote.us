@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createMemoryRouter, RouterProvider, useLocation, useParams } from 'react-router';
+import { createMemoryRouter, RouterProvider, MemoryRouter, useLocation, useParams } from 'react-router';
 import { LocaleProvider, useLocale, useT, useLocalizedPath } from './LocaleProvider';
 
 function Probe() {
-  const { locale, dir, localeRegion, setLocale, setCountry } = useLocale();
+  const { locale, dir, localeRegion, setLocale, setCountry, setLocaleRegion } = useLocale();
   const t = useT();
   const withLocale = useLocalizedPath();
   const location = useLocation();
@@ -19,6 +19,7 @@ function Probe() {
       <span data-testid="linked">{withLocale('/products')}</span>
       <button onClick={() => setLocale('he')}>to-he</button>
       <button onClick={() => setCountry('US')}>to-us</button>
+      <button onClick={() => setLocaleRegion('he', 'US')}>to-he-us</button>
     </div>
   );
 }
@@ -77,5 +78,27 @@ describe('LocaleProvider', () => {
     renderAt('/en-il/products');
     await userEvent.click(screen.getByText('to-us'));
     expect(screen.getByTestId('path')).toHaveTextContent('/en-us/products');
+  });
+
+  it('setLocaleRegion navigates both axes at once in a single navigation', async () => {
+    renderAt('/en-il/products');
+    await userEvent.click(screen.getByText('to-he-us'));
+    expect(screen.getByTestId('path')).toHaveTextContent('/he-us/products');
+    expect(screen.getByTestId('region')).toHaveTextContent('he-us');
+  });
+
+  it('throws when given an invalid localeRegion', () => {
+    // Uses the plain declarative <MemoryRouter> (not createMemoryRouter/RouterProvider) because
+    // the data router wraps each route in its own RenderErrorBoundary, which swallows the throw
+    // and renders a fallback UI instead of letting it propagate out of `render()`.
+    expect(() =>
+      render(
+        <MemoryRouter>
+          <LocaleProvider localeRegion="not-valid">
+            <Probe />
+          </LocaleProvider>
+        </MemoryRouter>,
+      ),
+    ).toThrow('LocaleProvider received an invalid localeRegion');
   });
 });
