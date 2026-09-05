@@ -1,1 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Frank+Ruhl+Libre:wght@500;600;700&family=Heebo:wght@400;500;700&display=swap');
+/* Display: Bodoni Moda (Didot-lineage modern serif — medical-luxury register).
+   Body / UI: Montserrat.
+   Hebrew: Frank Ruhl Libre (display) + Heebo (body) + Noto Sans Hebrew (fallback).
+   Arabic: Noto Sans Arabic (for the scaffolded `ar` locale).
+   Loaded via <link> tags in index.html, not @import here — @import serializes the
+   fetch (fetch+parse this file before the font stylesheet is even discovered),
+   delaying first paint of styled text. See SEO-AUDIT.md H3. */

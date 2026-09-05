@@ -29,8 +29,6 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dir = dir;
-    const table = messages[locale] as Record<string, string>;
-    document.title = table['meta.title'] ?? document.title;
   }, [locale, dir]);
 
   const setLocale = useCallback((l: Locale) => {
