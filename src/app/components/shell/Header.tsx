@@ -1,27 +1,37 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { Link } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router';
+import { useT, useLocale } from '@/i18n/LocaleProvider';
 import { useCart } from '@/store/cart';
 import { useScrollCondense } from '@/app/lib/useScrollCondense';
 import { Wordmark } from '@/app/components/brand/Wordmark';
-import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
+import { Button, Drawer, IconButton, CountryLanguageSelector } from '@/app/components/roote';
 import { cn } from '@/app/components/ui/utils';
+import { PATHS } from '@/app/paths';
+import { countryDefault, type LocaleCode } from '@/i18n/locales';
 import type { MessageKey } from '@/i18n/messages';
-import { MobileMenu } from './MobileMenu';
 
-function BagLink({ label, count }: { label: string; count: number }) {
+const NAV: Array<[key: MessageKey, to: string]> = [
+  ['marketing.nav.howItWorks', PATHS.howItWorks],
+  ['marketing.nav.solutions', PATHS.solutions],
+  ['marketing.nav.science', PATHS.science],
+  ['marketing.nav.results', PATHS.results],
+  ['marketing.nav.system', PATHS.system],
+  ['marketing.nav.about', PATHS.about],
+];
+
+function CartLink({ label, count }: { label: string; count: number }) {
   return (
     <Link
-      to="/bag"
+      to={PATHS.bag}
       aria-label={label}
-      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground"
+      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-foreground hover:bg-ink-foreground/10"
     >
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
         <path d="M6 8h12l-1 12H7L6 8Z" strokeLinejoin="round" />
         <path d="M9 8V6a3 3 0 0 1 6 0v2" strokeLinecap="round" />
       </svg>
       {count > 0 && (
-        <span className="absolute -end-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-medium text-accent-foreground">
+        <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 text-[10px] font-semibold text-ink">
           {count}
         </span>
       )}
@@ -29,149 +39,116 @@ function BagLink({ label, count }: { label: string; count: number }) {
   );
 }
 
-const PRIMARY_LINKS: Array<[key: MessageKey, to: string]> = [
-  ['marketing.nav.howItWorks', '/how-it-works'],
-  ['marketing.nav.science', '/science'],
-  ['marketing.nav.products', '/products'],
-  ['marketing.nav.about', '/about'],
-];
-
-const MORE_LINKS: Array<[key: MessageKey, to: string]> = [
-  ['marketing.nav.faq', '/faq'],
-  ['marketing.nav.support', '/support'],
-];
-
 export function Header() {
   const t = useT();
   const cart = useCart();
   const condensed = useScrollCondense();
+  const { locale, country, setLocale, setCountry } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
-  const moreRef = useRef<HTMLDivElement>(null);
-  const moreButtonRef = useRef<HTMLButtonElement>(null);
-  const burgerRef = useRef<HTMLButtonElement>(null);
-  const moreMenuId = useId();
 
-  useEffect(() => {
-    if (!moreOpen) return;
-    function onPointerDown(event: PointerEvent) {
-      if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
-        setMoreOpen(false);
-      }
-    }
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setMoreOpen(false);
-        moreButtonRef.current?.focus();
-      }
-    }
-    document.addEventListener('pointerdown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, [moreOpen]);
+  const regionLabels = {
+    open: t('marketing.region.trigger'),
+    title: t('marketing.region.title'),
+    region: t('marketing.region.regionLabel'),
+    language: t('marketing.region.languageLabel'),
+    done: t('marketing.region.done'),
+  };
 
-  const closeMenu = useCallback(() => {
-    setMenuOpen(false);
-    burgerRef.current?.focus();
-  }, []);
+  // Picking a region also moves the language to that region's default.
+  const onChangeCountry = (c: string) => {
+    setCountry(c);
+    setLocale(countryDefault(c).locale);
+  };
+  const onChangeLocale = (l: LocaleCode) => setLocale(l);
+
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    cn(
+      'font-body text-sm tracking-wide transition-colors',
+      isActive ? 'text-ink-foreground' : 'text-ink-foreground/70 hover:text-ink-foreground',
+    );
 
   return (
-    <>
     <header
       className={cn(
-        'sticky top-0 z-40 w-full transition-colors',
-        condensed
-          ? 'border-b border-border bg-background/95 backdrop-blur'
-          : 'bg-transparent',
+        'glass-dark sticky top-0 z-40 w-full transition-[padding,border-color] duration-200',
+        condensed ? 'border-b border-ink-foreground/15' : 'border-b border-transparent',
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-        <Link to="/" className="inline-flex items-center">
-          <Wordmark className="w-28" />
+      <div
+        className={cn(
+          'mx-auto flex max-w-[80rem] items-center justify-between gap-6 px-6 md:px-10',
+          condensed ? 'py-3' : 'py-4',
+        )}
+      >
+        <Link to={PATHS.home} aria-label="ROOTÉ" className="inline-flex items-center">
+          <Wordmark className="w-28" onInk />
         </Link>
 
-        <nav aria-label={t('marketing.nav.primaryLabel')} className="hidden items-center gap-8 lg:flex">
-          {PRIMARY_LINKS.map(([key, to]) => (
-            <Link key={to} to={to} className="text-sm tracking-wide text-foreground">
-              {t(key)}
-            </Link>
+        <nav
+          aria-label={t('marketing.nav.primaryLabel')}
+          className="hidden items-center gap-6 lg:flex xl:gap-8"
+        >
+          {NAV.map(([key, to]) => (
+            <NavLink key={to} to={to} className={navLinkClass}>
+              <span className="whitespace-nowrap">{t(key)}</span>
+            </NavLink>
           ))}
-
-          <div ref={moreRef} className="relative">
-            <button
-              ref={moreButtonRef}
-              type="button"
-              aria-expanded={moreOpen}
-              aria-haspopup="true"
-              aria-controls={moreOpen ? moreMenuId : undefined}
-              onClick={() => setMoreOpen((open) => !open)}
-              className="inline-flex items-center gap-1 text-sm tracking-wide text-foreground"
-            >
-              {t('marketing.nav.more')}
-              <span aria-hidden="true">▾</span>
-            </button>
-
-            {moreOpen && (
-              <ul
-                id={moreMenuId}
-                className="absolute end-0 top-full mt-2 min-w-40 rounded-lg border border-border bg-background py-2 shadow-lg"
-              >
-                {MORE_LINKS.map(([key, to]) => (
-                  <li key={to}>
-                    <Link
-                      to={to}
-                      onClick={() => setMoreOpen(false)}
-                      className="block px-4 py-2 text-sm text-foreground"
-                    >
-                      {t(key)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <BagLink label={t('cart.open')} count={cart.count} />
-          <LocaleToggle />
-          <Link
-            to="/diagnosis"
-            className="hidden items-center rounded-full bg-primary px-6 py-3 text-sm tracking-wide text-primary-foreground sm:inline-flex"
-          >
+          <CountryLanguageSelector
+            country={country}
+            locale={locale}
+            onChangeCountry={onChangeCountry}
+            onChangeLocale={onChangeLocale}
+            labels={regionLabels}
+            className="hidden text-ink-foreground/70 hover:text-ink-foreground md:inline-flex"
+          />
+          <NavLink to={PATHS.account} className="hidden font-body text-sm text-ink-foreground/70 hover:text-ink-foreground md:inline">
+            {t('marketing.nav.account')}
+          </NavLink>
+          <CartLink label={t('cart.open')} count={cart.count} />
+          <Button to={PATHS.analysis} size="sm" caps className="hidden sm:inline-flex">
             {t('marketing.nav.cta')}
-          </Link>
-          <button
-            ref={burgerRef}
-            type="button"
-            aria-label={t('marketing.nav.openMenu')}
-            aria-expanded={menuOpen}
-            aria-haspopup="dialog"
+          </Button>
+          <IconButton
+            label={t('marketing.nav.openMenu')}
             onClick={() => setMenuOpen(true)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground lg:hidden"
+            className="lg:hidden text-ink-foreground hover:bg-ink-foreground/10"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              aria-hidden="true"
-            >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
               <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
             </svg>
-          </button>
+          </IconButton>
         </div>
       </div>
 
+      <Drawer open={menuOpen} onClose={() => setMenuOpen(false)} title={t('marketing.nav.menuLabel')}>
+        <nav className="flex flex-col gap-1">
+          {[...NAV, ['marketing.nav.products', PATHS.products] as [MessageKey, string], ['marketing.nav.faq', PATHS.faq] as [MessageKey, string], ['marketing.nav.support', PATHS.support] as [MessageKey, string], ['marketing.nav.account', PATHS.account] as [MessageKey, string]].map(([key, to]) => (
+            <Link
+              key={to}
+              to={to}
+              onClick={() => setMenuOpen(false)}
+              className="rounded-lg px-2 py-3 font-display text-lg text-foreground hover:bg-cream-100"
+            >
+              {t(key)}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-6 border-t border-border pt-6">
+          <CountryLanguageSelector
+            country={country}
+            locale={locale}
+            onChangeCountry={onChangeCountry}
+            onChangeLocale={onChangeLocale}
+            labels={regionLabels}
+          />
+          <Button to={PATHS.analysis} caps block className="mt-4" onClick={() => setMenuOpen(false)}>
+            {t('marketing.nav.cta')}
+          </Button>
+        </div>
+      </Drawer>
     </header>
-    {/* Rendered outside <header>: the header's `backdrop-blur` would otherwise trap this
-        position:fixed overlay to the header's box instead of the viewport. */}
-    {menuOpen && <MobileMenu onClose={closeMenu} />}
-    </>
   );
 }
