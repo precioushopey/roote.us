@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { parseLocaleRegion, isValidLocaleRegion, formatLocaleRegion, resolveLocaleRedirect } from './localeRegion';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { parseLocaleRegion, isValidLocaleRegion, formatLocaleRegion, resolveLocaleRedirect, readStoredRegion, writeStoredRegion, PREFERRED_REGION_KEY } from './localeRegion';
 
 describe('parseLocaleRegion', () => {
   it('parses a valid shipped locale + known country', () => {
@@ -66,5 +66,37 @@ describe('resolveLocaleRedirect', () => {
 
   it('ignores a stored preference that is no longer valid', () => {
     expect(resolveLocaleRedirect('/', 'xx-yy', 'en-US')).toBe('/en-us');
+  });
+});
+
+describe('readStoredRegion / writeStoredRegion', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('round-trips a region through localStorage', () => {
+    writeStoredRegion('en-us');
+    expect(readStoredRegion()).toBe('en-us');
+  });
+
+  it('returns null when nothing has been stored yet', () => {
+    expect(readStoredRegion()).toBeNull();
+  });
+
+  it('handles localStorage access errors gracefully on read', () => {
+    writeStoredRegion('en-us');
+    const getItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+    expect(readStoredRegion()).toBeNull();
+    getItemSpy.mockRestore();
+  });
+
+  it('handles localStorage access errors gracefully on write', () => {
+    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+    expect(() => writeStoredRegion('en-us')).not.toThrow();
+    setItemSpy.mockRestore();
   });
 });
