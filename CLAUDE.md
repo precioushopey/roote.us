@@ -146,8 +146,10 @@ falling back to the local model on any failure. `hairhealthAdapter`'s request/re
 Tailwind **v4** (`@tailwindcss/vite`) — no `tailwind.config`, `postcss.config.mjs` is intentionally
 empty. Tokens are CSS custom properties in `theme.css` (shadcn variable names) + an `@theme inline`
 map; **keep `src/styles/tokens.ts` in sync** (`tokens.test.ts` checks it). Light-only in practice —
-the `.dark` block exists but nothing toggles it. Palette: ivory `#f9f6ef` ground, `#2a2320` text,
-`#745f50` primary CTA, brass `#a97b45` accent (non-text / ≥24 px only), `#201812` ink bands. Motion
+the `.dark` block exists but nothing toggles it. Palette: cream `#fcf9f3` ground, `#172022` text, deep
+emerald `#1b4b32` primary CTA / `#0a2a1c` ink bands (header, footer, AppShell sidebar — anchor, not
+dominant; body content stays on cream), gold `#c6a15a` accent (non-text / ≥24 px only, logo exempt).
+Motion
 via `motion`; every effect needs a `prefers-reduced-motion` static fallback (`useReducedMotion`).
 
 ## Gotchas
