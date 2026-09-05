@@ -50,7 +50,7 @@ export const palette = {
 /** Glass surfaces — genuine depth only (sticky nav, floating result card, modals). */
 export const glass = {
   light: 'rgba(255, 255, 255, 0.62)',
-  dark: 'rgba(10, 42, 28, 0.7)',
+  dark: 'rgba(10, 42, 28, 0.85)',
   border: 'rgba(255, 255, 255, 0.18)',
   borderDark: 'rgba(255, 255, 255, 0.1)',
   blur: '20px',

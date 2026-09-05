@@ -44,7 +44,7 @@
 }
 
 /* --- imagery -------------------------------------------------------------
-   Subtle unifying grade. No sepia (it fights the teal). */
+   Subtle unifying grade. No sepia (it fights the emerald). */
 .img-editorial {
   filter: saturate(0.96) contrast(1.03);
 }

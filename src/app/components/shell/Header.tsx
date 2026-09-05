@@ -108,7 +108,7 @@ export function Header() {
             {t('marketing.nav.account')}
           </NavLink>
           <CartLink label={t('cart.open')} count={cart.count} />
-          <Button to={PATHS.analysis} size="sm" caps className="hidden sm:inline-flex">
+          <Button to={PATHS.analysis} size="sm" caps onInk className="hidden sm:inline-flex">
             {t('marketing.nav.cta')}
           </Button>
           <IconButton

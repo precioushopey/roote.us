@@ -118,7 +118,7 @@ export function Footer() {
               {t('marketing.footer.startTitle')}
             </h2>
             <p className="mt-3 font-body text-sm text-ink-foreground/60">{t('marketing.footer.startBody')}</p>
-            <Button to={PATHS.analysis} size="sm" caps className="mt-4">
+            <Button to={PATHS.analysis} size="sm" caps onInk className="mt-4">
               {t('marketing.nav.cta')}
             </Button>
           </div>

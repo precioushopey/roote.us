@@ -86,7 +86,7 @@ export function AppShell() {
       data-pack={pack}
       className="min-h-screen bg-background text-foreground lg:grid lg:grid-cols-[248px_minmax(0,1fr)]"
     >
-      <aside className="sticky top-0 hidden h-screen flex-col border-e border-ink-foreground/15 bg-ink px-4 py-6 lg:flex">
+      <aside className="sticky top-0 hidden h-screen flex-col border-e border-ink-foreground/15 bg-ink px-4 py-6 text-ink-foreground lg:flex">
         <Wordmark className="w-24" onInk />
         <nav aria-label={t('app.nav.label')} className="mt-8 flex flex-col gap-1">
           {TABS.map(([to, key]) => (
@@ -95,7 +95,7 @@ export function AppShell() {
             </NavLink>
           ))}
         </nav>
-        <div className="mt-auto flex flex-col gap-2 border-t border-border pt-4">
+        <div className="mt-auto flex flex-col gap-2 border-t border-ink-foreground/15 pt-4">
           <NavLink
             to={PATHS.accountSection('scans')}
             className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"

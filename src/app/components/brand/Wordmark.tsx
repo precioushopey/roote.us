@@ -16,7 +16,7 @@ export function Wordmark({ className, onInk = false }: WordmarkProps) {
       <span
         role="img"
         aria-label="ROOTÉ"
-        className={cn('inline-block select-none bg-gold-500', className)}
+        className={cn('inline-block w-32 select-none bg-gold-500', className)}
         style={{
           aspectRatio: '1400 / 435',
           WebkitMaskImage: `url(${logo})`,

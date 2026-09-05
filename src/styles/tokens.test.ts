@@ -5,7 +5,10 @@ describe('primitive scales (brief §6)', () => {
   it('carries the pinned emerald / cream / gold / ink values', () => {
     expect(primitives).toMatchObject({
       emerald950: '#0A2A1C',
+      emerald900: '#123726',
       emerald800: '#1B4B32',
+      emerald700: '#235E3F',
+      emerald600: '#34805A',
       cream50: '#FCF9F3',
       cream100: '#F6EFE4',
       gold500: '#C6A15A',
@@ -16,6 +19,12 @@ describe('primitive scales (brief §6)', () => {
     });
   });
 });
+
+// NOTE (final-review fix #5): --chart-1..5 in theme.css (#1b4b32, #34805a,
+// #5fa97f, #c6a15a, #a98343) are CSS-only custom properties — tokens.ts does
+// not export a `chart` object, so there is nothing in JS to assert against.
+// Adding one here would just re-assert a literal against itself. Exporting
+// the chart values from tokens.ts is outside this fix's scope (see report).
 
 describe('semantic palette', () => {
   it('uses deep emerald for the filled CTA, not a brown', () => {
@@ -44,7 +53,7 @@ describe('semantic palette', () => {
 describe('glass tokens', () => {
   it('are the brief §6 values and are used for depth only', () => {
     expect(glass.light).toBe('rgba(255, 255, 255, 0.62)');
-    expect(glass.dark).toBe('rgba(10, 42, 28, 0.7)');
+    expect(glass.dark).toBe('rgba(10, 42, 28, 0.85)');
     expect(glass.border).toBe('rgba(255, 255, 255, 0.18)');
     expect(glass.blur).toBe('20px');
   });
