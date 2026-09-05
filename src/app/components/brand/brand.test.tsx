@@ -15,6 +15,20 @@ describe('brand components', () => {
     expect(screen.getByRole('img', { name: 'ROOTÉ' })).toBeInTheDocument();
   });
 
+  it('Wordmark default renders the ROOTÉ img element', () => {
+    wrap(<Wordmark />);
+    const mark = screen.getByRole('img', { name: 'ROOTÉ' });
+    expect(mark.tagName).toBe('IMG');
+  });
+
+  it('Wordmark onInk renders a gold-masked mark instead of the default image', () => {
+    wrap(<Wordmark onInk />);
+    const mark = screen.getByRole('img', { name: 'ROOTÉ' });
+    expect(mark.tagName).toBe('SPAN');
+    expect(mark.className).toContain('bg-gold-500');
+    expect(mark.getAttribute('style')).toContain('mask-image');
+  });
+
   it('LocaleToggle flips he -> en', async () => {
     wrap(<><LocaleToggle /><Wordmark /></>);
     const btn = screen.getByRole('button');
