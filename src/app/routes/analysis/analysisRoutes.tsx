@@ -1,4 +1,5 @@
-import { Navigate, type RouteObject } from 'react-router';
+import { type RouteObject } from 'react-router';
+import { LocalizedNavigate } from '@/app/LocaleGate';
 import { AnalysisShell } from './AnalysisShell';
 import { IntroScreen, GenderScreen, ConcernScreen } from './Steps1to3';
 import { PhotosScreen } from './PhotosScreen';
@@ -19,8 +20,8 @@ export const analysisRoutes: RouteObject = {
     { path: 'questions', element: <QuestionsScreen /> },
     { path: 'results', element: <ResultsScreen /> },
     // WP2-era aliases
-    { path: 'intro', element: <Navigate to="/analysis" replace /> },
-    { path: 'analyzing', element: <Navigate to="/analysis/scanning" replace /> },
-    { path: 'ready', element: <Navigate to="/analysis/results" replace /> },
+    { path: 'intro', element: <LocalizedNavigate to="/analysis" replace /> },
+    { path: 'analyzing', element: <LocalizedNavigate to="/analysis/scanning" replace /> },
+    { path: 'ready', element: <LocalizedNavigate to="/analysis/results" replace /> },
   ],
 };
