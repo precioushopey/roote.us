@@ -133,5 +133,8 @@ export function useT() {
 /** Prefixes a bare `PATHS.x` value with the current locale-region, e.g. `/products` -> `/en-us/products`. */
 export function useLocalizedPath() {
   const { localeRegion } = useCtx();
-  return useCallback((path: string) => `/${localeRegion}${path}`, [localeRegion]);
+  return useCallback(
+    (path: string) => (path === '/' ? `/${localeRegion}` : `/${localeRegion}${path}`),
+    [localeRegion],
+  );
 }

@@ -30,17 +30,15 @@ describe('Header', () => {
     renderHeader();
     const nav = screen.getByRole('navigation', { name: 'Primary' });
     expect(within(nav).getByRole('link', { name: 'How It Works' })).toHaveAttribute('href', '/en-us/how-it-works');
-    expect(within(nav).getByRole('link', { name: 'Solutions' })).toHaveAttribute('href', '/en-us/solutions');
+    expect(within(nav).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
     expect(within(nav).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/en-us/science');
-    expect(within(nav).getByRole('link', { name: 'Results' })).toHaveAttribute('href', '/en-us/results');
-    expect(within(nav).getByRole('link', { name: 'Our System' })).toHaveAttribute('href', '/en-us/system');
     expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en-us/about');
     expect(screen.getByRole('link', { name: 'Start free hair analysis' })).toHaveAttribute('href', '/en-us/analysis');
   });
 
   it('links the wordmark home', () => {
     renderHeader();
-    expect(screen.getByRole('link', { name: 'ROOTÉ' })).toHaveAttribute('href', '/en-us/');
+    expect(screen.getByRole('link', { name: 'ROOTÉ' })).toHaveAttribute('href', '/en-us');
   });
 
   it('opens and closes the mobile menu drawer', async () => {
@@ -50,8 +48,8 @@ describe('Header', () => {
 
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveAttribute('aria-modal', 'true');
-    expect(within(dialog).getByRole('link', { name: 'How It Works' })).toHaveAttribute('href', '/en-us/how-it-works');
-    expect(within(dialog).getByRole('link', { name: 'FAQ' })).toHaveAttribute('href', '/en-us/faq');
+    expect(within(dialog).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
+    expect(within(dialog).getByRole('link', { name: 'Account' })).toHaveAttribute('href', '/en-us/account');
     expect(within(dialog).getAllByRole('link', { name: 'Start free hair analysis' })[0]).toHaveAttribute('href', '/en-us/analysis');
 
     await user.keyboard('{Escape}');
