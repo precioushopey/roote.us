@@ -5,23 +5,23 @@ import App from './App';
 
 describe('App shell', () => {
   afterEach(() => {
-    // Restore history for the module-scoped browser router so tests in this file are order-independent.
-    // Wrapped in act() because the still-mounted RouterProvider updates in response to the popstate.
     act(() => {
       window.history.pushState({}, '', '/');
       window.dispatchEvent(new PopStateEvent('popstate'));
     });
   });
 
-  it('mounts the marketing shell at / with the real homepage', () => {
-    localStorage.setItem('roote.locale', 'en');
+  it('mounts the marketing shell at /en-us with the real homepage', () => {
+    window.history.pushState({}, '', '/en-us');
+    window.dispatchEvent(new PopStateEvent('popstate'));
     render(<App />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Regrowth');
-    expect(screen.getAllByRole('link', { name: 'Start Free Diagnosis' }).length).toBeGreaterThan(0);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Your hair is individual');
+    expect(
+      screen.getAllByRole('link', { name: 'Start free hair analysis' }).length,
+    ).toBeGreaterThan(0);
   });
 
-  it('reaches /start and can sign up to advance to the plan step', async () => {
-    localStorage.setItem('roote.locale', 'en');
+  it('reaches /en-us/program and can sign up to advance to the plan step', async () => {
     const { deriveAnalysis } = await import('@/domain/analysis/deriveAnalysis');
     const answers = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
     const analysis = deriveAnalysis({ gender: 'male', answers });
@@ -36,9 +36,7 @@ describe('App shell', () => {
         program: null,
       }),
     );
-    window.history.pushState({}, '', '/start');
-    // App's router is a module-scoped createBrowserRouter whose history listener was attached at
-    // import; pushState alone does not notify it, so fire the popstate it listens for.
+    window.history.pushState({}, '', '/en-us/program');
     window.dispatchEvent(new PopStateEvent('popstate'));
     render(<App />);
     const user = userEvent.setup({ delay: null });

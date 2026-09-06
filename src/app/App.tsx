@@ -1,87 +1,102 @@
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
-import { LocaleProvider } from '@/i18n/LocaleProvider';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 import { SessionProvider } from '@/store/sessionStore';
 import { AuthProvider } from '@/store/auth';
 import { CartProvider } from '@/store/cart';
+import { TrackingProvider } from '@/store/tracking';
+import { ToastProvider } from '@/app/components/roote';
+import { LocaleGate, BareOrLegacyPathRedirect, LocalizedNavigate } from './LocaleGate';
 import { ReportPage } from './routes/report/ReportPage';
 import { LoginPage } from './routes/auth/LoginPage';
 import { FunnelShell } from './components/shell/FunnelShell';
 import { marketingRoutes } from './routes/marketing/marketingRoutes';
-import { DiagnosisLayout } from './routes/diagnosis/DiagnosisLayout';
-import { IntroStep } from './routes/diagnosis/IntroStep';
-import { GenderStep } from './routes/diagnosis/GenderStep';
-import { PhotosStep } from './routes/diagnosis/PhotosStep';
-import { AnalyzingStep } from './routes/diagnosis/AnalyzingStep';
-import { ReadyStep } from './routes/diagnosis/ReadyStep';
+import { analysisRoutes } from './routes/analysis/analysisRoutes';
 import { StartLayout } from './routes/start/StartLayout';
 import { AccountStep } from './routes/start/AccountStep';
 import { PlanStep } from './routes/start/PlanStep';
 import { CheckoutStep } from './routes/start/CheckoutStep';
 import { SuccessStep } from './routes/start/SuccessStep';
 import { AppShell } from './routes/app/AppShell';
-import { AppToday } from './routes/app/AppToday';
+import { AccountOverview } from './routes/app/AccountOverview';
+import { AccountToday } from './routes/app/AccountToday';
+import { AccountBaseline } from './routes/app/AccountBaseline';
+import { AccountPhotos } from './routes/app/AccountPhotos';
+import { AccountScans } from './routes/app/AccountScans';
+import { AccountProgress } from './routes/app/AccountProgress';
+import { AccountBeforeAfter } from './routes/app/AccountBeforeAfter';
+import { AccountResults } from './routes/app/AccountResults';
+import { AccountRenew } from './routes/app/AccountRenew';
+import { AccountReminders } from './routes/app/AccountReminders';
 import { AppPlan } from './routes/app/AppPlan';
-import { AppProgress } from './routes/app/AppProgress';
 import { AppCare } from './routes/app/AppCare';
-import { AppRescan } from './routes/app/AppRescan';
 import { AppProfile } from './routes/app/AppProfile';
+import { AccountOrders } from './routes/app/AccountOrders';
+import { AccountSubscription } from './routes/app/AccountSubscription';
 
 const router = createBrowserRouter([
-  marketingRoutes,
   {
-    element: <FunnelShell />,
+    path: '/:localeRegion',
+    element: <LocaleGate />,
     children: [
-      { path: '/login', element: <LoginPage /> },
+      marketingRoutes,
+      analysisRoutes,
       {
-        path: '/diagnosis',
-        element: <DiagnosisLayout />,
+        element: <FunnelShell />,
         children: [
-          { index: true, element: <IntroStep /> },
-          { path: 'intro', element: <IntroStep /> },
-          { path: 'gender', element: <GenderStep /> },
-          { path: 'photos', element: <PhotosStep /> },
-          { path: 'analyzing', element: <AnalyzingStep /> },
-          { path: 'ready', element: <ReadyStep /> },
+          { path: 'login', element: <LoginPage /> },
+          {
+            path: 'program',
+            element: <StartLayout />,
+            children: [
+              { index: true, element: <AccountStep /> },
+              { path: 'plan', element: <PlanStep /> },
+              { path: 'checkout', element: <CheckoutStep /> },
+              { path: 'success', element: <SuccessStep /> },
+            ],
+          },
         ],
       },
       {
-        path: '/start',
-        element: <StartLayout />,
+        path: 'account',
+        element: <AppShell />,
         children: [
-          { index: true, element: <AccountStep /> },
-          { path: 'plan', element: <PlanStep /> },
-          { path: 'checkout', element: <CheckoutStep /> },
-          { path: 'success', element: <SuccessStep /> },
+          { index: true, element: <AccountOverview /> },
+          { path: 'today', element: <AccountToday /> },
+          { path: 'program', element: <AppPlan /> },
+          { path: 'baseline', element: <AccountBaseline /> },
+          { path: 'progress', element: <AccountProgress /> },
+          { path: 'progress/before-after', element: <AccountBeforeAfter /> },
+          { path: 'results', element: <AccountResults /> },
+          { path: 'renew', element: <AccountRenew /> },
+          { path: 'reminders', element: <AccountReminders /> },
+          { path: 'photos', element: <AccountPhotos /> },
+          { path: 'scans', element: <AccountScans /> },
+          { path: 'orders', element: <AccountOrders /> },
+          { path: 'subscription', element: <AccountSubscription /> },
+          { path: 'care', element: <AppCare /> },
+          { path: 'profile', element: <AppProfile /> },
+          // WP2-era sub-segment names
+          { path: 'plan', element: <LocalizedNavigate to="/account/program" replace /> },
+          { path: 'rescan', element: <LocalizedNavigate to="/account/scans" replace /> },
         ],
       },
+      { path: 'report/:reportId', element: <ReportPage /> },
     ],
   },
-  {
-    path: '/app',
-    element: <AppShell />,
-    children: [
-      { index: true, element: <AppToday /> },
-      { path: 'plan', element: <AppPlan /> },
-      { path: 'progress', element: <AppProgress /> },
-      { path: 'care', element: <AppCare /> },
-      { path: 'rescan', element: <AppRescan /> },
-      { path: 'profile', element: <AppProfile /> },
-    ],
-  },
-  { path: '/report/:reportId', element: <ReportPage /> },
-  { path: '*', element: <Navigate to="/" replace /> },
+  { path: '*', element: <BareOrLegacyPathRedirect /> },
 ]);
 
 export default function App() {
   return (
-    <LocaleProvider>
-      <AuthProvider>
-        <SessionProvider>
-          <CartProvider>
-            <RouterProvider router={router} />
-          </CartProvider>
-        </SessionProvider>
-      </AuthProvider>
-    </LocaleProvider>
+    <AuthProvider>
+      <SessionProvider>
+        <CartProvider>
+          <TrackingProvider>
+            <ToastProvider>
+              <RouterProvider router={router} />
+            </ToastProvider>
+          </TrackingProvider>
+        </CartProvider>
+      </SessionProvider>
+    </AuthProvider>
   );
 }
