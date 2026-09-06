@@ -4,6 +4,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { SessionProvider } from '@/store/sessionStore';
 import { AuthProvider } from '@/store/auth';
+import { CartProvider } from '@/store/cart';
 import { TrackingProvider } from '@/store/tracking';
 import { AppShell } from './AppShell';
 
@@ -52,9 +53,11 @@ function renderAt(path: string) {
   return render(
     <AuthProvider>
       <SessionProvider>
-        <TrackingProvider>
-          <RouterProvider router={router} />
-        </TrackingProvider>
+        <CartProvider>
+          <TrackingProvider>
+            <RouterProvider router={router} />
+          </TrackingProvider>
+        </CartProvider>
       </SessionProvider>
     </AuthProvider>,
   );

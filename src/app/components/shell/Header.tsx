@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
-import { useCart } from '@/store/cart';
 import { useScrollCondense } from '@/app/lib/useScrollCondense';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { Button, Drawer, IconButton, CountryLanguageSelector } from '@/app/components/roote';
@@ -12,38 +11,14 @@ import type { MessageKey } from '@/i18n/messages';
 
 const NAV: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.howItWorks', PATHS.howItWorks],
-  ['marketing.nav.solutions', PATHS.solutions],
+  ['marketing.nav.products', PATHS.products],
   ['marketing.nav.science', PATHS.science],
-  ['marketing.nav.results', PATHS.results],
-  ['marketing.nav.system', PATHS.system],
   ['marketing.nav.about', PATHS.about],
 ];
-
-function CartLink({ label, count }: { label: string; count: number }) {
-  const withLocale = useLocalizedPath();
-  return (
-    <Link
-      to={withLocale(PATHS.bag)}
-      aria-label={label}
-      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-foreground hover:bg-ink-foreground/10"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-        <path d="M6 8h12l-1 12H7L6 8Z" strokeLinejoin="round" />
-        <path d="M9 8V6a3 3 0 0 1 6 0v2" strokeLinecap="round" />
-      </svg>
-      {count > 0 && (
-        <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 text-[10px] font-semibold text-ink">
-          {count}
-        </span>
-      )}
-    </Link>
-  );
-}
 
 export function Header() {
   const t = useT();
   const withLocale = useLocalizedPath();
-  const cart = useCart();
   const condensed = useScrollCondense();
   const { locale, country, setLocale, setLocaleRegion } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -64,7 +39,7 @@ export function Header() {
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      'font-body text-sm tracking-wide transition-colors',
+      'font-body text-xs uppercase tracking-[0.14em] transition-colors',
       isActive ? 'text-ink-foreground' : 'text-ink-foreground/70 hover:text-ink-foreground',
     );
 
@@ -77,17 +52,13 @@ export function Header() {
     >
       <div
         className={cn(
-          'mx-auto flex max-w-[80rem] items-center justify-between gap-6 px-6 md:px-10',
+          'relative mx-auto flex max-w-[80rem] items-center gap-4 px-6 md:px-10',
           condensed ? 'py-3' : 'py-4',
         )}
       >
-        <Link to={withLocale(PATHS.home)} aria-label="ROOTÉ" className="inline-flex items-center">
-          <Wordmark className="w-28" onInk />
-        </Link>
-
         <nav
           aria-label={t('marketing.nav.primaryLabel')}
-          className="hidden items-center gap-6 lg:flex xl:gap-8"
+          className="hidden flex-1 items-center gap-6 lg:flex xl:gap-8"
         >
           {NAV.map(([key, to]) => (
             <NavLink key={to} to={withLocale(to)} className={navLinkClass}>
@@ -96,19 +67,26 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="ms-auto flex items-center gap-2 sm:gap-3">
           <CountryLanguageSelector
             country={country}
             locale={locale}
             onChangeCountry={onChangeCountry}
             onChangeLocale={onChangeLocale}
             labels={regionLabels}
-            className="hidden text-ink-foreground/70 hover:text-ink-foreground md:inline-flex"
+            compact
+            className="hidden text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground md:inline-flex"
           />
-          <NavLink to={withLocale(PATHS.account)} className="hidden font-body text-sm text-ink-foreground/70 hover:text-ink-foreground md:inline">
-            {t('marketing.nav.account')}
-          </NavLink>
-          <CartLink label={t('cart.open')} count={cart.count} />
+          <Link
+            to={withLocale(PATHS.account)}
+            aria-label={t('marketing.nav.account')}
+            className="hidden h-10 w-10 items-center justify-center rounded-full text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground md:inline-flex"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+              <circle cx="12" cy="8" r="3.5" />
+              <path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5" strokeLinecap="round" />
+            </svg>
+          </Link>
           <Button to={withLocale(PATHS.analysis)} size="sm" caps onInk className="hidden sm:inline-flex">
             {t('marketing.nav.cta')}
           </Button>
@@ -122,11 +100,19 @@ export function Header() {
             </svg>
           </IconButton>
         </div>
+
+        <Link
+          to={withLocale(PATHS.home)}
+          aria-label="ROOTÉ"
+          className="absolute inset-x-0 mx-auto w-fit"
+        >
+          <Wordmark className="w-24 md:w-28 lg:w-32" onInk />
+        </Link>
       </div>
 
       <Drawer open={menuOpen} onClose={() => setMenuOpen(false)} title={t('marketing.nav.menuLabel')}>
         <nav className="flex flex-col gap-1">
-          {[...NAV, ['marketing.nav.products', PATHS.products] as [MessageKey, string], ['marketing.nav.faq', PATHS.faq] as [MessageKey, string], ['marketing.nav.support', PATHS.support] as [MessageKey, string], ['marketing.nav.account', PATHS.account] as [MessageKey, string]].map(([key, to]) => (
+          {[...NAV, ['marketing.nav.account', PATHS.account] as [MessageKey, string]].map(([key, to]) => (
             <Link
               key={to}
               to={withLocale(to)}

@@ -40,6 +40,10 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     css: false,
+    // Full-app integration tests (App.test, diagnosis e2e) mount the whole route
+    // graph; under worker contention the module load + render can pass 5s.
+    testTimeout: 20000,
+    hookTimeout: 20000,
     // .worktrees/ holds sibling git worktrees (their own full checkout + node_modules) nested
     // inside this repo root — without excluding it, Vitest's default discovery also picks up
     // their test files, running two different node_modules' React copies in one process and

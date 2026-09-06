@@ -2,12 +2,14 @@ import { NavLink, Navigate, Outlet, useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
+import { useCart } from '@/store/cart';
 import { seedProgram } from '@/store/devSeed';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { useTrackingMigration } from './useTrackingMigration';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
+import { CartLink } from '@/app/components/shell/CartLink';
 import { Button } from '@/app/components/roote';
 import { packagingFor } from '@/domain/recommendation/recommend';
 import { cn } from '@/app/components/ui/utils';
@@ -35,6 +37,7 @@ export function AppShell() {
   const withLocale = useLocalizedPath();
   const session = useSession();
   const auth = useAuth();
+  const cart = useCart();
   const navigate = useNavigate();
   useRevealOnRoute();
   useTrackingMigration();
@@ -105,12 +108,15 @@ export function AppShell() {
           >
             {t('app.care.rescanLink')}
           </NavLink>
-          <NavLink
-            to={withLocale(PATHS.products)}
-            className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
-          >
-            {t('app.nav.shop')}
-          </NavLink>
+          <div className="flex items-center justify-between ps-3 pe-1">
+            <NavLink
+              to={withLocale(PATHS.products)}
+              className="rounded-lg py-2 font-body text-sm text-ink-foreground/70 hover:text-ink-foreground"
+            >
+              {t('app.nav.shop')}
+            </NavLink>
+            <CartLink label={t('cart.open')} count={cart.count} />
+          </div>
           <button
             type="button"
             onClick={logout}
@@ -125,7 +131,8 @@ export function AppShell() {
       <header className="glass-dark sticky top-0 z-40 border-b border-ink-foreground/15 lg:hidden">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
           <Wordmark className="w-24" onInk />
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <CartLink label={t('cart.open')} count={cart.count} />
             <button type="button" onClick={logout} className="font-body text-xs text-ink-foreground/70 underline">
               {t('app.profile.logout')}
             </button>

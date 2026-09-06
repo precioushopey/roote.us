@@ -28,7 +28,10 @@ export const rooteContent = {
     },
   },
 
-  currency: 'ILS', // TODO: confirm with client — ILS vs USD
+  // PO #3 (2026-09-04): launch currencies are USD + ILS (en-US→USD, he-IL→ILS);
+  // GBP with UK commerce, EUR later, no RUB at launch. This is the fallback when
+  // no country/locale is resolved — see i18n/locales `launchCurrencyFor`.
+  currency: 'USD',
 
   formula: {
     status: 'pending-regulatory-review',
@@ -41,23 +44,70 @@ export const rooteContent = {
     ],
   },
 
-  treatments: {
-    core: [
-      {
-        key: 'roote-topical',
-        name: { en: 'ROOTÉ Topical Formula', he: 'תרחיף ROOTÉ לקרקפת' } as LocalizedText, // TODO: confirm medical HE
-        form: 'topical' as const,
-        usageKey: 'usage.apply-scalp-affected',
-        frequencyKey: 'frequency.twice-daily',
-        appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
-      },
-    ],
-    supporting: [
-      // TODO: confirm with client — identity of the supporting treatment(s); HE names pending medical review
-      { key: 'derma-stim', name: { en: 'Scalp stimulation routine', he: 'שגרת גירוי קרקפת' } as LocalizedText, usageKey: 'usage.derma-stim', frequencyKey: 'frequency.weekly' },
-      { key: 'cleanser',   name: { en: 'Gentle scalp cleanser',     he: 'תכשיר ניקוי עדין לקרקפת' } as LocalizedText, usageKey: 'usage.cleanse', frequencyKey: 'frequency.daily' },
-    ],
-  },
+  // PO #5 / #15 (2026-09-04): every treatment product, keyed by slug — the single
+  // source of truth for display (name/usage/frequency/zones). WHICH keys apply to
+  // a given customer is a *concern-branched* decision, resolved by
+  // `domain/recommendation/recommend()` + `planKeysFor()` (rules.ts), never by
+  // reading this whole registry — a gray-only customer gets Gray Support + Gray
+  // Serum and no Density component; a thinning customer gets Density + Regrowth
+  // Shampoo and no gray products; "both" gets all of it. Do not auto-stack a
+  // Density topical + Gray Serum: [PENDING CLINICAL COMPATIBILITY REVIEW].
+  treatmentRegistry: {
+    'density-6': {
+      name: { en: 'ROOTÉ Density 6', he: 'ROOTÉ דנסיטי 6' } as LocalizedText, // TODO: confirm medical HE
+      form: 'topical' as const,
+      usageKey: 'usage.apply-scalp-affected',
+      frequencyKey: 'frequency.daily-evening',
+      appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
+    },
+    'density-10': {
+      name: { en: 'ROOTÉ Density 10', he: 'ROOTÉ דנסיטי 10' } as LocalizedText,
+      form: 'topical' as const,
+      usageKey: 'usage.apply-scalp-affected',
+      frequencyKey: 'frequency.daily-evening',
+      appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
+    },
+    'density-15': {
+      name: { en: 'ROOTÉ Density 15', he: 'ROOTÉ דנסיטי 15' } as LocalizedText,
+      form: 'topical' as const,
+      usageKey: 'usage.apply-scalp-affected',
+      frequencyKey: 'frequency.daily-evening',
+      appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
+    },
+    'regrowth-shampoo': {
+      name: { en: 'ROOTÉ Regrowth Shampoo', he: 'שמפו ROOTÉ ריגרות׳' } as LocalizedText,
+      form: 'shampoo' as const,
+      usageKey: 'usage.cleanse',
+      frequencyKey: 'frequency.wash-day',
+    },
+    'gray-support': {
+      name: { en: 'ROOTÉ Gray Support', he: 'ROOTÉ גריי סאפורט' } as LocalizedText, // TODO: confirm medical HE
+      form: 'capsule' as const,
+      usageKey: 'usage.gray-support',
+      frequencyKey: 'frequency.daily-morning',
+    },
+    'gray-serum': {
+      name: { en: 'ROOTÉ Gray Serum', he: 'סרום ROOTÉ גריי' } as LocalizedText, // TODO: confirm medical HE
+      form: 'serum' as const,
+      usageKey: 'usage.gray-serum',
+      frequencyKey: 'frequency.daily-evening',
+    },
+    'derma-stim': {
+      name: { en: 'Scalp-care guidance (optional)', he: 'הנחיות לטיפוח הקרקפת (רשות)' } as LocalizedText,
+      form: 'routine' as const,
+      usageKey: 'usage.derma-stim',
+      frequencyKey: 'frequency.weekly',
+    },
+  } as Record<
+    string,
+    {
+      name: LocalizedText;
+      form: 'topical' | 'shampoo' | 'capsule' | 'serum' | 'routine';
+      usageKey: string;
+      frequencyKey: string;
+      appliesToZones?: readonly string[];
+    }
+  >,
 
   programDurations: [
     { days: 90,  key: 'd90',  price: null, perDayFrom: null },
@@ -80,7 +130,10 @@ export const rooteContent = {
     'established:stabilize': 270, 'established:regrow': 360,  'established:stabilize-regrow': 360,
   } as Record<string, 90 | 120 | 180 | 270 | 360>,
 
-  reorderLeadDays: 21, // TODO: confirm with client
+  // PO #20 (2026-09-04): dashboard reorder card at end−21d; email + in-app nudge at
+  // end−14d; final nudge at end−7d. International shipping may tune these later.
+  reorderLeadDays: 21,
+  reorderReminderLeadDays: [14, 7] as readonly number[],
 
   disclaimers: {
     // HE strings are a plain translation of the EN liability disclaimers; still pending formal legal review.

@@ -1,4 +1,6 @@
-export type Gender = 'male' | 'female';
+// 'unspecified' = "Prefer not to say" (PO #24). Uses the finer Norwood scale for
+// the visual assessment; the report leads with severity bands, not the scale name.
+export type Gender = 'male' | 'female' | 'unspecified';
 export type ZoneKey = 'frontal-hairline' | 'temples' | 'mid-scalp' | 'crown-vertex';
 export type Level = 'low' | 'medium' | 'high';
 export type SeverityBand = 'mild' | 'moderate' | 'established';

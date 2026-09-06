@@ -8,7 +8,12 @@ import type { SessionState } from '@/store/sessionStore';
 describe('buildProgram', () => {
   it('freezes plan, analysis, and computes endDate from durationDays', () => {
     const answers = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
-    const diagnosis: SessionState['diagnosis'] = { gender: 'male', photos: [], answers };
+    const diagnosis: Pick<SessionState['diagnosis'], 'gender' | 'concern' | 'photos' | 'answers'> = {
+      gender: 'male',
+      concern: 'thinning',
+      photos: [],
+      answers,
+    };
     const analysis = deriveAnalysis({ gender: 'male', answers });
     const model = buildReport({ diagnosis, analysis, content: rooteContent, locale: 'en', reportId: 'rep-9' });
 

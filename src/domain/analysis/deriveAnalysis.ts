@@ -29,7 +29,7 @@ function emphasisForGoal(goal: Answers['q5_goal']): PlanEmphasis {
 
 export function deriveAnalysis(input: { gender: Gender; answers: Answers }): HairAnalysis {
   const { gender, answers } = input;
-  const scale = gender === 'male' ? 'norwood' : 'ludwig';
+  const scale = gender === 'female' ? 'ludwig' : 'norwood'; // male + unspecified → Norwood (PO #24)
   const severityBand = severityFromOnset(answers.q2_onset);
 
   const bump = answers.q1_area === 'entire-scalp' ? 1 : 0;

@@ -1,25 +1,40 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
 import { lsGet, lsSet } from './persistence';
 import type { HairAnalysis, Gender, Answers } from '@/domain/analysis/types';
+import type { GrayAnswers, GrayProfile } from '@/domain/analysis/grayProfile';
+import type { Concern } from '@/domain/recommendation/types';
 import type { Program, ProgramDurationDays, ProgressPhoto, Reminder } from '@/domain/program/types';
 
 export type AngleKey = 'front' | 'top' | 'crown' | 'hairline';
 export type PhotoRef = { id: string; angleKey: AngleKey; thumb: string; blobId: string };
 
 export type SessionState = {
-  diagnosis: { gender: Gender | null; photos: PhotoRef[]; answers: Partial<Answers> };
+  diagnosis: {
+    gender: Gender | null;
+    /** packaging look chosen when gender is 'unspecified' (PO #24) — presentation only */
+    packagingPreference?: 'men' | 'women';
+    concern: Concern | null;
+    photos: PhotoRef[];
+    answers: Partial<Answers>;
+    grayAnswers: Partial<GrayAnswers>;
+    /** explicit photo-upload consent (brief §26) */
+    photoConsent: boolean;
+  };
   analysis: HairAnalysis | null;
+  grayProfile: GrayProfile | null;
   reportId: string | null;
-  account: { email: string | null };
+  /** `marketingConsent` is separate + optional — never a condition of the report (PO #11) */
+  account: { email: string | null; marketingConsent: boolean };
   draftDurationDays: ProgramDurationDays | null;
   program: Program | null;
 };
 
 const EMPTY: SessionState = {
-  diagnosis: { gender: null, photos: [], answers: {} },
+  diagnosis: { gender: null, concern: null, photos: [], answers: {}, grayAnswers: {}, photoConsent: false },
   analysis: null,
+  grayProfile: null,
   reportId: null,
-  account: { email: null },
+  account: { email: null, marketingConsent: false },
   draftDurationDays: null,
   program: null,
 };
@@ -27,10 +42,16 @@ const EMPTY: SessionState = {
 type Action =
   | { type: 'HYDRATE'; state: SessionState }
   | { type: 'SET_GENDER'; gender: Gender }
+  | { type: 'SET_PACKAGING_PREFERENCE'; value: 'men' | 'women' }
+  | { type: 'SET_CONCERN'; concern: Concern }
+  | { type: 'SET_MARKETING_CONSENT'; value: boolean }
   | { type: 'ADD_PHOTO'; photo: PhotoRef }
   | { type: 'REMOVE_PHOTO'; id: string }
   | { type: 'SET_ANSWER'; key: keyof Answers; value: Answers[keyof Answers] }
+  | { type: 'SET_GRAY_ANSWER'; key: keyof GrayAnswers; value: GrayAnswers[keyof GrayAnswers] }
+  | { type: 'SET_PHOTO_CONSENT'; value: boolean }
   | { type: 'SET_ANALYSIS'; analysis: HairAnalysis }
+  | { type: 'SET_GRAY_PROFILE'; profile: GrayProfile }
   | { type: 'SET_REPORT_ID'; id: string }
   | { type: 'SET_EMAIL'; email: string }
   | { type: 'SET_DRAFT_DURATION'; days: ProgramDurationDays }
@@ -46,6 +67,24 @@ function reducer(state: SessionState, action: Action): SessionState {
       return action.state;
     case 'SET_GENDER':
       return { ...state, diagnosis: { ...state.diagnosis, gender: action.gender } };
+    case 'SET_PACKAGING_PREFERENCE':
+      return { ...state, diagnosis: { ...state.diagnosis, packagingPreference: action.value } };
+    case 'SET_CONCERN':
+      return { ...state, diagnosis: { ...state.diagnosis, concern: action.concern } };
+    case 'SET_MARKETING_CONSENT':
+      return { ...state, account: { ...state.account, marketingConsent: action.value } };
+    case 'SET_GRAY_ANSWER':
+      return {
+        ...state,
+        diagnosis: {
+          ...state.diagnosis,
+          grayAnswers: { ...state.diagnosis.grayAnswers, [action.key]: action.value },
+        },
+      };
+    case 'SET_PHOTO_CONSENT':
+      return { ...state, diagnosis: { ...state.diagnosis, photoConsent: action.value } };
+    case 'SET_GRAY_PROFILE':
+      return { ...state, grayProfile: action.profile };
     case 'ADD_PHOTO':
       return {
         ...state,
@@ -72,7 +111,7 @@ function reducer(state: SessionState, action: Action): SessionState {
     case 'SET_REPORT_ID':
       return { ...state, reportId: action.id };
     case 'SET_EMAIL':
-      return { ...state, account: { email: action.email } };
+      return { ...state, account: { ...state.account, email: action.email } };
     case 'SET_DRAFT_DURATION':
       return { ...state, draftDurationDays: action.days };
     case 'SET_PROGRAM':
@@ -112,10 +151,16 @@ function reducer(state: SessionState, action: Action): SessionState {
 const SessionContext = createContext<
   (SessionState & {
     setGender: (g: Gender) => void;
+    setPackagingPreference: (value: 'men' | 'women') => void;
+    setConcern: (c: Concern) => void;
+    setMarketingConsent: (value: boolean) => void;
     addPhoto: (p: PhotoRef) => void;
     removePhoto: (id: string) => void;
     setAnswer: <K extends keyof Answers>(key: K, value: Answers[K]) => void;
+    setGrayAnswer: <K extends keyof GrayAnswers>(key: K, value: GrayAnswers[K]) => void;
+    setPhotoConsent: (value: boolean) => void;
     setAnalysis: (a: HairAnalysis) => void;
+    setGrayProfile: (p: GrayProfile) => void;
     setReportId: (id: string) => void;
     setEmail: (email: string) => void;
     setDraftDurationDays: (days: ProgramDurationDays) => void;
@@ -129,8 +174,21 @@ const SessionContext = createContext<
 
 const STORAGE_KEY = 'session';
 
+/** Merge a persisted session over the current defaults so older stored shapes
+ *  (before `concern` / `grayAnswers` / `photoConsent` / `grayProfile`) hydrate
+ *  cleanly. */
+function hydrate(): SessionState {
+  const stored = lsGet<Partial<SessionState>>(STORAGE_KEY, EMPTY);
+  return {
+    ...EMPTY,
+    ...stored,
+    diagnosis: { ...EMPTY.diagnosis, ...(stored.diagnosis ?? {}) },
+    account: { ...EMPTY.account, ...(stored.account ?? {}) },
+  };
+}
+
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, EMPTY, () => lsGet<SessionState>(STORAGE_KEY, EMPTY));
+  const [state, dispatch] = useReducer(reducer, EMPTY, hydrate);
 
   useEffect(() => {
     lsSet(STORAGE_KEY, state);
@@ -140,11 +198,19 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     () => ({
       ...state,
       setGender: (gender: Gender) => dispatch({ type: 'SET_GENDER', gender }),
+      setPackagingPreference: (value: 'men' | 'women') =>
+        dispatch({ type: 'SET_PACKAGING_PREFERENCE', value }),
+      setConcern: (concern: Concern) => dispatch({ type: 'SET_CONCERN', concern }),
+      setMarketingConsent: (value: boolean) => dispatch({ type: 'SET_MARKETING_CONSENT', value }),
       addPhoto: (photo: PhotoRef) => dispatch({ type: 'ADD_PHOTO', photo }),
       removePhoto: (id: string) => dispatch({ type: 'REMOVE_PHOTO', id }),
       setAnswer: <K extends keyof Answers>(key: K, value: Answers[K]) =>
         dispatch({ type: 'SET_ANSWER', key, value }),
+      setGrayAnswer: <K extends keyof GrayAnswers>(key: K, value: GrayAnswers[K]) =>
+        dispatch({ type: 'SET_GRAY_ANSWER', key, value }),
+      setPhotoConsent: (value: boolean) => dispatch({ type: 'SET_PHOTO_CONSENT', value }),
       setAnalysis: (analysis: HairAnalysis) => dispatch({ type: 'SET_ANALYSIS', analysis }),
+      setGrayProfile: (profile: GrayProfile) => dispatch({ type: 'SET_GRAY_PROFILE', profile }),
       setReportId: (id: string) => dispatch({ type: 'SET_REPORT_ID', id }),
       setEmail: (email: string) => dispatch({ type: 'SET_EMAIL', email }),
       setDraftDurationDays: (days: ProgramDurationDays) => dispatch({ type: 'SET_DRAFT_DURATION', days }),

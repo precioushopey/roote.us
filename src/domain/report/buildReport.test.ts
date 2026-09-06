@@ -6,9 +6,13 @@ import { isPending } from '@/content/pending';
 import type { Answers, Gender } from '@/domain/analysis/types';
 import type { SessionState } from '@/store/sessionStore';
 
-function personaDiagnosis(gender: Gender, answers: Answers): SessionState['diagnosis'] {
+function personaDiagnosis(
+  gender: Gender,
+  answers: Answers,
+): Pick<SessionState['diagnosis'], 'gender' | 'concern' | 'photos' | 'answers'> {
   return {
     gender,
+    concern: 'thinning',
     photos: [
       { id: 'p1', angleKey: 'front', thumb: 'data:image/jpeg;base64,AAA', blobId: 'b1' },
       { id: 'p2', angleKey: 'crown', thumb: 'data:image/jpeg;base64,BBB', blobId: 'b2' },
@@ -62,7 +66,7 @@ describe('buildReport', () => {
     expect(model.plan.supporting.length).toBeGreaterThan(0);
     expect(model.recommendedDuration.days).toBe(deriveAnalysis({ gender, answers }).recommendedDurationDays);
     expect(model.claims).toHaveLength(3);
-    expect(model.cta.href).toBe('/start?report=rep-test-1');
+    expect(model.cta.href).toBe('/program?report=rep-test-1');
   });
 
   it('sets dir=rtl for the he locale', () => {
@@ -122,10 +126,38 @@ describe('buildReport', () => {
   it('is pure — same input, deep-equal output (ignoring meta.generatedAt)', () => {
     const a = build('male', mildMaleHairline);
     const b = build('male', mildMaleHairline);
-    const { generatedAt: ga, ...metaA } = a.meta;
-    const { generatedAt: gb, ...metaB } = b.meta;
+    const { generatedAt: _ga, ...metaA } = a.meta;
+    const { generatedAt: _gb, ...metaB } = b.meta;
     expect(metaA).toEqual(metaB);
     expect({ ...a, meta: metaA }).toEqual({ ...b, meta: metaB });
+  });
+
+  it('branches the plan by concern (PO #15) — never mixes Density and gray products', () => {
+    const answers = mildFemaleCrown;
+    const analysis = deriveAnalysis({ gender: 'female', answers });
+    const planFor = (concern: 'thinning' | 'gray' | 'both') =>
+      buildReport({
+        diagnosis: { gender: 'female', concern, photos: [], answers },
+        analysis,
+        content: rooteContent,
+        locale: 'en',
+        reportId: 'rep-concern',
+      }).plan;
+
+    const thinning = planFor('thinning');
+    expect(thinning.core.some((tr) => String(tr.name).includes('Density'))).toBe(true);
+    expect(thinning.supporting.some((tr) => String(tr.name).includes('Gray'))).toBe(false);
+
+    const gray = planFor('gray');
+    expect(gray.core).toHaveLength(0); // no Rx component for a pigmentation-only concern
+    expect(gray.supporting.some((tr) => String(tr.name).includes('Density'))).toBe(false);
+    expect(gray.supporting.some((tr) => String(tr.name).includes('Gray Support'))).toBe(true);
+    expect(gray.supporting.some((tr) => String(tr.name).includes('Gray Serum'))).toBe(true);
+
+    const both = planFor('both');
+    expect(both.core.some((tr) => String(tr.name).includes('Density'))).toBe(true);
+    expect(both.supporting.some((tr) => String(tr.name).includes('Gray Support'))).toBe(true);
+    expect(both.supporting.some((tr) => String(tr.name).includes('Gray Serum'))).toBe(true);
   });
 
   it('collects every PENDING slot into model.pending', () => {

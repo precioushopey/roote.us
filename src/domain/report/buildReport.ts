@@ -4,6 +4,8 @@ import { messages } from '@/i18n/messages';
 import { interpolate } from '@/i18n/interpolate';
 import type { HairAnalysis } from '@/domain/analysis/types';
 import type { SessionState } from '@/store/sessionStore';
+import { recommend } from '@/domain/recommendation/recommend';
+import { planKeysFor } from '@/domain/recommendation/planKeys';
 import { formatMoney, type Money } from './money';
 import type { ReportModel } from './types';
 
@@ -34,7 +36,8 @@ function buildScaleStrip(scale: HairAnalysis['scale'], stage: number) {
 }
 
 export function buildReport(input: {
-  diagnosis: SessionState['diagnosis'];
+  /** photos for the gallery; gender + concern branch which treatments the plan shows (PO #15) */
+  diagnosis: Pick<SessionState['diagnosis'], 'photos' | 'gender' | 'concern'>;
   analysis: HairAnalysis;
   content: typeof rooteContent;
   locale: Locale;
@@ -44,6 +47,21 @@ export function buildReport(input: {
 }): ReportModel {
   const { diagnosis, analysis, content, locale, reportId, assets = {} } = input;
   const dir: 'ltr' | 'rtl' = locale === 'he' ? 'rtl' : 'ltr';
+
+  // Concern-branched product set (PO #15): gray-only never gets Density, thinning
+  // never gets Gray Support/Serum, "both" gets everything. `gender` only feeds the
+  // packaging theme downstream — never the product set itself.
+  const outcome = diagnosis.gender
+    ? recommend({
+        concern: diagnosis.concern ?? 'thinning',
+        gender: diagnosis.gender,
+        severityBand: analysis.severityBand,
+        planEmphasis: analysis.planEmphasis,
+        recommendedDurationDays: analysis.recommendedDurationDays,
+      })
+    : null;
+  const planKeys = outcome ? planKeysFor(outcome) : planKeysFor({ densityTier: 'density-10', supportingProductKeys: ['regrowth-shampoo'] });
+  const treatmentDef = (key: string) => content.treatmentRegistry[key];
 
   const scaleLabel = t(locale, `scale.${analysis.scale}.label`);
   const scaleLine = t(locale, 'ready.teaser', {
@@ -110,17 +128,23 @@ export function buildReport(input: {
     paragraphs: [t(locale, analysis.summaryPlainKey), t(locale, 'report.currentSituation.nextStep')],
   };
 
-  const core = content.treatments.core.map((tr) => ({
-    name: resolveLocalized(tr.name, locale, `${tr.key} name (${locale})`),
-    usage: t(locale, tr.usageKey),
-    frequency: t(locale, tr.frequencyKey),
-    appliesToLabels: tr.appliesToZones.map((z) => t(locale, `zone.${z}`)),
-  }));
-  const supporting = content.treatments.supporting.map((tr) => ({
-    name: resolveLocalized(tr.name, locale, `${tr.key} name (${locale})`),
-    usage: t(locale, tr.usageKey),
-    frequency: t(locale, tr.frequencyKey),
-  }));
+  const core = planKeys.core.map((key) => {
+    const tr = treatmentDef(key);
+    return {
+      name: resolveLocalized(tr.name, locale, `${key} name (${locale})`),
+      usage: t(locale, tr.usageKey),
+      frequency: t(locale, tr.frequencyKey),
+      appliesToLabels: (tr.appliesToZones ?? []).map((z) => t(locale, `zone.${z}`)),
+    };
+  });
+  const supporting = planKeys.supporting.map((key) => {
+    const tr = treatmentDef(key);
+    return {
+      name: resolveLocalized(tr.name, locale, `${key} name (${locale})`),
+      usage: t(locale, tr.usageKey),
+      frequency: t(locale, tr.frequencyKey),
+    };
+  });
   const planLabels = {
     core: t(locale, 'report.plan.core.title'),
     supporting: t(locale, 'report.plan.supporting.title'),
@@ -142,34 +166,40 @@ export function buildReport(input: {
   const matchedBadge = t(locale, 'report.section.plan.matchedBadge');
   const regimenBadges = t(locale, 'report.regimen.badges').split('|').filter(Boolean);
 
-  const coreItems = content.treatments.core.map((tr): ReportModel['regimen']['items'][number] => ({
-    key: tr.key,
-    kind: 'core',
-    name: resolveLocalized(tr.name, locale, `${tr.key} name (${locale})`),
-    form: t(locale, `report.treatment.${tr.key}.form`),
-    photo: assets[tr.key],
-    addressesLabels: t(locale, `report.treatment.${tr.key}.addresses`).split('|').filter(Boolean),
-    mechanism: [
-      t(locale, `report.treatment.${tr.key}.mechanism1`),
-      t(locale, `report.treatment.${tr.key}.mechanism2`),
-    ].filter((s) => s && !s.startsWith('report.treatment.')),
-    howToLabel: t(locale, 'report.regimen.howToApply', { frequency: t(locale, tr.frequencyKey) }),
-    appliesToLabel: tr.appliesToZones.map((z) => t(locale, `zone.${z}`)).join(', '),
-    badges: regimenBadges,
-  }));
-  const supportingItems = content.treatments.supporting.map((tr): ReportModel['regimen']['items'][number] => ({
-    key: tr.key,
-    kind: 'supporting',
-    name: resolveLocalized(tr.name, locale, `${tr.key} name (${locale})`),
-    form: t(locale, `report.treatment.${tr.key}.form`),
-    photo: assets[tr.key],
-    addressesLabels: t(locale, `report.treatment.${tr.key}.addresses`).split('|').filter(Boolean),
-    mechanism: [t(locale, `report.treatment.${tr.key}.mechanism1`)].filter(
-      (s) => s && !s.startsWith('report.treatment.'),
-    ),
-    howToLabel: t(locale, 'report.regimen.howToUse', { frequency: t(locale, tr.frequencyKey) }),
-    badges: regimenBadges,
-  }));
+  const coreItems = planKeys.core.map((key): ReportModel['regimen']['items'][number] => {
+    const tr = treatmentDef(key);
+    return {
+      key,
+      kind: 'core',
+      name: resolveLocalized(tr.name, locale, `${key} name (${locale})`),
+      form: t(locale, `report.treatment.${key}.form`),
+      photo: assets[key],
+      addressesLabels: t(locale, `report.treatment.${key}.addresses`).split('|').filter(Boolean),
+      mechanism: [
+        t(locale, `report.treatment.${key}.mechanism1`),
+        t(locale, `report.treatment.${key}.mechanism2`),
+      ].filter((s) => s && !s.startsWith('report.treatment.')),
+      howToLabel: t(locale, 'report.regimen.howToApply', { frequency: t(locale, tr.frequencyKey) }),
+      appliesToLabel: (tr.appliesToZones ?? []).map((z) => t(locale, `zone.${z}`)).join(', '),
+      badges: regimenBadges,
+    };
+  });
+  const supportingItems = planKeys.supporting.map((key): ReportModel['regimen']['items'][number] => {
+    const tr = treatmentDef(key);
+    return {
+      key,
+      kind: 'supporting',
+      name: resolveLocalized(tr.name, locale, `${key} name (${locale})`),
+      form: t(locale, `report.treatment.${key}.form`),
+      photo: assets[key],
+      addressesLabels: t(locale, `report.treatment.${key}.addresses`).split('|').filter(Boolean),
+      mechanism: [t(locale, `report.treatment.${key}.mechanism1`)].filter(
+        (s) => s && !s.startsWith('report.treatment.'),
+      ),
+      howToLabel: t(locale, 'report.regimen.howToUse', { frequency: t(locale, tr.frequencyKey) }),
+      badges: regimenBadges,
+    };
+  });
 
   const regimen = {
     badge: matchedBadge,
@@ -289,7 +319,7 @@ export function buildReport(input: {
     recommendedDuration,
     pricing,
     claims,
-    cta: { label: t(locale, 'report.cta.label'), href: `/start?report=${reportId}` },
+    cta: { label: t(locale, 'report.cta.label'), href: `/program?report=${reportId}` },
     disclaimers,
     pending: [],
   };

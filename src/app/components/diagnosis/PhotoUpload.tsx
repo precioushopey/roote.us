@@ -28,7 +28,7 @@ export function PhotoUpload({
     if (file.size > MAX_BYTES) { setError(t('photo.error.size')); return; }
     setBusy(true);
     try {
-      const { blob, dataUrl } = await downscaleImage(file);
+      const { blob } = await downscaleImage(file);
       const { dataUrl: thumb } = await downscaleImage(file, { maxEdge: 256, quality: 0.6 });
       const id = crypto.randomUUID();
       await putBlob(id, blob);
