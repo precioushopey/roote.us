@@ -1,13 +1,28 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createMemoryRouter, RouterProvider, useParams } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { Wordmark } from './Wordmark';
 import { LocaleToggle } from './LocaleToggle';
 import { PendingChip } from './PendingChip';
 import { ProgressRail } from './ProgressRail';
 
-const wrap = (ui: React.ReactNode) => render(<LocaleProvider>{ui}</LocaleProvider>);
+// Reads the `:localeRegion` route param and feeds it to LocaleProvider — mirrors the real
+// LocaleGate so a `setLocale()` navigation (used by the LocaleToggle test below) is reflected
+// back into the provider, same pattern as src/i18n/LocaleProvider.test.tsx's `ProviderFromRoute`.
+function ProviderFromRoute({ children }: { children: React.ReactNode }) {
+  const { localeRegion } = useParams();
+  return <LocaleProvider localeRegion={localeRegion}>{children}</LocaleProvider>;
+}
+
+const wrap = (ui: React.ReactNode) => {
+  const router = createMemoryRouter(
+    [{ path: '/:localeRegion/*', element: <ProviderFromRoute>{ui}</ProviderFromRoute> }],
+    { initialEntries: ['/he-il/'] },
+  );
+  return render(<RouterProvider router={router} />);
+};
 
 describe('brand components', () => {
   it('Wordmark renders the ROOTÉ logo image', () => {

@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useLocale, useT } from '@/i18n/LocaleProvider';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { Header } from './Header';
@@ -8,6 +8,7 @@ import { AnalysisPrompt } from './AnalysisPrompt';
 
 export function MarketingShell() {
   const t = useT();
+  const { localeRegion } = useLocale();
   const { pathname } = useLocation();
   useRevealOnRoute();
   useDocumentMeta();
@@ -24,7 +25,7 @@ export function MarketingShell() {
         <Outlet />
       </main>
       <Footer />
-      {pathname === '/' && <AnalysisPrompt />}
+      {pathname === `/${localeRegion}` && <AnalysisPrompt />}
     </div>
   );
 }

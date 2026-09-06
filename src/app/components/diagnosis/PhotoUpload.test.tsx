@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 
 vi.mock('./downscaleImage', () => ({
@@ -19,7 +20,12 @@ vi.mock('@/store/persistence', () => ({
 
 import { PhotoUpload } from './PhotoUpload';
 
-const wrap = (ui: React.ReactNode) => render(<LocaleProvider>{ui}</LocaleProvider>);
+const wrap = (ui: React.ReactNode) =>
+  render(
+    <MemoryRouter>
+      <LocaleProvider>{ui}</LocaleProvider>
+    </MemoryRouter>,
+  );
 
 describe('PhotoUpload', () => {
   it('accepts an image, downscales it, and reports a PhotoRef', async () => {
