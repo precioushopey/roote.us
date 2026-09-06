@@ -6,12 +6,22 @@ import { CartProvider } from '@/store/cart';
 import { MarketingShell } from './MarketingShell';
 
 function renderShell() {
-  localStorage.setItem('roote.locale', 'en');
   const router = createMemoryRouter(
-    [{ element: <MarketingShell />, children: [{ path: '/', element: <p>child content</p> }] }],
+    [
+      {
+        element: (
+          <LocaleProvider localeRegion="en-us">
+            <CartProvider>
+              <MarketingShell />
+            </CartProvider>
+          </LocaleProvider>
+        ),
+        children: [{ path: '/', element: <p>child content</p> }],
+      },
+    ],
     { initialEntries: ['/'] },
   );
-  render(<LocaleProvider><CartProvider><RouterProvider router={router} /></CartProvider></LocaleProvider>);
+  render(<RouterProvider router={router} />);
 }
 
 it('has a localized, non-empty skip link that targets #main', () => {

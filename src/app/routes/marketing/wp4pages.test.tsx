@@ -1,21 +1,29 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router';
+import { createMemoryRouter, RouterProvider, Outlet } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { CartProvider } from '@/store/cart';
 import { marketingRoutes } from './marketingRoutes';
 import { containsForbiddenClaim } from '@/content/claims';
 
 function renderAt(path: string, locale: 'en' | 'he' = 'en') {
-  localStorage.setItem('roote.locale', locale);
-  const router = createMemoryRouter([marketingRoutes], { initialEntries: [path] });
-  render(
-    <LocaleProvider>
-      <CartProvider>
-        <RouterProvider router={router} />
-      </CartProvider>
-    </LocaleProvider>,
+  const localeRegion = locale === 'he' ? 'he-il' : 'en-us';
+  const router = createMemoryRouter(
+    [
+      {
+        element: (
+          <LocaleProvider localeRegion={localeRegion}>
+            <CartProvider>
+              <Outlet />
+            </CartProvider>
+          </LocaleProvider>
+        ),
+        children: [marketingRoutes],
+      },
+    ],
+    { initialEntries: [path] },
   );
+  render(<RouterProvider router={router} />);
 }
 
 describe('WP4 marketing pages', () => {
@@ -51,7 +59,7 @@ describe('WP4 marketing pages', () => {
   it('Solution page: routes into the assessment with a concern hint', () => {
     renderAt('/solutions/thinning');
     const ctas = screen.getAllByRole('link', { name: 'Start free hair analysis' });
-    expect(ctas.some((c) => c.getAttribute('href') === '/analysis?concern=thinning')).toBe(true);
+    expect(ctas.some((c) => c.getAttribute('href') === '/en-us/analysis?concern=thinning')).toBe(true);
   });
 
   it('Results page is an honest empty state (no fabricated proof)', () => {
@@ -61,13 +69,22 @@ describe('WP4 marketing pages', () => {
 
   it('no forbidden marketing claim renders on the rebuilt pages', () => {
     for (const path of ['/science', '/solutions/gray-hair', '/products/gray-serum', '/system']) {
-      const { container } = render(
-        <LocaleProvider>
-          <CartProvider>
-            <RouterProvider router={createMemoryRouter([marketingRoutes], { initialEntries: [path] })} />
-          </CartProvider>
-        </LocaleProvider>,
+      const router = createMemoryRouter(
+        [
+          {
+            element: (
+              <LocaleProvider localeRegion="en-us">
+                <CartProvider>
+                  <Outlet />
+                </CartProvider>
+              </LocaleProvider>
+            ),
+            children: [marketingRoutes],
+          },
+        ],
+        { initialEntries: [path] },
       );
+      const { container } = render(<RouterProvider router={router} />);
       expect(containsForbiddenClaim(container.textContent ?? ''), path).toBe(false);
     }
   });

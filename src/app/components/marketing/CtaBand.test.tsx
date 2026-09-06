@@ -5,10 +5,9 @@ import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { CtaBand } from './CtaBand';
 
 it('renders a heading and a CTA linking to /analysis', () => {
-  localStorage.setItem('roote.locale', 'en');
-  render(<LocaleProvider><MemoryRouter>
+  render(<MemoryRouter><LocaleProvider localeRegion="en-us">
     <CtaBand headingKey="marketing.cta.default.title" bodyKey="marketing.cta.default.body" />
-  </MemoryRouter></LocaleProvider>);
+  </LocaleProvider></MemoryRouter>);
   expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('one free analysis');
-  expect(screen.getByRole('link', { name: 'Start free hair analysis' })).toHaveAttribute('href', '/analysis');
+  expect(screen.getByRole('link', { name: 'Start free hair analysis' })).toHaveAttribute('href', '/en-us/analysis');
 });

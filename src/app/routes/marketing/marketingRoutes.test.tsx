@@ -1,14 +1,28 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router';
+import { createMemoryRouter, RouterProvider, Outlet } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { CartProvider } from '@/store/cart';
 import { marketingRoutes } from './marketingRoutes';
 
 function renderAt(path: string) {
-  localStorage.setItem('roote.locale', 'en');
-  const router = createMemoryRouter([marketingRoutes], { initialEntries: [path] });
-  render(<LocaleProvider><CartProvider><RouterProvider router={router} /></CartProvider></LocaleProvider>);
+  const router = createMemoryRouter(
+    [
+      {
+        path: '/en-us',
+        element: (
+          <LocaleProvider localeRegion="en-us">
+            <CartProvider>
+              <Outlet />
+            </CartProvider>
+          </LocaleProvider>
+        ),
+        children: [marketingRoutes],
+      },
+    ],
+    { initialEntries: [`/en-us${path}`] },
+  );
+  render(<RouterProvider router={router} />);
 }
 
 describe('marketing routes', () => {
