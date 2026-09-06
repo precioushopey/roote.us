@@ -16,7 +16,7 @@ export function StartLayout() {
   const auth = useAuth();
   useDocumentMeta();
 
-  const seg = pathname.split('/')[2]; // undefined for /start, 'plan' | 'checkout' | 'success' otherwise
+  const seg = pathname.split('/')[3]; // ['', localeRegion, 'program', step] — undefined for /program itself, 'plan' | 'checkout' | 'success' otherwise
   const step: StartStep = (START_STEPS as readonly string[]).includes(seg ?? '') ? (seg as StartStep) : 'account';
   const current = START_STEPS.indexOf(step);
 
