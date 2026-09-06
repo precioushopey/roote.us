@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
-import { useContentLocale } from '@/i18n/LocaleProvider';
+import { useLocale } from '@/i18n/LocaleProvider';
+import { SHIPPED_LOCALES, COUNTRY_DEFAULTS } from '@/i18n/locales';
+import { formatLocaleRegion } from '@/i18n/localeRegion';
 import { metaForPath, fullTitle } from './meta';
 import { pickLocalized } from '@/content/localized';
 import logo from '@/assets/logo.png';
@@ -30,21 +32,44 @@ function upsertCanonical(href: string) {
   el.setAttribute('href', href);
 }
 
+function upsertHreflangAlternates(bareLogicalPath: string) {
+  document.head.querySelectorAll('link[data-roote-hreflang]').forEach((el) => el.remove());
+  const suffix = bareLogicalPath === '/' ? '' : bareLogicalPath;
+  for (const locale of SHIPPED_LOCALES) {
+    for (const country of Object.keys(COUNTRY_DEFAULTS)) {
+      const region = formatLocaleRegion(locale, country);
+      appendAlternate(region, `${SITE_ORIGIN}/${region}${suffix}`);
+    }
+  }
+  appendAlternate('x-default', `${SITE_ORIGIN}${suffix}`);
+}
+
+function appendAlternate(hreflang: string, href: string) {
+  const el = document.createElement('link');
+  el.setAttribute('rel', 'alternate');
+  el.setAttribute('hreflang', hreflang);
+  el.setAttribute('href', href);
+  el.setAttribute('data-roote-hreflang', '');
+  document.head.appendChild(el);
+}
+
 /**
- * Sets document title + description + canonical + OpenGraph on route change from
- * the `ROUTE_META` table. No framework dependency. `index.html` keeps
- * `noindex,nofollow` for the concept build, so this is inert for crawlers but
- * ready for launch.
+ * Sets document title + description + canonical + OpenGraph + hreflang on
+ * route change from the `ROUTE_META` table. `metaForPath` operates on the
+ * bare logical path (locale-region prefix stripped) — it never sees the
+ * region segment. `index.html` keeps `noindex,nofollow` for the concept
+ * build, so this is inert for crawlers but ready for launch.
  */
 export function useDocumentMeta() {
   const { pathname } = useLocation();
-  const cl = useContentLocale();
+  const { contentLocale, localeRegion } = useLocale();
 
   useEffect(() => {
-    const meta = metaForPath(pathname);
-    const title = fullTitle(pickLocalized(meta.title, cl));
-    const description = pickLocalized(meta.description, cl);
-    const canonical = `${SITE_ORIGIN}${pathname === '/' ? '' : pathname}`;
+    const bareLogicalPath = pathname.slice(`/${localeRegion}`.length) || '/';
+    const meta = metaForPath(bareLogicalPath);
+    const title = fullTitle(pickLocalized(meta.title, contentLocale));
+    const description = pickLocalized(meta.description, contentLocale);
+    const canonical = `${SITE_ORIGIN}${pathname}`;
 
     document.title = title;
     upsertMeta('meta[name="description"]', 'name', 'description', description);
@@ -59,5 +84,6 @@ export function useDocumentMeta() {
     upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
     upsertMeta('meta[name="twitter:image"]', 'name', 'twitter:image', SHARE_IMAGE);
     upsertCanonical(canonical);
-  }, [pathname, cl]);
+    upsertHreflangAlternates(bareLogicalPath);
+  }, [pathname, contentLocale, localeRegion]);
 }

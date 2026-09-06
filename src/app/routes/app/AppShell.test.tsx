@@ -36,26 +36,34 @@ function seedSignedInProgram() {
 
 function renderAt(path: string) {
   const router = createMemoryRouter(
-    [{ path: '/account', element: <AppShell />, children: [{ index: true, element: <div>overview</div> }] }],
+    [
+      {
+        path: '/en-us/account',
+        element: (
+          <LocaleProvider localeRegion="en-us">
+            <AppShell />
+          </LocaleProvider>
+        ),
+        children: [{ index: true, element: <div>overview</div> }],
+      },
+    ],
     { initialEntries: [path] },
   );
   return render(
-    <LocaleProvider>
-      <AuthProvider>
-        <SessionProvider>
-          <TrackingProvider>
-            <RouterProvider router={router} />
-          </TrackingProvider>
-        </SessionProvider>
-      </AuthProvider>
-    </LocaleProvider>,
+    <AuthProvider>
+      <SessionProvider>
+        <TrackingProvider>
+          <RouterProvider router={router} />
+        </TrackingProvider>
+      </SessionProvider>
+    </AuthProvider>,
   );
 }
 
 describe('AppShell', () => {
   it('sets document.title from the route metadata (SEO-AUDIT.md H2)', () => {
     seedSignedInProgram();
-    renderAt('/account');
+    renderAt('/en-us/account');
     expect(screen.getByText('overview')).toBeInTheDocument();
     expect(document.title).toBe('ROOTÉ — My ROOTÉ');
   });
