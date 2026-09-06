@@ -1,4 +1,4 @@
-// src/app/routes/start/PlanStep.test.tsx
+// src/app/routes/program/PlanStep.test.tsx
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -9,7 +9,6 @@ import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { PlanStep } from './PlanStep';
 
 function seedSession() {
-  localStorage.setItem('roote.locale', 'en');
   const answers = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
   const analysis = deriveAnalysis({ gender: 'male', answers });
   localStorage.setItem(
@@ -29,17 +28,15 @@ function seedSession() {
 function renderAt() {
   const router = createMemoryRouter(
     [
-      { path: '/start/plan', element: <PlanStep /> },
-      { path: '/start/checkout', element: <div>checkout-step</div> },
+      { path: '/en-us/program/plan', element: <LocaleProvider localeRegion="en-us"><PlanStep /></LocaleProvider> },
+      { path: '/en-us/program/checkout', element: <LocaleProvider localeRegion="en-us"><div>checkout-step</div></LocaleProvider> },
     ],
-    { initialEntries: ['/start/plan'] },
+    { initialEntries: ['/en-us/program/plan'] },
   );
   return render(
-    <LocaleProvider>
-      <SessionProvider>
-        <RouterProvider router={router} />
-      </SessionProvider>
-    </LocaleProvider>,
+    <SessionProvider>
+      <RouterProvider router={router} />
+    </SessionProvider>,
   );
 }
 
@@ -47,20 +44,29 @@ describe('PlanStep', () => {
   it('pre-selects the AI-recommended duration and lets the user change it', async () => {
     const analysis = seedSession();
     renderAt();
-    const recommended = screen.getByRole('radio', { name: new RegExp(`${analysis.recommendedDurationDays}`) });
-    expect(recommended).toBeChecked();
-    const other = screen.getAllByRole('radio').find((r) => r !== recommended)!;
+    const group = screen.getByRole('radiogroup');
+    const recommendedCard = screen
+      .getByText(new RegExp(`^${analysis.recommendedDurationDays}\\b`))
+      .closest('div[class*="rounded-xl"]')!;
+    const recommendedBtn = recommendedCard.querySelector('button[aria-pressed]')!;
+    expect(recommendedBtn).toHaveAttribute('aria-pressed', 'true');
+
+    const otherBtn = Array.from(group.querySelectorAll('button[aria-pressed]')).find(
+      (b) => b !== recommendedBtn,
+    ) as HTMLElement;
     const user = userEvent.setup();
-    await user.click(other);
-    expect(other).toBeChecked();
-    expect(recommended).not.toBeChecked();
+    await user.click(otherBtn);
+    expect(otherBtn).toHaveAttribute('aria-pressed', 'true');
+    expect(recommendedBtn).toHaveAttribute('aria-pressed', 'false');
   });
 
   it('advances to checkout with the selected duration stored as the draft', async () => {
     const analysis = seedSession();
     renderAt();
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /continue/i }));
+    // the sticky footer Continue button (there are per-card ones too)
+    const buttons = screen.getAllByRole('button', { name: /continue to payment/i });
+    await user.click(buttons[buttons.length - 1]);
     expect(await screen.findByText('checkout-step')).toBeInTheDocument();
     const stored = JSON.parse(localStorage.getItem('roote.session')!);
     expect(stored.draftDurationDays).toBe(analysis.recommendedDurationDays);

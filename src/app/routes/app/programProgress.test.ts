@@ -6,10 +6,12 @@ import {
   dailyTasks,
   daysRemaining,
   isReorderDue,
+  planKeysForProgram,
   programDay,
   reorderDate,
   resolvePlanTreatments,
 } from './programProgress';
+import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 
 function makeProgram(over: Partial<Program> = {}): Program {
   return {
@@ -62,15 +64,41 @@ describe('programProgress', () => {
   });
 
   it('resolvePlanTreatments renders names in the active locale and resolves usage/frequency via t', () => {
-    const he = resolvePlanTreatments((k) => `t:${k}`, 'he');
-    const en = resolvePlanTreatments((k) => `t:${k}`, 'en');
-    expect(he.core[0].name).toBe(rooteContent.treatments.core[0].name.he);
-    expect(en.core[0].name).toBe(rooteContent.treatments.core[0].name.en);
+    const keys = { core: ['density-10'], supporting: ['regrowth-shampoo'] };
+    const he = resolvePlanTreatments((k) => `t:${k}`, 'he', keys);
+    const en = resolvePlanTreatments((k) => `t:${k}`, 'en', keys);
+    expect(he.core[0].name).toBe(rooteContent.treatmentRegistry['density-10'].name.he);
+    expect(en.core[0].name).toBe(rooteContent.treatmentRegistry['density-10'].name.en);
     expect(he.core[0].name).not.toBe(en.core[0].name);
-    expect(he.supporting[0].name).toBe(rooteContent.treatments.supporting[0].name.he);
+    expect(he.supporting[0].name).toBe(rooteContent.treatmentRegistry['regrowth-shampoo'].name.he);
     expect(he.supporting[0].name).not.toBe(en.supporting[0].name);
     expect(he.core[0].usage).toBe('t:usage.apply-scalp-affected');
-    expect(he.core[0].frequency).toBe('t:frequency.twice-daily');
+    expect(he.core[0].frequency).toBe('t:frequency.daily-evening');
+  });
+
+  it('planKeysForProgram branches by concern (PO #15 — closes the gray/thinning routine gap)', () => {
+    const analysis = deriveAnalysis({
+      gender: 'male',
+      answers: { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' },
+    });
+    const thinning = planKeysForProgram({ concern: 'thinning', gender: 'male' }, analysis);
+    expect(thinning.core[0]).toMatch(/^density-/);
+    expect(thinning.supporting).toContain('regrowth-shampoo');
+    expect(thinning.supporting).not.toContain('gray-support');
+    expect(thinning.supporting).not.toContain('gray-serum');
+
+    const gray = planKeysForProgram({ concern: 'gray', gender: 'female' }, analysis);
+    expect(gray.core).toHaveLength(0); // no Density component for a gray-only concern
+    expect(gray.supporting).toEqual(expect.arrayContaining(['gray-support', 'gray-serum']));
+    expect(gray.supporting).not.toContain('regrowth-shampoo');
+
+    const both = planKeysForProgram({ concern: 'both', gender: 'male' }, analysis);
+    expect(both.core[0]).toMatch(/^density-/);
+    expect(both.supporting).toEqual(
+      expect.arrayContaining(['regrowth-shampoo', 'gray-support', 'gray-serum', 'derma-stim']),
+    );
+
+    expect(planKeysForProgram({ concern: 'thinning', gender: null }, analysis)).toEqual({ core: [], supporting: [] });
   });
 
   it('adherencePct is a rolling completion rate over the window', () => {

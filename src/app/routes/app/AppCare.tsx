@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import type { MessageKey } from '@/i18n/messages';
 import { CARE_MESSAGES, isoToday, programDay } from './programProgress';
 
 export function AppCare() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const program = useSession().program!;
   const day = programDay(program, isoToday());
   const [sent, setSent] = useState(false);
@@ -59,7 +60,7 @@ export function AppCare() {
           </section>
 
           <Link
-            to="/app/rescan"
+            to={withLocale('/account/rescan')}
             className="rounded-xl border border-border bg-card p-4 text-sm text-accent underline shadow-sm"
           >
             {t('app.care.rescanLink')}

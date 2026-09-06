@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { useT, useLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
 import { readOrders } from '@/store/orders';
@@ -14,6 +14,7 @@ const PW_ERROR_KEYS: Record<string, string> = {
 export function AppProfile() {
   const t = useT();
   const { locale } = useLocale();
+  const withLocale = useLocalizedPath();
   const navigate = useNavigate();
   const auth = useAuth();
   const program = useSession().program!;
@@ -41,7 +42,7 @@ export function AppProfile() {
 
   function logout() {
     auth.signOut();
-    navigate('/');
+    navigate(withLocale('/'));
   }
 
   const memberSince = auth.since ? new Date(auth.since).toLocaleDateString() : '—';
@@ -84,8 +85,16 @@ export function AppProfile() {
             <dd>{program.startDate} → {program.endDate}</dd>
           </div>
         </dl>
-        <Link to={`/report/${program.reportId}`} className="w-fit text-sm text-accent underline">
+        <Link to={withLocale(`/report/${program.reportId}`)} className="w-fit text-sm text-accent underline">
           {t('app.profile.viewReport')}
+        </Link>
+      </section>
+
+      <section className="flex flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm">
+        <h2 className="font-display text-lg font-medium">{t('app.reminders.title')}</h2>
+        <p className="text-sm text-muted-foreground">{t('app.reminders.subtitle')}</p>
+        <Link to={withLocale('/account/reminders')} className="w-fit text-sm text-accent underline">
+          {t('app.reminders.manage')}
         </Link>
       </section>
 

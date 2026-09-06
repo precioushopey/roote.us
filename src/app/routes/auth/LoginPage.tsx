@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useAuth } from '@/store/auth';
 import { useSession } from '@/store/sessionStore';
 import { funnelField, funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
@@ -12,6 +12,7 @@ const ERROR_KEYS: Record<string, string> = {
 
 export function LoginPage() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const navigate = useNavigate();
   const auth = useAuth();
   const session = useSession();
@@ -26,7 +27,7 @@ export function LoginPage() {
       setError(t(ERROR_KEYS[result.error] as never));
       return;
     }
-    navigate(session.program ? '/app' : '/');
+    navigate(withLocale(session.program ? '/account' : '/'));
   }
 
   return (
@@ -58,7 +59,7 @@ export function LoginPage() {
       </form>
       <p className="text-xs text-muted-foreground">
         {t('auth.login.noAccount')}{' '}
-        <Link to="/start" className="text-accent underline">{t('auth.login.startCta')}</Link>
+        <Link to={withLocale('/program')} className="text-accent underline">{t('auth.login.startCta')}</Link>
       </p>
     </main>
   );

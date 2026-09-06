@@ -67,4 +67,14 @@ describe('AppShell', () => {
     expect(screen.getByText('overview')).toBeInTheDocument();
     expect(document.title).toBe('ROOTÉ — My ROOTÉ');
   });
+
+  it('prefixes every sidebar nav link with the current locale-region', () => {
+    seedSignedInProgram();
+    const { container } = renderAt('/en-us/account');
+    const navLinks = container.querySelectorAll('aside nav a[href]');
+    expect(navLinks.length).toBeGreaterThan(0);
+    navLinks.forEach((a) => {
+      expect(a.getAttribute('href')).toMatch(/^\/en-us\/account/);
+    });
+  });
 });

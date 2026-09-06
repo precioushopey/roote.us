@@ -1,6 +1,11 @@
 import { rooteContent } from '@/content/roote.config';
+import { recommend } from '@/domain/recommendation/recommend';
+import { planKeysFor } from '@/domain/recommendation/planKeys';
+import type { Concern } from '@/domain/recommendation/types';
+import type { Gender, HairAnalysis } from '@/domain/analysis/types';
 import type { Program } from '@/domain/program/types';
-import type { Locale, MessageKey } from '@/i18n/messages';
+import type { MessageKey } from '@/i18n/messages';
+import { type LocaleCode, contentLocaleOf } from '@/i18n/locales';
 
 const DAY_MS = 86_400_000;
 
@@ -15,34 +20,59 @@ export type ResolvedTreatment = {
 };
 
 /**
+ * Which `treatmentRegistry` keys this customer's program actually includes
+ * (PO #15 — concern-branched: gray-only never gets Density, thinning never gets
+ * Gray Support/Serum). Recomputed from the frozen `analysisSnapshot` + the
+ * (effectively immutable, post-purchase) diagnosis rather than stored on
+ * `Program`, so it stays derivable and never drifts from the recommendation engine.
+ */
+export function planKeysForProgram(
+  diagnosis: { concern: Concern | null; gender: Gender | null },
+  analysis: HairAnalysis | null,
+): { core: string[]; supporting: string[] } {
+  if (!analysis || !diagnosis.gender) return { core: [], supporting: [] };
+  const outcome = recommend({
+    concern: diagnosis.concern ?? 'thinning',
+    gender: diagnosis.gender,
+    severityBand: analysis.severityBand,
+    planEmphasis: analysis.planEmphasis,
+    recommendedDurationDays: analysis.recommendedDurationDays,
+  });
+  return planKeysFor(outcome);
+}
+
+/**
  * The post-purchase plan, resolved into the *current* locale from config.
  *
- * `program.plan` is a frozen snapshot of what was purchased, but the treatment
- * set is config-derived and identical for every user, so the app renders the
- * canonical `rooteContent.treatments` list — this way "My Plan" and "Today"
- * localize when the language is switched instead of being stuck in the checkout
- * locale. Names fall back to English where a Hebrew string is not yet in config.
+ * `program.plan` is a frozen snapshot of what was purchased; `planKeys` (from
+ * `planKeysForProgram`) says *which* products that snapshot should contain, and
+ * this resolves their display strings — so "My Plan" and "Today" re-localize
+ * when the language is switched instead of being stuck in the checkout locale.
+ * Names fall back to English where a Hebrew string is not yet in config.
  */
-export function resolvePlanTreatments(t: Translate, locale: Locale): {
+export function resolvePlanTreatments(
+  t: Translate,
+  locale: LocaleCode,
+  planKeys: { core: string[]; supporting: string[] },
+): {
   core: ResolvedTreatment[];
   supporting: ResolvedTreatment[];
 } {
-  const one = (tr: {
-    key: string;
-    name: { en: string; he: string };
-    usageKey: MessageKey;
-    frequencyKey: MessageKey;
-    appliesToZones?: readonly string[];
-  }): ResolvedTreatment => ({
-    key: tr.key,
-    name: tr.name[locale] || tr.name.en,
-    usage: t(tr.usageKey),
-    frequency: t(tr.frequencyKey),
-    appliesToLabels: (tr.appliesToZones ?? []).map((z) => t(`zone.${z}` as MessageKey)),
-  });
+  const cl = contentLocaleOf(locale);
+  const one = (key: string): ResolvedTreatment => {
+    const tr = rooteContent.treatmentRegistry[key];
+    if (!tr) return { key, name: key, usage: '', frequency: '', appliesToLabels: [] };
+    return {
+      key,
+      name: tr.name[cl] || tr.name.en,
+      usage: t(tr.usageKey as MessageKey),
+      frequency: t(tr.frequencyKey as MessageKey),
+      appliesToLabels: (tr.appliesToZones ?? []).map((z) => t(`zone.${z}` as MessageKey)),
+    };
+  };
   return {
-    core: rooteContent.treatments.core.map(one),
-    supporting: rooteContent.treatments.supporting.map(one),
+    core: planKeys.core.map(one),
+    supporting: planKeys.supporting.map(one),
   };
 }
 

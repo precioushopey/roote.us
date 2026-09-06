@@ -3,11 +3,12 @@ import { redirectForStartStep } from './guards';
 import type { SessionState } from '@/store/sessionStore';
 
 const base: SessionState = {
-  diagnosis: { gender: null, photos: [], answers: {} },
+  diagnosis: { gender: null, concern: null, photos: [], answers: {}, grayAnswers: {}, photoConsent: false },
   analysis: null,
   reportId: 'rep-1',
-  account: { email: null },
+  account: { email: null, marketingConsent: false },
   draftDurationDays: null,
+  grayProfile: null,
   program: null,
 };
 
@@ -16,13 +17,13 @@ describe('redirectForStartStep', () => {
     expect(redirectForStartStep('account', base, null)).toBeNull();
   });
   it('account: redirects to plan when already authenticated', () => {
-    expect(redirectForStartStep('account', base, 'a@b.com')).toBe('/start/plan');
+    expect(redirectForStartStep('account', base, 'a@b.com')).toBe('/program/plan');
   });
   it('plan: redirects back to account when not authenticated', () => {
-    expect(redirectForStartStep('plan', base, null)).toBe('/start');
+    expect(redirectForStartStep('plan', base, null)).toBe('/program');
   });
   it('checkout: redirects to plan when no duration is selected', () => {
-    expect(redirectForStartStep('checkout', base, 'a@b.com')).toBe('/start/plan');
+    expect(redirectForStartStep('checkout', base, 'a@b.com')).toBe('/program/plan');
   });
   it('checkout: no redirect once a duration is selected', () => {
     expect(redirectForStartStep('checkout', { ...base, draftDurationDays: 180 }, 'a@b.com')).toBeNull();
@@ -30,14 +31,14 @@ describe('redirectForStartStep', () => {
   it('checkout: redirects to success once a program has been created', () => {
     expect(
       redirectForStartStep('checkout', { ...base, draftDurationDays: 180, program: { orderId: 'ord-1' } as SessionState['program'] }, 'a@b.com'),
-    ).toBe('/start/success');
+    ).toBe('/program/success');
   });
   it('plan: redirects to success once a program has been created', () => {
     expect(
       redirectForStartStep('plan', { ...base, program: { orderId: 'ord-1' } as SessionState['program'] }, 'a@b.com'),
-    ).toBe('/start/success');
+    ).toBe('/program/success');
   });
   it('success: redirects to start when there is no program', () => {
-    expect(redirectForStartStep('success', base, 'a@b.com')).toBe('/start');
+    expect(redirectForStartStep('success', base, 'a@b.com')).toBe('/program');
   });
 });

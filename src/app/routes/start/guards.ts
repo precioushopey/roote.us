@@ -6,18 +6,18 @@ export type StartStep = (typeof START_STEPS)[number];
 export function redirectForStartStep(step: StartStep, s: SessionState, authEmail: string | null): string | null {
   switch (step) {
     case 'account':
-      return authEmail ? '/start/plan' : null;
+      return authEmail ? '/program/plan' : null;
     case 'plan':
-      if (!authEmail) return '/start';
-      if (s.program) return '/start/success';
+      if (!authEmail) return '/program';
+      if (s.program) return '/program/success';
       return null;
     case 'checkout':
-      if (!authEmail) return '/start';
-      if (s.program) return '/start/success';
-      return s.draftDurationDays ? null : '/start/plan';
+      if (!authEmail) return '/program';
+      if (s.program) return '/program/success';
+      return s.draftDurationDays ? null : '/program/plan';
     case 'success':
-      if (!authEmail) return '/start';
-      return s.program ? null : '/start';
+      if (!authEmail) return '/program';
+      return s.program ? null : '/program';
     default:
       return null;
   }

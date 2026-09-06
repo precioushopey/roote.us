@@ -1,15 +1,16 @@
 // src/app/routes/start/StartLayout.tsx
 import { Navigate, Outlet, useLocation, useSearchParams } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { ProgressRail } from '@/app/components/brand/ProgressRail';
+import { Stepper, Button } from '@/app/components/roote';
 import { redirectForStartStep, START_STEPS, type StartStep } from './guards';
 import { seedDiagnosisAndReport } from '@/store/devSeed';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
 
 export function StartLayout() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
   const session = useSession();
@@ -29,11 +30,9 @@ export function StartLayout() {
   if (!resolved) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-12 text-center">
-        <p className="text-sm text-muted-foreground">{t('start.noReport.body')}</p>
+        <p className="font-body text-sm text-muted-foreground">{t('start.noReport.body')}</p>
         {import.meta.env.DEV && (
-          <button
-            type="button"
-            className="rounded-md bg-primary px-6 py-3 text-sm text-primary-foreground"
+          <Button
             onClick={() => {
               const seed = seedDiagnosisAndReport();
               session.setAnalysis(seed.analysis);
@@ -41,21 +40,25 @@ export function StartLayout() {
             }}
           >
             {t('start.noReport.devSeedCta')}
-          </button>
+          </Button>
         )}
       </div>
     );
   }
 
   const redirect = redirectForStartStep(step, session, auth.email);
-  if (redirect) return <Navigate to={redirect} replace />;
+  if (redirect) return <Navigate to={withLocale(redirect)} replace />;
 
-  const labels = [t('start.rail.account'), t('start.rail.plan'), t('start.rail.payment')];
+  const steps = [
+    { id: 'account', label: t('start.rail.account') },
+    { id: 'plan', label: t('start.rail.plan') },
+    { id: 'payment', label: t('start.rail.payment') },
+  ];
 
   return (
     <div className="mx-auto w-full max-w-3xl px-6">
       <div className="py-6">
-        <ProgressRail steps={labels} current={Math.max(0, Math.min(2, current))} />
+        <Stepper steps={steps} current={Math.max(0, Math.min(2, current))} label={t('common.progressLabel')} />
       </div>
       <main className="flex-1 pb-16 pt-4">
         <Outlet />

@@ -1,4 +1,4 @@
-// src/app/routes/start/CheckoutStep.test.tsx
+// src/app/routes/program/CheckoutStep.test.tsx
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -9,7 +9,6 @@ import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { CheckoutStep } from './CheckoutStep';
 
 function seedSession(overrides: Record<string, unknown> = {}) {
-  localStorage.setItem('roote.locale', 'en');
   const answers = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
   const analysis = deriveAnalysis({ gender: 'male', answers });
   localStorage.setItem(
@@ -29,28 +28,28 @@ function seedSession(overrides: Record<string, unknown> = {}) {
 function renderAt() {
   const router = createMemoryRouter(
     [
-      { path: '/start/checkout', element: <CheckoutStep /> },
-      { path: '/start/success', element: <div>success-step</div> },
+      { path: '/en-us/program/checkout', element: <LocaleProvider localeRegion="en-us"><CheckoutStep /></LocaleProvider> },
+      { path: '/en-us/program/success', element: <LocaleProvider localeRegion="en-us"><div>success-step</div></LocaleProvider> },
     ],
-    { initialEntries: ['/start/checkout'] },
+    { initialEntries: ['/en-us/program/checkout'] },
   );
   return render(
-    <LocaleProvider>
-      <SessionProvider>
-        <RouterProvider router={router} />
-      </SessionProvider>
-    </LocaleProvider>,
+    <SessionProvider>
+      <RouterProvider router={router} />
+    </SessionProvider>,
   );
 }
 
 afterEach(() => localStorage.removeItem('roote.debug.forceCheckoutFailure'));
 
 describe('CheckoutStep', () => {
-  it('renders a pending total row in the order summary', () => {
+  it('renders the program summary with a pending total, never an invented number', () => {
     seedSession();
     renderAt();
-    expect(screen.getByText(/^total$/i)).toBeInTheDocument();
-    expect(screen.getByText('[PENDING: total]')).toBeInTheDocument();
+    expect(screen.getByText(/your ROOTÉ program/i)).toBeInTheDocument();
+    expect(screen.getByText('[PENDING: program total]')).toBeInTheDocument();
+    // no preselected recurring billing
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
   it('submits valid contact + payment details and advances to success on stub success', async () => {

@@ -1,4 +1,4 @@
-// src/app/routes/start/SuccessStep.test.tsx
+// src/app/routes/program/SuccessStep.test.tsx
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
@@ -7,7 +7,6 @@ import { SessionProvider } from '@/store/sessionStore';
 import { SuccessStep } from './SuccessStep';
 
 function renderAt() {
-  localStorage.setItem('roote.locale', 'en');
   localStorage.setItem(
     'roote.session',
     JSON.stringify({
@@ -32,17 +31,15 @@ function renderAt() {
   );
   const router = createMemoryRouter(
     [
-      { path: '/start/success', element: <SuccessStep /> },
-      { path: '/app', element: <div>app-home</div> },
+      { path: '/en-us/program/success', element: <LocaleProvider localeRegion="en-us"><SuccessStep /></LocaleProvider> },
+      { path: '/en-us/account', element: <LocaleProvider localeRegion="en-us"><div>app-home</div></LocaleProvider> },
     ],
-    { initialEntries: ['/start/success'] },
+    { initialEntries: ['/en-us/program/success'] },
   );
   return render(
-    <LocaleProvider>
-      <SessionProvider>
-        <RouterProvider router={router} />
-      </SessionProvider>
-    </LocaleProvider>,
+    <SessionProvider>
+      <RouterProvider router={router} />
+    </SessionProvider>,
   );
 }
 
@@ -50,6 +47,6 @@ describe('SuccessStep', () => {
   it('shows the order confirmation and links to /app', () => {
     renderAt();
     expect(screen.getByText(/ord-777/)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /program/i })).toHaveAttribute('href', '/app');
+    expect(screen.getByRole('link', { name: /program/i })).toHaveAttribute('href', '/en-us/account');
   });
 });

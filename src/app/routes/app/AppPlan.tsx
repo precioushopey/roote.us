@@ -1,14 +1,16 @@
 import { useT, useLocale } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { resolvePlanTreatments } from './programProgress';
+import { resolvePlanTreatments, planKeysForProgram } from './programProgress';
 import type { MessageKey } from '@/i18n/messages';
 
 export function AppPlan() {
   const t = useT();
   const { locale } = useLocale();
-  const program = useSession().program!;
+  const session = useSession();
+  const program = session.program!;
   const a = program.analysisSnapshot;
-  const plan = resolvePlanTreatments(t, locale);
+  const planKeys = planKeysForProgram(session.diagnosis, a);
+  const plan = resolvePlanTreatments(t, locale, planKeys);
 
   return (
     <div data-animate className="flex flex-col gap-8">

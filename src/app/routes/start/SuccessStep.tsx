@@ -1,28 +1,31 @@
-// src/app/routes/start/SuccessStep.tsx
-import { Link } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
+import { DisplayTitle, Button, StrandMark } from '@/app/components/roote';
 
 export function SuccessStep() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const session = useSession();
   const program = session.program;
-  if (!program) return null; // StartLayout's guard already ensures this
+  if (!program) return null;
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-4 text-center">
-      <h1 className={funnelHeading}>{t('start.success.title')}</h1>
-      <p className="text-sm text-muted-foreground">#{program.orderId}</p>
-      <p className="text-sm">{t('report.duration.label', { days: program.durationDays })} · {program.startDate}</p>
-      <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+    <div className="mx-auto flex max-w-md flex-col items-center gap-5 text-center">
+      <StrandMark size={44} variant="solid" className="text-accent" />
+      <DisplayTitle as="h1" step="sm" align="center">
+        {t('start.success.title')}
+      </DisplayTitle>
+      <p className="font-body text-sm text-muted-foreground">
+        #{program.orderId} · {t('report.duration.label', { days: program.durationDays })} · {program.startDate}
+      </p>
+      <ul className="flex flex-col gap-2 font-body text-sm text-muted-foreground">
         <li>{t('start.success.point1')}</li>
         <li>{t('start.success.point2')}</li>
         <li>{t('start.success.point3')}</li>
       </ul>
-      <Link to="/app" className={funnelPrimaryBtn}>
+      <Button to={withLocale('/account')} size="lg" caps>
         {t('start.success.cta')}
-      </Link>
+      </Button>
     </div>
   );
 }

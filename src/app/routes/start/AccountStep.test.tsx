@@ -1,4 +1,4 @@
-// src/app/routes/start/AccountStep.test.tsx
+// src/app/routes/program/AccountStep.test.tsx
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -9,27 +9,24 @@ import { AuthProvider } from '@/store/auth';
 import { AccountStep } from './AccountStep';
 
 function renderAt() {
-  localStorage.setItem('roote.locale', 'en');
   const router = createMemoryRouter(
     [
-      { path: '/start', element: <AccountStep /> },
-      { path: '/start/plan', element: <div>plan-step</div> },
+      { path: '/en-us/program', element: <LocaleProvider localeRegion="en-us"><AccountStep /></LocaleProvider> },
+      { path: '/en-us/program/plan', element: <LocaleProvider localeRegion="en-us"><div>plan-step</div></LocaleProvider> },
     ],
-    { initialEntries: ['/start'] },
+    { initialEntries: ['/en-us/program'] },
   );
   return render(
-    <LocaleProvider>
-      <AuthProvider>
-        <SessionProvider>
-          <RouterProvider router={router} />
-        </SessionProvider>
-      </AuthProvider>
-    </LocaleProvider>,
+    <AuthProvider>
+      <SessionProvider>
+        <RouterProvider router={router} />
+      </SessionProvider>
+    </AuthProvider>,
   );
 }
 
 describe('AccountStep', () => {
-  it('signs up with a valid email/password and advances to /start/plan', async () => {
+  it('signs up with a valid email/password and advances to /program/plan', async () => {
     renderAt();
     const user = userEvent.setup();
     await user.type(screen.getByLabelText(/email/i), 'demo@roote.us');

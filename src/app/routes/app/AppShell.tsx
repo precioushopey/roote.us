@@ -1,5 +1,5 @@
 import { NavLink, Navigate, Outlet, useNavigate } from 'react-router';
-import { useT, useLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
 import { seedProgram } from '@/store/devSeed';
@@ -32,6 +32,7 @@ const TABS: Array<[to: string, key: MessageKey]> = [
 export function AppShell() {
   const t = useT();
   const { locale } = useLocale();
+  const withLocale = useLocalizedPath();
   const session = useSession();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -60,9 +61,9 @@ export function AppShell() {
         </div>
       );
     }
-    return <Navigate to="/" replace />;
+    return <Navigate to={withLocale('/')} replace />;
   }
-  if (!auth.email) return <Navigate to="/login" replace />;
+  if (!auth.email) return <Navigate to={withLocale('/login')} replace />;
 
   // PO #24: "Prefer not to say" carries an explicit packaging preference instead
   const { gender, packagingPreference } = session.diagnosis;
@@ -80,7 +81,7 @@ export function AppShell() {
 
   function logout() {
     auth.signOut();
-    navigate('/');
+    navigate(withLocale('/'));
   }
 
   return (
@@ -92,20 +93,20 @@ export function AppShell() {
         <Wordmark className="w-24" onInk />
         <nav aria-label={t('app.nav.label')} className="mt-8 flex flex-col gap-1">
           {TABS.map(([to, key]) => (
-            <NavLink key={to} to={to} end={to === PATHS.account} className={navLinkClass}>
+            <NavLink key={to} to={withLocale(to)} end={to === PATHS.account} className={navLinkClass}>
               {t(key)}
             </NavLink>
           ))}
         </nav>
         <div className="mt-auto flex flex-col gap-2 border-t border-ink-foreground/15 pt-4">
           <NavLink
-            to={PATHS.accountSection('scans')}
+            to={withLocale(PATHS.accountSection('scans'))}
             className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.care.rescanLink')}
           </NavLink>
           <NavLink
-            to={PATHS.products}
+            to={withLocale(PATHS.products)}
             className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.nav.shop')}
@@ -133,7 +134,7 @@ export function AppShell() {
         </div>
         <nav aria-label={t('app.nav.label')} className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-4 pb-2">
           {TABS.map(([to, key]) => (
-            <NavLink key={to} to={to} end={to === PATHS.account} className={navLinkClass}>
+            <NavLink key={to} to={withLocale(to)} end={to === PATHS.account} className={navLinkClass}>
               {t(key)}
             </NavLink>
           ))}
