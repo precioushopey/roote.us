@@ -13,10 +13,16 @@ function renderAt(path: string) {
 
 describe('marketing routes', () => {
   it.each([
-    ['/', 'Regrowth'],
+    ['/', 'Your hair is individual'],
     ['/how-it-works', 'How ROOTÉ works'],
-    ['/science', 'The science behind your plan'],
-    ['/products', 'Your regimen'],
+    ['/science', 'Know what is in your program'],
+    ['/products', 'Refills and add-ons'],
+    ['/solutions', 'Understand your hair, then choose'],
+    ['/solutions/thinning', 'Understand your hair density before choosing a treatment'],
+    ['/solutions/gray-hair', 'Understand what is changing at the root'],
+    ['/results', 'Progress should be documented, not promised'],
+    ['/system', 'Analyze. Treat. Track.'],
+    ['/products/density-6', 'ROOTÉ Density 6'],
     ['/about', 'About ROOTÉ'],
     ['/faq', 'Frequently asked questions'],
     ['/support', 'Support'],
@@ -62,6 +68,6 @@ describe('bag routes', () => {
 
   it('redirects /bag/success to /products when there is no completed order', () => {
     renderAt('/bag/success');
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Your regimen');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Refills and add-ons');
   });
 });

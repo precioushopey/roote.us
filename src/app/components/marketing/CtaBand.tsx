@@ -1,4 +1,4 @@
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Section } from './Section';
 import { DisplayHeading } from './DisplayHeading';
 import { Prose } from './Prose';
@@ -23,6 +23,7 @@ interface CtaBandProps {
 
 export function CtaBand({ headingKey, bodyKey, checklistKeys, image }: CtaBandProps) {
   const t = useT();
+  const withLocale = useLocalizedPath();
 
   if (checklistKeys && image) {
     return (
@@ -38,7 +39,7 @@ export function CtaBand({ headingKey, bodyKey, checklistKeys, image }: CtaBandPr
                 </li>
               ))}
             </ul>
-            <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
+            <CtaButton to={withLocale('/analysis')} size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
           </div>
           <div className="relative mx-auto w-full max-w-md">
             <div
@@ -61,7 +62,7 @@ export function CtaBand({ headingKey, bodyKey, checklistKeys, image }: CtaBandPr
         </Prose>
       )}
       <div className="mt-8">
-        <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
+        <CtaButton to={withLocale('/analysis')} size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
       </div>
     </Section>
   );

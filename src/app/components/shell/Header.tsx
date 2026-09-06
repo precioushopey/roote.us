@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
-import { useT, useLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useCart } from '@/store/cart';
 import { useScrollCondense } from '@/app/lib/useScrollCondense';
 import { Wordmark } from '@/app/components/brand/Wordmark';
@@ -20,9 +20,10 @@ const NAV: Array<[key: MessageKey, to: string]> = [
 ];
 
 function CartLink({ label, count }: { label: string; count: number }) {
+  const withLocale = useLocalizedPath();
   return (
     <Link
-      to={PATHS.bag}
+      to={withLocale(PATHS.bag)}
       aria-label={label}
       className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-foreground hover:bg-ink-foreground/10"
     >
@@ -41,9 +42,10 @@ function CartLink({ label, count }: { label: string; count: number }) {
 
 export function Header() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const cart = useCart();
   const condensed = useScrollCondense();
-  const { locale, country, setLocale, setCountry } = useLocale();
+  const { locale, country, setLocale, setLocaleRegion } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const regionLabels = {
@@ -56,8 +58,7 @@ export function Header() {
 
   // Picking a region also moves the language to that region's default.
   const onChangeCountry = (c: string) => {
-    setCountry(c);
-    setLocale(countryDefault(c).locale);
+    setLocaleRegion(countryDefault(c).locale, c);
   };
   const onChangeLocale = (l: LocaleCode) => setLocale(l);
 
@@ -80,7 +81,7 @@ export function Header() {
           condensed ? 'py-3' : 'py-4',
         )}
       >
-        <Link to={PATHS.home} aria-label="ROOTÉ" className="inline-flex items-center">
+        <Link to={withLocale(PATHS.home)} aria-label="ROOTÉ" className="inline-flex items-center">
           <Wordmark className="w-28" onInk />
         </Link>
 
@@ -89,7 +90,7 @@ export function Header() {
           className="hidden items-center gap-6 lg:flex xl:gap-8"
         >
           {NAV.map(([key, to]) => (
-            <NavLink key={to} to={to} className={navLinkClass}>
+            <NavLink key={to} to={withLocale(to)} className={navLinkClass}>
               <span className="whitespace-nowrap">{t(key)}</span>
             </NavLink>
           ))}
@@ -104,11 +105,11 @@ export function Header() {
             labels={regionLabels}
             className="hidden text-ink-foreground/70 hover:text-ink-foreground md:inline-flex"
           />
-          <NavLink to={PATHS.account} className="hidden font-body text-sm text-ink-foreground/70 hover:text-ink-foreground md:inline">
+          <NavLink to={withLocale(PATHS.account)} className="hidden font-body text-sm text-ink-foreground/70 hover:text-ink-foreground md:inline">
             {t('marketing.nav.account')}
           </NavLink>
           <CartLink label={t('cart.open')} count={cart.count} />
-          <Button to={PATHS.analysis} size="sm" caps onInk className="hidden sm:inline-flex">
+          <Button to={withLocale(PATHS.analysis)} size="sm" caps onInk className="hidden sm:inline-flex">
             {t('marketing.nav.cta')}
           </Button>
           <IconButton
@@ -128,7 +129,7 @@ export function Header() {
           {[...NAV, ['marketing.nav.products', PATHS.products] as [MessageKey, string], ['marketing.nav.faq', PATHS.faq] as [MessageKey, string], ['marketing.nav.support', PATHS.support] as [MessageKey, string], ['marketing.nav.account', PATHS.account] as [MessageKey, string]].map(([key, to]) => (
             <Link
               key={to}
-              to={to}
+              to={withLocale(to)}
               onClick={() => setMenuOpen(false)}
               className="rounded-lg px-2 py-3 font-display text-lg text-foreground hover:bg-cream-100"
             >
@@ -144,7 +145,7 @@ export function Header() {
             onChangeLocale={onChangeLocale}
             labels={regionLabels}
           />
-          <Button to={PATHS.analysis} caps block className="mt-4" onClick={() => setMenuOpen(false)}>
+          <Button to={withLocale(PATHS.analysis)} caps block className="mt-4" onClick={() => setMenuOpen(false)}>
             {t('marketing.nav.cta')}
           </Button>
         </div>

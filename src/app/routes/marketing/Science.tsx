@@ -1,125 +1,81 @@
-import { useT } from '@/i18n/LocaleProvider';
-import { Link } from 'react-router';
-import { Section } from '@/app/components/marketing/Section';
-import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
-import { SectionHeading } from '@/app/components/marketing/SectionHeading';
-import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
-import { Prose } from '@/app/components/marketing/Prose';
-import { Eyebrow } from '@/app/components/marketing/Eyebrow';
-import { CtaButton } from '@/app/components/marketing/CtaButton';
-import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { PendingChip } from '@/app/components/brand/PendingChip';
-import { rooteContent } from '@/content/roote.config';
-import hairCuticle from '@/assets/hair-cuticle.jpg';
-import scalpBefore from '@/assets/scalp-before.jpg';
-import scalpAfter from '@/assets/scalp-after.jpg';
-import minoxidilPhoto from '@/assets/PRODUCTS/minoxidil_roote_product_image_2026.png';
-import finasteridePhoto from '@/assets/PRODUCTS/finaesteride_roote_product_image_2026.png';
-import azelaicPhoto from '@/assets/PRODUCTS/azelaic acid_roote_product_image_2026.png';
-import abnPhoto from '@/assets/PRODUCTS/ABN Complex_roote_product_image_2026.png';
+import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { Section, DisplayTitle, Prose, Eyebrow, Button, IngredientCard, LegalNotice } from '@/app/components/roote';
+import { PATHS } from '@/app/paths';
+import { pickLocalized } from '@/content/localized';
+import { getProduct } from '@/content/products';
+import type { MessageKey } from '@/i18n/messages';
 
-const ROLE_KEYS = {
-  'regrowth-stimulant': 'marketing.science.ingredients.evidence.regrowth-stimulant',
-  'dht-blocker': 'marketing.science.ingredients.evidence.dht-blocker',
-  'dht-support': 'marketing.science.ingredients.evidence.dht-support',
-  'proprietary-support': 'marketing.science.ingredients.evidence.proprietary-support',
-} as const;
-
-const INGREDIENT_PHOTOS: Record<string, string> = {
-  minoxidil: minoxidilPhoto,
-  finasteride: finasteridePhoto,
-  azelaic: azelaicPhoto,
-  abn: abnPhoto,
-};
+const GROUPS: Array<{ labelKey: MessageKey; slug: string }> = [
+  { labelKey: 'marketing.sci.groupDensity', slug: 'density-10' },
+  { labelKey: 'marketing.sci.groupGray', slug: 'gray-serum' },
+  { labelKey: 'marketing.sci.groupShampoo', slug: 'regrowth-shampoo' },
+];
 
 export function Science() {
   const t = useT();
+  const cl = useContentLocale();
+  const withLocale = useLocalizedPath();
   return (
     <>
-      <Section tone="ink" className="overflow-hidden pt-28 text-center md:pt-32">
-        <div className="relative flex flex-col items-center">
-          <div
-            aria-hidden
-            className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
-          />
-          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.science.hero.title')} className="mx-auto max-w-3xl uppercase" />
-          <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.science.hero.body')}</Prose>
-          <div className="mt-8">
-            <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
-          </div>
-        </div>
+      <Section tone="teal" width="content" animate={false} className="text-center">
+        <Eyebrow onDark>{t('marketing.sci.eyebrow')}</Eyebrow>
+        <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto mt-2 max-w-2xl">
+          {t('marketing.sci.heading')}
+        </DisplayTitle>
+        <Prose onDark size="lg" className="mx-auto mt-4 text-center">
+          {t('marketing.sci.body')}
+        </Prose>
       </Section>
 
-      <Section className="overflow-hidden">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
-          <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="01" clamp={DISPLAY_CLAMP}>
-              {t('marketing.science.mechanism.title')}
-            </SectionHeading>
-            <Prose size="l" className="max-w-xl">{t('marketing.science.mechanism.body')}</Prose>
-          </div>
-          <img
-            src={hairCuticle}
-            alt={t('marketing.science.evidence.caption')}
-            className="img-editorial w-full rounded-2xl object-cover lg:ms-auto lg:max-w-md"
-          />
-        </div>
-      </Section>
-
-      <Section tone="ink">
-        <SectionHeading
-          index="02"
-          onInk
-          clamp={DISPLAY_CLAMP}
-          trailing={<Link to="/products"><Eyebrow onInk>{t('marketing.nav.products')}</Eyebrow></Link>}
-        >
-          {t('marketing.science.ingredients.title')}
-        </SectionHeading>
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {rooteContent.formula.ingredients.map((ing) => (
-            <div
-              key={ing.key}
-              className="overflow-hidden rounded-xl border border-ink-foreground/15 bg-ink-foreground/5 text-start"
-            >
-              <img
-                src={INGREDIENT_PHOTOS[ing.key]}
-                alt=""
-                className="img-editorial aspect-square w-full object-cover"
-              />
-              <div className="p-6">
-                <p className="font-display text-lg font-medium text-ink-foreground">{ing.name}</p>
-                <p className="mt-2 text-sm text-ink-foreground/70">{t(ROLE_KEYS[ing.role as keyof typeof ROLE_KEYS])}</p>
-                <div className="mt-3">
-                  <PendingChip label={`${ing.key} dose`} />
+      <Section tone="cream" width="content">
+        <div className="flex flex-col gap-12">
+          {GROUPS.map((g) => {
+            const product = getProduct(g.slug)!;
+            return (
+              <div key={g.slug}>
+                <div className="flex items-baseline justify-between gap-4">
+                  <h2 className="font-display text-lg text-foreground">{t(g.labelKey)}</h2>
+                  <span className="font-body text-xs text-muted-foreground">{product.name}</span>
+                </div>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {product.ingredients.map((ing) => (
+                    <IngredientCard
+                      key={ing.name}
+                      name={ing.name}
+                      note={pickLocalized(ing.note, cl)}
+                      status={ing.claimStatus}
+                      readMoreLabel={t('marketing.sci.readMore')}
+                    />
+                  ))}
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
+        <LegalNotice reviewRequired className="mt-10">
+          {t('marketing.sci.note')}
+        </LegalNotice>
       </Section>
 
-      <Section className="border-t border-border">
-        <SectionHeading index="03" align="end" clamp={DISPLAY_CLAMP}>
-          {t('marketing.science.evidence.title')}
-        </SectionHeading>
-        <Prose size="l" className="ms-auto mt-4 max-w-xl text-end">{t('marketing.science.evidence.body')}</Prose>
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6">
-          <div className="relative">
-            <img src={scalpBefore} alt={t('marketing.science.evidence.beforeLabel')} className="img-editorial aspect-[4/3] w-full rounded-xl object-cover" />
-            <span className="absolute bottom-4 end-4 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
-              {t('marketing.science.evidence.beforeLabel')}
-            </span>
-          </div>
-          <div className="relative">
-            <img src={scalpAfter} alt={t('marketing.science.evidence.afterLabel')} className="img-editorial aspect-[4/3] w-full rounded-xl object-cover" />
-            <span className="absolute bottom-4 end-4 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground shadow-sm">
-              {t('marketing.science.evidence.afterLabel')}
-            </span>
-          </div>
-        </div>
+      <Section tone="grid" width="readable">
+        <DisplayTitle as="h2" step="md">
+          {t('marketing.sci.oversightHeading')}
+        </DisplayTitle>
+        <Prose className="mt-3">{t('marketing.sci.oversightBody')}</Prose>
+        <p className="mt-6 font-body text-xs text-muted-foreground">{t('marketing.sci.referencesNote')}</p>
       </Section>
 
-      <CtaBand headingKey="marketing.science.cta.title" />
+      <Section tone="teal" width="readable" className="text-center">
+        <DisplayTitle as="h2" step="lg" onDark align="center">
+          {t('marketing.sci.ctaHeading')}
+        </DisplayTitle>
+        <div className="mt-6 flex justify-center">
+          <Button to={withLocale(PATHS.analysis)} size="lg" caps>
+            {t('marketing.nav.cta')}
+          </Button>
+        </div>
+      </Section>
     </>
   );
 }

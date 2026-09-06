@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { cn } from '@/app/components/ui/utils';
 
 interface DisplayHeadingProps {

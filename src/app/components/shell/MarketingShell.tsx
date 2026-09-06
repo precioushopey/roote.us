@@ -1,12 +1,16 @@
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { useT } from '@/i18n/LocaleProvider';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
+import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { AnalysisPrompt } from './AnalysisPrompt';
 
 export function MarketingShell() {
   const t = useT();
+  const { pathname } = useLocation();
   useRevealOnRoute();
+  useDocumentMeta();
   return (
     <div className="min-h-screen bg-background font-body text-foreground">
       <a
@@ -20,6 +24,7 @@ export function MarketingShell() {
         <Outlet />
       </main>
       <Footer />
+      {pathname === '/' && <AnalysisPrompt />}
     </div>
   );
 }

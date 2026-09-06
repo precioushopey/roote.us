@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
 import type { MessageKey } from '@/i18n/messages';
 
@@ -15,6 +15,7 @@ const MENU_LINKS: Array<[key: MessageKey, to: string]> = [
 
 export function MobileMenu({ onClose }: { onClose: () => void }) {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -87,7 +88,7 @@ export function MobileMenu({ onClose }: { onClose: () => void }) {
       <ul className="mt-6 flex flex-1 flex-col gap-6">
         {MENU_LINKS.map(([key, to]) => (
           <li key={to}>
-            <Link to={to} onClick={onClose} className="font-display text-2xl text-foreground">
+            <Link to={withLocale(to)} onClick={onClose} className="font-display text-2xl text-foreground">
               {t(key)}
             </Link>
           </li>
@@ -97,7 +98,7 @@ export function MobileMenu({ onClose }: { onClose: () => void }) {
       <div className="mt-auto flex items-center justify-between gap-4 border-t border-border pt-6">
         <LocaleToggle />
         <Link
-          to="/diagnosis"
+          to={withLocale('/diagnosis')}
           onClick={onClose}
           className="inline-flex items-center rounded-full bg-primary px-6 py-3 text-sm tracking-wide text-primary-foreground"
         >

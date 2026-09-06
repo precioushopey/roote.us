@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
 import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
@@ -16,21 +16,26 @@ import scanDevice from '@/assets/scan-device.jpg';
 import productBg from '@/assets/product_bg.jpg';
 import productPhoto from '@/assets/product.png';
 
+// A representative showcase set for anonymous visitors (pre-assessment) — not
+// concern-specific. The customer's actual plan (Density vs. Gray vs. both) is
+// resolved by the recommendation engine after the assessment (PO #15).
+const KIT_KEYS = ['density-10', 'regrowth-shampoo', 'gray-serum'] as const;
 const KIT_PHOTOS: Record<string, string> = {
-  'roote-topical': productBg,
-  'derma-stim': scanDevice,
-  cleanser: productPhoto,
+  'density-10': productBg,
+  'regrowth-shampoo': productPhoto,
+  'gray-serum': scanDevice,
 };
 
 export function HowItWorks() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const steps = [
     { photo: stepQuiz, title: t('marketing.howItWorks.step1.title'), body: t('marketing.howItWorks.step1.body') },
     { photo: stepPhotoScan, title: t('marketing.howItWorks.step2.title'), body: t('marketing.howItWorks.step2.body') },
     { photo: scanDevice, title: t('marketing.howItWorks.step3.title'), body: t('marketing.howItWorks.step3.body') },
     { photo: productBg, title: t('marketing.howItWorks.step4.title'), body: t('marketing.howItWorks.step4.body') },
   ];
-  const kit = [...rooteContent.treatments.core, ...rooteContent.treatments.supporting];
+  const kit = KIT_KEYS.map((key) => ({ key, ...rooteContent.treatmentRegistry[key] }));
 
   return (
     <>
@@ -43,7 +48,7 @@ export function HowItWorks() {
           <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.howItWorks.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.howItWorks.hero.body')}</Prose>
           <div className="mt-8">
-            <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
+            <CtaButton to={withLocale('/analysis')} size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
           </div>
         </div>
       </Section>
@@ -52,7 +57,7 @@ export function HowItWorks() {
         <SectionHeading
           index="01"
           clamp={DISPLAY_CLAMP}
-          trailing={<Link to="/products"><Eyebrow>{t('marketing.nav.products')}</Eyebrow></Link>}
+          trailing={<Link to={withLocale('/products')}><Eyebrow>{t('marketing.nav.products')}</Eyebrow></Link>}
         >
           {t('marketing.nav.howItWorks')}
         </SectionHeading>
@@ -106,7 +111,7 @@ export function HowItWorks() {
           </div>
         </div>
         <div className="mt-8">
-          <ArrowLink to="/faq">{t('marketing.howItWorks.faqCta')}</ArrowLink>
+          <ArrowLink to={withLocale('/faq')}>{t('marketing.howItWorks.faqCta')}</ArrowLink>
         </div>
       </Section>
 

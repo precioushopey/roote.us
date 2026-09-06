@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { useT, useContentLocale, useLocale } from '@/i18n/LocaleProvider';
+import { useT, useContentLocale, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
 import { LEGAL_PAGES } from '@/content/legal';
@@ -48,13 +48,13 @@ const SOLUTION_LINKS: Array<[to: string, label: string]> = [
 export function Footer() {
   const t = useT();
   const cl = useContentLocale();
-  const { locale, country, setLocale, setCountry } = useLocale();
+  const withLocale = useLocalizedPath();
+  const { locale, country, setLocale, setLocaleRegion } = useLocale();
   const year = new Date().getFullYear();
   const { company } = rooteContent;
 
   const onChangeCountry = (c: string) => {
-    setCountry(c);
-    setLocale(countryDefault(c).locale);
+    setLocaleRegion(countryDefault(c).locale, c);
   };
 
   return (
@@ -67,7 +67,7 @@ export function Footer() {
               <ul className="mt-3 space-y-2">
                 {col.links.map(([to, label]) => (
                   <li key={to + label}>
-                    <Link to={to} className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                    <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
                       {t(label)}
                     </Link>
                   </li>
@@ -83,7 +83,7 @@ export function Footer() {
             <ul className="mt-3 space-y-2">
               {SOLUTION_LINKS.map(([to, kind]) => (
                 <li key={to}>
-                  <Link to={to} className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                  <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
                     {kind === 'products'
                       ? t('marketing.nav.products')
                       : pickLocalized(CONCERN_OPTIONS.find((c) => c.value === kind)!.title, cl)}
@@ -100,13 +100,13 @@ export function Footer() {
             <ul className="mt-3 space-y-2">
               {LEGAL_PAGES.map((p) => (
                 <li key={p.slug}>
-                  <Link to={PATHS.legal(p.slug)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                  <Link to={withLocale(PATHS.legal(p.slug))} className="font-body text-sm text-ink-foreground hover:text-gold-500">
                     {pickLocalized(p.title, cl)}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link to="/terms-of-sale" className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                <Link to={withLocale('/terms-of-sale')} className="font-body text-sm text-ink-foreground hover:text-gold-500">
                   {t('marketing.footer.termsOfSale')}
                 </Link>
               </li>
@@ -118,7 +118,7 @@ export function Footer() {
               {t('marketing.footer.startTitle')}
             </h2>
             <p className="mt-3 font-body text-sm text-ink-foreground/60">{t('marketing.footer.startBody')}</p>
-            <Button to={PATHS.analysis} size="sm" caps onInk className="mt-4">
+            <Button to={withLocale(PATHS.analysis)} size="sm" caps onInk className="mt-4">
               {t('marketing.nav.cta')}
             </Button>
           </div>

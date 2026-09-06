@@ -1,4 +1,4 @@
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Section } from '@/app/components/marketing/Section';
 import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
 import { SectionHeading } from '@/app/components/marketing/SectionHeading';
@@ -9,6 +9,7 @@ import heroPeople from '@/assets/hero-people.png';
 
 export function About() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const values = [
     { title: t('marketing.about.values.v1.title'), body: t('marketing.about.values.v1.body') },
     { title: t('marketing.about.values.v2.title'), body: t('marketing.about.values.v2.body') },
@@ -26,7 +27,7 @@ export function About() {
           <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.about.hero.title')} className="mx-auto max-w-3xl uppercase" />
           <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.about.mission.body')}</Prose>
           <div className="mt-8">
-            <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
+            <CtaButton to={withLocale('/analysis')} size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
           </div>
         </div>
       </Section>
@@ -60,7 +61,7 @@ export function About() {
           ))}
         </div>
         <div className="mt-12 flex justify-center">
-          <CtaButton to="/diagnosis" size="lg" className="w-full sm:w-auto">{t('marketing.home.how.getStarted')}</CtaButton>
+          <CtaButton to={withLocale('/analysis')} size="lg" className="w-full sm:w-auto">{t('marketing.home.how.getStarted')}</CtaButton>
         </div>
       </Section>
     </>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { cn } from '@/app/components/ui/utils';
 import { funnelField, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 import type { Contact, CardRef } from '@/store/checkout';
@@ -30,6 +30,7 @@ export function CheckoutFields({
   onSubmit: (data: { contact: Contact; card: CardRef }) => void;
 }) {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const [name, setName] = useState('');
   const [email, setEmail] = useState(defaultEmail);
   const [phone, setPhone] = useState('');
@@ -109,7 +110,7 @@ export function CheckoutFields({
       {shown && <p role="alert" className="text-sm text-destructive">{shown}</p>}
       <p className="text-xs text-muted-foreground">
         {t('checkout.termsAgree')}{' '}
-        <Link to="/terms-of-sale" className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>.
+        <Link to={withLocale('/terms-of-sale')} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>.
       </p>
       <button type="submit" disabled={submitting} className={funnelPrimaryBtn}>
         {submitting ? t('checkout.submitting') : t('checkout.submit')}

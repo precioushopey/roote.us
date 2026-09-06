@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
 import { Section } from '@/app/components/marketing/Section';
@@ -11,6 +11,7 @@ const SECTION_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6'] as const;
 
 export function Privacy() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   return (
     <>
       <Section tone="ink" className="overflow-hidden pt-28 text-center md:pt-32">
@@ -38,7 +39,7 @@ export function Privacy() {
               <Prose className="mt-3">{t(`marketing.legal.privacy.${s}.body` as MessageKey)}</Prose>
               {s === 's6' && (
                 <Prose className="mt-2">
-                  <Link to="/terms" className="text-accent underline">{t('marketing.legal.company.title')}</Link>
+                  <Link to={withLocale('/terms')} className="text-accent underline">{t('marketing.legal.company.title')}</Link>
                 </Prose>
               )}
             </div>
