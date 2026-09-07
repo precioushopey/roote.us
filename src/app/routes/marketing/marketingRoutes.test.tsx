@@ -35,7 +35,7 @@ describe('marketing routes', () => {
     ['/solutions/thinning', 'Understand your hair density before choosing a treatment'],
     ['/solutions/gray-hair', 'Understand what is changing at the root'],
     ['/system', 'Analyze. Treat. Track.'],
-    ['/products/density-6', 'ROOTÉ Density 6'],
+    ['/products/density-6', 'ROOTÉ Level 6'],
     ['/about', 'About us'],
     ['/faq', 'Frequently asked questions'],
     ['/support', 'Support'],

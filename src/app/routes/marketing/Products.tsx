@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router';
 import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
   Section,
@@ -60,6 +61,9 @@ function matches(p: Product, f: Filter) {
   return p.concern === 'gray' || p.concern === 'gray-support';
 }
 
+const OUTLINE_CTA_CLASS =
+  'inline-flex w-full items-center justify-center rounded-full border border-gold-500 px-4 py-2.5 font-body text-sm font-medium tracking-wide text-gold-600 transition-colors hover:bg-gold-500 hover:text-white';
+
 function AddToBagButton({ sku }: { sku: string }) {
   const t = useT();
   const cart = useCart();
@@ -77,10 +81,28 @@ function AddToBagButton({ sku }: { sku: string }) {
         clearTimeout(timer.current);
         timer.current = setTimeout(() => setAdded(false), 1600);
       }}
-      className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-primary px-4 py-2 font-body text-xs font-medium tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+      className={`mt-3 ${OUTLINE_CTA_CLASS}`}
     >
       {added ? t('cart.added') : t('cart.add')}
     </button>
+  );
+}
+
+/* Density SKUs (and bundles that include one) are assessment + review gated —
+   no direct add-to-bag. Point people at the free hair analysis instead of a
+   bare "Review" badge or review note. `spaced` adds the top margin needed
+   when there's no gap-providing parent (the catalog grid's wrapper), vs.
+   bundle cards, whose `gap-4` column already spaces it. */
+function FindYourMatchCta({ spaced = false }: { spaced?: boolean }) {
+  const t = useT();
+  const withLocale = useLocalizedPath();
+  return (
+    <Link
+      to={withLocale(PATHS.analysis)}
+      className={spaced ? `mt-3 ${OUTLINE_CTA_CLASS}` : OUTLINE_CTA_CLASS}
+    >
+      {t('marketing.shop.findYourMatchCta')}
+    </Link>
   );
 }
 
@@ -98,10 +120,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   useEffect(() => () => clearTimeout(timer.current), []);
 
   return (
-    <div className="flex flex-col items-center gap-4 text-center">
-      <span className="rounded-full bg-deep-950 px-3 py-1 font-body text-2xs font-semibold uppercase tracking-wide text-cream-100">
-        {bundle.packaging === 'men' ? t('marketing.home.gray.forMen') : t('marketing.home.gray.forWomen')}
-      </span>
+    <div className="flex flex-col gap-4">
       {image ? (
         <div className="aspect-[3/4] w-full border border-gold-500 bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
           <img src={image} alt={pickLocalized(bundle.name, cl)} className="h-full w-full object-contain" />
@@ -116,15 +135,17 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
           className="w-full border border-gold-500 [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
         />
       )}
-      <div className="flex flex-col items-center gap-2">
-        <p className="font-display text-lg text-foreground">{pickLocalized(bundle.name, cl)}</p>
-        <p className="font-body text-sm text-muted-foreground">{pickLocalized(bundle.summary, cl)}</p>
-        <div className="mt-1 font-body text-sm text-foreground">
-          {bundle.price === null ? <PendingChip label="price" /> : bundle.price}
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h3 className="font-display text-md text-foreground">{pickLocalized(bundle.name, cl)}</h3>
+          <p className="font-body text-sm text-muted-foreground">{pickLocalized(bundle.summary, cl)}</p>
+        </div>
+        <div className="shrink-0 font-display text-3xl font-bold text-foreground">
+          {bundle.price === null ? <PendingChip label="price" /> : `$${bundle.price}`}
         </div>
       </div>
       {requiresReview ? (
-        <p className="font-body text-xs text-muted-foreground">{t('marketing.shop.reviewNote')}</p>
+        <FindYourMatchCta />
       ) : (
         <button
           type="button"
@@ -135,7 +156,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
             clearTimeout(timer.current);
             timer.current = setTimeout(() => setAdded(false), 1600);
           }}
-          className="h-11 w-full rounded-full border border-border font-body text-sm font-medium text-foreground transition-colors hover:border-deep-700"
+          className={OUTLINE_CTA_CLASS}
         >
           {added ? t('cart.added') : t('marketing.shop.bundles.cta')}
         </button>
@@ -154,16 +175,15 @@ function BundleSection() {
   return (
     <Section tone="cream" width="content">
       <Eyebrow>{t('marketing.shop.bundles.eyebrow')}</Eyebrow>
-      <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
+      <DisplayTitle as="h2" step="lg" className="mt-2">
         {t('marketing.shop.bundles.heading')}
       </DisplayTitle>
       <Prose className="mt-4 max-w-2xl">{t('marketing.shop.bundles.body')}</Prose>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-x-6 gap-y-12 md:gap-y-18 sm:grid-cols-2 lg:grid-cols-3">
         {SHOP_BUNDLES.map((bundle) => (
           <BundleCard key={bundle.id} bundle={bundle} />
         ))}
       </div>
-      <p className="mt-6 font-body text-xs text-muted-foreground">{t('marketing.shop.bundles.note')}</p>
     </Section>
   );
 }
@@ -252,27 +272,20 @@ export function Products() {
             { value: 'gray', label: t('marketing.shop.filterGray') },
           ]}
         />
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-x-6 gap-y-12 md:gap-y-18 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((p) => (
             <div key={p.slug} className="flex flex-col">
               <ProductCard
                 name={p.name}
                 subtitle={pickLocalized(p.subtitle, cl)}
                 to={withLocale(PATHS.product(p.slug))}
-                priceLabel={p.price === null ? null : String(p.price)}
+                priceLabel={p.price === null ? null : `$${p.price}`}
                 packaging={p.concern === 'gray' || p.concern === 'gray-support' ? 'women' : 'men'}
-                reviewRequired={p.requiresMedicalReview}
                 mediaAlt={`${p.name} packaging`}
                 mediaLabel={`${p.name} — product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
-              {p.requiresMedicalReview ? (
-                <p className="mt-2 font-body text-xs text-muted-foreground">
-                  {t('marketing.shop.reviewNote')}
-                </p>
-              ) : (
-                <AddToBagButton sku={p.slug} />
-              )}
+              {p.requiresMedicalReview ? <FindYourMatchCta spaced /> : <AddToBagButton sku={p.slug} />}
             </div>
           ))}
         </div>

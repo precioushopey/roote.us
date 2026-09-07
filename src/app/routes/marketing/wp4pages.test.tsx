@@ -27,12 +27,12 @@ function renderAt(path: string, locale: 'en' | 'he' = 'en') {
 }
 
 describe('WP4 marketing pages', () => {
-  it('Products: the six SKUs, prices as [PENDING], Density gated behind review', () => {
+  it('Products: the six SKUs, competitor-matched prices, Density gated behind review', () => {
     renderAt('/products');
     for (const name of [
-      'ROOTÉ Density 6',
-      'ROOTÉ Density 10',
-      'ROOTÉ Density 15',
+      'ROOTÉ Level 6',
+      'ROOTÉ Level 10',
+      'ROOTÉ Level 15',
       'ROOTÉ Gray Support',
       'ROOTÉ Regrowth Shampoo',
       'ROOTÉ Gray Serum',
@@ -40,16 +40,24 @@ describe('WP4 marketing pages', () => {
       expect(screen.getByRole('heading', { name })).toBeInTheDocument();
     }
     const catalogSection = screen.getByRole('heading', { name: 'Every product, in one place.' }).closest('section')!;
-    expect(within(catalogSection).getAllByText('[PENDING: price]').length).toBe(6);
-    // cosmetic SKUs get an add-to-bag; Density SKUs get a review note instead
+    expect(within(catalogSection).queryAllByText('[PENDING: price]').length).toBe(0);
+    for (const price of ['$47', '$50', '$53', '$38', '$40', '$52']) {
+      expect(within(catalogSection).getByText(price)).toBeInTheDocument();
+    }
+    // cosmetic SKUs get an add-to-bag; Density SKUs get no note/button (review-gated)
     expect(within(catalogSection).getAllByRole('button', { name: /add to bag|add/i }).length).toBe(3);
   });
 
-  it('Product detail: no invented price, review badge on Density', () => {
+  it('Product detail: no invented price on the product itself, review badge on Density', () => {
     renderAt('/products/density-10');
-    expect(screen.getByRole('heading', { level: 1, name: 'ROOTÉ Density 10' })).toBeInTheDocument();
+    const heading = screen.getByRole('heading', { level: 1, name: 'ROOTÉ Level 10' });
+    expect(heading).toBeInTheDocument();
     expect(screen.getByText(/requires treatment review/i)).toBeInTheDocument();
-    expect(screen.queryByText(/\$\d/)).not.toBeInTheDocument();
+    // The viewed product's own price stays pending; related-product cards below
+    // now carry real, competitor-matched prices (content/products.ts), so the
+    // "no $ anywhere" check is scoped to the hero, not the whole page.
+    const hero = heading.closest('section')!;
+    expect(within(hero).queryByText(/\$\d/)).not.toBeInTheDocument();
   });
 
   it('Product detail: cosmetic SKU has no review badge', () => {

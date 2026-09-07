@@ -8,7 +8,11 @@ import type { ClaimStatus, ClaimSourceType } from './claims';
  * so wording can be approved centrally. No efficacy, "clinically proven",
  * "FDA-approved", regrowth or gray-reversal language appears here (brief §9).
  *
- * Prices are `null` → they render as [PENDING] until the client supplies them
+ * Prices are matched to the named competitor product the client pointed at
+ * for each SKU (client references, 2026-09-08: `ROOTÉ_Personal_design_
+ * minoxidilmax.docx` + `6-product lineup.docx`) — the 1-unit/lowest tier
+ * price of the linked product, in USD. Not invented: sourced per SKU below.
+ * Until a SKU has a named reference, its price stays `null` → [PENDING]
  * (hard rule: never invent product content).
  *
  * The old "Color Restore Shampoo" is intentionally NOT a launch SKU — it is
@@ -79,7 +83,7 @@ const ING = (
 export const PRODUCTS: Product[] = [
   {
     slug: 'density-6',
-    name: 'ROOTÉ Density 6',
+    name: 'ROOTÉ Level 6',
     // public-facing descriptor — PO #6 (2026-09-04)
     subtitle: L('Personalized Density Treatment', 'טיפול Density מותאם אישית'),
     concern: 'thinning',
@@ -113,11 +117,12 @@ export const PRODUCTS: Product[] = [
     relatedProducts: ['density-10', 'regrowth-shampoo'],
     evidenceStatus: 'ingredient-literature',
     claimStatus: 'working',
-    price: null,
+    // Client-set price (2026-09-08), overriding the Essengen-6 Extra competitor match.
+    price: 47,
   },
   {
     slug: 'density-10',
-    name: 'ROOTÉ Density 10',
+    name: 'ROOTÉ Level 10',
     subtitle: L('Advanced Density Treatment', 'טיפול Density מתקדם'),
     concern: 'thinning',
     format: 'topical-solution',
@@ -154,11 +159,12 @@ export const PRODUCTS: Product[] = [
     relatedProducts: ['density-6', 'density-15', 'regrowth-shampoo'],
     evidenceStatus: 'ingredient-literature',
     claimStatus: 'working',
-    price: null,
+    // Client-set price (2026-09-08), overriding the Dualgen-10 Plus competitor match.
+    price: 50,
   },
   {
     slug: 'density-15',
-    name: 'ROOTÉ Density 15',
+    name: 'ROOTÉ Level 15',
     subtitle: L('Intensive Density Treatment', 'טיפול Density אינטנסיבי'),
     concern: 'thinning',
     format: 'topical-solution',
@@ -196,7 +202,43 @@ export const PRODUCTS: Product[] = [
     relatedProducts: ['density-10', 'regrowth-shampoo'],
     evidenceStatus: 'ingredient-literature',
     claimStatus: 'requires-review',
-    price: null,
+    // Matches DualGen-15 With PG Plus (15% Minoxidil + 0.1% Finasteride + Azelaic Acid, 1 unit / 2 oz), minoxidilmax.com.
+    price: 53,
+  },
+  {
+    slug: 'gray-serum',
+    name: 'ROOTÉ Gray Serum',
+    subtitle: L('Daily Pigment Support Serum', 'סרום יומי לתמיכה בפיגמנט'),
+    concern: 'gray',
+    format: 'serum',
+    size: '50 mL',
+    role: L('Topical half of the Gray system.', 'החצי המקומי של מערכת Gray.'),
+    heroCopy: L(
+      'A leave-in serum in the anti-gray topical category, to support the appearance and health of naturally pigmented hair.',
+      'סרום ללא שטיפה בקטגוריית התכשירים לשיער אפור, לתמיכה במראה ובבריאות של שיער עם פיגמנט טבעי.',
+    ),
+    shortDescription: L('A daily leave-in serum. The topical half of the Gray system.', 'סרום יומי ללא שטיפה. החצי המקומי של מערכת Gray.'),
+    formulaReference: null,
+    displayFormulaDetail: true,
+    ingredients: [
+      ING('Greyverse™', 'A supplier active marketed for the anti-gray category.', 'רכיב פעיל של ספק, המשווק לקטגוריית השיער האפור.', 'requires-review', 'supplier-reference'),
+      ING('Darkenyl™', 'A supplier active marketed for pigmentation support.', 'רכיב פעיל של ספק, המשווק לתמיכה בפיגמנט.', 'requires-review', 'supplier-reference'),
+      ING('Capixyl™', 'A supplier peptide-based active used in scalp care.', 'רכיב פעיל מבוסס פפטידים של ספק, בשימוש בטיפוח קרקפת.', 'requires-review', 'supplier-reference'),
+      ING('Green Tea', 'An antioxidant-rich botanical extract.', 'תמצית צמחית עשירה בנוגדי חמצון.'),
+      ING('Fo-Ti', 'A botanical traditionally associated with hair.', 'צמח הנקשר באופן מסורתי לשיער.'),
+      ING('Panthenol', 'Pro-vitamin B5, a common conditioning agent.', 'פרו-ויטמין B5, רכיב הזנה נפוץ.'),
+      ING('Caffeine', 'A common scalp-serum ingredient.', 'רכיב נפוץ בסרומים לקרקפת.'),
+      ING('Ginseng', 'A botanical used in scalp-care formulas.', 'צמח בשימוש בפורמולות לקרקפת.'),
+    ],
+    usage: L('Apply a few drops to the scalp daily and massage in. Do not rinse out.', 'למרוח מספר טיפות על הקרקפת מדי יום ולעסות. לא לשטוף.'),
+    safety: L('For external use on the scalp only. Discontinue if irritation occurs.', 'לשימוש חיצוני על הקרקפת בלבד. יש להפסיק שימוש אם מופיע גירוי.'),
+    requiresMedicalReview: false,
+    packagingThemed: true,
+    relatedProducts: ['gray-support'],
+    evidenceStatus: 'none',
+    claimStatus: 'working',
+    // Matches Root Revival™ Advanced Anti-Gray Hair Serum (1 bottle), heyhair.co.
+    price: 52,
   },
   {
     slug: 'gray-support',
@@ -233,7 +275,8 @@ export const PRODUCTS: Product[] = [
     relatedProducts: ['gray-serum'],
     evidenceStatus: 'none',
     claimStatus: 'working',
-    price: null,
+    // Matches Gray Escape™ Advanced Anti-Gray Hair Growth Supplement (1 bottle), heyhair.co.
+    price: 38,
   },
   {
     slug: 'regrowth-shampoo',
@@ -267,41 +310,8 @@ export const PRODUCTS: Product[] = [
     relatedProducts: ['density-6', 'density-10'],
     evidenceStatus: 'none',
     claimStatus: 'working',
-    price: null,
-  },
-  {
-    slug: 'gray-serum',
-    name: 'ROOTÉ Gray Serum',
-    subtitle: L('Daily Pigment Support Serum', 'סרום יומי לתמיכה בפיגמנט'),
-    concern: 'gray',
-    format: 'serum',
-    size: '50 mL',
-    role: L('Topical half of the Gray system.', 'החצי המקומי של מערכת Gray.'),
-    heroCopy: L(
-      'A leave-in serum in the anti-gray topical category, to support the appearance and health of naturally pigmented hair.',
-      'סרום ללא שטיפה בקטגוריית התכשירים לשיער אפור, לתמיכה במראה ובבריאות של שיער עם פיגמנט טבעי.',
-    ),
-    shortDescription: L('A daily leave-in serum. The topical half of the Gray system.', 'סרום יומי ללא שטיפה. החצי המקומי של מערכת Gray.'),
-    formulaReference: null,
-    displayFormulaDetail: true,
-    ingredients: [
-      ING('Greyverse™', 'A supplier active marketed for the anti-gray category.', 'רכיב פעיל של ספק, המשווק לקטגוריית השיער האפור.', 'requires-review', 'supplier-reference'),
-      ING('Darkenyl™', 'A supplier active marketed for pigmentation support.', 'רכיב פעיל של ספק, המשווק לתמיכה בפיגמנט.', 'requires-review', 'supplier-reference'),
-      ING('Capixyl™', 'A supplier peptide-based active used in scalp care.', 'רכיב פעיל מבוסס פפטידים של ספק, בשימוש בטיפוח קרקפת.', 'requires-review', 'supplier-reference'),
-      ING('Green Tea', 'An antioxidant-rich botanical extract.', 'תמצית צמחית עשירה בנוגדי חמצון.'),
-      ING('Fo-Ti', 'A botanical traditionally associated with hair.', 'צמח הנקשר באופן מסורתי לשיער.'),
-      ING('Panthenol', 'Pro-vitamin B5, a common conditioning agent.', 'פרו-ויטמין B5, רכיב הזנה נפוץ.'),
-      ING('Caffeine', 'A common scalp-serum ingredient.', 'רכיב נפוץ בסרומים לקרקפת.'),
-      ING('Ginseng', 'A botanical used in scalp-care formulas.', 'צמח בשימוש בפורמולות לקרקפת.'),
-    ],
-    usage: L('Apply a few drops to the scalp daily and massage in. Do not rinse out.', 'למרוח מספר טיפות על הקרקפת מדי יום ולעסות. לא לשטוף.'),
-    safety: L('For external use on the scalp only. Discontinue if irritation occurs.', 'לשימוש חיצוני על הקרקפת בלבד. יש להפסיק שימוש אם מופיע גירוי.'),
-    requiresMedicalReview: false,
-    packagingThemed: true,
-    relatedProducts: ['gray-support'],
-    evidenceStatus: 'none',
-    claimStatus: 'working',
-    price: null,
+    // Matches ACTIVATE+ Advanced Anti-Thinning Hair Growth Shampoo (1 bottle), heyhair.co.
+    price: 40,
   },
 ];
 

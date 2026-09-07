@@ -123,8 +123,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
               name={p.name}
               subtitle={pickLocalized(p.subtitle, cl)}
               to={withLocale(PATHS.product(p.slug))}
-              priceLabel={p.price === null ? null : String(p.price)}
-              reviewRequired={p.requiresMedicalReview}
+              priceLabel={p.price === null ? null : `$${p.price}`}
               mediaAlt={`${p.name} packaging`}
               mediaLabel={`${p.name} — product photography`}
             />

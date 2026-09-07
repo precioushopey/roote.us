@@ -511,12 +511,11 @@ export const en = {
   'marketing.shop.filterAll': 'All',
   'marketing.shop.filterThinning': 'Thinning',
   'marketing.shop.filterGray': 'Gray',
-  'marketing.shop.reviewNote': 'Added to your program after a treatment review.',
+  'marketing.shop.findYourMatchCta': 'See if this is right for you',
   'marketing.shop.bundles.eyebrow': 'Bundle & save',
   'marketing.shop.bundles.heading': 'Stock up once, skip the reorder.',
   'marketing.shop.bundles.body': 'Complete System, Gray Support, and Hair Growth — each bundle in men’s and women’s packaging. Density-based bundles are added to your program after a treatment review.',
   'marketing.shop.bundles.cta': 'Add to bag',
-  'marketing.shop.bundles.note': 'Prices are confirmed at checkout. Density stays behind the free assessment and a treatment review.',
   'marketing.shop.finalCta.heading': 'Not sure what you need?',
   'marketing.shop.finalCta.body': 'Start with a free hair analysis and get a program built around your results.',
 

@@ -66,7 +66,7 @@ export function Footer() {
   return (
     <footer className="border-t border-ink-foreground/15 bg-ink px-6 py-16 text-ink-foreground md:px-10">
       <div className="mx-auto max-w-[80rem]">
-        <div className="grid gap-10 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-6">
           {COLUMNS.map((col) => (
             <nav key={col.title} aria-label={t(col.title)}>
               <h2 className="u-caps font-body text-2xs font-semibold text-ink-foreground/60">{t(col.title)}</h2>

@@ -26,8 +26,18 @@ describe('products (6 launch SKUs, brief §8)', () => {
     );
   });
 
-  it('never invents a price', () => {
-    for (const p of PRODUCTS) expect(p.price, p.slug).toBeNull();
+  it('prices are the confirmed values (competitor-matched, or client-set overrides), never an invented number', () => {
+    // Client references, 2026-09-08: ROOTÉ_Personal_design_minoxidilmax.docx + 6-product lineup.docx.
+    // density-6/density-10 are client-set overrides (2026-09-08) of the competitor match.
+    const expected: Record<string, number> = {
+      'density-6': 47,
+      'density-10': 50,
+      'density-15': 53, // DualGen-15 With PG Plus, minoxidilmax.com
+      'gray-support': 38, // Gray Escape, heyhair.co
+      'regrowth-shampoo': 40, // ACTIVATE+, heyhair.co
+      'gray-serum': 52, // Root Revival, heyhair.co
+    };
+    for (const p of PRODUCTS) expect(p.price, p.slug).toBe(expected[p.slug]);
   });
 
   it('gates every Density SKU behind medical review; leaves cosmetic SKUs open', () => {

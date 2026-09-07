@@ -511,12 +511,11 @@ export const he: Record<MessageKey, string> = {
   'marketing.shop.filterAll': 'הכול',
   'marketing.shop.filterThinning': 'דלילות',
   'marketing.shop.filterGray': 'אפור',
-  'marketing.shop.reviewNote': 'מתווסף לתוכנית שלך לאחר בדיקת טיפול.',
+  'marketing.shop.findYourMatchCta': 'בדקו אם זה מתאים לכם',
   'marketing.shop.bundles.eyebrow': 'צרור וחסכון',
   'marketing.shop.bundles.heading': 'להצטייד פעם אחת, לדלג על ההזמנה החוזרת.',
   'marketing.shop.bundles.body': 'המערכת המלאה, Gray Support, וצמיחת שיער — כל חבילה באריזה לגברים ולנשים. חבילות המבוססות על Density מתווספות לתוכנית שלך לאחר בדיקת טיפול.',
   'marketing.shop.bundles.cta': 'הוספה לסל',
-  'marketing.shop.bundles.note': 'המחיר נקבע בקופה. Density נשארת בכפוף לאבחון חינם ולבדיקת טיפול.',
   'marketing.shop.finalCta.heading': 'לא בטוחים במה אתם צריכים?',
   'marketing.shop.finalCta.body': 'התחילו באבחון שיער חינמי וקבלו תוכנית שנבנתה סביב התוצאות שלכם.',
 

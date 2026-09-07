@@ -55,10 +55,10 @@ export function ConcernCard({
 }
 
 /* --- ProductCard ---------------------------------------------------------
-   A product summary. Same arch-framed-image + plain-caption layout as the
-   Home page Density System spotlight — no card border/background, just the
-   gold-bordered arch image and centered text. `packaging` themes the
-   placeholder media only (men = dark teal, women = cream) — presentation
+   A product summary. Gold-bordered arch image (same treatment as the Home
+   page Density System spotlight), then a name+description block on the
+   start side against a big, bold price on the end side. `packaging` themes
+   the placeholder media only (men = dark teal, women = cream) — presentation
    only. Price shows a [PENDING] chip until supplied. */
 export function ProductCard({
   name,
@@ -66,7 +66,6 @@ export function ProductCard({
   to,
   priceLabel,
   packaging = 'women',
-  reviewRequired = false,
   mediaAlt,
   mediaLabel,
   image,
@@ -77,14 +76,13 @@ export function ProductCard({
   /** resolved price string, or null → [PENDING] */
   priceLabel: string | null;
   packaging?: 'men' | 'women';
-  reviewRequired?: boolean;
   mediaAlt: string;
   mediaLabel: string;
   /** Real product photography. Falls back to the placeholder when omitted. */
   image?: string;
 }) {
   return (
-    <Link to={to} data-pack={packaging} className="group flex flex-col items-center gap-4 text-center">
+    <Link to={to} data-pack={packaging} className="group flex flex-col gap-4">
       {image ? (
         <div className="aspect-[3/4] w-full border border-gold-500 bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
           <img src={image} alt={mediaAlt} className="h-full w-full object-contain" />
@@ -99,13 +97,12 @@ export function ProductCard({
           className="w-full border border-gold-500 [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
         />
       )}
-      <div className="flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-1">
           <h3 className="font-display text-md text-foreground">{name}</h3>
-          {reviewRequired ? <Badge tone="review">Review</Badge> : null}
+          <p className="font-body text-sm text-muted-foreground">{subtitle}</p>
         </div>
-        <p className="font-body text-sm text-muted-foreground">{subtitle}</p>
-        <div className="mt-1 font-body text-sm text-foreground">
+        <div className="shrink-0 font-display text-3xl font-bold text-foreground">
           {priceLabel === null ? <PendingChip label="price" /> : priceLabel}
         </div>
       </div>
