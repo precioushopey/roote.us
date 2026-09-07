@@ -61,31 +61,6 @@ describe('Home (redesigned)', () => {
     }
   });
 
-  it('renders the sample scan card with [PENDING] values, never invented numbers', () => {
-    renderHome();
-    expect(screen.getByText('[PENDING: density]')).toBeInTheDocument();
-    expect(screen.getByText('[PENDING: pattern]')).toBeInTheDocument();
-    expect(screen.getByText('[PENDING: progression]')).toBeInTheDocument();
-  });
-
-  it('program durations show a [PENDING] price, never a fabricated one', () => {
-    renderHome();
-    expect(screen.getAllByText('[PENDING: program price]').length).toBe(3);
-  });
-
-  it('results section is an honest empty state', () => {
-    renderHome();
-    expect(screen.getAllByText('Verified ROOTÉ results coming soon.').length).toBeGreaterThan(0);
-  });
-
-  it('renders the 12-question FAQ as an accordion', () => {
-    renderHome();
-    const faqRegion = screen.getByRole('heading', { name: 'Questions, answered plainly.' }).closest('section')!;
-    const buttons = within(faqRegion).getAllByRole('button');
-    expect(buttons.length).toBe(12);
-    expect(buttons[0]).toHaveAttribute('aria-expanded', 'false');
-  });
-
   it('has a single h1', () => {
     renderHome();
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);

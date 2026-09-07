@@ -8,12 +8,12 @@ import { AuthProvider } from '@/store/auth';
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { StartLayout } from './StartLayout';
 
-const ANSWERS = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
+const ANSWERS = { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'yes', q13_progression: 'gradual' } as const;
 
 function completeSeed(overrides: Record<string, unknown> = {}) {
   return {
-    diagnosis: { gender: 'male', photos: [], answers: ANSWERS },
-    analysis: deriveAnalysis({ gender: 'male', answers: ANSWERS }),
+    diagnosis: { gender: 'male', hairGoal: 'stop-loss', photos: [], answers: ANSWERS },
+    analysis: deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers: ANSWERS }),
     reportId: 'rep-123',
     account: { email: null },
     draftDurationDays: null,

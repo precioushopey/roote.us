@@ -81,7 +81,7 @@ export function AccountBaseline() {
           label: t(METRIC_LABEL[m.key] ?? METRIC_LABEL_FALLBACK),
           value: t(m.status as 'severity.mild'),
         }))}
-        footnote={session.diagnosis.concern ? undefined : t('analysis.results.consentLine')}
+        footnote={session.diagnosis.hairGoal ? undefined : t('analysis.results.consentLine')}
       />
       <Prose size="sm">{t('app.baseline.metricsNote')}</Prose>
     </div>

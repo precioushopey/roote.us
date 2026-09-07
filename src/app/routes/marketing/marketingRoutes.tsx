@@ -12,7 +12,6 @@ import { Terms } from './Terms';
 import { TermsOfSale } from './TermsOfSale';
 import { Privacy } from './Privacy';
 import { SolutionPage, SolutionsIndex } from './SolutionPage';
-import { Results } from './Results';
 import { SystemPage } from './SystemPage';
 import { BagPage } from '@/app/routes/bag/BagPage';
 import { BagCheckout } from '@/app/routes/bag/BagCheckout';
@@ -42,7 +41,6 @@ export const marketingRoutes: RouteObject = {
     { path: 'solutions/gray-hair', element: <SolutionPage slug="gray-hair" /> },
 
     { path: 'science', element: <Science /> },
-    { path: 'results', element: <Results /> },
     { path: 'system', element: <SystemPage /> },
 
     { path: 'about', element: <About /> },

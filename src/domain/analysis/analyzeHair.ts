@@ -1,9 +1,10 @@
-import type { Answers, Gender, HairAnalysis } from './types';
+import type { Answers, Gender, HairAnalysis, HairGoal } from './types';
 import { deriveAnalysis } from './deriveAnalysis';
 import { isHairhealthConfigured, requestHairhealthAnalysis } from './hairhealthAdapter';
 
 export type AnalyzeHairInput = {
   gender: Gender;
+  hairGoal: HairGoal;
   answers: Answers;
   photos?: { angleKey: string; blob: Blob }[];
 };
@@ -20,12 +21,13 @@ export type AnalyzeHairResult = {
  * the deterministic local model built from the questionnaire.
  */
 export async function analyzeHair(input: AnalyzeHairInput): Promise<AnalyzeHairResult> {
-  const local = () => deriveAnalysis({ gender: input.gender, answers: input.answers });
+  const local = () => deriveAnalysis({ gender: input.gender, hairGoal: input.hairGoal, answers: input.answers });
 
   if (isHairhealthConfigured() && input.photos && input.photos.length > 0) {
     try {
       const analysis = await requestHairhealthAnalysis({
         gender: input.gender,
+        hairGoal: input.hairGoal,
         answers: input.answers,
         photos: input.photos,
       });

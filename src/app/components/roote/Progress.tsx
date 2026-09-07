@@ -13,24 +13,36 @@ export type TimelineMilestone = {
   media?: ReactNode;
 };
 
-export function Timeline({ milestones, className }: { milestones: TimelineMilestone[]; className?: string }) {
+export function Timeline({
+  milestones,
+  className,
+  onDark = false,
+}: {
+  milestones: TimelineMilestone[];
+  className?: string;
+  onDark?: boolean;
+}) {
   return (
     <ol className={cn('relative flex flex-col gap-6 ps-6', className)}>
-      <span aria-hidden className="absolute inset-y-2 start-[7px] w-px bg-border" />
+      <span aria-hidden className={cn('absolute inset-y-2 start-[7px] w-px', onDark ? 'bg-cream-100/20' : 'bg-border')} />
       {milestones.map((m) => (
         <li key={m.id} className="relative">
           <span
             aria-hidden
             className={cn(
               'absolute -start-6 top-1 h-3.5 w-3.5 rounded-full border-2',
-              m.state === 'done' && 'border-deep-800 bg-deep-800',
-              m.state === 'current' && 'border-deep-800 bg-cream-50',
-              m.state === 'upcoming' && 'border-border bg-cream-50',
+              m.state === 'done' && (onDark ? 'border-gold-500 bg-gold-500' : 'border-deep-800 bg-deep-800'),
+              m.state === 'current' && (onDark ? 'border-gold-500 bg-transparent' : 'border-deep-800 bg-cream-50'),
+              m.state === 'upcoming' && (onDark ? 'border-cream-100/30 bg-transparent' : 'border-border bg-cream-50'),
             )}
           />
-          <p className="u-caps font-body text-2xs font-semibold text-muted-foreground">{m.dayLabel}</p>
-          <p className="mt-0.5 font-body font-medium text-foreground">{m.title}</p>
-          {m.caption ? <p className="font-body text-sm text-muted-foreground">{m.caption}</p> : null}
+          <p className={cn('u-caps font-body text-2xs font-semibold', onDark ? 'text-cream-100/70' : 'text-muted-foreground')}>
+            {m.dayLabel}
+          </p>
+          <p className={cn('mt-0.5 font-body font-medium', onDark ? 'text-cream-100' : 'text-foreground')}>{m.title}</p>
+          {m.caption ? (
+            <p className={cn('font-body text-sm', onDark ? 'text-cream-100/70' : 'text-muted-foreground')}>{m.caption}</p>
+          ) : null}
           {m.media ? <div className="mt-2">{m.media}</div> : null}
         </li>
       ))}

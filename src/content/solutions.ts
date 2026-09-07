@@ -53,7 +53,7 @@ export const SOLUTIONS: Solution[] = [
       'אלה דרכים להמחיש את ההערכה, לא מרשם. עוצמת הטיפול וההתאמה נקבעות לפי קריטריוני המלצה מאושרים.',
     ),
     severityLevels: [
-      { id: 'higher', title: L('Higher remaining density', 'צפיפות שנותרה גבוהה'), description: L('Most of the density is still present; changes are early or localized.', 'רוב הצפיפות עדיין קיימת; השינויים מוקדמים או מקומיים.') },
+      { id: 'higher', title: L('Higher remaining density', 'צפיפות שנותרה גבוהה'), description: L('Minimal loss so far, early or localized only.', 'אובדן מועט בלבד, מוקדם או מקומי.') },
       { id: 'moderate', title: L('Moderate density loss', 'אובדן צפיפות בינוני'), description: L('A visible reduction across one or more areas.', 'ירידה נראית לעין באזור אחד או יותר.') },
       { id: 'advanced', title: L('Advanced density loss', 'אובדן צפיפות מתקדם'), description: L('Density is reduced across most of the scalp.', 'הצפיפות מופחתת ברוב הקרקפת.') },
     ],
@@ -98,7 +98,7 @@ export const SOLUTIONS: Solution[] = [
       { id: 'root', alt: 'Macro photograph of a gray hair at the root against the scalp', label: 'Gray root macro', ratio: '4 / 3' },
       { id: 'support', alt: 'The Gray Support supplement bottle', label: 'Gray Support supplement', ratio: '1' },
       { id: 'serum', alt: 'The Gray Serum bottle', label: 'Gray Serum', ratio: '1' },
-      { id: 'system', alt: 'Gray Support and Gray Serum shown together as a bundle', label: 'The ROOTÉ Gray system bundle', ratio: '16 / 10' },
+      { id: 'system', alt: 'Gray Support and Gray Serum shown together as a bundle', label: 'The Gray system bundle', ratio: '16 / 10' },
     ],
   },
 ];

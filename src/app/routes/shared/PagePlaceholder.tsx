@@ -1,4 +1,4 @@
-import { Section, DisplayTitle, Prose, Eyebrow, Button, StrandMark } from '@/app/components/roote';
+import { Section, DisplayTitle, Prose, Eyebrow, Button } from '@/app/components/roote';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { PATHS } from '@/app/paths';
 
@@ -23,7 +23,6 @@ export function PagePlaceholder({
   return (
     <Section tone="cream" width="readable">
       <div className="flex flex-col items-center gap-5 py-10 text-center">
-        <StrandMark size={40} className="text-accent" />
         {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
         <DisplayTitle as="h1" step="lg" align="center">
           {title}

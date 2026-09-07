@@ -1,0 +1,122 @@
+ROOTÉ — IMAGE GENERATION PROMPT SHEET
+======================================
+Purpose: every "IMAGE PLACEHOLDER" box you see in the dev build is a
+<MediaPlaceholder> component. This sheet has one ready-to-paste prompt per
+placeholder still needed. Section 0 is a shared style guide — keep its
+wording in every prompt (copy it in full, don't paraphrase) so new images
+stay consistent with the ones already generated and wired into the project
+(see the "ALREADY GENERATED" list at the bottom).
+
+HOW TO USE THIS SHEET
+----------------------
+1. For each prompt below, if your tool supports an image reference /
+   image-prompt input, attach one of the already-generated PNGs from
+   src/assets/images/ alongside the text prompt (e.g. "Level 6.png" for any
+   packaging shot, "about-team.png" for editorial/lifestyle shots) — this
+   locks the visual style, since these are continuing an existing set, not
+   starting a new one.
+2. Save each new file straight into src/assets/images/ using the exact
+   filename given under "Save as" — that's a flat folder, no subfolders.
+3. Append the Section 0 "Negative prompt" line to every single generation.
+4. Once a file is saved, tell Claude — it will wire the <img> into the page
+   and remove that entry from this sheet.
+
+
+================================================================================
+0. MASTER STYLE GUIDE — keep this block identical across every prompt
+================================================================================
+
+BRAND
+- Name: ROOTÉ. Tagline: "Personalized Hair Growth System".
+- Wordmark: serif logotype "ROOTÉ" (a Frank Ruhl Libre–style transitional
+  serif, small caps feel, an accent over the É), set in gold foil (#C6A15A)
+  on dark-emerald packaging, or deep emerald (#0A2A1C) on cream packaging.
+  The tagline "Personalized Hair Growth System" sits directly beneath it in
+  a smaller, lighter serif/sans.
+- Logo motif ("the three-strand mark"): three curling strands of hair rising
+  from a single low horizontal ground-line / follicle base, each strand
+  trailing a scatter of small round beads/droplets, rendered as fine gold
+  linework. This sits above the wordmark on every box and bottle. Do not
+  change the strand count (always exactly three) or add extra ornamentation.
+
+PALETTE — use only these colors, nothing else
+- Deep emerald (men's / dark surfaces): #0A2A1C, #123726, #1B4B32
+- Warm cream (women's / light surfaces): #FCF9F3, #F6EFE4, #EDE1CF
+- Gold accent (foil text, dividers, icons, dropper collar, cap band): #C6A15A, #A98343
+
+TYPOGRAPHY ON PACKAGING
+- Display serif (Frank Ruhl Libre or a close transitional-serif match) for
+  the wordmark, "LEVEL {n}" / product name, and section dividers (a thin
+  horizontal gold hairline rule under the wordmark and under the level name).
+- A clean geometric sans-serif for small print: the formula list, the
+  "FOR MEN" / "FOR WOMEN" label, bullet claims, and the size line.
+
+EDITORIAL / CLINICAL PHOTOGRAPHY TREATMENT (hair & scalp macro crops,
+lifestyle or flat-lay photography — NOT product/bottle shots)
+- Real, documentary-style macro or portrait photography — not an
+  illustration, not a 3-D render, not a graphic composite.
+- Soft, diffused, daylight-balanced studio lighting. Shallow depth of field.
+- Neutral, soft-focus background in warm cream or off-white — never the
+  gold/emerald packaging palette applied to skin or hair (that palette stays
+  in wardrobe, props, and background dressing only, if used at all).
+- True-to-life skin and hair tones.
+- Clinical but warm — never a staged, glamorous "after" shot; never a
+  posed clinical set with visible medical equipment/branding.
+- Hair/scalp "clinical crop" shots must NEVER show a face — crop tightly to
+  hair, scalp, or hairline only, anonymized. (Lifestyle/editorial shots of
+  people, like the About page images, are the exception — faces are fine
+  there.)
+
+HARD CONTENT RULES — do not generate any of the following, ever
+- No visible faces in any hair/scalp clinical-crop image.
+- No on-image text claiming a specific efficacy %, "clinically proven",
+  "FDA-approved", regrowth guarantee, or before/after comparison claim.
+- No competitor logos, no invented award seals or press-mention badges.
+- No star ratings, review counts, or customer-testimonial text baked into
+  the image.
+- No pricing or "% off" text baked into the image.
+
+NEGATIVE PROMPT — append to literally every generation
+"no visible face, no extra text beyond what's specified, no watermark, no
+additional logos, no lens flare, no distorted or garbled text, no distorted
+hands, no additional bottles beyond what's specified, no star ratings, no
+price tags, no percentage-off badges"
+
+
+================================================================================
+CHECKLIST — still needed
+================================================================================
+(none right now — every placeholder has a generated image wired in)
+
+
+================================================================================
+ALREADY GENERATED — wired into the project, in src/assets/images/
+================================================================================
+about-story.png                                — About "Why we started" story image
+step-1-quiz.png                                — How it works step 1 (assessment quiz)
+step-2-scan.png                                — How it works step 2 (AI scalp-photo analysis)
+step-3-formula.png                             — How it works step 3 (custom formula)
+step-4-progress.png                            — How it works step 4 (ongoing adjustments)
+Level 6.png, Level 10.png, Level 15.png       — Density 6/10/15 packaging
+Gray Support.png                               — Gray Support packaging
+Regrowth Shampoo.png                           — Regrowth Shampoo packaging
+Gray Serum.png                                 — Gray Serum packaging
+hero-system.png                                — Home hero
+concern-thinning.png                           — Home "concern" card
+concern-gray.png                               — Home "concern" card
+concern-both.png                               — Home "concern" card
+system-men.png                                 — Home "Personalized system" (men); Products "Complete System — Men" bundle
+system-women.png                               — Home "Personalized system" (women); Products "Complete System — Women" bundle
+scan-baseline.png                              — Home progress before/after (before)
+scan-final.png                                 — Home progress before/after (after)
+gray-bundle-men.png                            — Home Gray System spotlight (men); Products "Gray Support Bundle — Men"
+gray-bundle-women.png                          — Home Gray System spotlight (women); Products "Gray Support Bundle — Women"
+regrowth-bundle-men.png                        — Products "Hair Growth Bundle — Men" (Level 15 + Regrowth Shampoo)
+regrowth-bundle-women.png                      — Products "Hair Growth Bundle — Women" (Level 15 + Regrowth Shampoo)
+catalog-hero.png                               — Products page hero
+about-team.png                                 — About page hero
+science-formulation.png                        — Science page hero
+science-oversight.png                          — Science "Medical oversight"
+how-it-works-hero.png                          — Process page hero
+thinning-hero.png                              — Thinning solution hero + index card
+gray-hair-hero.png                             — Gray-hair solution hero + index card

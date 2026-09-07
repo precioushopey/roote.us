@@ -19,6 +19,7 @@ const SLOTS: Record<string, SlotDef[]> = {
     { timeOfDay: 'morning', dose: 'app.today.dose.applyScalp' },
     { timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' },
   ],
+  'density-serum': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],
   'density-6': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],
   'density-10': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],
   'density-15': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],

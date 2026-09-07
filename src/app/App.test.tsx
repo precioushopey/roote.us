@@ -23,12 +23,12 @@ describe('App shell', () => {
 
   it('reaches /en-us/program and can sign up to advance to the plan step', async () => {
     const { deriveAnalysis } = await import('@/domain/analysis/deriveAnalysis');
-    const answers = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
-    const analysis = deriveAnalysis({ gender: 'male', answers });
+    const answers = { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'yes', q13_progression: 'gradual' } as const;
+    const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
     localStorage.setItem(
       'roote.session',
       JSON.stringify({
-        diagnosis: { gender: 'male', photos: [], answers },
+        diagnosis: { gender: 'male', hairGoal: 'stop-loss', photos: [], answers },
         analysis,
         reportId: 'rep-app-1',
         account: { email: null },

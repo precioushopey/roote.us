@@ -7,7 +7,7 @@
 export const ANALYTICS_EVENTS = [
   // marketing → funnel entry
   'hero_analysis_clicked',
-  'concern_selected',
+  'hair_goal_selected',
   // assessment
   'analysis_started',
   'gender_selected',

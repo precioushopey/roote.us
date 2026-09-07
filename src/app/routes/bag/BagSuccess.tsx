@@ -1,8 +1,6 @@
 import { Link, Navigate, useLocation } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
-import { Section } from '@/app/components/marketing/Section';
-import { SectionHeading } from '@/app/components/marketing/SectionHeading';
-import { Prose } from '@/app/components/marketing/Prose';
+import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
 
 type SuccessState = { orderId?: string } | null;
 
@@ -15,11 +13,11 @@ export function BagSuccess() {
   if (!orderId) return <Navigate to={withLocale('/products')} replace />;
 
   return (
-    <Section className="pt-28 md:pt-32">
-      <SectionHeading as="h1" clamp="clamp(1.75rem, 7vw, 5rem)">
+    <Section tone="cream" className="pt-28 md:pt-32">
+      <DisplayTitle as="h1" step="xl">
         {t('bag.success.title')}
-      </SectionHeading>
-      <Prose size="l" className="mt-4 max-w-xl">{t('bag.success.body')}</Prose>
+      </DisplayTitle>
+      <Prose size="lg" className="mt-4 max-w-xl">{t('bag.success.body')}</Prose>
 
       <div className="mt-8 rounded-xl border border-border bg-background p-6">
         <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{t('bag.success.orderId')}</p>
@@ -34,12 +32,8 @@ export function BagSuccess() {
       </ul>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Link to={withLocale('/products')} className="rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground">
-          {t('bag.success.continue')}
-        </Link>
-        <Link to={withLocale('/')} className="rounded-full border border-border px-6 py-3 text-sm text-foreground">
-          {t('bag.success.home')}
-        </Link>
+        <Button to={withLocale('/products')}>{t('bag.success.continue')}</Button>
+        <Button to={withLocale('/')} variant="secondary">{t('bag.success.home')}</Button>
       </div>
     </Section>
   );

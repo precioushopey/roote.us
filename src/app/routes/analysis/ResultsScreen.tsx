@@ -28,7 +28,7 @@ export function ResultsScreen() {
 
   const gray = session.grayProfile;
   const analysis = session.analysis;
-  const isGrayOnly = session.diagnosis.concern === 'gray';
+  const isGrayOnly = session.diagnosis.hairGoal === 'slow-graying';
 
   const rows = isGrayOnly && gray
     ? [

@@ -10,19 +10,22 @@ import { recommend } from '@/domain/recommendation/recommend';
 import { deriveGrayProfile, type GrayAnswers } from '@/domain/analysis/grayProfile';
 import type { SessionState } from '@/store/sessionStore';
 
-const answers = { q1_area: 'entire-scalp', q2_onset: 'gt-5y', q3_prior: 'no-success', q4_family: 'yes', q5_goal: 'both' } as const;
-const diagnosis: Pick<SessionState['diagnosis'], 'gender' | 'concern' | 'photos' | 'answers'> = {
+const answers = { q1_area: 'entire-scalp', q2_onset: 'gt-3y', q3_prior: 'no-success', q4_family: 'yes', q13_progression: 'gradual' } as const;
+const diagnosis: Pick<SessionState['diagnosis'], 'gender' | 'hairGoal' | 'photos' | 'answers'> = {
   gender: 'male',
-  concern: 'thinning',
+  hairGoal: 'stop-loss',
   photos: [{ id: 'p1', angleKey: 'front', thumb: 'data:image/jpeg;base64,AAA', blobId: 'b1' }],
   answers,
 };
-const analysis = deriveAnalysis({ gender: 'male', answers });
+const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
 const rec = recommend({
-  concern: 'thinning',
+  hairGoal: 'stop-loss',
   gender: 'male',
+  scale: analysis.scale,
+  stage: analysis.stage,
   severityBand: analysis.severityBand,
   planEmphasis: analysis.planEmphasis,
+  progression: answers.q13_progression,
   recommendedDurationDays: analysis.recommendedDurationDays,
 });
 
@@ -42,7 +45,7 @@ function renderView(locale: 'en' | 'he' = 'en', gray = false) {
           grayProfile={
             gray
               ? deriveGrayProfile({
-                  answers: { g1_onset: '1-5y', g2_area: 'crown', g3_pace: 'steady', g4_color: 'no', g5_goal: 'both' } as GrayAnswers,
+                  answers: { g1_onset: '1-5y', g2_area: 'crown', g3_pace: 'steady', g4_color: 'no' } as GrayAnswers,
                 })
               : null
           }
@@ -81,9 +84,11 @@ describe('ReportView', () => {
     expect(screen.getAllByText(/\[PENDING:/).length).toBeGreaterThan(0);
   });
 
-  it('states the medical-review requirement for a Density plan', () => {
+  it('states no treatment review is required for the currently-active Stop Hair Loss product', () => {
+    // Every currently production-active goal (Thicker/Fuller, Slow Graying, Stop
+    // Loss) is non-Rx; only Hair Growth is Rx-strength, and it's gated inactive.
     renderView();
-    expect(screen.getByText(/prescription-strength component/i)).toBeInTheDocument();
+    expect(screen.getByText(/does not require a treatment review/i)).toBeInTheDocument();
   });
 
   it('adds a gray profile section only when a gray profile is supplied', () => {

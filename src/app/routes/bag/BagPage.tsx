@@ -3,11 +3,8 @@ import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider'
 import { useCart } from '@/store/cart';
 import { findProduct } from '@/content/catalog';
 import { pickLocalized } from '@/content/localized';
-import { Section } from '@/app/components/marketing/Section';
-import { SectionHeading } from '@/app/components/marketing/SectionHeading';
-import { Prose } from '@/app/components/marketing/Prose';
+import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
 import { PendingChip } from '@/app/components/brand/PendingChip';
-import { StrandMark } from '@/app/components/roote';
 
 export function BagPage() {
   const t = useT();
@@ -20,26 +17,22 @@ export function BagPage() {
     .filter((x): x is { line: typeof x.line; product: NonNullable<typeof x.product> } => !!x.product);
 
   return (
-    <Section className="pt-28 md:pt-32">
-      <SectionHeading as="h1" clamp="clamp(1.75rem, 7vw, 5rem)">
+    <Section tone="cream" className="pt-28 md:pt-32">
+      <DisplayTitle as="h1" step="xl">
         {t('bag.title')}
-      </SectionHeading>
+      </DisplayTitle>
 
       {lines.length === 0 ? (
         <div className="mt-10 flex flex-col items-start gap-4">
-          <Prose size="l">{t('cart.empty')}</Prose>
-          <Link to={withLocale('/products')} className="rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground">
-            {t('cart.browse')}
-          </Link>
+          <Prose size="lg">{t('cart.empty')}</Prose>
+          <Button to={withLocale('/products')}>{t('cart.browse')}</Button>
         </div>
       ) : (
         <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1.6fr_1fr]">
           <ul className="flex flex-col divide-y divide-border">
             {lines.map(({ line, product }) => (
               <li key={line.sku} className="flex gap-4 py-6">
-                <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg bg-cream-100">
-                  <StrandMark size={30} className="text-accent" />
-                </div>
+                <div className="h-24 w-24 shrink-0 rounded-lg bg-cream-100" />
                 <div className="flex flex-1 flex-col gap-2">
                   <p className="font-display text-lg font-medium">{product.name}</p>
                   <p className="text-sm text-muted-foreground">{pickLocalized(product.subtitle, cl)}</p>
@@ -91,12 +84,9 @@ export function BagPage() {
               <span>{t('bag.total')}</span>
               <PendingChip label="bag total" />
             </div>
-            <Link
-              to={withLocale('/bag/checkout')}
-              className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3.5 text-sm tracking-wide text-primary-foreground"
-            >
+            <Button to={withLocale('/bag/checkout')} block className="mt-5">
               {t('bag.checkout')}
-            </Link>
+            </Button>
             <Link to={withLocale('/products')} className="mt-3 block text-center text-xs text-muted-foreground underline">
               {t('bag.continue')}
             </Link>

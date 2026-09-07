@@ -5,7 +5,7 @@ export const en = {
   'common.start': 'Start',
   'common.progressLabel': 'Progress',
   'brand.tagline': 'Personalized Hair Growth System',
-  'meta.title': 'ROOTÉ — Personalized Hair Growth System',
+  'meta.title': 'Personalized Hair Growth System',
   'locale.toggle.toHe': 'עברית',
   'locale.toggle.toEn': 'English',
 
@@ -69,26 +69,6 @@ export const en = {
   'diagnosis.photos.needAll': '{have} of {total} photos added. Add all four angles to continue.',
 
   'q.counter': 'Question {index} of {total}',
-  'q.area.prompt': 'Where are you experiencing hair loss?',
-  'q.area.hairline': 'Hairline',
-  'q.area.crown': 'Crown',
-  'q.area.entire': 'Entire scalp',
-  'q.onset.prompt': 'When did you first notice hair loss?',
-  'q.onset.lt1': 'Less than 1 year',
-  'q.onset.1to5': '1–5 years',
-  'q.onset.gt5': 'More than 5 years',
-  'q.prior.prompt': 'Have you previously used hair-loss treatments?',
-  'q.prior.never': 'Never',
-  'q.prior.nosuccess': 'Yes, without success',
-  'q.prior.partial': 'Yes, with partial improvement',
-  'q.family.prompt': 'Does hair loss run in your family?',
-  'q.family.yes': 'Yes',
-  'q.family.no': 'No',
-  'q.family.notsure': 'Not sure',
-  'q.goal.prompt': 'What is your main goal?',
-  'q.goal.stop': 'Stop hair loss',
-  'q.goal.regrow': 'Regrow lost hair',
-  'q.goal.both': 'Both',
 
   'analysis.title': 'Analyzing your hair',
 
@@ -121,10 +101,19 @@ export const en = {
   'report.gray.routineBody': 'The Gray routine pairs a daily supplement with a topical serum, used consistently. It is not a claim to slow or reverse graying.',
   'report.safety.reviewRequired': 'This plan includes a prescription-strength component. Eligibility and directions are confirmed at a treatment review before anything ships.',
   'report.safety.notRequired': 'This plan is made up of support products and does not require a treatment review.',
-  'report.safety.strongerTier': 'Your assessment profile is one where a higher Density tier may be discussed at review. It is never selected automatically.',
+  'report.plan.review.requiresReview': 'Your goal needs a little more information before we can recommend the right program. Your analysis results below are ready — we’ll follow up on the product recommendation.',
+  'report.plan.review.professional': 'Based on what you told us, we recommend a professional evaluation before starting any treatment. We’ve held the automatic product recommendation — your analysis results below are still ready to view.',
+  'report.plan.review.pendingApproval': 'Your Hair Growth treatment plan has been matched to your pattern and is finalizing clinical review before we can show it here. Your analysis results below are ready in the meantime.',
+  'recommend.rationale.thickerFuller': 'Matched to your goal of thicker, fuller-looking hair.',
+  'recommend.rationale.slowGraying': 'Matched to your goal of slowing further graying.',
+  'recommend.rationale.stopLoss': 'Matched to your goal of stopping ongoing hair loss.',
+  'recommend.rationale.hairGrowthReview': 'Hair Growth treatment strength needs a known pattern set, so we held the automatic recommendation.',
+  'recommend.rationale.hairGrowthPending': 'Your Hair Growth treatment strength has been matched to your pattern and is pending clinical approval before activation.',
+  'recommend.rationale.other': 'Your goal needs a little more information before we can recommend a program.',
+  'recommend.rationale.fallback': 'We could not determine a recommendation from your answers.',
   'report.hairLossType.typeLabel': '{band} pattern',
   'report.cta.label': 'Start My Program',
-  'report.pdf.title': 'ROOTÉ Personalized Hair Report',
+  'report.pdf.title': 'Your Personalized Hair Report',
   'report.pdf.download': 'Download PDF',
   'report.duration.label': '{days} Days',
   'report.duration.rationale': '{severity} pattern, {emphasis} goal',
@@ -146,7 +135,7 @@ export const en = {
   'report.notFound.title': 'Report not found',
   'report.notFound.body': 'This report link has expired, or the diagnosis needs to be restarted.',
   'report.notFound.cta': 'Start a new diagnosis',
-  'report.emailPreview.subject': 'Your ROOTÉ Hair Analysis Report',
+  'report.emailPreview.subject': 'Your Hair Analysis Report',
   'report.emailPreview.intro': 'Your personalized hair report is ready.',
   'report.emailPreview.openOnSite': 'View my full report',
   'report.ribbon': 'Dermatologist-informed',
@@ -174,6 +163,34 @@ export const en = {
   'report.treatment.cleanser.addresses': 'Scalp condition|Treatment retention',
   'report.treatment.cleanser.mechanism1':
     'A gentle daily cleanser formulated not to strip the topical treatment or dry out the scalp.',
+  'report.treatment.density-serum.form': 'Daily leave-in serum',
+  'report.treatment.density-serum.addresses': 'Visible fullness|Strand thickness',
+  'report.treatment.density-serum.mechanism1':
+    'A leave-in serum formulated to support visible density and fuller-looking hair, applied to the areas your scan flagged.',
+  'report.treatment.density-6.form': 'Daily topical treatment',
+  'report.treatment.density-6.addresses': 'Hair growth|Affected zones',
+  'report.treatment.density-6.mechanism1':
+    'A pattern-based hair growth treatment, applied at the strength your assessment calls for.',
+  'report.treatment.density-10.form': 'Daily topical treatment',
+  'report.treatment.density-10.addresses': 'Hair growth|Affected zones',
+  'report.treatment.density-10.mechanism1':
+    'A pattern-based hair growth treatment, applied at the strength your assessment calls for.',
+  'report.treatment.density-15.form': 'Daily topical treatment',
+  'report.treatment.density-15.addresses': 'Hair growth|Affected zones',
+  'report.treatment.density-15.mechanism1':
+    'A pattern-based hair growth treatment, applied at the strength your assessment calls for.',
+  'report.treatment.regrowth-shampoo.form': 'Wash-day shampoo',
+  'report.treatment.regrowth-shampoo.addresses': 'Ongoing shedding|Scalp condition',
+  'report.treatment.regrowth-shampoo.mechanism1':
+    'A shampoo formulated to help reduce ongoing shedding as part of your regular wash routine.',
+  'report.treatment.gray-support.form': 'Daily capsule',
+  'report.treatment.gray-support.addresses': 'Pigmentation support',
+  'report.treatment.gray-support.mechanism1':
+    'A daily capsule formulated to support hair pigmentation and slow further graying.',
+  'report.treatment.gray-serum.form': 'Daily leave-in serum',
+  'report.treatment.gray-serum.addresses': 'Pigmentation support',
+  'report.treatment.gray-serum.mechanism1':
+    'A companion topical serum for the areas where graying is most visible.',
   'report.actives.title': 'The actives in your formula',
   'report.actives.note': 'Every active traces to a published mechanism of action.',
   'report.expect.title': 'What to expect',
@@ -233,7 +250,7 @@ export const en = {
   // --- Program funnel (WP7) ---
   'program.plan.reviewRequired': 'Includes a treatment review',
   'program.plan.priceNote': 'Prices, savings, and the exact charge are confirmed at checkout.',
-  'program.checkout.programTitle': 'Your ROOTÉ program',
+  'program.checkout.programTitle': 'Your program',
   'program.checkout.recommendedFor': 'Recommended for',
   'program.checkout.includes': 'Includes',
   'program.checkout.packaging': 'Packaging',
@@ -273,11 +290,10 @@ export const en = {
   'start.success.point3': 'Track your progress with photos as you go.',
   'start.success.cta': 'Go to my program',
 
-  'marketing.nav.howItWorks': 'How It Works',
+  'marketing.nav.howItWorks': 'Process',
   'marketing.nav.solutions': 'Solutions',
   'marketing.nav.science': 'Science',
   'marketing.nav.products': 'Products',
-  'marketing.nav.results': 'Results',
   'marketing.nav.system': 'Our System',
   'marketing.nav.about': 'About',
   'marketing.nav.more': 'More',
@@ -302,14 +318,12 @@ export const en = {
   'marketing.footer.company': 'Company',
   'marketing.footer.legal': 'Legal',
   'marketing.footer.account': 'Your account',
-  'marketing.footer.startTitle': 'Start today',
-  'marketing.footer.startBody': 'One free analysis. A program built for your hair.',
   'marketing.footer.terms': 'Terms',
   'marketing.footer.privacy': 'Privacy',
   'marketing.footer.rights': 'All rights reserved.',
 
   'marketing.popup.eyebrow': 'Not sure where to start?',
-  'marketing.popup.title': 'Find your ROOTÉ program',
+  'marketing.popup.title': 'Find your program',
   'marketing.popup.body': 'Free guided hair analysis. A few minutes, no commitment.',
   'marketing.popup.cta': 'Start free analysis',
   'marketing.popup.continueCta': 'Continue your analysis',
@@ -328,9 +342,9 @@ export const en = {
 
   'marketing.home.hero.eyebrow': 'Personalized Hair Growth System',
   'marketing.home.hero.support':
-    'Start with a guided hair analysis. Understand your condition, receive a personalized program, and track your journey from your first scan to your final result.',
+    'Start with a guided hair analysis, receive a personalized program, and track your progress to the final result.',
   'marketing.home.hero.mediaAlt':
-    'The ROOTÉ product system in dark-teal and cream packaging under clinical studio light',
+    'The product system in dark-teal and cream packaging under clinical studio light',
 
   'marketing.home.strip.item1': 'AI-assisted hair analysis',
   'marketing.home.strip.item2': 'Personalized program',
@@ -343,11 +357,11 @@ export const en = {
   'marketing.home.concern.grayMediaAlt': 'Macro of naturally gray strands',
   'marketing.home.concern.bothMediaAlt': 'Close crop of the crown showing thinning and gray together',
 
-  'marketing.home.how.eyebrow': 'How ROOTÉ works',
+  'marketing.home.how.eyebrow': 'How it works',
   'marketing.home.how.heading': 'A treatment journey built around your hair.',
   'marketing.home.how.mediaAlt': 'Five-step sequence: Analyze, Understand, Personalize, Treat, Track',
 
-  'marketing.home.analysis.eyebrow': 'ROOTÉ hair analysis',
+  'marketing.home.analysis.eyebrow': 'Hair analysis',
   'marketing.home.analysis.heading': 'Your starting point is your data.',
   'marketing.home.analysis.body':
     'Upload guided hair photos and complete a short assessment while your scan is processed.',
@@ -362,11 +376,11 @@ export const en = {
   'marketing.home.system.eyebrow': 'Personalized system',
   'marketing.home.system.heading': 'Not one product for everyone.',
   'marketing.home.system.body':
-    'Your ROOTÉ program can combine targeted treatments and support products according to your assessment and eligibility.',
+    'Your program can combine targeted treatments and support products according to your assessment and eligibility.',
   'marketing.home.system.men': "Men's system",
   'marketing.home.system.women': "Women's system",
-  'marketing.home.system.menMediaAlt': "Men's ROOTÉ system in dark-teal packaging",
-  'marketing.home.system.womenMediaAlt': "Women's ROOTÉ system in cream packaging",
+  'marketing.home.system.menMediaAlt': "Men's system in dark-teal packaging",
+  'marketing.home.system.womenMediaAlt': "Women's system in cream packaging",
 
   'marketing.home.density.eyebrow': 'Density system',
   'marketing.home.density.heading': 'Different stages require different decisions.',
@@ -378,8 +392,9 @@ export const en = {
   'marketing.home.gray.heading': 'Gray hair deserves its own system.',
   'marketing.home.gray.body':
     'A coordinated inside and topical routine for customers focused on visible gray-hair management.',
-  'marketing.home.gray.bundle': 'The ROOTÉ Gray System',
   'marketing.home.gray.mediaAlt': 'Gray Support supplement and Gray Serum shown together',
+  'marketing.home.gray.forMen': 'For men',
+  'marketing.home.gray.forWomen': 'For women',
 
   'marketing.home.science.eyebrow': 'Science',
   'marketing.home.science.heading': 'Know what is in your program.',
@@ -389,7 +404,7 @@ export const en = {
   'marketing.home.science.groupGray': 'Gray',
   'marketing.home.science.groupShampoo': 'Shampoo',
 
-  'marketing.home.progress.eyebrow': 'ROOTÉ Progress',
+  'marketing.home.progress.eyebrow': 'Your progress',
   'marketing.home.progress.heading': 'Your program does not end at checkout.',
   'marketing.home.progress.body':
     'Track the journey from your baseline scan to your final scan. Use consistent guided photos to compare over time.',
@@ -400,7 +415,8 @@ export const en = {
   'marketing.home.progress.finalScan': 'Final scan',
   'marketing.home.progress.before': 'Before',
   'marketing.home.progress.after': 'After',
-  'marketing.home.progress.compareCaption': 'Illustrative comparison view, not ROOTÉ product results.',
+  'marketing.home.progress.compareCaption':
+    'This is how tracking works. Results vary by day and depend on your individual case and use of the product.',
   'marketing.home.progress.beforeMediaAlt': 'Baseline scan placeholder',
   'marketing.home.progress.afterMediaAlt': 'Final scan placeholder',
 
@@ -409,19 +425,14 @@ export const en = {
   'marketing.home.durations.note': 'Prices, savings, and included products are confirmed at checkout.',
   'marketing.home.durations.includesDensity': 'Density treatment where eligible',
   'marketing.home.durations.includesShampoo': 'Regrowth Shampoo',
-  'marketing.home.durations.includesTracking': 'Progress tracking in My ROOTÉ',
-
-  'marketing.home.results.eyebrow': 'Results',
-  'marketing.home.results.heading': 'Progress should be documented, not promised.',
-  'marketing.home.results.empty': 'Verified ROOTÉ results coming soon.',
-  'marketing.home.results.mediaAlt': 'Reserved for a verified ROOTÉ before-and-after result',
+  'marketing.home.durations.includesHeading': 'Every program includes',
+  'marketing.home.durations.includesTracking': 'Progress tracking in your account',
 
   'marketing.home.faq.eyebrow': 'FAQ',
-  'marketing.home.faq.heading': 'Questions, answered plainly.',
 
   'marketing.home.finalCta.heading': 'Start with your hair.',
   'marketing.home.finalCta.body': 'Your first step is a free guided hair analysis.',
-  'marketing.home.finalCta.mediaAlt': 'The ROOTÉ three-strand symbol emerging from a follicle',
+  'marketing.home.finalCta.mediaAlt': 'The three-strand symbol emerging from a follicle',
 
   // Legacy — still consumed by pre-redesign pages (About).
   'marketing.home.how.getStarted': 'Get started',
@@ -445,25 +456,38 @@ export const en = {
   'marketing.sci.eyebrow': 'Science',
   'marketing.sci.heading': 'Know what is in your program.',
   'marketing.sci.body': 'Each program is built from ingredients with a described purpose. Formula and claim information is subject to regulatory review.',
+  'marketing.sci.heroMediaAlt': 'The formulation, active ingredients under studio light',
+  'marketing.sci.ingredientsHeading': 'Active ingredients',
   'marketing.sci.groupDensity': 'Density',
   'marketing.sci.groupGray': 'Gray',
   'marketing.sci.groupShampoo': 'Shampoo',
   'marketing.sci.readMore': 'Read more',
-  'marketing.sci.note': 'Formula and claim information is subject to regulatory review. ROOTÉ does not present an ingredient study or a competitor study as its own.',
+  'marketing.sci.note': 'Formula and claim information is subject to regulatory review. We do not present an ingredient study or a competitor study as our own.',
+  'marketing.sci.mechanism.eyebrow': "How it's built",
+  'marketing.sci.mechanism.heading': 'How your formula works.',
+  'marketing.sci.mechanism.dhtTitle': 'DHT-pathway support',
+  'marketing.sci.mechanism.dhtBody': 'Ingredients studied for their role in the DHT pathway linked to pattern hair loss.',
+  'marketing.sci.mechanism.regrowthTitle': 'Regrowth stimulation',
+  'marketing.sci.mechanism.regrowthBody': 'Topical actives associated with stimulating the hair growth cycle and scalp circulation.',
+  'marketing.sci.mechanism.pigmentTitle': 'Pigment & nutrition support',
+  'marketing.sci.mechanism.pigmentBody': 'Nutrients and actives referenced in the anti-gray category for supporting natural pigment processes.',
+  'marketing.sci.mechanism.conditioningTitle': 'Scalp & hair conditioning',
+  'marketing.sci.mechanism.conditioningBody': 'Botanicals and conditioning agents that support day-to-day scalp and hair care.',
+  'marketing.sci.status.approved': 'Approved',
+  'marketing.sci.status.working': 'Working reference',
+  'marketing.sci.status.requiresReview': 'Pending review',
+  'marketing.sci.evidenceLabels.eyebrow': 'Our standards',
+  'marketing.sci.evidenceLabels.heading': 'How we label the evidence.',
+  'marketing.sci.evidenceLabels.body': 'Every ingredient claim on this site carries one of three labels, so you can see how confident we are before you read it.',
+  'marketing.sci.evidenceLabels.approvedBody': 'Reviewed and cleared for use exactly as written.',
+  'marketing.sci.evidenceLabels.workingBody': "Our own accurate description — not an efficacy claim, and not yet formally signed off.",
+  'marketing.sci.evidenceLabels.requiresReviewBody': 'Needs substantiation or legal review before we make any claim — shown as [PENDING] until then.',
+  'marketing.sci.oversightEyebrow': 'Oversight',
   'marketing.sci.oversightHeading': 'Medical oversight',
   'marketing.sci.oversightBody': 'Formulation and claims are reviewed against dermatology literature before anything ships. Programs with a prescription-strength component include a treatment-review step.',
+  'marketing.sci.oversightMediaAlt': 'A clinician reviewing a treatment plan',
   'marketing.sci.referencesNote': 'References are published alongside a claim once it is approved.',
   'marketing.sci.ctaHeading': 'See what your analysis suggests.',
-
-  // --- Results (WP4) ---
-  'marketing.results.heading': 'Progress should be documented, not promised.',
-  'marketing.results.body': 'We publish verified ROOTÉ results as they become available. Until then, these slots stay empty.',
-  'marketing.results.slot1': 'Verified before / after',
-  'marketing.results.slot2': 'Customer progress series',
-  'marketing.results.slot3': 'Clinical evidence',
-  'marketing.results.empty': 'Verified ROOTÉ results coming soon.',
-  'marketing.results.disclosure': 'ROOTÉ does not use stock testimonials, borrowed reviews, or invented percentages.',
-  'marketing.results.ctaHeading': 'Start your own record.',
 
   // --- Our system (WP4) ---
   'marketing.sys.heading': 'Analyze. Treat. Track.',
@@ -479,19 +503,28 @@ export const en = {
   'marketing.sys.pillar.trackBody': 'Consistent guided photos and scans let you compare from baseline to final result.',
 
   // --- Shop (WP4) ---
-  'marketing.shop.heading': 'Refills and add-ons',
-  'marketing.shop.body': 'Support products you can buy on their own. Programs with a prescription-strength component still require the assessment and a treatment review.',
+  'marketing.shop.heading': 'A hair system, shaped entirely around you.',
+  'marketing.shop.body': 'Take the free hair analysis and get a treatment kit built around your scalp, your goals, and your results.',
+  'marketing.shop.heroMediaAlt': 'The full product lineup',
+  'marketing.shop.catalogHeading': 'Every product, in one place.',
   'marketing.shop.filterLabel': 'Filter products',
   'marketing.shop.filterAll': 'All',
   'marketing.shop.filterThinning': 'Thinning',
   'marketing.shop.filterGray': 'Gray',
   'marketing.shop.reviewNote': 'Added to your program after a treatment review.',
+  'marketing.shop.bundles.eyebrow': 'Bundle & save',
+  'marketing.shop.bundles.heading': 'Stock up once, skip the reorder.',
+  'marketing.shop.bundles.body': 'Complete System, Gray Support, and Hair Growth — each bundle in men’s and women’s packaging. Density-based bundles are added to your program after a treatment review.',
+  'marketing.shop.bundles.cta': 'Add to bag',
+  'marketing.shop.bundles.note': 'Prices are confirmed at checkout. Density stays behind the free assessment and a treatment review.',
+  'marketing.shop.finalCta.heading': 'Not sure what you need?',
+  'marketing.shop.finalCta.body': 'Start with a free hair analysis and get a program built around your results.',
 
   // --- Product detail (WP4) ---
   'marketing.pdp.priceLabel': 'Price',
   'marketing.pdp.pricePending': 'Pending',
   'marketing.pdp.reviewBadge': 'Requires treatment review',
-  'marketing.pdp.fitTitle': 'How it fits your ROOTÉ program',
+  'marketing.pdp.fitTitle': 'How it fits your program',
   'marketing.pdp.fitBody': 'Your program lists exactly which products to use and when. This page explains the product on its own.',
   'marketing.pdp.format': '{size} per unit',
   'marketing.pdp.activesTitle': 'Key actives',
@@ -500,25 +533,41 @@ export const en = {
   'marketing.pdp.safety': 'Safety & eligibility',
   'marketing.pdp.formula': 'Formula reference',
   'marketing.pdp.formulaNote': 'Full formula detail is available to your report after eligibility review. Subject to regulatory review.',
-  'marketing.pdp.evidenceNote': 'ROOTÉ publishes trial data for this formulation as it becomes available, and never presents an ingredient study or a competitor study as its own.',
+  'marketing.pdp.evidenceNote': 'We publish trial data for this formulation as it becomes available, and never present an ingredient study or a competitor study as our own.',
   'marketing.pdp.relatedTitle': 'Complementary products',
   'marketing.pdp.ctaHeading': 'Start with your analysis.',
 
-  'marketing.howItWorks.hero.title': 'How ROOTÉ works',
+  'marketing.howItWorks.hero.title': 'How it works',
   'marketing.howItWorks.hero.body': 'From your first photo to your ongoing plan, here is exactly what happens at each step.',
+  'marketing.howItWorks.heroMediaAlt': 'The process, from assessment quiz to treatment kit',
   'marketing.howItWorks.step1.title': 'Assessment quiz',
   'marketing.howItWorks.step1.body': 'A short questionnaire on your goals, history, and hair loss pattern, about 3 minutes.',
+  'marketing.howItWorks.step1MediaAlt': 'A phone showing the assessment quiz',
   'marketing.howItWorks.step2.title': 'AI scalp-photo analysis',
   'marketing.howItWorks.step2.body': 'Four guided photos are mapped against a recognized hair-loss scale.',
+  'marketing.howItWorks.step2MediaAlt': 'Four guided angles of a scalp photo scan',
   'marketing.howItWorks.step3.title': 'Your custom formula',
   'marketing.howItWorks.step3.body': 'Your inputs determine which active ingredients and duration your plan uses.',
+  'marketing.howItWorks.step3MediaAlt': 'A formula reference card with active ingredients',
   'marketing.howItWorks.step4.title': 'Ongoing adjustments',
   'marketing.howItWorks.step4.body': 'Check-ins and photo comparisons let your plan be revisited as you progress.',
+  'marketing.howItWorks.step4MediaAlt': 'A check-in photo comparison over time',
   'marketing.howItWorks.kit.title': "What's in your kit",
+  'marketing.howItWorks.philosophy.eyebrow': 'Our approach',
+  'marketing.howItWorks.philosophy.heading': 'Why we built it this way.',
   'marketing.howItWorks.timeline.title': 'What to expect',
   'marketing.howItWorks.timeline.m1': '1 month',
+  'marketing.howItWorks.timeline.m1Action': 'Start here',
+  'marketing.howItWorks.timeline.m1Bullet1': 'Your daily routine begins.',
+  'marketing.howItWorks.timeline.m1Bullet2': 'Your first check-in photo is logged.',
   'marketing.howItWorks.timeline.m3': '3 months',
+  'marketing.howItWorks.timeline.m3Action': 'Stay consistent',
+  'marketing.howItWorks.timeline.m3Bullet1': 'A progress scan compares against your baseline.',
+  'marketing.howItWorks.timeline.m3Bullet2': 'Your plan can be adjusted at review.',
   'marketing.howItWorks.timeline.m6': '6 months',
+  'marketing.howItWorks.timeline.m6Action': 'Check in',
+  'marketing.howItWorks.timeline.m6Bullet1': 'Your final scan closes out this supply period.',
+  'marketing.howItWorks.timeline.m6Bullet2': 'Renew, adjust, or run a new analysis.',
   'marketing.howItWorks.timeline.shedding':
     'Some users notice a temporary increase in shedding in the first weeks as follicles reset their growth cycle. This is expected and typically settles.',
   'marketing.howItWorks.support.title': 'Support along the way',
@@ -528,7 +577,6 @@ export const en = {
   'marketing.howItWorks.faq.a1': 'Hair growth cycles are slow. Most regimens are evaluated over months, not weeks.',
   'marketing.howItWorks.faq.q2': 'Is the photo analysis private?',
   'marketing.howItWorks.faq.a2': 'Your photos are used only to build your plan and track your own progress.',
-  'marketing.howItWorks.faqCta': 'See all FAQs',
   'marketing.howItWorks.cta.title': 'Ready to see your own plan?',
 
   'marketing.science.hero.title': 'The science behind your plan',
@@ -540,7 +588,7 @@ export const en = {
   'marketing.science.ingredients.evidence.regrowth-stimulant': 'Widely studied for stimulating regrowth in pattern hair loss.',
   'marketing.science.ingredients.evidence.dht-blocker': 'Reduces DHT production at the follicle.',
   'marketing.science.ingredients.evidence.dht-support': 'Supports scalp condition alongside DHT-focused actives.',
-  'marketing.science.ingredients.evidence.proprietary-support': "ROOTÉ's proprietary supporting complex.",
+  'marketing.science.ingredients.evidence.proprietary-support': "Our proprietary supporting complex.",
   'marketing.science.evidence.title': 'Clinical evidence',
   'marketing.science.evidence.body': 'We report real trial data as it becomes available for this formulation, never an invented figure.',
   'marketing.science.evidence.beforeLabel': 'Before',
@@ -560,8 +608,7 @@ export const en = {
     'Your severity band and affected zones, mapped from your photos against a recognized hair-loss scale, determine which actives and duration your plan uses. Nothing is generic.',
   'marketing.products.guarantee.title': 'Our guarantee',
   'marketing.products.reviews.title': 'See what people are saying',
-  'marketing.products.reviews.cta': 'Read results & reviews',
-  'marketing.products.catalog.title': 'The full ROOTÉ range',
+  'marketing.products.catalog.title': 'The full product range',
   'marketing.products.range.viewAll': 'View all',
   'marketing.products.catalog.body':
     'Everything we make, beyond the personalized formula. Not sure where to start? Begin with a free analysis and we will tell you what your scalp actually needs.',
@@ -624,22 +671,61 @@ export const en = {
   'bag.success.continue': 'Continue shopping',
   'bag.success.home': 'Back to home',
 
-  'marketing.results.hero.title': 'Results & reviews',
-  'marketing.results.hero.body': 'Real photo comparisons and feedback from people on a ROOTÉ plan.',
-  'marketing.results.rating.title': 'Average rating',
-  'marketing.results.gallery.title': 'Before & after',
-  'marketing.results.testimonials.title': 'What people are saying',
-  'marketing.results.timeline.title': 'Results by timeline',
-  'marketing.results.press.title': 'In the press',
-  'marketing.results.cta.title': 'Start your own plan',
-
-  'marketing.about.hero.title': 'About ROOTÉ',
+  'marketing.about.hero.title': 'About us',
   'marketing.about.mission.body':
-    'ROOTÉ exists to replace guesswork with a plan built from your own scalp: evidence-led, personalized, and transparent about what we do and do not yet know.',
+    'We exist to replace guesswork with a plan built from your own scalp: evidence-led, personalized, and transparent about what we do and do not yet know.',
+  'marketing.about.heroMediaAlt': 'The ROOTÉ follicle mark',
+  'marketing.about.problem.eyebrow': 'The gap we saw',
+  'marketing.about.problem.heading': 'Hair loss care is stuck in one mode.',
+  'marketing.about.problem.p1Title': 'One routine for everyone',
+  'marketing.about.problem.p1Body': 'Most products are sold the same way to everyone, regardless of pattern, severity, or cause.',
+  'marketing.about.problem.p2Title': 'A doctor visit just to start',
+  'marketing.about.problem.p2Body': 'Prescription-strength options usually mean booking an appointment before you can even begin.',
+  'marketing.about.problem.p3Title': 'No way to see what changed',
+  'marketing.about.problem.p3Body': 'Without consistent photos or scans, it is hard to tell if anything is actually working.',
+  'marketing.about.solution.eyebrow': 'How we solve it',
+  'marketing.about.solution.heading': 'One scan. One plan built around it.',
+  'marketing.about.solution.body': 'You complete a short assessment and upload four guided photos. We map what is visible against a recognized hair-loss scale, then put together a plan — the products, the routine, and whether a treatment review applies to you.',
+  'marketing.about.solution.mediaAlt': 'The four guided scan angles: hairline, crown, top, and side',
+  'marketing.about.benefits.eyebrow': 'What you get',
+  'marketing.about.benefits.heading': 'Built around your scan, not a shelf of the same bottle.',
+  'marketing.about.benefits.b1Title': 'Matched to your scan',
+  'marketing.about.benefits.b1Body': 'Your recommendation comes from what your photos actually show, not a generic routine.',
+  'marketing.about.benefits.b2Title': 'A review gate, not a guess',
+  'marketing.about.benefits.b2Body': 'Anything prescription-strength is confirmed by a treatment review before it ships.',
+  'marketing.about.benefits.b3Title': 'A way to see change',
+  'marketing.about.benefits.b3Body': 'Consistent check-in photos and scans let you compare your baseline to where you are now.',
+  'marketing.about.comparison.eyebrow': 'The difference',
+  'marketing.about.comparison.heading': 'The usual approach, and ours.',
+  'marketing.about.comparison.colGeneric': 'Typical approach',
+  'marketing.about.comparison.colOurs': 'Our approach',
+  'marketing.about.comparison.row1Label': 'Personalization',
+  'marketing.about.comparison.row1Generic': 'Same product for everyone',
+  'marketing.about.comparison.row1Ours': 'Matched to your own scan',
+  'marketing.about.comparison.row2Label': 'Prescription-strength access',
+  'marketing.about.comparison.row2Generic': "A separate doctor's visit",
+  'marketing.about.comparison.row2Ours': 'Built into your assessment, with a treatment review',
+  'marketing.about.comparison.row3Label': 'Progress tracking',
+  'marketing.about.comparison.row3Generic': 'No structured way to check',
+  'marketing.about.comparison.row3Ours': 'Scheduled check-in photos and scans',
+  'marketing.about.comparison.row4Label': 'Ingredient claims',
+  'marketing.about.comparison.row4Generic': 'Rarely labeled',
+  'marketing.about.comparison.row4Ours': 'Every claim tagged approved, working, or pending review',
   'marketing.about.story.title': 'Why we started',
   'marketing.about.story.body':
-    'Pattern hair loss is common, well studied, and still usually treated with a one-size-fits-all routine. We built ROOTÉ to start every plan from an actual scan instead.',
+    'Pattern hair loss is common, well studied, and still usually treated with a one-size-fits-all routine. We started this so every plan begins from an actual scan instead.',
+  'marketing.about.story.mediaAlt': 'A close-up scalp scan, the starting point for every plan',
+  'marketing.about.promise.eyebrow': 'Our promise',
+  'marketing.about.promise.heading': 'What we commit to, in writing.',
+  'marketing.about.promise.p1Title': 'Nothing invented',
+  'marketing.about.promise.p1Body': "If we don't have real information yet, it stays marked pending — never guessed at.",
+  'marketing.about.promise.p2Title': 'A review before anything prescription-strength',
+  'marketing.about.promise.p2Body': 'Every prescription-strength component is confirmed by a treatment review before it ships.',
+  'marketing.about.promise.p3Title': 'Every claim labeled',
+  'marketing.about.promise.p3Body': 'Ingredient claims are tagged approved, working, or pending review, so you know exactly how confident we are.',
+  'marketing.about.team.eyebrow': 'Who is behind this',
   'marketing.about.team.title': 'Team & advisors',
+  'marketing.about.team.body': "We're finalizing the bios and credentials for the people and advisors on this team.",
   'marketing.about.values.title': 'How we work',
   'marketing.about.values.v1.title': 'Evidence-led',
   'marketing.about.values.v1.body': 'Every active ingredient traces to a published mechanism.',
@@ -649,7 +735,7 @@ export const en = {
   'marketing.about.values.v3.body': "What we don't yet know, we mark as pending, never invented.",
   'marketing.about.press.title': 'Press',
   'marketing.about.careers.title': 'Careers',
-  'marketing.about.careers.body': "We're building the team behind ROOTÉ.",
+  'marketing.about.careers.body': "We're building the team behind this.",
   'marketing.about.cta.title': 'Get your own plan',
 
   'marketing.faq.hero.title': 'Frequently asked questions',
@@ -658,7 +744,6 @@ export const en = {
   'marketing.faq.category.plan': 'The plan',
   'marketing.faq.category.ingredients': 'Ingredients & safety',
   'marketing.faq.category.billing': 'Billing & shipping',
-  'marketing.faq.category.results': 'Results',
   'marketing.faq.gettingStarted.q1': 'What do I need to get started?',
   'marketing.faq.gettingStarted.a1': 'Just a few minutes and a phone camera. The quiz and scan take about 3 minutes.',
   'marketing.faq.gettingStarted.q2': 'Is the scan accurate?',
@@ -708,37 +793,37 @@ export const en = {
   // Privacy Policy — section bodies (headings are marketing.legal.privacy.s1–s6 above).
   // Describes the preview build's actual (client-only) data handling; production specifics are TODOs.
   'marketing.legal.privacy.intro':
-    'This policy explains what information ROOTÉ handles and how. ROOTÉ is a brand operated by 91 ENTERPRISE LLC (see the “Company details” section on our Terms pages), which is the data controller.',
+    'This policy explains what information we handle and how. This service is operated by 91 ENTERPRISE LLC (see the “Company details” section on our Terms pages), which is the data controller.',
   'marketing.legal.privacy.s1.body':
-    'When you use ROOTÉ you may provide: the photos you upload for your hair assessment; your answers to the assessment questionnaire; your email address; and, if you create an account or place an order, your name, contact and delivery details and a masked reference to your payment card (only the last four digits and expiry date — never the full card number or security code). From this, ROOTÉ generates an assessment result and, after a purchase, a program record.',
+    'When you use this service you may provide: the photos you upload for your hair assessment; your answers to the assessment questionnaire; your email address; and, if you create an account or place an order, your name, contact and delivery details and a masked reference to your payment card (only the last four digits and expiry date — never the full card number or security code). From this, we generate an assessment result and, after a purchase, a program record.',
   'marketing.legal.privacy.s2.body':
     'Your photos and questionnaire answers are used only to produce your hair assessment and personalized plan, and to show you before/after comparisons over time. In this preview build the assessment runs entirely in your browser. If a clinical analysis provider (hairhealth.ai) is enabled for your session, your photos and answers are sent to that provider solely to generate the assessment; otherwise they never leave your device. We do not use your photos for advertising, model training, or any purpose you have not agreed to.',
   'marketing.legal.privacy.s3.body':
-    'In this preview build, everything you enter — photos, answers, email, account, cart, and program — is stored only in your own browser (its local storage and database) and remains on your device until you clear it. Nothing is kept on a ROOTÉ server. Once real accounts and orders are introduced, the retention period for each type of data will be published here.', // TODO: confirm retention periods with client once a backend exists
+    'In this preview build, everything you enter — photos, answers, email, account, cart, and program — is stored only in your own browser (its local storage and database) and remains on your device until you clear it. Nothing is kept on our servers. Once real accounts and orders are introduced, the retention period for each type of data will be published here.', // TODO: confirm retention periods with client once a backend exists
   'marketing.legal.privacy.s4.body':
     'You can view and delete the information held in your browser at any time by clearing this site’s data in your browser settings; doing so removes your assessment, account, and program from this device. Where applicable law gives you rights to access, correct, export, or erase personal data, or to object to or restrict its processing, you can exercise them by contacting us using the details below.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
   'marketing.legal.privacy.s5.body':
     'We do not sell your personal data. In this preview build the only third parties involved are Google Fonts, which serves the site’s typefaces, and — if enabled for your session — the hairhealth.ai analysis provider, which receives your photos and answers to generate your assessment. Production services for payment, shipping, email, and hosting will be listed here as they are added.', // TODO: confirm the production sub-processor list with client
   'marketing.legal.privacy.s6.body':
-    'For any privacy question or request, contact ROOTÉ at support@roote.us or +1 (310) 651-7283.',
+    'For any privacy question or request, contact us at support@roote.us or +1 (310) 651-7283.',
 
   // Terms of Service — section bodies (headings are marketing.legal.terms.s1–s6 above)
   'marketing.legal.terms.s1.body':
-    'By accessing the ROOTÉ website or creating an account, you agree to these Terms of Service, our Terms of Sale, and our Privacy Policy. If you do not agree, do not use the service. We may update these terms; material changes take effect when posted with a new "last updated" date.',
+    'By accessing this website or creating an account, you agree to these Terms of Service, our Terms of Sale, and our Privacy Policy. If you do not agree, do not use the service. We may update these terms; material changes take effect when posted with a new "last updated" date.',
   'marketing.legal.terms.s2.body':
-    'ROOTÉ provides an AI-assisted, photo-based hair assessment and a personalized product regimen. You must be at least 18 years old and provide accurate information. You may not misuse the service, upload photos of anyone other than yourself, attempt to reverse-engineer the analysis, or resell any part of the service.',
+    'We provide an AI-assisted, photo-based hair assessment and a personalized product regimen. You must be at least 18 years old and provide accurate information. You may not misuse the service, upload photos of anyone other than yourself, attempt to reverse-engineer the analysis, or resell any part of the service.',
   'marketing.legal.terms.s3.body':
     'The analysis and report are a preliminary visual estimate, not a medical diagnosis, and do not replace advice from a licensed physician. Consult a doctor before starting, changing, or stopping any treatment — especially if you are pregnant or nursing, take medication, or have a scalp or skin condition. Stop use and seek medical advice if you experience an adverse reaction.',
   'marketing.legal.terms.s4.body':
     'Purchases of products and program subscriptions are governed by our Terms of Sale, which cover pricing, payment, shipping, returns, refunds, and subscription auto-renewal. Please review the Terms of Sale before you buy.',
   'marketing.legal.terms.s5.body':
-    'To the fullest extent permitted by law, ROOTÉ and 91 ENTERPRISE LLC are not liable for indirect, incidental, or consequential damages arising from use of the service. Nothing in these terms excludes liability that cannot be excluded under applicable law. Our total liability for any claim is limited to the amount you paid us in the twelve months before the claim.',
+    'To the fullest extent permitted by law, 91 ENTERPRISE LLC is not liable for indirect, incidental, or consequential damages arising from use of the service. Nothing in these terms excludes liability that cannot be excluded under applicable law. Our total liability for any claim is limited to the amount you paid us in the twelve months before the claim.',
   'marketing.legal.terms.s6.body':
     'These terms are governed by the laws of the State of California, USA, without regard to its conflict-of-laws rules. Disputes that cannot be resolved informally will be brought before the state or federal courts located in Los Angeles County, California.',
 
   // Company / legal-entity details — shared by /terms and /terms-of-sale (facts in roote.config company)
   'marketing.legal.company.title': 'Company details',
-  'marketing.legal.company.intro': 'ROOTÉ is a brand operated by the company below.',
+  'marketing.legal.company.intro': 'This service is operated by the company below.',
   'marketing.legal.company.legalNameLabel': 'Registered company name',
   'marketing.legal.company.entityTypeLabel': 'Entity type',
   'marketing.legal.company.entityType': 'Limited Liability Company (LLC), taxed as an S Corporation',
@@ -757,7 +842,7 @@ export const en = {
   // Terms of Sale (/terms-of-sale)
   'marketing.legalSale.title': 'Terms of Sale',
   'marketing.legalSale.intro':
-    "These Terms of Sale govern your purchase of ROOTÉ products and program subscriptions from 91 ENTERPRISE LLC (“ROOTÉ”, “we”, “us”). They apply together with our Terms of Service and Privacy Policy. Please read them before placing an order.",
+    "These Terms of Sale govern your purchase of products and program subscriptions from 91 ENTERPRISE LLC (“we”, “us”). They apply together with our Terms of Service and Privacy Policy. Please read them before placing an order.",
   'marketing.legalSale.s1.title': 'Orders and order acceptance',
   'marketing.legalSale.s1.body':
     'Placing an order is an offer to buy. Your order is accepted, and a contract is formed, only when we send an order-confirmation email or dispatch the products, whichever is first. We may decline or cancel an order — for example if an item is out of stock, a price is shown in error, or we cannot verify payment or delivery details — and will refund any amount already charged.',
@@ -778,13 +863,13 @@ export const en = {
     'Approved refunds are issued to the original payment method within 14 days of us receiving the returned item or agreeing to the refund. A refund covers the product price and, where the return is due to our error or a defect, the original standard shipping cost. Taxes and duties are refunded where required by law.',
   'marketing.legalSale.s7.title': 'Subscription programs and auto-renewal',
   'marketing.legalSale.s7.body':
-    'A ROOTÉ program is a subscription. When you enroll, you authorize recurring charges for the program term you select. Unless you cancel before the renewal date, the subscription renews automatically for a further term of the same length at the then-current price, and we send a reminder before each renewal where required by law. Each renewal ships a new supply.',
+    'Your program is a subscription. When you enroll, you authorize recurring charges for the program term you select. Unless you cancel before the renewal date, the subscription renews automatically for a further term of the same length at the then-current price, and we send a reminder before each renewal where required by law. Each renewal ships a new supply.',
   'marketing.legalSale.s8.title': 'Changing, pausing, or cancelling a subscription',
   'marketing.legalSale.s8.body':
     'You can cancel or change your subscription at any time from your account or by contacting support, effective from the next renewal. Cancelling stops future charges and shipments; it does not refund a term already started or products already shipped, except where required by law or under the returns section above. We may change subscription pricing with at least 30 days’ notice before it applies to you.',
   'marketing.legalSale.s9.title': 'Product use and medical disclaimer',
   'marketing.legalSale.s9.body':
-    'Products are cosmetic or over-the-counter items to be used as directed on the label and in your plan. The ROOTÉ analysis is a preliminary visual estimate, not a medical diagnosis. Consult a physician before starting if you are pregnant or nursing, under 18, taking medication, or have a scalp or skin condition, and stop use if you have an adverse reaction. Results vary and are not guaranteed.',
+    'Products are cosmetic or over-the-counter items to be used as directed on the label and in your plan. The analysis is a preliminary visual estimate, not a medical diagnosis. Consult a physician before starting if you are pregnant or nursing, under 18, taking medication, or have a scalp or skin condition, and stop use if you have an adverse reaction. Results vary and are not guaranteed.',
   'marketing.legalSale.s10.title': 'Product warranty and complaints',
   'marketing.legalSale.s10.body':
     'We warrant that products are free from defects in materials and workmanship at delivery and match their description. If a product is faulty or not as described, email support@roote.us within a reasonable time and we will replace or refund it. This does not affect your statutory rights.',
@@ -804,7 +889,7 @@ export const en = {
   'marketing.support.contact.hours': 'Sunday–Thursday, 9:00–17:00', // TODO: confirm hours + timezone with client
 
   // Footer — entity line + Terms of Sale link
-  'marketing.footer.brandOf': 'ROOTÉ is a brand of',
+  'marketing.footer.brandOf': 'A brand of',
   'marketing.footer.termsOfSale': 'Terms of Sale',
 
   'analysis.finalizing': 'Finalizing your analysis…',
@@ -817,11 +902,11 @@ export const en = {
   'analysis.intro.cta': 'Begin analysis',
   'analysis.intro.consentHint': 'You choose what to share. Nothing is uploaded without your consent.',
 
-  'analysis.gender.title': 'How should we personalize your ROOTÉ experience?',
+  'analysis.gender.title': 'How should we personalize your experience?',
   'analysis.gender.note': 'This sets how packaging is shown. Treatment recommendations come from your assessment and the eligibility rules, not from this choice.',
-  'analysis.gender.packagingTitle': 'Choose your preferred ROOTÉ packaging',
+  'analysis.gender.packagingTitle': 'Choose your preferred packaging',
 
-  'analysis.concern.title': 'What would you like to understand?',
+  'analysis.goal.title': 'What is your main goal?',
 
   'analysis.photos.title': 'Guided photos',
   'analysis.photos.body': 'Four photos from your phone: front, top, crown, and hairline. Each step shows an outline and an example.',
@@ -831,7 +916,7 @@ export const en = {
   'analysis.consent.label': 'I agree to share these photos for my hair analysis.',
   'analysis.consent.summary': 'Used only to build your hair profile and your report.',
   'analysis.consent.details':
-    'Photos are needed so ROOTÉ can organize what is visible in your hair. On this preview build they stay on your device. In production they would be processed to produce your analysis, kept for the period stated in the Privacy Policy, and deleted on request. ROOTÉ does not claim HIPAA or medical-grade handling.',
+    'Photos are needed so we can organize what is visible in your hair. On this preview build they stay on your device. In production they would be processed to produce your analysis, kept for the period stated in the Privacy Policy, and deleted on request. We do not claim HIPAA or medical-grade handling.',
 
   'analysis.scanning.title': 'Analyzing your hair…',
   'analysis.scanning.body': 'Your scan is being organized while you answer a few questions.',
@@ -850,9 +935,9 @@ export const en = {
   'analysis.results.emailLabel': 'Where should we send your results?',
   'analysis.results.emailCta': 'Send my personalized results',
   'analysis.results.consentLine': 'Your results open on the next screen. Program and account emails are operational; marketing is separate and optional.',
-  'analysis.results.consentResults': 'Email me my ROOTÉ results and program updates',
+  'analysis.results.consentResults': 'Email me my results and program updates',
   'analysis.results.consentResultsRequired': 'We need this to send you your results.',
-  'analysis.results.consentMarketing': 'I’d also like ROOTÉ news and offers (optional)',
+  'analysis.results.consentMarketing': 'I’d also like news and offers (optional)',
 
   'gray.area.temples': 'Temples',
   'gray.area.crown': 'Crown and top',
@@ -919,7 +1004,7 @@ export const en = {
   'app.nav.support': 'Support',
   'app.nav.beforeAfter': 'Before & After',
 
-  'app.overview.eyebrow': 'My ROOTÉ',
+  'app.overview.eyebrow': 'My program',
   'app.overview.dayOf': 'Day {day} of {total}',
   'app.overview.completedRemaining': '{done} days completed · {left} days remaining',
   'app.overview.continueToday': "Continue today's plan",

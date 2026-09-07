@@ -6,11 +6,12 @@ import type { HairMetric } from './types';
 
 const analysis = deriveAnalysis({
   gender: 'male',
-  answers: { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' },
+  hairGoal: 'stop-loss',
+  answers: { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'yes', q13_progression: 'gradual' },
 });
 
 const grayProfile = deriveGrayProfile({
-  answers: { g1_onset: '1-5y', g2_area: 'crown', g3_pace: 'steady', g4_color: 'no', g5_goal: 'both' },
+  answers: { g1_onset: '1-5y', g2_area: 'crown', g3_pace: 'steady', g4_color: 'no' },
 });
 
 describe('qualitativeMetrics (locked decision: no numbers until a real provider)', () => {

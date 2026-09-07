@@ -1,121 +1,219 @@
-import { Link } from 'react-router';
-import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
-import { Section } from '@/app/components/marketing/Section';
-import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
-import { SectionHeading } from '@/app/components/marketing/SectionHeading';
-import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
-import { Prose } from '@/app/components/marketing/Prose';
-import { Eyebrow } from '@/app/components/marketing/Eyebrow';
-import { ArrowLink } from '@/app/components/marketing/ArrowLink';
-import { CtaButton } from '@/app/components/marketing/CtaButton';
-import { CtaBand } from '@/app/components/marketing/CtaBand';
-import { rooteContent } from '@/content/roote.config';
-import stepQuiz from '@/assets/step-quiz.jpg';
-import stepPhotoScan from '@/assets/step-photo-scan.jpg';
-import scanDevice from '@/assets/scan-device.jpg';
-import productBg from '@/assets/product_bg.jpg';
-import productPhoto from '@/assets/product.png';
-
-// A representative showcase set for anonymous visitors (pre-assessment) — not
-// concern-specific. The customer's actual plan (Density vs. Gray vs. both) is
-// resolved by the recommendation engine after the assessment (PO #15).
-const KIT_KEYS = ['density-10', 'regrowth-shampoo', 'gray-serum'] as const;
-const KIT_PHOTOS: Record<string, string> = {
-  'density-10': productBg,
-  'regrowth-shampoo': productPhoto,
-  'gray-serum': scanDevice,
-};
+import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import {
+  Section,
+  DisplayTitle,
+  Prose,
+  Eyebrow,
+  Button,
+  TextLink,
+  ScanCard,
+  Accordion,
+} from '@/app/components/roote';
+import { PATHS } from '@/app/paths';
+import { pickLocalized } from '@/content/localized';
+import { HOME_FAQS } from '@/content/faqs';
+import howItWorksHero from '@/assets/images/how-it-works-hero.png';
+import step1Quiz from '@/assets/images/step-1-quiz.png';
+import step2Scan from '@/assets/images/step-2-scan.png';
+import step3Formula from '@/assets/images/step-3-formula.png';
+import step4Progress from '@/assets/images/step-4-progress.png';
 
 export function HowItWorks() {
   const t = useT();
+  const cl = useContentLocale();
   const withLocale = useLocalizedPath();
   const steps = [
-    { photo: stepQuiz, title: t('marketing.howItWorks.step1.title'), body: t('marketing.howItWorks.step1.body') },
-    { photo: stepPhotoScan, title: t('marketing.howItWorks.step2.title'), body: t('marketing.howItWorks.step2.body') },
-    { photo: scanDevice, title: t('marketing.howItWorks.step3.title'), body: t('marketing.howItWorks.step3.body') },
-    { photo: productBg, title: t('marketing.howItWorks.step4.title'), body: t('marketing.howItWorks.step4.body') },
+    {
+      title: t('marketing.howItWorks.step1.title'),
+      body: t('marketing.howItWorks.step1.body'),
+      mediaAlt: t('marketing.howItWorks.step1MediaAlt'),
+      image: step1Quiz,
+    },
+    {
+      title: t('marketing.howItWorks.step2.title'),
+      body: t('marketing.howItWorks.step2.body'),
+      mediaAlt: t('marketing.howItWorks.step2MediaAlt'),
+      image: step2Scan,
+    },
+    {
+      title: t('marketing.howItWorks.step3.title'),
+      body: t('marketing.howItWorks.step3.body'),
+      mediaAlt: t('marketing.howItWorks.step3MediaAlt'),
+      image: step3Formula,
+    },
+    {
+      title: t('marketing.howItWorks.step4.title'),
+      body: t('marketing.howItWorks.step4.body'),
+      mediaAlt: t('marketing.howItWorks.step4MediaAlt'),
+      image: step4Progress,
+    },
   ];
-  const kit = KIT_KEYS.map((key) => ({ key, ...rooteContent.treatmentRegistry[key] }));
+  const phases = [
+    {
+      n: 1,
+      action: t('marketing.howItWorks.timeline.m1Action'),
+      duration: t('marketing.howItWorks.timeline.m1'),
+      bullets: [t('marketing.howItWorks.timeline.m1Bullet1'), t('marketing.howItWorks.timeline.m1Bullet2')],
+    },
+    {
+      n: 2,
+      action: t('marketing.howItWorks.timeline.m3Action'),
+      duration: t('marketing.howItWorks.timeline.m3'),
+      bullets: [t('marketing.howItWorks.timeline.m3Bullet1'), t('marketing.howItWorks.timeline.m3Bullet2')],
+    },
+    {
+      n: 3,
+      action: t('marketing.howItWorks.timeline.m6Action'),
+      duration: t('marketing.howItWorks.timeline.m6'),
+      bullets: [t('marketing.howItWorks.timeline.m6Bullet1'), t('marketing.howItWorks.timeline.m6Bullet2')],
+    },
+  ];
 
   return (
     <>
-      <Section tone="ink" className="overflow-hidden pt-28 text-center md:pt-32">
-        <div className="relative flex flex-col items-center">
-          <div
-            aria-hidden
-            className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
-          />
-          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.howItWorks.hero.title')} className="mx-auto max-w-3xl uppercase" />
-          <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.howItWorks.hero.body')}</Prose>
-          <div className="mt-8">
-            <CtaButton to={withLocale('/analysis')} size="lg" className="w-full sm:w-auto">{t('marketing.nav.cta')}</CtaButton>
+      <Section tone="teal" width="content" animate={false}>
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div className="flex flex-col items-start gap-5">
+            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+              {t('marketing.nav.howItWorks')}
+            </Eyebrow>
+            <DisplayTitle as="h1" step="lg" onDark>
+              {t('marketing.howItWorks.hero.title')}
+            </DisplayTitle>
+            <Prose onDark size="lg" className="max-w-lg">
+              {t('marketing.howItWorks.hero.body')}
+            </Prose>
+            <Button
+              to={withLocale(PATHS.analysis)}
+              size="lg"
+              caps
+              className="bg-gold-500 text-ink text-sm md:text-base font-bold hover:bg-gold-600"
+            >
+              {t('marketing.nav.cta')}
+            </Button>
           </div>
+          <img
+            src={howItWorksHero}
+            alt={t('marketing.howItWorks.heroMediaAlt')}
+            className="aspect-[4/3] w-full rounded-xl object-cover"
+          />
         </div>
       </Section>
 
-      <Section>
-        <SectionHeading
-          index="01"
-          clamp={DISPLAY_CLAMP}
-          trailing={<Link to={withLocale('/products')}><Eyebrow>{t('marketing.nav.products')}</Eyebrow></Link>}
-        >
-          {t('marketing.nav.howItWorks')}
-        </SectionHeading>
-        <ol className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <Section tone="cream" width="content">
+        <div className="flex items-start justify-between gap-4">
+          <DisplayTitle as="h2" step="lg" className="max-w-2xl">
+            {t('marketing.nav.howItWorks')}
+          </DisplayTitle>
+          <TextLink to={withLocale(PATHS.products)} className="mt-2 shrink-0">
+            {t('marketing.nav.products')}
+          </TextLink>
+        </div>
+        <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <li key={step.title} className="flex flex-col gap-3">
-              <img src={step.photo} alt="" className="img-editorial aspect-square w-full rounded-xl object-cover" />
-              <div className="flex flex-row items-baseline gap-2 sm:flex-col sm:gap-1">
-                <span className="text-xs font-medium tracking-[0.18em] text-accent">0{i + 1}</span>
-                <p className="font-display text-lg font-medium">{step.title}</p>
+              <img
+                src={step.image}
+                alt={step.mediaAlt}
+                className="aspect-square w-full rounded-xl object-cover"
+              />
+              <div className="flex flex-row items-center gap-3 sm:flex-col sm:items-start sm:gap-2">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-500 font-display text-xs text-accent">
+                  {i + 1}
+                </span>
+                <p className="font-display text-lg font-medium text-foreground">{step.title}</p>
               </div>
               <Prose>{step.body}</Prose>
             </li>
           ))}
         </ol>
+
+        <div className="mt-16 grid items-center gap-10 border-t border-border pt-16 lg:grid-cols-2">
+          <div className="flex flex-col items-start gap-4">
+            <Eyebrow>{t('marketing.home.analysis.eyebrow')}</Eyebrow>
+            <DisplayTitle as="h3" step="md" className="mt-1 max-w-lg">
+              {t('marketing.home.analysis.heading')}
+            </DisplayTitle>
+            <Prose size="lg" className="max-w-lg">
+              {t('marketing.home.analysis.body')}
+            </Prose>
+            <Button to={withLocale(PATHS.analysis)} size="lg" className="mt-2">
+              {t('marketing.nav.cta')}
+            </Button>
+          </div>
+          <ScanCard
+            title={t('marketing.home.analysis.cardTitle')}
+            rows={[
+              { label: t('marketing.home.analysis.rowDensity'), value: null, pendingLabel: 'density' },
+              { label: t('marketing.home.analysis.rowPattern'), value: null, pendingLabel: 'pattern' },
+              { label: t('marketing.home.analysis.rowProgression'), value: null, pendingLabel: 'progression' },
+            ]}
+            footnote={t('marketing.home.analysis.disclaimer')}
+          />
+        </div>
       </Section>
 
-      <Section tone="ink">
-        <SectionHeading index="02" onInk align="end" clamp={DISPLAY_CLAMP}>
-          {t('marketing.howItWorks.kit.title')}
-        </SectionHeading>
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {kit.map((item) => (
-            <div
-              key={item.key}
-              className="overflow-hidden rounded-xl border border-ink-foreground/15 bg-ink-foreground/5 text-start"
-            >
-              <img
-                src={KIT_PHOTOS[item.key]}
-                alt=""
-                className="img-editorial aspect-[4/3] w-full object-cover"
-              />
-              <p className="p-6 font-display text-base font-medium text-ink-foreground">{item.name.en}</p>
-            </div>
+      <Section tone="cream" width="content">
+        <DisplayTitle as="h2" step="lg" className="max-w-2xl">
+          {t('marketing.howItWorks.timeline.title')}
+        </DisplayTitle>
+        <ol className="relative mt-12 grid gap-10 sm:grid-cols-3">
+          <span aria-hidden className="absolute left-[10%] right-[10%] top-5 hidden h-px bg-gold-500/40 sm:block" />
+          {phases.map((phase) => (
+            <li key={phase.action} className="relative flex flex-col gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold-500 bg-background font-display text-sm text-accent">
+                {String(phase.n).padStart(2, '0')}
+              </span>
+              <div>
+                <p className="font-display text-lg font-medium text-foreground">{phase.action}</p>
+                <p className="font-body text-xs font-semibold uppercase tracking-wide text-accent">{phase.duration}</p>
+              </div>
+              <ul className="flex flex-col gap-1.5 font-body text-sm text-muted-foreground">
+                {phase.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-2">
+                    <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+            </li>
           ))}
-        </div>
+        </ol>
+        <p className="mt-8 max-w-2xl font-body text-xs text-muted-foreground">
+          {t('marketing.howItWorks.timeline.shedding')}
+        </p>
       </Section>
 
-      <Section>
-        <SectionHeading index="03" clamp={DISPLAY_CLAMP}>
+      <Section tone="cream" width="readable">
+        <Eyebrow>{t('marketing.home.faq.eyebrow')}</Eyebrow>
+        <DisplayTitle as="h2" step="md" className="mt-2">
           {t('marketing.howItWorks.faq.title')}
-        </SectionHeading>
-        <div className="mt-10 flex max-w-2xl flex-col gap-6 text-start">
-          <div className="border-b border-border pb-4">
-            <p className="font-medium">{t('marketing.howItWorks.faq.q1')}</p>
-            <Prose className="mt-1">{t('marketing.howItWorks.faq.a1')}</Prose>
-          </div>
-          <div className="border-b border-border pb-4">
-            <p className="font-medium">{t('marketing.howItWorks.faq.q2')}</p>
-            <Prose className="mt-1">{t('marketing.howItWorks.faq.a2')}</Prose>
-          </div>
-        </div>
-        <div className="mt-8">
-          <ArrowLink to={withLocale('/faq')}>{t('marketing.howItWorks.faqCta')}</ArrowLink>
-        </div>
+        </DisplayTitle>
+        <Accordion
+          className="mt-10"
+          items={HOME_FAQS.map((f) => ({
+            id: f.id,
+            title: pickLocalized(f.q, cl),
+            body: pickLocalized(f.a, cl),
+          }))}
+        />
       </Section>
 
-      <CtaBand headingKey="marketing.howItWorks.cta.title" />
+      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
+        <DisplayTitle as="h2" step="lg" onDark align="center">
+          {t('marketing.howItWorks.cta.title')}
+        </DisplayTitle>
+        <div className="mt-6 flex justify-center">
+          <Button
+            to={withLocale(PATHS.analysis)}
+            size="lg"
+            caps
+            className="bg-gold-500 text-ink text-sm md:text-base font-bold hover:bg-gold-600"
+          >
+            {t('marketing.nav.cta')}
+          </Button>
+        </div>
+      </Section>
     </>
   );
 }

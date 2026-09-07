@@ -1,5 +1,5 @@
 import type {
-  Answers, Gender, HairAnalysis, Level, PlanEmphasis, SeverityBand, ZoneKey,
+  Answers, Gender, HairAnalysis, HairGoal, Level, PlanEmphasis, SeverityBand, ZoneKey,
 } from './types';
 
 export const RECOMMENDED_DURATION_TABLE: Record<string, HairAnalysis['recommendedDurationDays']> = {
@@ -10,8 +10,12 @@ export const RECOMMENDED_DURATION_TABLE: Record<string, HairAnalysis['recommende
 
 const ALL_ZONES: ZoneKey[] = ['frontal-hairline', 'temples', 'mid-scalp', 'crown-vertex'];
 
+/** Q12 buckets collapse to 3 severity bands — the two "under a year" buckets are
+ *  finer-grained context for the report/recommendation layer, not extra severity
+ *  resolution (client confirmed Q12 is context-only re: the 6/10/15 mapping). */
 export function severityFromOnset(onset: Answers['q2_onset']): SeverityBand {
-  return onset === 'lt-1y' ? 'mild' : onset === '1-5y' ? 'moderate' : 'established';
+  if (onset === 'lt-6mo' || onset === '6-12mo') return 'mild';
+  return onset === '1-3y' ? 'moderate' : 'established';
 }
 
 const sevIndex: Record<SeverityBand, number> = { mild: 0, moderate: 1, established: 2 };
@@ -23,20 +27,27 @@ function zonesForArea(area: Answers['q1_area']): ZoneKey[] {
   return [...ALL_ZONES];
 }
 
-function emphasisForGoal(goal: Answers['q5_goal']): PlanEmphasis {
-  return goal === 'stop' ? 'stabilize' : goal === 'regrow' ? 'regrow' : 'stabilize-regrow';
+/** Hair Goal replaces the old q5_goal question (client confirmed Goal already
+ *  distinguishes Stop Hair Loss from Hair Growth, so a separate goal question
+ *  inside the thinning branch would be redundant). */
+function emphasisForGoal(goal: HairGoal): PlanEmphasis {
+  if (goal === 'stop-loss') return 'stabilize';
+  if (goal === 'hair-growth') return 'regrow';
+  return 'stabilize-regrow'; // thicker-fuller, other
 }
 
-export function deriveAnalysis(input: { gender: Gender; answers: Answers }): HairAnalysis {
-  const { gender, answers } = input;
+export function deriveAnalysis(input: { gender: Gender; hairGoal: HairGoal; answers: Answers }): HairAnalysis {
+  const { gender, hairGoal, answers } = input;
   const scale = gender === 'female' ? 'ludwig' : 'norwood'; // male + unspecified → Norwood (PO #24)
   const severityBand = severityFromOnset(answers.q2_onset);
 
+  // Applies to both scales — Ludwig now spans 1–4 so it can carry the F1–F4
+  // pattern codes the client's Hair Growth strength table is keyed on.
   const bump = answers.q1_area === 'entire-scalp' ? 1 : 0;
   const stage =
     scale === 'norwood'
       ? clamp(2 + sevIndex[severityBand] + bump, 2, 6)
-      : clamp(1 + sevIndex[severityBand], 1, 3);
+      : clamp(1 + sevIndex[severityBand] + bump, 1, 4);
 
   const flaggedZoneKeys = zonesForArea(answers.q1_area);
   const zoneSeverity: 'mild' | 'moderate' = severityBand === 'mild' ? 'mild' : 'moderate';
@@ -75,7 +86,7 @@ export function deriveAnalysis(input: { gender: Gender; answers: Answers }): Hai
         : 'note.family-history-negative',
   );
 
-  const planEmphasis = emphasisForGoal(answers.q5_goal);
+  const planEmphasis = emphasisForGoal(hairGoal);
   const recommendedDurationDays = RECOMMENDED_DURATION_TABLE[`${severityBand}:${planEmphasis}`];
   const summaryPlainKey = `summary.${scale}.${severityBand}`;
 

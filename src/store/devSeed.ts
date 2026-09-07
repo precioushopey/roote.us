@@ -16,20 +16,21 @@ export function seedDiagnosisAndReport(): {
 } {
   const answers = {
     q1_area: 'crown',
-    q2_onset: '1-5y',
+    q2_onset: '1-3y',
     q3_prior: 'no-success',
     q4_family: 'yes',
-    q5_goal: 'both',
+    q13_progression: 'gradual',
   } as const;
   const diagnosis: SessionState['diagnosis'] = {
     gender: 'male',
-    concern: 'thinning',
+    hairGoal: 'stop-loss',
     photos: [],
     answers,
     grayAnswers: {},
+    healthHistory: ['none'],
     photoConsent: true,
   };
-  const analysis = deriveAnalysis({ gender: 'male', answers });
+  const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
   return { diagnosis, analysis, reportId: `rep-dev-${Date.now()}` };
 }
 

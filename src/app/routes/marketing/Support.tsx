@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { useT } from '@/i18n/LocaleProvider';
-import { Section } from '@/app/components/marketing/Section';
-import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
-import { SectionHeading } from '@/app/components/marketing/SectionHeading';
-import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
-import { Prose } from '@/app/components/marketing/Prose';
+import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
 import { rooteContent } from '@/content/roote.config';
 
 const FIELD_CLASS =
@@ -44,12 +40,9 @@ function ContactForm() {
         {t('marketing.support.form.messageLabel')}
         <textarea required rows={5} className={FIELD_CLASS} />
       </label>
-      <button
-        type="submit"
-        className="mt-1 inline-flex w-full items-center justify-center rounded-full bg-primary px-8 py-4 text-sm tracking-wide text-primary-foreground sm:w-auto sm:self-start"
-      >
+      <Button type="submit" className="mt-1 w-full sm:w-auto sm:self-start">
         {t('marketing.support.form.submit')}
-      </button>
+      </Button>
       {submitted && (
         <p role="status" className="text-sm text-muted-foreground">{t('marketing.support.form.stubNotice')}</p>
       )}
@@ -62,21 +55,19 @@ export function Support() {
   const { company } = rooteContent;
   return (
     <>
-      <Section tone="ink" className="overflow-hidden pt-28 text-center md:pt-32">
-        <div className="relative flex flex-col items-center">
-          <div
-            aria-hidden
-            className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
-          />
-          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.support.hero.title')} className="mx-auto max-w-3xl uppercase" />
-          <Prose size="l" onInk className="mx-auto mt-4 max-w-xl">{t('marketing.support.hero.body')}</Prose>
-        </div>
+      <Section tone="teal" width="content" animate={false} className="text-center">
+        <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto max-w-2xl">
+          {t('marketing.support.hero.title')}
+        </DisplayTitle>
+        <Prose onDark size="lg" className="mx-auto mt-4 text-center">
+          {t('marketing.support.hero.body')}
+        </Prose>
       </Section>
 
-      <Section>
-        <SectionHeading index="01" clamp={DISPLAY_CLAMP}>
+      <Section tone="cream" width="content">
+        <DisplayTitle as="h2" step="md" className="max-w-2xl">
           {t('marketing.support.contact.title')}
-        </SectionHeading>
+        </DisplayTitle>
         <div className="mt-8 flex max-w-md flex-col items-start gap-4">
           <dl className="flex flex-col gap-3 text-sm">
             <div className="flex flex-col gap-0.5">
@@ -110,13 +101,13 @@ export function Support() {
         </div>
       </Section>
 
-      <Section tone="ink">
+      <Section tone="teal" width="content">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col items-start gap-4">
-            <SectionHeading index="02" onInk clamp={DISPLAY_CLAMP}>
+            <DisplayTitle as="h2" step="md" onDark className="max-w-sm">
               {t('marketing.support.form.title')}
-            </SectionHeading>
-            <Prose size="l" onInk className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
+            </DisplayTitle>
+            <Prose size="lg" onDark className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
           </div>
           <div className="rounded-2xl border border-ink-foreground/15 bg-background p-6 text-foreground sm:p-8">
             <ContactForm />

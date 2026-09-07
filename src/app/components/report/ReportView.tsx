@@ -195,39 +195,54 @@ export function ReportView({
           </Sec>
         )}
 
-        {/* 6 — Personalized treatment plan */}
-        <Sec n={next()} title={model.titles.plan}>
-          <p className="text-foreground">
-            <Badge tone="gold">{model.plan.matchedToScanBadge}</Badge>
-          </p>
-          <div className="mt-4 flex flex-col gap-3">
-            {model.plan.core.map((it, i) => (
-              <div key={i} className="rounded-lg border border-border bg-card p-4">
-                <p className="font-body font-medium text-foreground">
-                  {isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}
-                </p>
-                <p className="mt-1">{it.usage}</p>
-              </div>
-            ))}
-          </div>
-        </Sec>
+        {/* 6 — Personalized treatment plan, or a review notice when the
+             recommendation engine held the product (client-confirmed states:
+             requires-review / professional-review-recommended / confirmed-but-
+             not-yet-production-active). No automatic recommendation is invented
+             in the meantime. */}
+        {!model.plan.isStandard && model.plan.reviewMessage && (
+          <Sec n={next()} title={model.titles.plan}>
+            <p className="text-foreground">{model.plan.reviewMessage}</p>
+          </Sec>
+        )}
 
-        {/* 7 — Products included · 8 — Application frequency */}
-        <Sec n={next()} title={t('report.section.productsIncluded')}>
-          <ul className="flex flex-col gap-2">
-            {model.plan.core.map((it, i) => (
-              <li key={`c${i}`} className="flex flex-wrap items-baseline justify-between gap-2">
-                <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
-                <span className="text-2xs text-muted-foreground">
-                  {model.plan.labels.applicationFrequency}: {it.frequency}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Sec>
+        {model.plan.isStandard && (
+          <>
+            {/* 6 — Personalized treatment plan */}
+            <Sec n={next()} title={model.titles.plan}>
+              <p className="text-foreground">
+                <Badge tone="gold">{model.plan.matchedToScanBadge}</Badge>
+              </p>
+              <div className="mt-4 flex flex-col gap-3">
+                {model.plan.core.map((it, i) => (
+                  <div key={i} className="rounded-lg border border-border bg-card p-4">
+                    <p className="font-body font-medium text-foreground">
+                      {isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}
+                    </p>
+                    <p className="mt-1">{it.usage}</p>
+                  </div>
+                ))}
+              </div>
+            </Sec>
+
+            {/* 7 — Products included · 8 — Application frequency */}
+            <Sec n={next()} title={t('report.section.productsIncluded')}>
+              <ul className="flex flex-col gap-2">
+                {model.plan.core.map((it, i) => (
+                  <li key={`c${i}`} className="flex flex-wrap items-baseline justify-between gap-2">
+                    <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
+                    <span className="text-2xs text-muted-foreground">
+                      {model.plan.labels.applicationFrequency}: {it.frequency}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Sec>
+          </>
+        )}
 
         {/* 9 — Supporting treatment */}
-        {model.plan.supporting.length > 0 && (
+        {model.plan.isStandard && model.plan.supporting.length > 0 && (
           <Sec n={next()} title={model.plan.labels.supporting}>
             <ul className="flex flex-col gap-2">
               {model.plan.supporting.map((it, i) => (
@@ -241,34 +256,39 @@ export function ReportView({
         )}
 
         {/* 10 — Recommended program duration */}
-        <Sec n={next()} title={model.titles.program}>
-          <p className="font-display text-2xl text-foreground">{model.recommendedDuration.label}</p>
-          <p className="mt-1">{model.recommendedDuration.rationaleNote}</p>
-        </Sec>
+        {model.plan.isStandard && (
+          <Sec n={next()} title={model.titles.program}>
+            <p className="font-display text-2xl text-foreground">{model.recommendedDuration.label}</p>
+            <p className="mt-1">{model.recommendedDuration.rationaleNote}</p>
+          </Sec>
+        )}
 
         {/* 11 — Pricing */}
-        <Sec n={next()} title={model.titles.pricing}>
-          <div className="flex flex-col gap-1.5">
-            {model.pricing.compareAll.map((r) => (
-              <div key={r.days} className="flex items-center justify-between">
-                <span>
-                  {r.label}
-                  {r.isRecommended && <span className="ms-2 text-2xs text-deep-800">{model.pricing.recommendedBadge}</span>}
-                </span>
-                {isPending(r.price) ? <PendingChip label={r.price.label} /> : <span className="text-foreground">{r.price.formatted}</span>}
-              </div>
-            ))}
-          </div>
-        </Sec>
+        {model.plan.isStandard && (
+          <Sec n={next()} title={model.titles.pricing}>
+            <div className="flex flex-col gap-1.5">
+              {model.pricing.compareAll.map((r) => (
+                <div key={r.days} className="flex items-center justify-between">
+                  <span>
+                    {r.label}
+                    {r.isRecommended && <span className="ms-2 text-2xs text-deep-800">{model.pricing.recommendedBadge}</span>}
+                  </span>
+                  {isPending(r.price) ? <PendingChip label={r.price.label} /> : <span className="text-foreground">{r.price.formatted}</span>}
+                </div>
+              ))}
+            </div>
+          </Sec>
+        )}
 
         {/* 12 — Safety / eligibility */}
         <Sec n={next()} title={t('report.section.safety')}>
-          {recommendation?.requiresMedicalReview ? (
-            <p className="text-foreground">{t('report.safety.reviewRequired')}</p>
-          ) : (
-            <p>{t('report.safety.notRequired')}</p>
+          {model.plan.isStandard && (
+            recommendation?.requiresMedicalReview ? (
+              <p className="text-foreground">{t('report.safety.reviewRequired')}</p>
+            ) : (
+              <p>{t('report.safety.notRequired')}</p>
+            )
           )}
-          {recommendation?.strongerTierNote && <p className="mt-2">{t('report.safety.strongerTier')}</p>}
           <LegalNotice reviewRequired className="mt-4">
             <span className="block"><Val value={model.disclaimers.medical} /></span>
             <span className="mt-1 block"><Val value={model.disclaimers.notADiagnosis} /></span>

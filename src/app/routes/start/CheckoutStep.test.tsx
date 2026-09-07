@@ -9,12 +9,12 @@ import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { CheckoutStep } from './CheckoutStep';
 
 function seedSession(overrides: Record<string, unknown> = {}) {
-  const answers = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
-  const analysis = deriveAnalysis({ gender: 'male', answers });
+  const answers = { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'yes', q13_progression: 'gradual' } as const;
+  const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
   localStorage.setItem(
     'roote.session',
     JSON.stringify({
-      diagnosis: { gender: 'male', photos: [], answers },
+      diagnosis: { gender: 'male', hairGoal: 'stop-loss', photos: [], answers },
       analysis,
       reportId: 'rep-checkout-1',
       account: { email: 'demo@roote.us' },
@@ -46,7 +46,7 @@ describe('CheckoutStep', () => {
   it('renders the program summary with a pending total, never an invented number', () => {
     seedSession();
     renderAt();
-    expect(screen.getByText(/your ROOTÉ program/i)).toBeInTheDocument();
+    expect(screen.getByText(/your program/i)).toBeInTheDocument();
     expect(screen.getByText('[PENDING: program total]')).toBeInTheDocument();
     // no preselected recurring billing
     expect(screen.getByRole('checkbox')).not.toBeChecked();

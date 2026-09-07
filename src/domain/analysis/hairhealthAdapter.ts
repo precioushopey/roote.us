@@ -1,4 +1,4 @@
-import type { Answers, Gender, HairAnalysis } from './types';
+import type { Answers, Gender, HairAnalysis, HairGoal } from './types';
 import { deriveAnalysis, RECOMMENDED_DURATION_TABLE } from './deriveAnalysis';
 
 const API_URL = import.meta.env.VITE_HAIRHEALTH_API_URL as string | undefined;
@@ -6,6 +6,7 @@ const API_KEY = import.meta.env.VITE_HAIRHEALTH_API_KEY as string | undefined;
 
 export type HairhealthInput = {
   gender: Gender;
+  hairGoal: HairGoal;
   answers: Answers;
   photos: { angleKey: string; blob: Blob }[];
 };
@@ -56,7 +57,7 @@ export async function requestHairhealthAnalysis(input: HairhealthInput): Promise
  * so every downstream field stays defined. Expand this once the contract is firm.
  */
 function mapResponse(raw: HairhealthResponse, input: HairhealthInput): HairAnalysis {
-  const base = deriveAnalysis({ gender: input.gender, answers: input.answers });
+  const base = deriveAnalysis({ gender: input.gender, hairGoal: input.hairGoal, answers: input.answers });
   const remoteStage = input.gender === 'male' ? raw.norwood_stage : raw.ludwig_stage;
   const severityBand =
     raw.severity === 'mild' || raw.severity === 'moderate' || raw.severity === 'established'

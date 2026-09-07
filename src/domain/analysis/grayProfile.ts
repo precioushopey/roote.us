@@ -10,7 +10,6 @@ export type GrayAnswers = {
   g2_area: 'temples' | 'crown' | 'throughout';
   g3_pace: 'slow' | 'steady' | 'fast';
   g4_color: 'no' | 'sometimes' | 'regularly';
-  g5_goal: 'slow-gray' | 'appearance' | 'both';
 };
 
 export type GrayStage = 'early' | 'moderate' | 'advanced';

@@ -19,7 +19,10 @@ export const brand = {
 
 /** Primary headline territory + supporting lines (brief §2). */
 export const brandLines = {
-  headline: L('Your hair is individual.\nYour treatment should be too.', 'השיער שלך ייחודי.\nגם הטיפול שלך צריך להיות.'),
+  /** `*word*` marks a word/phrase to render in italic (see Hero's renderWithEmphasis) —
+   *  left to each locale to place, since the emphasised word doesn't always land in
+   *  the same position once translated. */
+  headline: L('Your hair is *individual*.\nYour *treatment* should be too.', 'השיער שלך *ייחודי*.\nגם *הטיפול* שלך צריך להיות.'),
   secondary: L('From your first scan to your final result.', 'מהסריקה הראשונה ועד לתוצאה הסופית.'),
   supporting: [
     L('Understand your hair. Personalize your path.', 'להבין את השיער. להתאים את הדרך.'),
@@ -61,8 +64,8 @@ export const threeStrand = {
 export const systemSteps = [
   { n: 1, key: 'analyze', title: L('Analyze', 'ניתוח'), body: L('Complete a short assessment and a guided hair scan.', 'משלימים הערכה קצרה וסריקת שיער מודרכת.') },
   { n: 2, key: 'understand', title: L('Understand', 'הבנה'), body: L('Your hair profile organizes visible patterns and concerns.', 'פרופיל השיער שלך מארגן דפוסים ותחומי עניין נראים לעין.') },
-  { n: 3, key: 'personalize', title: L('Personalize', 'התאמה'), body: L('ROOTÉ builds a recommended program around your profile.', 'ROOTÉ בונה תוכנית מומלצת סביב הפרופיל שלך.') },
-  { n: 4, key: 'treat', title: L('Treat', 'טיפול'), body: L('Follow a clear daily routine.', 'עוקבים אחר שגרה יומית ברורה.') },
+  { n: 3, key: 'personalize', title: L('Personalize', 'התאמה'), body: L('A recommended program, built around your profile.', 'תוכנית מומלצת, שנבנית סביב הפרופיל שלך.') },
+  { n: 4, key: 'treat', title: L('Treat', 'טיפול'), body: L('Follow a clear daily routine, built around your formula.', 'עוקבים אחר שגרה יומית ברורה, המותאמת לפורמולה שלך.') },
   { n: 5, key: 'track', title: L('Track', 'מעקב'), body: L('Compare progress from baseline scan to final scan.', 'משווים את ההתקדמות מהסריקה הראשונה ועד הסופית.') },
 ] as const;
 

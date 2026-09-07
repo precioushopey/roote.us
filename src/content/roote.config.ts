@@ -44,44 +44,66 @@ export const rooteContent = {
     ],
   },
 
-  // PO #5 / #15 (2026-09-04): every treatment product, keyed by slug — the single
-  // source of truth for display (name/usage/frequency/zones). WHICH keys apply to
-  // a given customer is a *concern-branched* decision, resolved by
-  // `domain/recommendation/recommend()` + `planKeysFor()` (rules.ts), never by
-  // reading this whole registry — a gray-only customer gets Gray Support + Gray
-  // Serum and no Density component; a thinning customer gets Density + Regrowth
-  // Shampoo and no gray products; "both" gets all of it. Do not auto-stack a
-  // Density topical + Gray Serum: [PENDING CLINICAL COMPATIBILITY REVIEW].
+  // PO #5 / #15 (2026-09-04), realigned 2026-09-07 to the client-confirmed Hair
+  // Goal → product mapping (Ilay/Marwell thread): every treatment product, keyed
+  // by slug — the single source of truth for display (name/usage/frequency/zones).
+  // WHICH keys apply to a given customer is a *Hair-Goal-branched* decision,
+  // resolved by `domain/recommendation/recommend()` + `planKeysFor()` (rules.ts),
+  // never by reading this whole registry. The client's "internal recommendation
+  // key" and "customer-facing working name" are kept distinct from the slug below
+  // (final commercial SKU/branding is still open — see client instruction to keep
+  // the recommendation engine independent from commerce SKUs):
+  //
+  //   slug              internal recommendation key         customer-facing name (working)
+  //   density-serum   → ROOTE_DENSITY_SERUM               → ROOTÉ Root Density Serum
+  //   gray-support    → ROOTE_ANTI_GRAY_CAPSULES          → ROOTÉ Anti-Gray Capsules
+  //   gray-serum      → (unconfirmed companion — kept as a supporting product only, [PENDING CLIENT RE-CONFIRMATION])
+  //   regrowth-shampoo→ ROOTE_STOP_LOSS_SHAMPOO           → ROOTÉ Hair Loss Control Shampoo
+  //   density-6/10/15 → ROOTE_HAIR_GROWTH_06/10/15        → ROOTÉ Hair Growth Treatment
+  //     (Hair Growth tiers are business_rule_confirmed=true, clinical_approval=pending,
+  //      production_active=false — see `domain/recommendation/hairGrowthTable.ts`.
+  //      Never auto-recommended to a customer while inactive; do not depend on a
+  //      final commercial name such as "Aminoxi"/"Minoxi" yet — client instruction.)
+  //
+  // Do not auto-stack a Density topical + Gray Serum: [PENDING CLINICAL COMPATIBILITY REVIEW].
   treatmentRegistry: {
+    'density-serum': {
+      name: { en: 'ROOTÉ Root Density Serum', he: 'סרום צפיפות שורש ROOTÉ' } as LocalizedText, // TODO: confirm medical HE
+      form: 'serum' as const,
+      usageKey: 'usage.apply-scalp-affected',
+      frequencyKey: 'frequency.daily-evening',
+      appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
+    },
     'density-6': {
-      name: { en: 'ROOTÉ Density 6', he: 'ROOTÉ דנסיטי 6' } as LocalizedText, // TODO: confirm medical HE
+      // Generic name only — client instruction: don't depend on a final branded name yet.
+      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ' } as LocalizedText, // TODO: confirm medical HE
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-10': {
-      name: { en: 'ROOTÉ Density 10', he: 'ROOTÉ דנסיטי 10' } as LocalizedText,
+      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-15': {
-      name: { en: 'ROOTÉ Density 15', he: 'ROOTÉ דנסיטי 15' } as LocalizedText,
+      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'regrowth-shampoo': {
-      name: { en: 'ROOTÉ Regrowth Shampoo', he: 'שמפו ROOTÉ ריגרות׳' } as LocalizedText,
+      name: { en: 'ROOTÉ Hair Loss Control Shampoo', he: 'שמפו ROOTÉ לבלימת נשירה' } as LocalizedText,
       form: 'shampoo' as const,
       usageKey: 'usage.cleanse',
       frequencyKey: 'frequency.wash-day',
     },
     'gray-support': {
-      name: { en: 'ROOTÉ Gray Support', he: 'ROOTÉ גריי סאפורט' } as LocalizedText, // TODO: confirm medical HE
+      name: { en: 'ROOTÉ Anti-Gray Capsules', he: 'קפסולות ROOTÉ נגד הזדקנות שיער' } as LocalizedText, // TODO: confirm medical HE
       form: 'capsule' as const,
       usageKey: 'usage.gray-support',
       frequencyKey: 'frequency.daily-morning',

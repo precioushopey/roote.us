@@ -84,7 +84,7 @@ export const PRODUCTS: Product[] = [
     subtitle: L('Personalized Density Treatment', 'טיפול Density מותאם אישית'),
     concern: 'thinning',
     format: 'topical-solution',
-    size: '60 mL',
+    size: '60 mL (2 fl oz)',
     role: L('Entry / lower-strength Density program.', 'תוכנית Density בעוצמה נמוכה, לשלב הראשון.'),
     heroCopy: L(
       'A lower-strength topical to open a Density program where the assessment supports one.',
@@ -121,7 +121,7 @@ export const PRODUCTS: Product[] = [
     subtitle: L('Advanced Density Treatment', 'טיפול Density מתקדם'),
     concern: 'thinning',
     format: 'topical-solution',
-    size: '60 mL',
+    size: '60 mL (2 fl oz)',
     role: L('Advanced Density program.', 'תוכנית Density מתקדמת.'),
     heroCopy: L(
       'A higher-concentration topical with added scalp-support actives for an advanced Density program.',
@@ -132,15 +132,14 @@ export const PRODUCTS: Product[] = [
       'תרחיף לקרקפת עם קומפלקס תמיכה רחב יותר. השלב האמצעי במסלול Density.',
     ),
     formulaReference: L(
-      'Working reference: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + support complex.',
-      'התייחסות עבודה: 10% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית + קומפלקס תמיכה.',
+      'Working reference: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid.',
+      'התייחסות עבודה: 10% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית.',
     ),
     displayFormulaDetail: false,
     ingredients: [
       ING('Minoxidil', 'A long-studied topical used in pattern hair loss.', 'רכיב מקומי נחקר בהתמדה, לנשירת שיער תורשתית.'),
       ING('Finasteride', 'A DHT-pathway ingredient, used topically here.', 'רכיב במסלול ה-DHT, בשימוש מקומי כאן.'),
       ING('Azelaic Acid', 'Included as a DHT-pathway support ingredient.', 'רכיב תמיכה במסלול ה-DHT.'),
-      ING('Scalp-support complex', 'Conditioning and soothing agents for daily topical use.', 'רכיבים מרגיעים ומזינים לשימוש יומי על הקרקפת.', 'working', 'supplier-reference'),
     ],
     usage: L(
       'Apply to the scalp across the areas of concern once or twice daily, as directed at review.',
@@ -163,7 +162,7 @@ export const PRODUCTS: Product[] = [
     subtitle: L('Intensive Density Treatment', 'טיפול Density אינטנסיבי'),
     concern: 'thinning',
     format: 'topical-solution',
-    size: '60 mL',
+    size: '60 mL (2 fl oz)',
     role: L('Intensive / highest-strength Density concept.', 'קונספט Density בעוצמה הגבוהה ביותר.'),
     heroCopy: L(
       'The most concentrated Density concept. Considered only through a treatment review — never selected from a score.',
@@ -174,14 +173,15 @@ export const PRODUCTS: Product[] = [
       'קונספט התרחיף בעוצמה הגבוהה ביותר במסלול Density. בכפוף לאישור רפואי.',
     ),
     formulaReference: L(
-      'Working reference: 15% Minoxidil + 0.1% Finasteride + advanced support actives.',
-      'התייחסות עבודה: 15% מינוקסידיל + 0.1% פינסטריד + רכיבי תמיכה מתקדמים.',
+      'Working reference: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + Procapil®.',
+      'התייחסות עבודה: 15% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית + Procapil®.',
     ),
     displayFormulaDetail: false,
     ingredients: [
       ING('Minoxidil', 'A long-studied topical used in pattern hair loss.', 'רכיב מקומי נחקר בהתמדה, לנשירת שיער תורשתית.'),
       ING('Finasteride', 'A DHT-pathway ingredient, used topically here.', 'רכיב במסלול ה-DHT, בשימוש מקומי כאן.'),
-      ING('Advanced support actives', 'Additional conditioning and tolerability agents.', 'רכיבי תמיכה וסבילות נוספים.', 'working', 'supplier-reference'),
+      ING('Azelaic Acid', 'Included as a DHT-pathway support ingredient.', 'רכיב תמיכה במסלול ה-DHT.'),
+      ING('Procapil®', 'A supplier active marketed for scalp microcirculation and follicle anchoring.', 'רכיב פעיל של ספק, המשווק לתמיכה במיקרו-מחזור בקרקפת ובעיגון הזקיק.', 'requires-review', 'supplier-reference'),
     ],
     usage: L(
       'Directions are set individually at treatment review; this concept is not self-selected.',
@@ -285,9 +285,9 @@ export const PRODUCTS: Product[] = [
     formulaReference: null,
     displayFormulaDetail: true,
     ingredients: [
-      ING('Greyverse™', 'A supplier active marketed for the anti-gray category.', 'רכיב פעיל של ספק, המשווק לקטגוריית השיער האפור.', 'working', 'supplier-reference'),
-      ING('Darkenyl™', 'A supplier active marketed for pigmentation support.', 'רכיב פעיל של ספק, המשווק לתמיכה בפיגמנט.', 'working', 'supplier-reference'),
-      ING('Capixyl™', 'A supplier peptide-based active used in scalp care.', 'רכיב פעיל מבוסס פפטידים של ספק, בשימוש בטיפוח קרקפת.', 'working', 'supplier-reference'),
+      ING('Greyverse™', 'A supplier active marketed for the anti-gray category.', 'רכיב פעיל של ספק, המשווק לקטגוריית השיער האפור.', 'requires-review', 'supplier-reference'),
+      ING('Darkenyl™', 'A supplier active marketed for pigmentation support.', 'רכיב פעיל של ספק, המשווק לתמיכה בפיגמנט.', 'requires-review', 'supplier-reference'),
+      ING('Capixyl™', 'A supplier peptide-based active used in scalp care.', 'רכיב פעיל מבוסס פפטידים של ספק, בשימוש בטיפוח קרקפת.', 'requires-review', 'supplier-reference'),
       ING('Green Tea', 'An antioxidant-rich botanical extract.', 'תמצית צמחית עשירה בנוגדי חמצון.'),
       ING('Fo-Ti', 'A botanical traditionally associated with hair.', 'צמח הנקשר באופן מסורתי לשיער.'),
       ING('Panthenol', 'Pro-vitamin B5, a common conditioning agent.', 'פרו-ויטמין B5, רכיב הזנה נפוץ.'),

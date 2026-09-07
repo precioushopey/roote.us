@@ -64,6 +64,12 @@ export type ReportModel = {
   hairLossType: { title: string; areaLabels: string[]; patternNote: string };
   currentSituation: { paragraphs: string[] };
   plan: {
+    /** `false` whenever no automatic product recommendation is shown — either the
+     *  recommendation engine held it (review-gated) or it's confirmed-but-not-yet
+     *  production-active (client's Hair Growth strength gate). `reviewMessage`
+     *  carries the customer-facing explanation for either case. */
+    isStandard: boolean;
+    reviewMessage: string | null;
     matchedToScanBadge: string;
     labels: { core: string; supporting: string; applicationFrequency: string; appliesTo: string };
     core: { name: Resolved<string>; usage: string; frequency: string; appliesToLabels: string[] }[];

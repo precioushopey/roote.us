@@ -8,12 +8,12 @@ import { ReportPage } from './ReportPage';
 
 function seedSession(reportId: string | null) {
   localStorage.setItem('roote.locale', 'en');
-  const answers = { q1_area: 'hairline', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'no', q5_goal: 'both' };
-  const analysis = reportId ? deriveAnalysis({ gender: 'male', answers } as never) : null;
+  const answers = { q1_area: 'hairline', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'no', q13_progression: 'gradual' };
+  const analysis = reportId ? deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers } as never) : null;
   localStorage.setItem(
     'roote.session',
     JSON.stringify({
-      diagnosis: { gender: 'male', photos: [], answers },
+      diagnosis: { gender: 'male', hairGoal: 'stop-loss', photos: [], answers },
       analysis,
       reportId,
       account: { email: null },

@@ -35,13 +35,16 @@ export function PlanStep() {
   const rec = useMemo(() => {
     if (!session.analysis || !session.diagnosis.gender) return null;
     return recommend({
-      concern: session.diagnosis.concern ?? 'thinning',
+      hairGoal: session.diagnosis.hairGoal ?? 'other',
       gender: session.diagnosis.gender,
+      scale: session.analysis.scale,
+      stage: session.analysis.stage,
       severityBand: session.analysis.severityBand,
       planEmphasis: session.analysis.planEmphasis,
+      progression: session.diagnosis.answers.q13_progression ?? 'gradual',
       recommendedDurationDays: session.analysis.recommendedDurationDays,
     });
-  }, [session.analysis, session.diagnosis.concern, session.diagnosis.gender]);
+  }, [session.analysis, session.diagnosis.hairGoal, session.diagnosis.gender, session.diagnosis.answers.q13_progression]);
 
   const [selected, setSelected] = useState<ProgramDurationDays | null>(
     session.draftDurationDays ?? (model ? (model.recommendedDuration.days as ProgramDurationDays) : null),

@@ -2,8 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { cn } from '@/app/components/ui/utils';
 import { PendingChip } from '@/app/components/brand/PendingChip';
-import { StrandMark } from './StrandMark';
-import { Badge } from './Badge';
+import { Badge, type BadgeTone } from './Badge';
 import { MediaPlaceholder } from '@/app/components/media/MediaPlaceholder';
 
 /* --- ConcernCard -----------------------------------------------------
@@ -16,6 +15,7 @@ export function ConcernCard({
   cta,
   mediaAlt,
   mediaLabel,
+  image,
 }: {
   title: string;
   description: string;
@@ -23,17 +23,30 @@ export function ConcernCard({
   cta: string;
   mediaAlt: string;
   mediaLabel: string;
+  /** Real photography. Falls back to the placeholder when omitted. */
+  image?: string;
 }) {
   return (
-    <Link
-      to={to}
-      className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-deep-700"
-    >
-      <MediaPlaceholder alt={mediaAlt} label={mediaLabel} ratio="4 / 3" rounded="none" />
-      <div className="flex flex-1 flex-col gap-2 p-5">
-        <h3 className="font-display text-lg text-foreground">{title}</h3>
+    <Link to={to} className="group flex flex-col items-center gap-4 text-center">
+      {image ? (
+        <img
+          src={image}
+          alt={mediaAlt}
+          className="aspect-[3/4] w-full border border-gold-500 object-cover [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+        />
+      ) : (
+        <MediaPlaceholder
+          alt={mediaAlt}
+          label={mediaLabel}
+          ratio="3 / 4"
+          rounded="none"
+          className="w-full border border-gold-500 [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+        />
+      )}
+      <div className="flex flex-col gap-2">
+        <h3 className="u-caps font-body text-sm text-foreground">{title}</h3>
         <p className="font-body text-sm text-muted-foreground">{description}</p>
-        <span className="mt-auto pt-3 font-body text-sm font-medium text-deep-800 underline decoration-1 underline-offset-4">
+        <span className="mt-1 font-body text-sm font-medium text-deep-800 underline decoration-1 underline-offset-4">
           {cta}
         </span>
       </div>
@@ -54,6 +67,7 @@ export function ProductCard({
   reviewRequired = false,
   mediaAlt,
   mediaLabel,
+  image,
 }: {
   name: string;
   subtitle: string;
@@ -64,6 +78,8 @@ export function ProductCard({
   reviewRequired?: boolean;
   mediaAlt: string;
   mediaLabel: string;
+  /** Real product photography. Falls back to the placeholder when omitted. */
+  image?: string;
 }) {
   return (
     <Link
@@ -71,13 +87,19 @@ export function ProductCard({
       data-pack={packaging}
       className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-deep-700"
     >
-      <MediaPlaceholder
-        alt={mediaAlt}
-        label={mediaLabel}
-        ratio="1"
-        rounded="none"
-        tone={packaging === 'men' ? 'teal' : 'cream'}
-      />
+      {image ? (
+        <div className="aspect-square w-full border-b border-gold-500 bg-white p-6">
+          <img src={image} alt={mediaAlt} className="h-full w-full object-contain" />
+        </div>
+      ) : (
+        <MediaPlaceholder
+          alt={mediaAlt}
+          label={mediaLabel}
+          ratio="1"
+          rounded="none"
+          tone={packaging === 'men' ? 'teal' : 'cream'}
+        />
+      )}
       <div className="flex flex-1 flex-col gap-1 p-5">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-display text-md text-foreground">{name}</h3>
@@ -137,7 +159,7 @@ export function ProgramCard({
       <ul className="mt-4 flex flex-col gap-1.5 font-body text-sm text-muted-foreground">
         {includes.map((line) => (
           <li key={line} className="flex items-start gap-2">
-            <StrandMark size={14} className="mt-0.5 text-accent" />
+            <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
             {line}
           </li>
         ))}
@@ -162,22 +184,34 @@ export function ProgramCard({
 /* --- IngredientCard --------------------------------------------------
    Name + short purpose + optional "Read more". Claim-status aware: a
    `requires-review` note renders as a pending chip, never as plain copy. */
+const STATUS_BADGE_TONE: Record<'approved' | 'working' | 'requires-review', BadgeTone> = {
+  approved: 'success',
+  working: 'info',
+  'requires-review': 'review',
+};
+
 export function IngredientCard({
   name,
   note,
   status = 'working',
+  statusLabel,
   onReadMore,
   readMoreLabel = 'Read more',
 }: {
   name: string;
   note: ReactNode;
   status?: 'approved' | 'working' | 'requires-review';
+  /** Visible label for the evidence-status badge. Omit to hide the badge. */
+  statusLabel?: string;
   onReadMore?: () => void;
   readMoreLabel?: string;
 }) {
   return (
     <div className="rounded-xl border border-border bg-card p-5">
-      <p className="font-display text-md text-foreground">{name}</p>
+      <div className="flex items-start justify-between gap-2">
+        <p className="font-display text-md text-foreground">{name}</p>
+        {statusLabel ? <Badge tone={STATUS_BADGE_TONE[status]}>{statusLabel}</Badge> : null}
+      </div>
       <div className="mt-1 font-body text-sm text-muted-foreground">
         {status === 'requires-review' ? <PendingChip label={`${name} — claim`} /> : note}
       </div>

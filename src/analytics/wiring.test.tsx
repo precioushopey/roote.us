@@ -53,10 +53,10 @@ describe('analytics is wired into the real flows', () => {
 
     await userEvent.click(screen.getByRole('button', { name: /begin analysis/i }));
     await userEvent.click(await screen.findByText('Male'));
-    await userEvent.click(await screen.findByText('Hair thinning'));
+    await userEvent.click(await screen.findByText('Stop hair loss'));
 
     expect(events).toContain('analysis_started');
     expect(events).toContain('gender_selected');
-    expect(events).toContain('concern_selected');
+    expect(events).toContain('hair_goal_selected');
   });
 });

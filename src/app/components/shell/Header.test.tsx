@@ -29,7 +29,7 @@ describe('Header', () => {
   it('shows the primary nav links and the analysis CTA', () => {
     renderHeader();
     const nav = screen.getByRole('navigation', { name: 'Primary' });
-    expect(within(nav).getByRole('link', { name: 'How It Works' })).toHaveAttribute('href', '/en-us/how-it-works');
+    expect(within(nav).getByRole('link', { name: 'Process' })).toHaveAttribute('href', '/en-us/how-it-works');
     expect(within(nav).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
     expect(within(nav).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/en-us/science');
     expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en-us/about');

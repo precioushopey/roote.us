@@ -4,12 +4,11 @@ import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider'
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, Prose, Button, RadioCard } from '@/app/components/roote';
 import { pickLocalized } from '@/content/localized';
-import { GENDER_OPTIONS, PACKAGING_OPTIONS, CONCERN_OPTIONS } from '@/content/assessment';
+import { GENDER_OPTIONS, PACKAGING_OPTIONS, HAIR_GOAL_OPTIONS } from '@/content/assessment';
 import { track } from '@/analytics/analytics';
 import { PATHS } from '@/app/paths';
 import { redirectForAnalysisStep } from './guards';
-import type { Gender } from '@/domain/analysis/types';
-import type { Concern } from '@/domain/recommendation/types';
+import type { Gender, HairGoal } from '@/domain/analysis/types';
 
 /* --- 1 · Intro ------------------------------------------------------------ */
 export function IntroScreen() {
@@ -65,12 +64,12 @@ export function GenderScreen() {
       setNeedPackaging(true);
       return;
     }
-    navigate(withLocale(PATHS.analysisStep('concern')));
+    navigate(withLocale(PATHS.analysisStep('goal')));
   };
 
   const choosePackaging = (p: 'men' | 'women') => {
     session.setPackagingPreference(p);
-    navigate(withLocale(PATHS.analysisStep('concern')));
+    navigate(withLocale(PATHS.analysisStep('goal')));
   };
 
   return (
@@ -113,36 +112,36 @@ export function GenderScreen() {
   );
 }
 
-/* --- 3 · Primary concern -------------------------------------------- */
-export function ConcernScreen() {
+/* --- 3 · Hair Goal (client-confirmed 2026-09-07) ----------------------- */
+export function GoalScreen() {
   const t = useT();
   const cl = useContentLocale();
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
 
-  const redirect = redirectForAnalysisStep('concern', session);
+  const redirect = redirectForAnalysisStep('goal', session);
   if (redirect) return <Navigate to={withLocale(redirect)} replace />;
 
-  const choose = (c: Concern) => {
-    session.setConcern(c);
-    track('concern_selected', { concern: c });
+  const choose = (g: HairGoal) => {
+    session.setHairGoal(g);
+    track('hair_goal_selected', { hairGoal: g });
     navigate(withLocale(PATHS.analysisStep('photos')));
   };
 
   return (
     <section data-animate className="flex flex-col gap-8">
       <DisplayTitle as="h1" step="md">
-        {t('analysis.concern.title')}
+        {t('analysis.goal.title')}
       </DisplayTitle>
       <div className="grid gap-3">
-        {CONCERN_OPTIONS.map((o) => (
+        {HAIR_GOAL_OPTIONS.map((o) => (
           <RadioCard
             key={o.value}
-            name="concern"
+            name="hairGoal"
             value={o.value}
-            checked={session.diagnosis.concern === o.value}
-            onChange={() => choose(o.value as Concern)}
+            checked={session.diagnosis.hairGoal === o.value}
+            onChange={() => choose(o.value)}
             title={pickLocalized(o.title, cl)}
             description={pickLocalized(o.description, cl)}
           />

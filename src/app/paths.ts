@@ -11,7 +11,6 @@ export const PATHS = {
   solutionThinning: '/solutions/thinning',
   solutionGray: '/solutions/gray-hair',
   science: '/science',
-  results: '/results',
   system: '/system',
   about: '/about',
   faq: '/faq',

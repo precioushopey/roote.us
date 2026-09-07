@@ -19,7 +19,7 @@ function renderFooter(locale: 'en' | 'he') {
 describe('Footer', () => {
   it('renders the explore + legal links and the year (en)', () => {
     const footer = renderFooter('en');
-    expect(within(footer).getByRole('link', { name: 'How It Works' })).toHaveAttribute('href', '/en-us/how-it-works');
+    expect(within(footer).getByRole('link', { name: 'Process' })).toHaveAttribute('href', '/en-us/how-it-works');
     expect(within(footer).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/en-us/science');
     expect(within(footer).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en-us/about');
     expect(within(footer).getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', '/en-us/privacy');

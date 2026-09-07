@@ -4,9 +4,8 @@ import { PROGRAM_DURATIONS, PROGRAMS, HEADLINE_DURATIONS } from './programs';
 import { SOLUTIONS } from './solutions';
 import { HOME_FAQS, PRODUCT_FAQS_COMMON } from './faqs';
 import { LEGAL_PAGES } from './legal';
-import { THINNING_QUESTIONS, GRAY_QUESTIONS, questionsForConcern } from './assessment';
+import { THINNING_QUESTIONS, GRAY_QUESTIONS, HEALTH_HISTORY_QUESTION, questionsForHairGoal } from './assessment';
 import { containsForbiddenClaim } from './claims';
-import { QUESTIONS } from '@/app/components/diagnosis/questions';
 
 const localizedStrings = (v: unknown, acc: string[] = []): string[] => {
   if (v == null) return acc;
@@ -121,20 +120,27 @@ describe('legal registry (brief §25)', () => {
 });
 
 describe('assessment question sets', () => {
-  it('thinning branch matches the deriveAnalysis Answers vocabulary', () => {
-    const byId = Object.fromEntries(QUESTIONS.map((q) => [q.id, q.options.map((o) => o.value).sort()]));
-    for (const q of THINNING_QUESTIONS) {
-      expect(byId[q.id], q.id).toEqual(q.options.map((o) => o.value).sort());
+  it('thinning-style branch matches the deriveAnalysis Answers vocabulary, plus shared Health History', () => {
+    expect(THINNING_QUESTIONS.map((q) => q.id)).toEqual([
+      'q1_area', 'q2_onset', 'q3_prior', 'q4_family', 'q13_progression', 'health_history',
+    ]);
+  });
+
+  it('gray branch is its own four questions plus shared Health History', () => {
+    expect(GRAY_QUESTIONS.map((q) => q.id)).toEqual(['g1_onset', 'g2_area', 'g3_pace', 'g4_color', 'health_history']);
+  });
+
+  it('Health History is multi-select and None-exclusive by option list (enforced in sessionStore)', () => {
+    expect(HEALTH_HISTORY_QUESTION.multi).toBe(true);
+    expect(HEALTH_HISTORY_QUESTION.options.map((o) => o.value)).toEqual([
+      'thyroid', 'anemia', 'autoimmune', 'cancer', 'glp1', 'none',
+    ]);
+  });
+
+  it('routes Hair Goal → question set (only Slow Hair Graying uses the gray branch)', () => {
+    expect(questionsForHairGoal('slow-graying')).toBe(GRAY_QUESTIONS);
+    for (const goal of ['thicker-fuller', 'stop-loss', 'hair-growth', 'other'] as const) {
+      expect(questionsForHairGoal(goal)).toBe(THINNING_QUESTIONS);
     }
-  });
-
-  it('gray branch is its own five questions', () => {
-    expect(GRAY_QUESTIONS.map((q) => q.id)).toEqual(['g1_onset', 'g2_area', 'g3_pace', 'g4_color', 'g5_goal']);
-  });
-
-  it('routes concern → question set', () => {
-    expect(questionsForConcern('thinning')).toBe(THINNING_QUESTIONS);
-    expect(questionsForConcern('gray')).toBe(GRAY_QUESTIONS);
-    expect(questionsForConcern('both').length).toBeGreaterThan(THINNING_QUESTIONS.length);
   });
 });

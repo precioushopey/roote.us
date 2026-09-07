@@ -1,6 +1,6 @@
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { DisplayTitle, Button, StrandMark } from '@/app/components/roote';
+import { DisplayTitle, Button } from '@/app/components/roote';
 
 export function SuccessStep() {
   const t = useT();
@@ -11,7 +11,6 @@ export function SuccessStep() {
 
   return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-5 text-center">
-      <StrandMark size={44} variant="solid" className="text-accent" />
       <DisplayTitle as="h1" step="sm" align="center">
         {t('start.success.title')}
       </DisplayTitle>

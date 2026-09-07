@@ -30,7 +30,7 @@ export function Eyebrow({
 }
 
 /* --- DisplayTitle ----------------------------------------------------
-   Bodoni Moda display heading. Optional decorative "ghost" continuation
+   Frank Ruhl Libre display heading. Optional decorative "ghost" continuation
    word (aria-hidden). */
 export function DisplayTitle({
   children,
@@ -51,7 +51,7 @@ export function DisplayTitle({
 }) {
   return (
     <Tag
-      style={{ fontSize: displayClamp[step] }}
+      style={{ fontSize: displayClamp[step], fontFamily: "'Frank Ruhl Libre', serif" }}
       className={cn(
         'text-display text-balance',
         onDark ? 'text-cream-100' : 'text-foreground',

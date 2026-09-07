@@ -1,4 +1,4 @@
-import type { Answers, Gender, HairAnalysis } from './types';
+import type { Answers, Gender, HairAnalysis, HairGoal } from './types';
 import { analyzeHair } from './analyzeHair';
 
 /**
@@ -24,6 +24,7 @@ export type HairAnalysisImage = { angleKey: string; blob: Blob };
 
 export type HairAnalysisRequest = {
   gender: Gender;
+  hairGoal: HairGoal;
   answers: Answers;
   images: HairAnalysisImage[];
 };
@@ -48,8 +49,8 @@ export interface HairAnalysisProvider {
  */
 export const mockHairAnalysisProvider: HairAnalysisProvider = {
   name: 'mock',
-  async analyze({ gender, answers, images }) {
-    const { analysis, source } = await analyzeHair({ gender, answers, photos: images });
+  async analyze({ gender, hairGoal, answers, images }) {
+    const { analysis, source } = await analyzeHair({ gender, hairGoal, answers, photos: images });
     return {
       analysis,
       source: source === 'hairhealth' ? 'provider' : 'mock',

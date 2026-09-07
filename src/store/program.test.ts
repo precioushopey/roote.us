@@ -7,14 +7,14 @@ import type { SessionState } from '@/store/sessionStore';
 
 describe('buildProgram', () => {
   it('freezes plan, analysis, and computes endDate from durationDays', () => {
-    const answers = { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' } as const;
-    const diagnosis: Pick<SessionState['diagnosis'], 'gender' | 'concern' | 'photos' | 'answers'> = {
+    const answers = { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'yes', q13_progression: 'gradual' } as const;
+    const diagnosis: Pick<SessionState['diagnosis'], 'gender' | 'hairGoal' | 'photos' | 'answers'> = {
       gender: 'male',
-      concern: 'thinning',
+      hairGoal: 'stop-loss',
       photos: [],
       answers,
     };
-    const analysis = deriveAnalysis({ gender: 'male', answers });
+    const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
     const model = buildReport({ diagnosis, analysis, content: rooteContent, locale: 'en', reportId: 'rep-9' });
 
     const program = buildProgram({
@@ -40,7 +40,7 @@ describe('buildProgram', () => {
   });
 
   it('never mutates the analysis object it is given', () => {
-    const analysis = deriveAnalysis({ gender: 'female', answers: { q1_area: 'crown', q2_onset: 'lt-1y', q3_prior: 'never', q4_family: 'no', q5_goal: 'regrow' } });
+    const analysis = deriveAnalysis({ gender: 'female', hairGoal: 'stop-loss', answers: { q1_area: 'crown', q2_onset: 'lt-6mo', q3_prior: 'never', q4_family: 'no', q13_progression: 'gradual' } });
     const before = JSON.stringify(analysis);
     buildProgram({ orderId: 'o', reportId: 'r', analysis, durationDays: 90, plan: { core: [], supporting: [], formula: null } as never, today: new Date() });
     expect(JSON.stringify(analysis)).toBe(before);

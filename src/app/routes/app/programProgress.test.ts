@@ -76,29 +76,29 @@ describe('programProgress', () => {
     expect(he.core[0].frequency).toBe('t:frequency.daily-evening');
   });
 
-  it('planKeysForProgram branches by concern (PO #15 — closes the gray/thinning routine gap)', () => {
-    const analysis = deriveAnalysis({
-      gender: 'male',
-      answers: { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' },
-    });
-    const thinning = planKeysForProgram({ concern: 'thinning', gender: 'male' }, analysis);
-    expect(thinning.core[0]).toMatch(/^density-/);
-    expect(thinning.supporting).toContain('regrowth-shampoo');
-    expect(thinning.supporting).not.toContain('gray-support');
-    expect(thinning.supporting).not.toContain('gray-serum');
+  it('planKeysForProgram branches by Hair Goal (client-confirmed) — closes the gray/thinning routine gap', () => {
+    const answers = { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'yes', q13_progression: 'gradual' } as const;
+    const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
 
-    const gray = planKeysForProgram({ concern: 'gray', gender: 'female' }, analysis);
-    expect(gray.core).toHaveLength(0); // no Density component for a gray-only concern
-    expect(gray.supporting).toEqual(expect.arrayContaining(['gray-support', 'gray-serum']));
-    expect(gray.supporting).not.toContain('regrowth-shampoo');
+    const stopLoss = planKeysForProgram({ hairGoal: 'stop-loss', gender: 'male', answers }, analysis);
+    expect(stopLoss.core).toEqual(['regrowth-shampoo']);
+    expect(stopLoss.supporting).not.toContain('gray-support');
+    expect(stopLoss.supporting).not.toContain('gray-serum');
 
-    const both = planKeysForProgram({ concern: 'both', gender: 'male' }, analysis);
-    expect(both.core[0]).toMatch(/^density-/);
-    expect(both.supporting).toEqual(
-      expect.arrayContaining(['regrowth-shampoo', 'gray-support', 'gray-serum', 'derma-stim']),
-    );
+    const slowGraying = planKeysForProgram({ hairGoal: 'slow-graying', gender: 'female', answers }, analysis);
+    expect(slowGraying.core).toEqual(['gray-support']); // core is Anti-Gray Capsules, not a Density component
+    expect(slowGraying.supporting).toEqual(expect.arrayContaining(['gray-serum']));
+    expect(slowGraying.supporting).not.toContain('regrowth-shampoo');
 
-    expect(planKeysForProgram({ concern: 'thinning', gender: null }, analysis)).toEqual({ core: [], supporting: [] });
+    const thickerFuller = planKeysForProgram({ hairGoal: 'thicker-fuller', gender: 'male', answers }, analysis);
+    expect(thickerFuller.core).toEqual(['density-serum']);
+    expect(thickerFuller.supporting).toEqual(expect.arrayContaining(['derma-stim']));
+
+    // Hair Growth is confirmed but not production-active — never a live core recommendation yet.
+    const hairGrowth = planKeysForProgram({ hairGoal: 'hair-growth', gender: 'male', answers }, analysis);
+    expect(hairGrowth.core).toHaveLength(0);
+
+    expect(planKeysForProgram({ hairGoal: 'stop-loss', gender: null, answers }, analysis)).toEqual({ core: [], supporting: [] });
   });
 
   it('adherencePct is a rolling completion rate over the window', () => {

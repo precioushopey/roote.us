@@ -1,6 +1,6 @@
 /**
- * Fluid sizes for Bodoni Moda display headings across the site. One place so
- * the scale tunes globally. Targets the brief §6 scale (28 → 80px).
+ * Fluid sizes for Frank Ruhl Libre display headings across the site. One
+ * place so the scale tunes globally. Targets the brief §6 scale (28 → 80px).
  * `DISPLAY_CLAMP` is the default section-heading size; the named steps cover
  * hero (xl) down to small callouts (sm).
  */

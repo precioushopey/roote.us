@@ -30,10 +30,10 @@
   --roote-line: rgba(23, 32, 34, 0.14);
 
   /* --- fonts --------------------------------------------------------------
-     Display: Bodoni Moda (Didot lineage). Body/UI: Montserrat.
-     Hebrew display: Frank Ruhl Libre; Hebrew/Arabic body: Noto. */
+     Display: Frank Ruhl Libre (all locales, incl. Hebrew). Body/UI: Montserrat.
+     Hebrew/Arabic body: Noto. */
   --font-size: 16px;
-  --font-display: 'Bodoni Moda', 'Frank Ruhl Libre', 'Didot', 'Bodoni 72', Georgia, serif;
+  --font-display: 'Frank Ruhl Libre', 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif;
   --font-body: 'Montserrat', 'Heebo', 'Noto Sans Hebrew', 'Noto Sans Arabic', system-ui, sans-serif;
   --font-sans: var(--font-body); /* legacy alias — was Libre Franklin */
   --font-weight-normal: 400;

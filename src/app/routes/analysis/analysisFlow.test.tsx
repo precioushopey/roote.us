@@ -13,7 +13,7 @@ import { mockHairAnalysisProvider } from '@/domain/analysis/provider';
 import type { SessionState } from '@/store/sessionStore';
 
 const emptySession = (over: Partial<SessionState> = {}): SessionState => ({
-  diagnosis: { gender: null, concern: null, photos: [], answers: {}, grayAnswers: {}, photoConsent: false },
+  diagnosis: { gender: null, hairGoal: null, photos: [], answers: {}, grayAnswers: {}, healthHistory: [], photoConsent: false },
   analysis: null,
   grayProfile: null,
   reportId: null,
@@ -24,20 +24,20 @@ const emptySession = (over: Partial<SessionState> = {}): SessionState => ({
 });
 
 describe('redirectForAnalysisStep', () => {
-  it('concern needs a gender', () => {
-    expect(redirectForAnalysisStep('concern', emptySession())).toBe('/analysis/gender');
+  it('goal needs a gender', () => {
+    expect(redirectForAnalysisStep('goal', emptySession())).toBe('/analysis/gender');
     expect(
-      redirectForAnalysisStep('concern', emptySession({ diagnosis: { ...emptySession().diagnosis, gender: 'male' } })),
+      redirectForAnalysisStep('goal', emptySession({ diagnosis: { ...emptySession().diagnosis, gender: 'male' } })),
     ).toBeNull();
   });
 
-  it('photos needs gender + concern', () => {
+  it('photos needs gender + Hair Goal', () => {
     const s = emptySession({ diagnosis: { ...emptySession().diagnosis, gender: 'male' } });
-    expect(redirectForAnalysisStep('photos', s)).toBe('/analysis/concern');
+    expect(redirectForAnalysisStep('photos', s)).toBe('/analysis/goal');
   });
 
   it('questions needs all four photo views (PO #25) — three is not enough', () => {
-    const base = { ...emptySession().diagnosis, gender: 'male' as const, concern: 'thinning' as const };
+    const base = { ...emptySession().diagnosis, gender: 'male' as const, hairGoal: 'stop-loss' as const };
     const three = emptySession({
       diagnosis: {
         ...base,
@@ -59,7 +59,7 @@ describe('redirectForAnalysisStep', () => {
       diagnosis: {
         ...emptySession().diagnosis,
         gender: 'male',
-        concern: 'thinning',
+        hairGoal: 'stop-loss',
         photos: [{ id: 'p', angleKey: 'front', thumb: 't', blobId: 'b' }],
       },
     });
@@ -72,7 +72,8 @@ describe('mock analysis provider', () => {
   it('returns a HairAnalysis and marks itself as mock', async () => {
     const res = await mockHairAnalysisProvider.analyze({
       gender: 'female',
-      answers: { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'no', q5_goal: 'both' },
+      hairGoal: 'stop-loss',
+      answers: { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'no', q13_progression: 'gradual' },
       images: [],
     });
     expect(res.analysis.scale).toBe('ludwig');
@@ -84,7 +85,7 @@ describe('mock analysis provider', () => {
 describe('deriveGrayProfile', () => {
   it('maps visible area to a stage, returns keys + the routine', () => {
     const p = deriveGrayProfile({
-      answers: { g1_onset: '1-5y', g2_area: 'crown', g3_pace: 'steady', g4_color: 'no', g5_goal: 'both' },
+      answers: { g1_onset: '1-5y', g2_area: 'crown', g3_pace: 'steady', g4_color: 'no' },
     });
     expect(p.stage).toBe('moderate');
     expect(p.summaryKey).toBe('gray.summary.moderate');
@@ -120,20 +121,20 @@ function renderFlow(path: string) {
 }
 
 describe('assessment screens', () => {
-  it('intro → gender → concern advances and shows the progress rail', async () => {
+  it('intro → gender → goal advances and shows the progress rail', async () => {
     renderFlow('/analysis');
     await userEvent.click(screen.getByRole('button', { name: /begin analysis/i }));
     expect(await screen.findByRole('heading', { name: /how should we personalize/i })).toBeInTheDocument();
 
     await userEvent.click(screen.getByText('Male'));
-    expect(await screen.findByRole('heading', { name: 'What would you like to understand?' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'What is your main goal?' })).toBeInTheDocument();
     // rail is visible now
     expect(screen.getByRole('list', { name: /progress/i })).toBeInTheDocument();
   });
 
   it('photos step gates Continue on consent + all four angles', async () => {
     renderFlow('/analysis/photos');
-    // guard bounces to gender (no gender/concern yet)
+    // guard bounces to gender (no gender/goal yet)
     expect(await screen.findByRole('heading', { name: /how should we personalize/i })).toBeInTheDocument();
   });
 

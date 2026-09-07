@@ -12,7 +12,7 @@ function seedProgram() {
   localStorage.setItem(
     'roote.session',
     JSON.stringify({
-      diagnosis: { gender: 'female', concern: 'thinning', photos: [], answers: {}, grayAnswers: {}, photoConsent: true },
+      diagnosis: { gender: 'female', hairGoal: 'stop-loss', photos: [], answers: {}, grayAnswers: {}, healthHistory: ['none'], photoConsent: true },
       analysis: null,
       grayProfile: null,
       reportId: 'rep-1',

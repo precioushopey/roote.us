@@ -77,15 +77,16 @@ export function AccountScans() {
       }
     }
     const gender = session.diagnosis.gender ?? 'male';
+    const hairGoal = session.diagnosis.hairGoal ?? 'other';
     const answers = (session.diagnosis.answers as Answers) ?? undefined;
     let analysis;
     let isMock = true;
     try {
-      const res = await getAnalysisProvider().analyze({ gender, answers, images });
+      const res = await getAnalysisProvider().analyze({ gender, hairGoal, answers, images });
       analysis = res.analysis;
       isMock = res.isMock;
     } catch {
-      analysis = deriveAnalysis({ gender, answers });
+      analysis = deriveAnalysis({ gender, hairGoal, answers });
     }
     const type: ScanType = isFinal ? 'final' : 'progress';
     const scan: HairScan = {

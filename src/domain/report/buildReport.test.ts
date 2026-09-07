@@ -3,16 +3,17 @@ import { buildReport } from './buildReport';
 import { rooteContent } from '@/content/roote.config';
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { isPending } from '@/content/pending';
-import type { Answers, Gender } from '@/domain/analysis/types';
+import type { Answers, Gender, HairGoal } from '@/domain/analysis/types';
 import type { SessionState } from '@/store/sessionStore';
 
 function personaDiagnosis(
   gender: Gender,
   answers: Answers,
-): Pick<SessionState['diagnosis'], 'gender' | 'concern' | 'photos' | 'answers'> {
+  hairGoal: HairGoal = 'thicker-fuller',
+): Pick<SessionState['diagnosis'], 'gender' | 'hairGoal' | 'photos' | 'answers'> {
   return {
     gender,
-    concern: 'thinning',
+    hairGoal,
     photos: [
       { id: 'p1', angleKey: 'front', thumb: 'data:image/jpeg;base64,AAA', blobId: 'b1' },
       { id: 'p2', angleKey: 'crown', thumb: 'data:image/jpeg;base64,BBB', blobId: 'b2' },
@@ -22,13 +23,13 @@ function personaDiagnosis(
 }
 
 const mildMaleHairline: Answers = {
-  q1_area: 'hairline', q2_onset: 'lt-1y', q3_prior: 'never', q4_family: 'no', q5_goal: 'stop',
+  q1_area: 'hairline', q2_onset: 'lt-6mo', q3_prior: 'never', q4_family: 'no', q13_progression: 'gradual',
 };
 const establishedMaleEntireScalp: Answers = {
-  q1_area: 'entire-scalp', q2_onset: 'gt-5y', q3_prior: 'no-success', q4_family: 'yes', q5_goal: 'both',
+  q1_area: 'entire-scalp', q2_onset: 'gt-3y', q3_prior: 'no-success', q4_family: 'yes', q13_progression: 'gradual',
 };
 const mildFemaleCrown: Answers = {
-  q1_area: 'crown', q2_onset: 'lt-1y', q3_prior: 'partial', q4_family: 'not-sure', q5_goal: 'regrow',
+  q1_area: 'crown', q2_onset: 'lt-6mo', q3_prior: 'partial', q4_family: 'not-sure', q13_progression: 'gradual',
 };
 
 const personas = [
@@ -37,10 +38,10 @@ const personas = [
   { name: 'mild female crown', gender: 'female' as const, answers: mildFemaleCrown },
 ];
 
-function build(gender: Gender, answers: Answers, locale: 'en' | 'he' = 'en') {
-  const analysis = deriveAnalysis({ gender, answers });
+function build(gender: Gender, answers: Answers, locale: 'en' | 'he' = 'en', hairGoal: HairGoal = 'thicker-fuller') {
+  const analysis = deriveAnalysis({ gender, hairGoal, answers });
   return buildReport({
-    diagnosis: personaDiagnosis(gender, answers),
+    diagnosis: personaDiagnosis(gender, answers, hairGoal),
     analysis,
     content: rooteContent,
     locale,
@@ -62,9 +63,10 @@ describe('buildReport', () => {
     expect(model.analysis.metrics.length).toBeGreaterThanOrEqual(3);
     expect(model.hairLossType.areaLabels.length).toBeGreaterThan(0);
     expect(model.currentSituation.paragraphs).toHaveLength(2);
+    expect(model.plan.isStandard).toBe(true);
     expect(model.plan.core.length).toBeGreaterThan(0);
     expect(model.plan.supporting.length).toBeGreaterThan(0);
-    expect(model.recommendedDuration.days).toBe(deriveAnalysis({ gender, answers }).recommendedDurationDays);
+    expect(model.recommendedDuration.days).toBe(deriveAnalysis({ gender, hairGoal: 'thicker-fuller', answers }).recommendedDurationDays);
     expect(model.claims).toHaveLength(3);
     expect(model.cta.href).toBe('/program?report=rep-test-1');
   });
@@ -132,32 +134,41 @@ describe('buildReport', () => {
     expect({ ...a, meta: metaA }).toEqual({ ...b, meta: metaB });
   });
 
-  it('branches the plan by concern (PO #15) — never mixes Density and gray products', () => {
+  it('branches the plan by Hair Goal (client-confirmed) — never mixes product families', () => {
     const answers = mildFemaleCrown;
-    const analysis = deriveAnalysis({ gender: 'female', answers });
-    const planFor = (concern: 'thinning' | 'gray' | 'both') =>
+    const analysis = deriveAnalysis({ gender: 'female', hairGoal: 'thicker-fuller', answers });
+    const planFor = (hairGoal: HairGoal) =>
       buildReport({
-        diagnosis: { gender: 'female', concern, photos: [], answers },
+        diagnosis: { gender: 'female', hairGoal, photos: [], answers },
         analysis,
         content: rooteContent,
         locale: 'en',
-        reportId: 'rep-concern',
+        reportId: 'rep-goal',
       }).plan;
 
-    const thinning = planFor('thinning');
-    expect(thinning.core.some((tr) => String(tr.name).includes('Density'))).toBe(true);
-    expect(thinning.supporting.some((tr) => String(tr.name).includes('Gray'))).toBe(false);
+    const thickerFuller = planFor('thicker-fuller');
+    expect(thickerFuller.core.some((tr) => String(tr.name).includes('Density Serum'))).toBe(true);
+    expect(thickerFuller.supporting.some((tr) => String(tr.name).includes('Gray'))).toBe(false);
 
-    const gray = planFor('gray');
-    expect(gray.core).toHaveLength(0); // no Rx component for a pigmentation-only concern
-    expect(gray.supporting.some((tr) => String(tr.name).includes('Density'))).toBe(false);
-    expect(gray.supporting.some((tr) => String(tr.name).includes('Gray Support'))).toBe(true);
-    expect(gray.supporting.some((tr) => String(tr.name).includes('Gray Serum'))).toBe(true);
+    const slowGraying = planFor('slow-graying');
+    expect(slowGraying.core.some((tr) => String(tr.name).includes('Anti-Gray'))).toBe(true);
+    expect(slowGraying.supporting.some((tr) => String(tr.name).includes('Gray Serum'))).toBe(true);
+    expect(slowGraying.core.some((tr) => String(tr.name).includes('Density'))).toBe(false);
 
-    const both = planFor('both');
-    expect(both.core.some((tr) => String(tr.name).includes('Density'))).toBe(true);
-    expect(both.supporting.some((tr) => String(tr.name).includes('Gray Support'))).toBe(true);
-    expect(both.supporting.some((tr) => String(tr.name).includes('Gray Serum'))).toBe(true);
+    const stopLoss = planFor('stop-loss');
+    expect(stopLoss.core.some((tr) => String(tr.name).includes('Shampoo'))).toBe(true);
+
+    // Hair Growth is confirmed but not production-active — held, not shown, per client instruction.
+    const hairGrowth = planFor('hair-growth');
+    expect(hairGrowth.isStandard).toBe(false);
+    expect(hairGrowth.core).toHaveLength(0);
+    expect(hairGrowth.reviewMessage).toBeTruthy();
+
+    // Other → REQUIRES_REVIEW, no automatic product.
+    const other = planFor('other');
+    expect(other.isStandard).toBe(false);
+    expect(other.core).toHaveLength(0);
+    expect(other.reviewMessage).toBeTruthy();
   });
 
   it('collects every PENDING slot into model.pending', () => {

@@ -1,8 +1,7 @@
 import { rooteContent } from '@/content/roote.config';
 import { recommend } from '@/domain/recommendation/recommend';
 import { planKeysFor } from '@/domain/recommendation/planKeys';
-import type { Concern } from '@/domain/recommendation/types';
-import type { Gender, HairAnalysis } from '@/domain/analysis/types';
+import type { Answers, Gender, HairAnalysis, HairGoal } from '@/domain/analysis/types';
 import type { Program } from '@/domain/program/types';
 import type { MessageKey } from '@/i18n/messages';
 import { type LocaleCode, contentLocaleOf } from '@/i18n/locales';
@@ -21,21 +20,24 @@ export type ResolvedTreatment = {
 
 /**
  * Which `treatmentRegistry` keys this customer's program actually includes
- * (PO #15 — concern-branched: gray-only never gets Density, thinning never gets
- * Gray Support/Serum). Recomputed from the frozen `analysisSnapshot` + the
- * (effectively immutable, post-purchase) diagnosis rather than stored on
- * `Program`, so it stays derivable and never drifts from the recommendation engine.
+ * (Hair-Goal-branched, client-confirmed 2026-09-07). Recomputed from the frozen
+ * `analysisSnapshot` + the (effectively immutable, post-purchase) diagnosis
+ * rather than stored on `Program`, so it stays derivable and never drifts from
+ * the recommendation engine.
  */
 export function planKeysForProgram(
-  diagnosis: { concern: Concern | null; gender: Gender | null },
+  diagnosis: { hairGoal: HairGoal | null; gender: Gender | null; answers: Partial<Answers> },
   analysis: HairAnalysis | null,
 ): { core: string[]; supporting: string[] } {
   if (!analysis || !diagnosis.gender) return { core: [], supporting: [] };
   const outcome = recommend({
-    concern: diagnosis.concern ?? 'thinning',
+    hairGoal: diagnosis.hairGoal ?? 'other',
     gender: diagnosis.gender,
+    scale: analysis.scale,
+    stage: analysis.stage,
     severityBand: analysis.severityBand,
     planEmphasis: analysis.planEmphasis,
+    progression: diagnosis.answers.q13_progression ?? 'gradual',
     recommendedDurationDays: analysis.recommendedDurationDays,
   });
   return planKeysFor(outcome);

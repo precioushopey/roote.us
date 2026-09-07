@@ -16,7 +16,7 @@ function seed(daysAgo = 20) {
   localStorage.setItem(
     'roote.session',
     JSON.stringify({
-      diagnosis: { gender: 'male', concern: 'thinning', photos: [], answers: {}, grayAnswers: {}, photoConsent: true },
+      diagnosis: { gender: 'male', hairGoal: 'stop-loss', photos: [], answers: {}, grayAnswers: {}, healthHistory: ['none'], photoConsent: true },
       analysis: null, grayProfile: null, reportId: 'rep-1', account: { email: 'demo@roote.us' },
       program: {
         orderId: 'ord-1', reportId: 'rep-1', durationDays: 180,

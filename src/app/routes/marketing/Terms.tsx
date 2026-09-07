@@ -2,11 +2,7 @@ import { Link } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
-import { Section } from '@/app/components/marketing/Section';
-import { DISPLAY_CLAMP } from '@/app/components/marketing/displayScale';
-import { DisplayHeading } from '@/app/components/marketing/DisplayHeading';
-import { SectionHeading } from '@/app/components/marketing/SectionHeading';
-import { Prose } from '@/app/components/marketing/Prose';
+import { Section, DisplayTitle, Prose, Eyebrow, LegalNotice } from '@/app/components/roote';
 import { CompanyDetails } from '@/app/components/marketing/CompanyDetails';
 
 const SECTION_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6'] as const;
@@ -16,44 +12,45 @@ export function Terms() {
   const withLocale = useLocalizedPath();
   return (
     <>
-      <Section tone="ink" className="overflow-hidden pt-28 text-center md:pt-32">
-        <div className="relative flex flex-col items-center">
-          <div
-            aria-hidden
-            className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[85%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl"
-          />
-          <DisplayHeading as="h1" clamp={DISPLAY_CLAMP} onInk text={t('marketing.legal.terms.title')} className="mx-auto max-w-3xl uppercase" />
-          <p className="mt-3 text-xs text-ink-foreground/60">
-            {t('marketing.legal.updated')}: {rooteContent.company.legalUpdated}
-          </p>
-        </div>
+      <Section tone="teal" width="content" animate={false} className="text-center">
+        <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+          {t('marketing.footer.legal')}
+        </Eyebrow>
+        <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto mt-2 max-w-2xl">
+          {t('marketing.legal.terms.title')}
+        </DisplayTitle>
+        <p className="mt-3 font-body text-xs text-cream-100/60">
+          {t('marketing.legal.updated')}: {rooteContent.company.legalUpdated}
+        </p>
       </Section>
 
-      <Section>
+      <Section tone="cream" width="content">
         <div className="mx-auto flex max-w-3xl flex-col gap-10">
           {SECTION_KEYS.map((s, i) => (
-            <div key={s} className="border-b border-border pb-8 last:border-b-0">
-              <div className="flex items-baseline gap-3">
-                <span aria-hidden className="text-sm tracking-[0.18em] text-accent">0{i + 1}</span>
-                <p className="font-display text-lg font-medium">{t(`marketing.legal.terms.${s}` as MessageKey)}</p>
+            <div key={s} className="flex gap-4 border-b border-border pb-8 last:border-b-0">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-500 font-display text-sm text-accent">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <p className="font-display text-lg font-medium text-foreground">{t(`marketing.legal.terms.${s}` as MessageKey)}</p>
+                <Prose className="mt-3">{t(`marketing.legal.terms.${s}.body` as MessageKey)}</Prose>
+                {s === 's4' && (
+                  <Prose className="mt-2">
+                    <Link to={withLocale('/terms-of-sale')} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>
+                  </Prose>
+                )}
               </div>
-              <Prose className="mt-3">{t(`marketing.legal.terms.${s}.body` as MessageKey)}</Prose>
-              {s === 's4' && (
-                <Prose className="mt-2">
-                  <Link to={withLocale('/terms-of-sale')} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>
-                </Prose>
-              )}
             </div>
           ))}
         </div>
       </Section>
 
-      <Section tone="ink">
+      <Section tone="teal" width="content">
         <div className="mx-auto flex max-w-3xl flex-col gap-6">
-          <SectionHeading onInk clamp={DISPLAY_CLAMP}>{t('marketing.legal.company.title')}</SectionHeading>
-          <Prose onInk>{t('marketing.legal.company.intro')}</Prose>
+          <DisplayTitle as="h2" step="md" onDark>{t('marketing.legal.company.title')}</DisplayTitle>
+          <Prose onDark>{t('marketing.legal.company.intro')}</Prose>
           <CompanyDetails onInk />
-          <Prose onInk className="text-xs">{t('marketing.legal.company.reviewNote')}</Prose>
+          <LegalNotice reviewRequired>{t('marketing.legal.company.reviewNote')}</LegalNotice>
         </div>
       </Section>
     </>

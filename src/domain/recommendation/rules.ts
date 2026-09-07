@@ -1,81 +1,121 @@
-import type { DensityTier, RecommendationRule } from './types';
-import type { SeverityBand } from '@/domain/analysis/types';
+import type { RecommendationRule } from './types';
+import { hairGrowthTierFor } from './hairGrowthTable';
 
 /**
- * PLACEHOLDER recommendation rules (brief §14). Configurable data, not logic
- * buried in components. Every Density outcome carries `requiresMedicalReview`
- * and an `eligibilityStatus` of `requires-review`; the engine never returns
- * `density-15` — the intensive concept is added only at a clinician/pharmacy
- * review step that this shape leaves room for.
+ * Recommendation rules, keyed by Hair Goal (client-confirmed 2026-09-07 — see
+ * `docs/superpowers/specs/2026-09-07-hair-goal-recommendation-alignment-design.md`
+ * if present, else the Ilay/Marwell thread). Each goal maps to one internal
+ * recommendation key; the *customer-facing* product name lives in
+ * `content/roote.config.ts`'s `treatmentRegistry`, and the final commercial
+ * SKU/branding is explicitly still open — keep the two separate (client instruction).
  *
- * These outcomes are NOT medical advice and MUST be replaced with a
- * clinically- and legally-approved rule set before launch.
+ *   thicker-fuller → ROOTE_DENSITY_SERUM      → 'density-serum'
+ *   slow-graying   → ROOTE_ANTI_GRAY_CAPSULES → 'gray-support' (+ 'gray-serum' companion)
+ *   stop-loss      → ROOTE_STOP_LOSS_SHAMPOO  → 'regrowth-shampoo'
+ *   hair-growth    → ROOTE_HAIR_GROWTH_06/10/15 → 'density-6' / '-10' / '-15' (gated, see below)
+ *   other          → REQUIRES_REVIEW, no product (client instruction — do not guess)
  */
-export const RECOMMENDATION_RULESET_STATUS = 'placeholder' as const;
-
-/** Auto-suggestable starting tier by severity — capped at density-10 on purpose. */
-const TIER_BY_SEVERITY: Record<SeverityBand, DensityTier> = {
-  mild: 'density-6',
-  moderate: 'density-10',
-  established: 'density-10',
-};
-
-const REGROWTH_SHAMPOO = 'regrowth-shampoo';
-const GRAY_SUPPORT = 'gray-support';
-const GRAY_SERUM = 'gray-serum';
+export const RECOMMENDATION_RULESET_STATUS = 'client-confirmed-2026-09-07' as const;
 
 export const RECOMMENDATION_RULES: RecommendationRule[] = [
   {
-    id: 'gray-only',
-    note: 'Pigmentation concern with no thinning — cosmetic/supplement routine, no Rx component.',
-    when: (i) => i.concern === 'gray',
+    id: 'thicker-fuller-density-serum',
+    note: 'Thicker/Fuller Hair goal → Root Density Serum. Not tiered, not the Hair Growth product.',
+    when: (i) => i.hairGoal === 'thicker-fuller',
     outcome: () => ({
-      programKind: 'gray',
-      densityTier: null,
-      supportingProductKeys: [GRAY_SUPPORT, GRAY_SERUM],
+      status: 'standard',
+      coreProductKey: 'density-serum',
+      supportingProductKeys: ['derma-stim'],
+      productionActive: true,
+      hairGrowthTier: null,
       requiresMedicalReview: false,
-      eligibilityStatus: 'not-required',
-      strongerTierNote: false,
-      rationaleKey: 'recommend.rationale.grayOnly',
+      rationaleKey: 'recommend.rationale.thickerFuller',
     }),
   },
   {
-    id: 'both-thinning-and-gray',
-    note: 'Both concerns — Complete program: Density component (review-gated) + gray routine.',
-    when: (i) => i.concern === 'both',
-    outcome: (i) => ({
-      programKind: 'complete',
-      densityTier: TIER_BY_SEVERITY[i.severityBand],
-      supportingProductKeys: [REGROWTH_SHAMPOO, GRAY_SUPPORT, GRAY_SERUM],
-      requiresMedicalReview: true,
-      eligibilityStatus: 'requires-review',
-      strongerTierNote: i.severityBand === 'established',
-      rationaleKey: 'recommend.rationale.both',
+    id: 'slow-graying-anti-gray-capsules',
+    note: 'Slow Hair Graying goal → Anti-Gray Capsules (core) + gray serum companion.',
+    when: (i) => i.hairGoal === 'slow-graying',
+    outcome: () => ({
+      status: 'standard',
+      coreProductKey: 'gray-support',
+      supportingProductKeys: ['gray-serum'],
+      productionActive: true,
+      hairGrowthTier: null,
+      requiresMedicalReview: false,
+      rationaleKey: 'recommend.rationale.slowGraying',
     }),
   },
   {
-    id: 'thinning-by-severity',
-    note: 'Thinning concern — Density program; starting tier suggested by severity, capped at 10.',
-    when: (i) => i.concern === 'thinning',
-    outcome: (i) => ({
-      programKind: 'density',
-      densityTier: TIER_BY_SEVERITY[i.severityBand],
-      supportingProductKeys: [REGROWTH_SHAMPOO],
-      requiresMedicalReview: true,
-      eligibilityStatus: 'requires-review',
-      strongerTierNote: i.severityBand === 'established',
-      rationaleKey: 'recommend.rationale.thinning',
+    id: 'stop-loss-shampoo',
+    note: 'Stop Hair Loss goal → the ROOTÉ shampoo. Separate from the Hair Growth treatment family.',
+    when: (i) => i.hairGoal === 'stop-loss',
+    outcome: () => ({
+      status: 'standard',
+      coreProductKey: 'regrowth-shampoo',
+      supportingProductKeys: [],
+      productionActive: true,
+      hairGrowthTier: null,
+      requiresMedicalReview: false,
+      rationaleKey: 'recommend.rationale.stopLoss',
+    }),
+  },
+  {
+    id: 'hair-growth-strength',
+    note: 'Hair Growth goal → M1-M5/F1-F4 strength tier. Gender=unspecified has no pattern set '
+      + '(client rule 4) → REQUIRES_REVIEW. Otherwise confirmed but production_active=false '
+      + '(client rule 2) → the tier is computed and carried on the outcome for traceability, '
+      + 'but never surfaced as a product recommendation yet.',
+    when: (i) => i.hairGoal === 'hair-growth',
+    outcome: (i) => {
+      const tier = hairGrowthTierFor(i.gender, i.stage);
+      if (!tier) {
+        return {
+          status: 'requires-review',
+          coreProductKey: null,
+          supportingProductKeys: [],
+          productionActive: false,
+          hairGrowthTier: null,
+          requiresMedicalReview: false,
+          rationaleKey: 'recommend.rationale.hairGrowthReview',
+        };
+      }
+      return {
+        status: 'standard',
+        // Confirmed but not production-active — never shown as a live core item.
+        coreProductKey: null,
+        supportingProductKeys: [],
+        productionActive: false,
+        hairGrowthTier: tier,
+        requiresMedicalReview: false,
+        rationaleKey: 'recommend.rationale.hairGrowthPending',
+      };
+    },
+  },
+  {
+    id: 'other-requires-review',
+    note: 'Hair Goal = Other → REQUIRES_REVIEW, no automatic product (client instruction). '
+      + 'The questionnaire, AI analysis, and general results still complete normally.',
+    when: (i) => i.hairGoal === 'other',
+    outcome: () => ({
+      status: 'requires-review',
+      coreProductKey: null,
+      supportingProductKeys: [],
+      productionActive: true,
+      hairGrowthTier: null,
+      requiresMedicalReview: false,
+      rationaleKey: 'recommend.rationale.other',
     }),
   },
 ];
 
-/** Defensive fallback if no rule matches (should be unreachable). */
+/** Defensive fallback if no rule matches (should be unreachable — HairGoal is exhaustive). */
 export const RECOMMENDATION_FALLBACK: RecommendationRule['outcome'] = () => ({
-  programKind: 'gray',
-  densityTier: null,
-  supportingProductKeys: [GRAY_SUPPORT],
+  status: 'requires-review',
+  coreProductKey: null,
+  supportingProductKeys: [],
+  productionActive: true,
+  hairGrowthTier: null,
   requiresMedicalReview: false,
-  eligibilityStatus: 'not-required',
-  strongerTierNote: false,
   rationaleKey: 'recommend.rationale.fallback',
 });

@@ -5,7 +5,6 @@
  * reach into content config or i18n for domain content themselves.
  */
 
-export { StrandMark } from './StrandMark';
 export { Button, IconButton, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
 export { Card, GlassCard } from './Surface';
 export { Eyebrow, DisplayTitle, Prose, TextLink } from './Text';

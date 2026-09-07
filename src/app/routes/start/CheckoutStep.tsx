@@ -7,7 +7,7 @@ import { recommend } from '@/domain/recommendation/recommend';
 import { rooteContent } from '@/content/roote.config';
 import { isPending } from '@/content/pending';
 import { pickLocalized } from '@/content/localized';
-import { CONCERN_OPTIONS } from '@/content/assessment';
+import { HAIR_GOAL_OPTIONS } from '@/content/assessment';
 import { PendingChip, LegalNotice } from '@/app/components/roote';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type ProgramOrder, type Contact, type CardRef } from '@/store/checkout';
@@ -39,13 +39,16 @@ export function CheckoutStep() {
   const rec = useMemo(() => {
     if (!session.analysis || !session.diagnosis.gender) return null;
     return recommend({
-      concern: session.diagnosis.concern ?? 'thinning',
+      hairGoal: session.diagnosis.hairGoal ?? 'other',
       gender: session.diagnosis.gender,
+      scale: session.analysis.scale,
+      stage: session.analysis.stage,
       severityBand: session.analysis.severityBand,
       planEmphasis: session.analysis.planEmphasis,
+      progression: session.diagnosis.answers.q13_progression ?? 'gradual',
       recommendedDurationDays: session.analysis.recommendedDurationDays,
     });
-  }, [session.analysis, session.diagnosis.concern, session.diagnosis.gender]);
+  }, [session.analysis, session.diagnosis.hairGoal, session.diagnosis.gender, session.diagnosis.answers.q13_progression]);
 
   const days = (session.draftDurationDays ?? model?.recommendedDuration.days) as ProgramDurationDays | undefined;
   const row = model?.pricing.compareAll.find((r) => r.days === days);
@@ -55,7 +58,7 @@ export function CheckoutStep() {
 
   if (!model || !days || !row) return null;
 
-  const concern = CONCERN_OPTIONS.find((c) => c.value === (session.diagnosis.concern ?? 'thinning'));
+  const goal = HAIR_GOAL_OPTIONS.find((g) => g.value === (session.diagnosis.hairGoal ?? 'other'));
   const includes = [
     ...model.plan.core.map((c) => (isPending(c.name) ? t('app.task.pendingName') : c.name)),
     ...model.plan.supporting.map((s) => (isPending(s.name) ? t('app.task.pendingName') : s.name)),
@@ -100,7 +103,7 @@ export function CheckoutStep() {
         <dl className="mt-3 flex flex-col gap-2 font-body text-sm">
           <div className="flex justify-between gap-4">
             <dt className="text-muted-foreground">{t('program.checkout.recommendedFor')}</dt>
-            <dd className="text-end text-foreground">{concern ? pickLocalized(concern.title, cl) : '—'}</dd>
+            <dd className="text-end text-foreground">{goal ? pickLocalized(goal.title, cl) : '—'}</dd>
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-muted-foreground">{t('start.plan.durationLegend')}</dt>

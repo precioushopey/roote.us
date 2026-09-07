@@ -14,8 +14,8 @@ export const HOME_FAQS: Faq[] = [
     id: 'how-analysis-works',
     q: L('How does the free hair analysis work?', 'איך עובד אבחון השיער החינמי?'),
     a: L(
-      'You answer a short set of questions and upload four guided photos. ROOTÉ organizes what is visible into a hair profile and suggests a personalized program to consider. It takes a few minutes and there is no commitment.',
-      'עונים על סדרת שאלות קצרה ומעלים ארבע תמונות מודרכות. ROOTÉ מארגן את מה שנראה לעין לפרופיל שיער ומציע תוכנית אישית לשקול. זה לוקח כמה דקות וללא התחייבות.',
+      'You answer a short set of questions and upload four guided photos. We organize what is visible into a hair profile and suggest a personalized program to consider. It takes a few minutes and there is no commitment.',
+      'עונים על סדרת שאלות קצרה ומעלים ארבע תמונות מודרכות. אנו מארגנים את מה שנראה לעין לפרופיל שיער ומציעים תוכנית אישית לשקול. זה לוקח כמה דקות וללא התחייבות.',
     ),
   },
   {
@@ -57,10 +57,10 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     id: 'progress',
-    q: L('How does ROOTÉ Progress work?', 'איך עובד מעקב ROOTÉ?'),
+    q: L('How does progress tracking work?', 'איך עובד מעקב ההתקדמות?'),
     a: L(
-      'After you start a program, My ROOTÉ tracks your daily routine and stores your check-in photos and scans, so you can compare from your baseline scan to your final scan.',
-      'לאחר תחילת התוכנית, "ROOTÉ שלי" עוקב אחר השגרה היומית ושומר את תמונות המעקב והסריקות, כדי שתוכל/י להשוות מהסריקה הראשונה ועד הסופית.',
+      'After you start a program, your account tracks your daily routine and stores your check-in photos and scans, so you can compare from your baseline scan to your final scan.',
+      'לאחר תחילת התוכנית, החשבון שלך עוקב אחר השגרה היומית ושומר את תמונות המעקב והסריקות, כדי שתוכל/י להשוות מהסריקה הראשונה ועד הסופית.',
     ),
   },
   {
@@ -109,7 +109,7 @@ export const HOME_FAQS: Faq[] = [
 export const PRODUCT_FAQS_COMMON: Faq[] = [
   {
     id: 'how-it-fits',
-    q: L('How does this fit my ROOTÉ program?', 'איך זה משתלב בתוכנית ROOTÉ שלי?'),
+    q: L('How does this fit my program?', 'איך זה משתלב בתוכנית שלי?'),
     a: L('Your program lists exactly which products to use and when. This page explains the product on its own.', 'התוכנית שלך מפרטת בדיוק באילו מוצרים להשתמש ומתי. עמוד זה מסביר את המוצר עצמו.'),
   },
   {

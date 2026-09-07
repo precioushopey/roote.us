@@ -36,8 +36,8 @@ function buildScaleStrip(scale: HairAnalysis['scale'], stage: number) {
 }
 
 export function buildReport(input: {
-  /** photos for the gallery; gender + concern branch which treatments the plan shows (PO #15) */
-  diagnosis: Pick<SessionState['diagnosis'], 'photos' | 'gender' | 'concern'>;
+  /** photos for the gallery; gender + Hair Goal branch which treatments the plan shows */
+  diagnosis: Pick<SessionState['diagnosis'], 'photos' | 'gender' | 'hairGoal' | 'answers'>;
   analysis: HairAnalysis;
   content: typeof rooteContent;
   locale: Locale;
@@ -48,20 +48,34 @@ export function buildReport(input: {
   const { diagnosis, analysis, content, locale, reportId, assets = {} } = input;
   const dir: 'ltr' | 'rtl' = locale === 'he' ? 'rtl' : 'ltr';
 
-  // Concern-branched product set (PO #15): gray-only never gets Density, thinning
-  // never gets Gray Support/Serum, "both" gets everything. `gender` only feeds the
-  // packaging theme downstream — never the product set itself.
+  // Hair-Goal-branched product set (client-confirmed 2026-09-07): each goal maps
+  // to exactly one core product family; `gender` also feeds the Hair Growth
+  // strength table (client rule) in addition to the packaging theme downstream.
   const outcome = diagnosis.gender
     ? recommend({
-        concern: diagnosis.concern ?? 'thinning',
+        hairGoal: diagnosis.hairGoal ?? 'other',
         gender: diagnosis.gender,
+        scale: analysis.scale,
+        stage: analysis.stage,
         severityBand: analysis.severityBand,
         planEmphasis: analysis.planEmphasis,
+        progression: diagnosis.answers.q13_progression ?? 'gradual',
         recommendedDurationDays: analysis.recommendedDurationDays,
       })
     : null;
-  const planKeys = outcome ? planKeysFor(outcome) : planKeysFor({ densityTier: 'density-10', supportingProductKeys: ['regrowth-shampoo'] });
+  const planKeys = outcome ? planKeysFor(outcome) : planKeysFor({ coreProductKey: null, supportingProductKeys: [] });
   const treatmentDef = (key: string) => content.treatmentRegistry[key];
+
+  const isStandard = outcome !== null && outcome.status === 'standard' && outcome.productionActive;
+  const reviewMessage = isStandard
+    ? null
+    : outcome === null
+      ? null
+      : outcome.status === 'professional-review-recommended'
+        ? t(locale, 'report.plan.review.professional')
+        : outcome.status === 'requires-review'
+          ? t(locale, 'report.plan.review.requiresReview')
+          : t(locale, 'report.plan.review.pendingApproval'); // standard status, just not production-active yet
 
   const scaleLabel = t(locale, `scale.${analysis.scale}.label`);
   const scaleLine = t(locale, 'ready.teaser', {
@@ -311,7 +325,7 @@ export function buildReport(input: {
     analysis: { scaleLabel, scaleStrip, flagged, densityMap, metrics },
     hairLossType,
     currentSituation,
-    plan: { matchedToScanBadge: matchedBadge, labels: planLabels, core, supporting, formula },
+    plan: { isStandard, reviewMessage, matchedToScanBadge: matchedBadge, labels: planLabels, core, supporting, formula },
     regimen,
     actives,
     expect: expect_,

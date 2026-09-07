@@ -3,7 +3,7 @@ import { redirectForStartStep } from './guards';
 import type { SessionState } from '@/store/sessionStore';
 
 const base: SessionState = {
-  diagnosis: { gender: null, concern: null, photos: [], answers: {}, grayAnswers: {}, photoConsent: false },
+  diagnosis: { gender: null, hairGoal: null, photos: [], answers: {}, grayAnswers: {}, healthHistory: [], photoConsent: false },
   analysis: null,
   reportId: 'rep-1',
   account: { email: null, marketingConsent: false },

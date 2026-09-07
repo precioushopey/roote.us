@@ -1,8 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
 import { lsGet, lsSet } from './persistence';
-import type { HairAnalysis, Gender, Answers } from '@/domain/analysis/types';
+import type { HairAnalysis, Gender, HairGoal, HealthCondition, Answers } from '@/domain/analysis/types';
 import type { GrayAnswers, GrayProfile } from '@/domain/analysis/grayProfile';
-import type { Concern } from '@/domain/recommendation/types';
 import type { Program, ProgramDurationDays, ProgressPhoto, Reminder } from '@/domain/program/types';
 
 export type AngleKey = 'front' | 'top' | 'crown' | 'hairline';
@@ -13,10 +12,12 @@ export type SessionState = {
     gender: Gender | null;
     /** packaging look chosen when gender is 'unspecified' (PO #24) — presentation only */
     packagingPreference?: 'men' | 'women';
-    concern: Concern | null;
+    hairGoal: HairGoal | null;
     photos: PhotoRef[];
     answers: Partial<Answers>;
     grayAnswers: Partial<GrayAnswers>;
+    /** client-confirmed multi-select, None-exclusive (enforced in `setHealthHistory`) */
+    healthHistory: HealthCondition[];
     /** explicit photo-upload consent (brief §26) */
     photoConsent: boolean;
   };
@@ -30,7 +31,9 @@ export type SessionState = {
 };
 
 const EMPTY: SessionState = {
-  diagnosis: { gender: null, concern: null, photos: [], answers: {}, grayAnswers: {}, photoConsent: false },
+  diagnosis: {
+    gender: null, hairGoal: null, photos: [], answers: {}, grayAnswers: {}, healthHistory: [], photoConsent: false,
+  },
   analysis: null,
   grayProfile: null,
   reportId: null,
@@ -43,12 +46,13 @@ type Action =
   | { type: 'HYDRATE'; state: SessionState }
   | { type: 'SET_GENDER'; gender: Gender }
   | { type: 'SET_PACKAGING_PREFERENCE'; value: 'men' | 'women' }
-  | { type: 'SET_CONCERN'; concern: Concern }
+  | { type: 'SET_HAIR_GOAL'; hairGoal: HairGoal }
   | { type: 'SET_MARKETING_CONSENT'; value: boolean }
   | { type: 'ADD_PHOTO'; photo: PhotoRef }
   | { type: 'REMOVE_PHOTO'; id: string }
   | { type: 'SET_ANSWER'; key: keyof Answers; value: Answers[keyof Answers] }
   | { type: 'SET_GRAY_ANSWER'; key: keyof GrayAnswers; value: GrayAnswers[keyof GrayAnswers] }
+  | { type: 'TOGGLE_HEALTH_HISTORY'; value: HealthCondition }
   | { type: 'SET_PHOTO_CONSENT'; value: boolean }
   | { type: 'SET_ANALYSIS'; analysis: HairAnalysis }
   | { type: 'SET_GRAY_PROFILE'; profile: GrayProfile }
@@ -69,8 +73,20 @@ function reducer(state: SessionState, action: Action): SessionState {
       return { ...state, diagnosis: { ...state.diagnosis, gender: action.gender } };
     case 'SET_PACKAGING_PREFERENCE':
       return { ...state, diagnosis: { ...state.diagnosis, packagingPreference: action.value } };
-    case 'SET_CONCERN':
-      return { ...state, diagnosis: { ...state.diagnosis, concern: action.concern } };
+    case 'SET_HAIR_GOAL':
+      return { ...state, diagnosis: { ...state.diagnosis, hairGoal: action.hairGoal } };
+    case 'TOGGLE_HEALTH_HISTORY': {
+      const current = state.diagnosis.healthHistory;
+      // Client rule: "None" clears every other condition; picking any other
+      // condition automatically un-selects "None." Directional, so this has to
+      // know which value was just clicked — a plain set-union can't express it.
+      const next = action.value === 'none'
+        ? (current.includes('none') ? [] : ['none' as const])
+        : current.includes(action.value)
+          ? current.filter((v) => v !== action.value && v !== 'none')
+          : [...current.filter((v) => v !== 'none'), action.value];
+      return { ...state, diagnosis: { ...state.diagnosis, healthHistory: next } };
+    }
     case 'SET_MARKETING_CONSENT':
       return { ...state, account: { ...state.account, marketingConsent: action.value } };
     case 'SET_GRAY_ANSWER':
@@ -152,12 +168,13 @@ const SessionContext = createContext<
   (SessionState & {
     setGender: (g: Gender) => void;
     setPackagingPreference: (value: 'men' | 'women') => void;
-    setConcern: (c: Concern) => void;
+    setHairGoal: (goal: HairGoal) => void;
     setMarketingConsent: (value: boolean) => void;
     addPhoto: (p: PhotoRef) => void;
     removePhoto: (id: string) => void;
     setAnswer: <K extends keyof Answers>(key: K, value: Answers[K]) => void;
     setGrayAnswer: <K extends keyof GrayAnswers>(key: K, value: GrayAnswers[K]) => void;
+    toggleHealthHistory: (value: HealthCondition) => void;
     setPhotoConsent: (value: boolean) => void;
     setAnalysis: (a: HairAnalysis) => void;
     setGrayProfile: (p: GrayProfile) => void;
@@ -200,7 +217,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setGender: (gender: Gender) => dispatch({ type: 'SET_GENDER', gender }),
       setPackagingPreference: (value: 'men' | 'women') =>
         dispatch({ type: 'SET_PACKAGING_PREFERENCE', value }),
-      setConcern: (concern: Concern) => dispatch({ type: 'SET_CONCERN', concern }),
+      setHairGoal: (hairGoal: HairGoal) => dispatch({ type: 'SET_HAIR_GOAL', hairGoal }),
       setMarketingConsent: (value: boolean) => dispatch({ type: 'SET_MARKETING_CONSENT', value }),
       addPhoto: (photo: PhotoRef) => dispatch({ type: 'ADD_PHOTO', photo }),
       removePhoto: (id: string) => dispatch({ type: 'REMOVE_PHOTO', id }),
@@ -208,6 +225,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         dispatch({ type: 'SET_ANSWER', key, value }),
       setGrayAnswer: <K extends keyof GrayAnswers>(key: K, value: GrayAnswers[K]) =>
         dispatch({ type: 'SET_GRAY_ANSWER', key, value }),
+      toggleHealthHistory: (value: HealthCondition) => dispatch({ type: 'TOGGLE_HEALTH_HISTORY', value }),
       setPhotoConsent: (value: boolean) => dispatch({ type: 'SET_PHOTO_CONSENT', value }),
       setAnalysis: (analysis: HairAnalysis) => dispatch({ type: 'SET_ANALYSIS', analysis }),
       setGrayProfile: (profile: GrayProfile) => dispatch({ type: 'SET_GRAY_PROFILE', profile }),

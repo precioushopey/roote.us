@@ -16,8 +16,24 @@ import {
 import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getProduct } from '@/content/products';
+import type { ClaimStatus } from '@/content/claims';
 import { PRODUCT_FAQS_COMMON } from '@/content/faqs';
 import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
+import level6 from '@/assets/images/Level 6.png';
+import level10 from '@/assets/images/Level 10.png';
+import level15 from '@/assets/images/Level 15.png';
+import graySupport from '@/assets/images/Gray Support.png';
+import regrowthShampoo from '@/assets/images/Regrowth Shampoo.png';
+import graySerum from '@/assets/images/Gray Serum.png';
+
+const PRODUCT_PHOTOS: Record<string, string> = {
+  'density-6': level6,
+  'density-10': level10,
+  'density-15': level15,
+  'gray-support': graySupport,
+  'regrowth-shampoo': regrowthShampoo,
+  'gray-serum': graySerum,
+};
 
 /** Product page template (brief §20). Secondary to the assessment — the primary
  *  action is always "Start free hair analysis". */
@@ -27,6 +43,11 @@ export function ProductDetail() {
   const cl = useContentLocale();
   const withLocale = useLocalizedPath();
   const product = slug ? getProduct(slug) : undefined;
+  const statusLabel: Record<ClaimStatus, string> = {
+    approved: t('marketing.sci.status.approved'),
+    working: t('marketing.sci.status.working'),
+    'requires-review': t('marketing.sci.status.requiresReview'),
+  };
 
   if (!product) return <PagePlaceholder title="Product" body="This product could not be found." />;
 
@@ -61,14 +82,26 @@ export function ProductDetail() {
     <>
       <Section tone="teal" width="content" animate={false}>
         <div className="grid items-start gap-10 lg:grid-cols-2">
-          <MediaPlaceholder
-            tone={product.concern === 'gray' || product.concern === 'gray-support' ? 'cream' : 'card'}
-            ratio="1"
-            alt={`${product.name} packaging`}
-            label={`${product.name} — product photography, ${product.requiresMedicalReview ? 'dark-teal' : 'cream'} packaging`}
-          />
+          {PRODUCT_PHOTOS[product.slug] ? (
+            <div className="aspect-square w-full rounded-2xl border border-gold-500 bg-white p-8">
+              <img
+                src={PRODUCT_PHOTOS[product.slug]}
+                alt={`${product.name} packaging`}
+                className="h-full w-full object-contain"
+              />
+            </div>
+          ) : (
+            <MediaPlaceholder
+              tone={product.concern === 'gray' || product.concern === 'gray-support' ? 'cream' : 'card'}
+              ratio="1"
+              alt={`${product.name} packaging`}
+              label={`${product.name} — product photography, ${product.requiresMedicalReview ? 'dark-teal' : 'cream'} packaging`}
+            />
+          )}
           <div className="flex flex-col items-start gap-4">
-            <Eyebrow onDark>{pickLocalized(product.subtitle, cl)}</Eyebrow>
+            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+              {pickLocalized(product.subtitle, cl)}
+            </Eyebrow>
             <DisplayTitle as="h1" step="md" onDark>
               {product.name}
             </DisplayTitle>
@@ -107,6 +140,7 @@ export function ProductDetail() {
                   name={ing.name}
                   note={pickLocalized(ing.note, cl)}
                   status={ing.claimStatus}
+                  statusLabel={statusLabel[ing.claimStatus]}
                 />
               ))}
             </div>
@@ -136,13 +170,14 @@ export function ProductDetail() {
                 reviewRequired={p.requiresMedicalReview}
                 mediaAlt={`${p.name} packaging`}
                 mediaLabel={`${p.name} — product photography`}
+                image={PRODUCT_PHOTOS[p.slug]}
               />
             ))}
           </div>
         </Section>
       ) : null}
 
-      <Section tone="teal" width="readable" className="text-center">
+      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
         <DisplayTitle as="h2" step="lg" onDark align="center">
           {t('marketing.pdp.ctaHeading')}
         </DisplayTitle>

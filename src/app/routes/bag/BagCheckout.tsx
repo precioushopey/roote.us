@@ -6,9 +6,7 @@ import { findProduct } from '@/content/catalog';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type BagOrder, type Contact, type CardRef } from '@/store/checkout';
 import { recordOrder } from '@/store/orders';
-import { StrandMark } from '@/app/components/roote';
-import { Section } from '@/app/components/marketing/Section';
-import { SectionHeading } from '@/app/components/marketing/SectionHeading';
+import { Section, DisplayTitle } from '@/app/components/roote';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 
 export function BagCheckout() {
@@ -53,10 +51,10 @@ export function BagCheckout() {
   }
 
   return (
-    <Section className="pt-28 md:pt-32">
-      <SectionHeading as="h1" clamp="clamp(1.75rem, 7vw, 5rem)">
+    <Section tone="cream" className="pt-28 md:pt-32">
+      <DisplayTitle as="h1" step="xl">
         {t('bag.checkout.title')}
-      </SectionHeading>
+      </DisplayTitle>
 
       <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1fr]">
         <div className="flex flex-col gap-3">
@@ -74,9 +72,7 @@ export function BagCheckout() {
           <ul className="mt-4 flex flex-col divide-y divide-border">
             {lines.map(({ line, product }) => (
               <li key={line.sku} className="flex items-center gap-3 py-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-cream-100">
-                  <StrandMark size={18} className="text-accent" />
-                </span>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-cream-100" />
                 <div className="flex flex-1 flex-col">
                   <span className="text-sm">{product.name}</span>
                   <span className="text-xs text-muted-foreground">{t('bag.checkout.qty', { qty: String(line.qty) })}</span>

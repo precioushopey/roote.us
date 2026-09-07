@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
-import { Modal, Button, StrandMark } from '@/app/components/roote';
+import { Modal, Button } from '@/app/components/roote';
 import { track } from '@/analytics/analytics';
 import { PATHS } from '@/app/paths';
 
@@ -77,7 +77,6 @@ export function AnalysisPrompt() {
   return (
     <Modal open={open} onClose={dismiss} title={t('marketing.popup.title')} hideTitle>
       <div className="flex flex-col items-center gap-3 text-center">
-        <StrandMark size={36} className="text-accent" />
         <p className="font-body text-sm text-muted-foreground">{t('marketing.popup.eyebrow')}</p>
         <h2 className="font-display text-xl text-foreground">{t('marketing.popup.title')}</h2>
         <p className="max-w-sm font-body text-sm text-muted-foreground">{t('marketing.popup.body')}</p>

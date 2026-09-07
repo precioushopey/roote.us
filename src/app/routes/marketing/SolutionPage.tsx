@@ -7,7 +7,6 @@ import {
   Eyebrow,
   Button,
   Card,
-  MediaPlaceholder,
   ProductCard,
 } from '@/app/components/roote';
 import { PATHS } from '@/app/paths';
@@ -16,6 +15,13 @@ import { getSolution } from '@/content/solutions';
 import { getProduct } from '@/content/products';
 import { PROGRAMS } from '@/content/programs';
 import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
+import thinningHero from '@/assets/images/thinning-hero.png';
+import grayHairHero from '@/assets/images/gray-hair-hero.png';
+
+const SOLUTION_PHOTOS: Record<string, string> = {
+  thinning: thinningHero,
+  'gray-hair': grayHairHero,
+};
 
 /** Thinning + gray-hair solution pages (brief §18, §19). Educate → route to the
  *  assessment. Severity levels are an assessment visualization, never a tier map. */
@@ -39,7 +45,9 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
       <Section tone="teal" width="content" animate={false}>
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow onDark>{pickLocalized(solution.hero.eyebrow, cl)}</Eyebrow>
+            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+              {pickLocalized(solution.hero.eyebrow, cl)}
+            </Eyebrow>
             <DisplayTitle as="h1" step="lg" onDark>
               {pickLocalized(solution.hero.title, cl)}
             </DisplayTitle>
@@ -59,11 +67,10 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
               </Button>
             </div>
           </div>
-          <MediaPlaceholder
-            tone="cream"
-            ratio="4 / 3"
+          <img
+            src={SOLUTION_PHOTOS[solution.slug]}
             alt={solution.media[0].alt}
-            label={solution.media[0].label}
+            className="aspect-[4/3] w-full rounded-xl object-cover"
           />
         </div>
       </Section>
@@ -126,7 +133,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
       </Section>
 
       {/* closing CTA */}
-      <Section tone="teal" width="readable" className="text-center">
+      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
         <DisplayTitle as="h2" step="lg" onDark align="center">
           {t('marketing.sol.ctaHeading')}
         </DisplayTitle>
@@ -149,7 +156,9 @@ export function SolutionsIndex() {
   return (
     <>
       <Section tone="teal" width="content" animate={false} className="text-center">
-        <Eyebrow onDark>{t('marketing.nav.solutions')}</Eyebrow>
+        <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+          {t('marketing.nav.solutions')}
+        </Eyebrow>
         <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto mt-2 max-w-2xl">
           {t('marketing.sol.indexHeading')}
         </DisplayTitle>
@@ -161,7 +170,7 @@ export function SolutionsIndex() {
         <div className="grid gap-6 md:grid-cols-2">
           {solutions.map((s) => (
             <Card key={s.slug} padded={false} className="overflow-hidden">
-              <MediaPlaceholder tone="cream" ratio="16 / 9" rounded="none" alt={s.media[0].alt} label={s.media[0].label} />
+              <img src={SOLUTION_PHOTOS[s.slug]} alt={s.media[0].alt} className="aspect-video w-full object-cover" />
               <div className="p-6">
                 <h2 className="font-display text-lg text-foreground">{pickLocalized(s.hero.title, cl)}</h2>
                 <p className="mt-2 font-body text-sm text-muted-foreground">{pickLocalized(s.hero.body, cl)}</p>

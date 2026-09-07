@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider, Outlet } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { CartProvider } from '@/store/cart';
@@ -39,9 +39,10 @@ describe('WP4 marketing pages', () => {
     ]) {
       expect(screen.getByRole('heading', { name })).toBeInTheDocument();
     }
-    expect(screen.getAllByText('[PENDING: price]').length).toBe(6);
+    const catalogSection = screen.getByRole('heading', { name: 'Every product, in one place.' }).closest('section')!;
+    expect(within(catalogSection).getAllByText('[PENDING: price]').length).toBe(6);
     // cosmetic SKUs get an add-to-bag; Density SKUs get a review note instead
-    expect(screen.getAllByRole('button', { name: /add to bag|add/i }).length).toBe(3);
+    expect(within(catalogSection).getAllByRole('button', { name: /add to bag|add/i }).length).toBe(3);
   });
 
   it('Product detail: no invented price, review badge on Density', () => {
@@ -60,11 +61,6 @@ describe('WP4 marketing pages', () => {
     renderAt('/solutions/thinning');
     const ctas = screen.getAllByRole('link', { name: 'Start free hair analysis' });
     expect(ctas.some((c) => c.getAttribute('href') === '/en-us/analysis?concern=thinning')).toBe(true);
-  });
-
-  it('Results page is an honest empty state (no fabricated proof)', () => {
-    renderAt('/results');
-    expect(screen.getAllByText('Verified ROOTÉ results coming soon.').length).toBe(3);
   });
 
   it('no forbidden marketing claim renders on the rebuilt pages', () => {

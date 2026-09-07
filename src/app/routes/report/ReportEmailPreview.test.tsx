@@ -8,14 +8,14 @@ import { rooteContent } from '@/content/roote.config';
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import type { SessionState } from '@/store/sessionStore';
 
-const answers = { q1_area: 'hairline', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'no', q5_goal: 'both' } as const;
-const diagnosis: Pick<SessionState['diagnosis'], 'gender' | 'concern' | 'photos' | 'answers'> = {
+const answers = { q1_area: 'hairline', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'no', q13_progression: 'gradual' } as const;
+const diagnosis: Pick<SessionState['diagnosis'], 'gender' | 'hairGoal' | 'photos' | 'answers'> = {
   gender: 'male',
-  concern: 'thinning',
+  hairGoal: 'stop-loss',
   photos: [],
   answers,
 };
-const analysis = deriveAnalysis({ gender: 'male', answers });
+const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
 const model = buildReport({ diagnosis, analysis, content: rooteContent, locale: 'en', reportId: 'rep-3' });
 
 describe('ReportEmailPreview', () => {
@@ -27,7 +27,7 @@ describe('ReportEmailPreview', () => {
         </LocaleProvider>
       </MemoryRouter>,
     );
-    expect(screen.getByText('Your ROOTÉ Hair Analysis Report')).toBeInTheDocument();
+    expect(screen.getByText('Your Hair Analysis Report')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'View my full report' })).toHaveAttribute('href', `/report/${model.meta.reportId}`);
   });
 });

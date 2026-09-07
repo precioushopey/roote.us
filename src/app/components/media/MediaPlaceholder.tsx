@@ -43,22 +43,6 @@ const ROUND_CLASS = {
   none: '',
 } as const;
 
-/** The three-strand follicle mark — the recurring ROOTÉ motif, drawn once. */
-function StrandMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" className={className}>
-      <path
-        d="M24 44V26M24 26c0-9-6-14-6-20M24 26c0-9 6-14 6-20M24 26V6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        opacity="0.5"
-      />
-      <circle cx="24" cy="44" r="2.5" fill="currentColor" opacity="0.5" />
-    </svg>
-  );
-}
-
 /**
  * A labelled stand-in for a not-yet-supplied image / video / animation.
  * ROOTÉ never fetches or generates imagery — every future asset slot is a
@@ -87,7 +71,6 @@ export function MediaPlaceholder({
         className,
       )}
     >
-      <StrandMark className="h-10 w-10 shrink-0" />
       {isDev && (
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 p-4 text-center">
           <span className="text-2xs font-semibold uppercase tracking-[0.16em] opacity-70">

@@ -12,7 +12,8 @@ import { AccountRenew } from './AccountRenew';
 
 const ANALYSIS = deriveAnalysis({
   gender: 'male',
-  answers: { q1_area: 'crown', q2_onset: '1-5y', q3_prior: 'never', q4_family: 'yes', q5_goal: 'both' },
+  hairGoal: 'stop-loss',
+  answers: { q1_area: 'crown', q2_onset: '1-3y', q3_prior: 'never', q4_family: 'yes', q13_progression: 'gradual' },
 });
 const THUMB = 'data:image/png;base64,iVBORw0KGgo=';
 const iso = (offsetDays: number) => new Date(Date.now() + offsetDays * 86_400_000).toISOString().slice(0, 10);
@@ -22,7 +23,7 @@ function seed({ daysAgo = 60, withFinal = false }: { daysAgo?: number; withFinal
   localStorage.setItem(
     'roote.session',
     JSON.stringify({
-      diagnosis: { gender: 'male', concern: 'thinning', photos: [], answers: {}, grayAnswers: {}, photoConsent: true },
+      diagnosis: { gender: 'male', hairGoal: 'stop-loss', photos: [], answers: {}, grayAnswers: {}, healthHistory: ['none'], photoConsent: true },
       analysis: ANALYSIS,
       grayProfile: null,
       reportId: 'rep-1',

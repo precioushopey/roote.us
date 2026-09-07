@@ -54,7 +54,7 @@ export function LegalPageView({ slug: slugProp }: { slug?: string } = {}) {
       </ol>
 
       <p className="mt-10 border-t border-border pt-6 font-body text-xs text-muted-foreground">
-        {rooteContent.brand.name} is a brand of{' '}
+        A brand of{' '}
         <span dir="ltr">
           {company.legalName} · {company.address.join(', ')} · {company.support.email}
         </span>

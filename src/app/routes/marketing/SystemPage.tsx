@@ -30,7 +30,9 @@ export function SystemPage() {
   return (
     <>
       <Section tone="teal" width="content" animate={false} className="text-center">
-        <Eyebrow onDark>{t('marketing.nav.system')}</Eyebrow>
+        <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+          {t('marketing.nav.system')}
+        </Eyebrow>
         <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto mt-2 max-w-2xl">
           {t('marketing.sys.heading')}
         </DisplayTitle>
@@ -77,7 +79,7 @@ export function SystemPage() {
         </div>
       </Section>
 
-      <Section tone="teal" width="readable" className="text-center">
+      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
         <DisplayTitle as="h2" step="lg" onDark align="center">
           {t('marketing.sys.ctaHeading')}
         </DisplayTitle>

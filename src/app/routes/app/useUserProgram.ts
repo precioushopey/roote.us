@@ -43,8 +43,9 @@ export function useUserProgram(): UserProgramView | null {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     session.program,
-    session.diagnosis.concern,
+    session.diagnosis.hairGoal,
     session.diagnosis.gender,
+    session.diagnosis.answers.q13_progression,
     locale,
     today,
     tracking.taskLog,

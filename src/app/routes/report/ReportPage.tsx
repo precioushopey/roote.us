@@ -31,20 +31,23 @@ export function ReportPage() {
   const recommendation = useMemo(() => {
     if (!ready || !session.analysis || !session.diagnosis.gender) return null;
     return recommend({
-      concern: session.diagnosis.concern ?? 'thinning',
+      hairGoal: session.diagnosis.hairGoal ?? 'other',
       gender: session.diagnosis.gender,
+      scale: session.analysis.scale,
+      stage: session.analysis.stage,
       severityBand: session.analysis.severityBand,
       planEmphasis: session.analysis.planEmphasis,
+      progression: session.diagnosis.answers.q13_progression ?? 'gradual',
       recommendedDurationDays: session.analysis.recommendedDurationDays,
     });
-  }, [ready, session.analysis, session.diagnosis.concern, session.diagnosis.gender]);
+  }, [ready, session.analysis, session.diagnosis.hairGoal, session.diagnosis.gender, session.diagnosis.answers.q13_progression]);
 
   if (!model) return <ReportNotFound />;
 
   return (
     <ReportView
       model={model}
-      grayProfile={session.diagnosis.concern === 'gray' || session.diagnosis.concern === 'both' ? session.grayProfile : null}
+      grayProfile={session.diagnosis.hairGoal === 'slow-graying' ? session.grayProfile : null}
       recommendation={recommendation}
     />
   );
