@@ -53,6 +53,9 @@ export function Header() {
       )}
     >
       <div
+        // Header chrome stays in a fixed left-nav / right-menu arrangement in
+        // every locale — only page content mirrors for RTL, not this bar.
+        dir="ltr"
         className={cn(
           'relative mx-auto flex max-w-[80rem] items-center gap-4 px-6 md:px-10',
           condensed ? 'py-3' : 'py-4',
@@ -121,7 +124,7 @@ export function Header() {
         </Link>
       </div>
 
-      <Drawer open={menuOpen} onClose={() => setMenuOpen(false)} title={t('marketing.nav.menuLabel')}>
+      <Drawer open={menuOpen} onClose={() => setMenuOpen(false)} title={t('marketing.nav.menuLabel')} side="right">
         <nav className="flex flex-col gap-1">
           {[...NAV, ['marketing.nav.account', PATHS.account] as [MessageKey, string]].map(([key, to]) => (
             <Link

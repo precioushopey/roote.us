@@ -98,31 +98,33 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   useEffect(() => () => clearTimeout(timer.current), []);
 
   return (
-    <div className="relative flex flex-col rounded-xl border border-border bg-card p-6">
-      <span className="absolute -top-3 start-6 rounded-full bg-deep-950 px-3 py-1 font-body text-2xs font-semibold uppercase tracking-wide text-cream-100">
+    <div className="flex flex-col items-center gap-4 text-center">
+      <span className="rounded-full bg-deep-950 px-3 py-1 font-body text-2xs font-semibold uppercase tracking-wide text-cream-100">
         {bundle.packaging === 'men' ? t('marketing.home.gray.forMen') : t('marketing.home.gray.forWomen')}
       </span>
       {image ? (
-        <div className="mb-4 aspect-[4/3] w-full rounded-lg border border-gold-500 bg-white p-4">
+        <div className="aspect-[3/4] w-full border border-gold-500 bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
           <img src={image} alt={pickLocalized(bundle.name, cl)} className="h-full w-full object-contain" />
         </div>
       ) : (
         <MediaPlaceholder
-          className="mb-4"
           alt={pickLocalized(bundle.name, cl)}
           label={`${pickLocalized(bundle.name, cl)} — product photography`}
-          ratio="4 / 3"
-          rounded="lg"
+          ratio="3 / 4"
+          rounded="none"
           tone={bundle.packaging === 'men' ? 'teal' : 'cream'}
+          className="w-full border border-gold-500 [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
         />
       )}
-      <p className="font-display text-lg text-foreground">{pickLocalized(bundle.name, cl)}</p>
-      <p className="mt-2 font-body text-sm text-muted-foreground">{pickLocalized(bundle.summary, cl)}</p>
-      <div className="mt-4 font-body text-sm text-foreground">
-        {bundle.price === null ? <PendingChip label="price" /> : bundle.price}
+      <div className="flex flex-col items-center gap-2">
+        <p className="font-display text-lg text-foreground">{pickLocalized(bundle.name, cl)}</p>
+        <p className="font-body text-sm text-muted-foreground">{pickLocalized(bundle.summary, cl)}</p>
+        <div className="mt-1 font-body text-sm text-foreground">
+          {bundle.price === null ? <PendingChip label="price" /> : bundle.price}
+        </div>
       </div>
       {requiresReview ? (
-        <p className="mt-6 font-body text-xs text-muted-foreground">{t('marketing.shop.reviewNote')}</p>
+        <p className="font-body text-xs text-muted-foreground">{t('marketing.shop.reviewNote')}</p>
       ) : (
         <button
           type="button"
@@ -133,7 +135,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
             clearTimeout(timer.current);
             timer.current = setTimeout(() => setAdded(false), 1600);
           }}
-          className="mt-6 h-11 rounded-full border border-border font-body text-sm font-medium text-foreground transition-colors hover:border-deep-700"
+          className="h-11 w-full rounded-full border border-border font-body text-sm font-medium text-foreground transition-colors hover:border-deep-700"
         >
           {added ? t('cart.added') : t('marketing.shop.bundles.cta')}
         </button>

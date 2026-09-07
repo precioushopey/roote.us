@@ -105,12 +105,25 @@ type DrawerProps = {
   open: boolean;
   onClose: () => void;
   title: string;
-  side?: 'start' | 'end';
+  /**
+   * `'start'`/`'end'` are RTL-aware (flip with locale, like the page content).
+   * `'left'`/`'right'` are physical and never flip — use these for chrome
+   * that should stay put regardless of locale, such as a menu anchored to a
+   * fixed-position trigger (see `Header`'s nav drawer, always `'right'`).
+   */
+  side?: 'start' | 'end' | 'left' | 'right';
   children: ReactNode;
   className?: string;
 };
 
-/** Edge sheet. Used for the mobile nav and product filters. RTL-aware side. */
+const DRAWER_SIDE_CLASS = {
+  end: 'end-0',
+  start: 'start-0',
+  right: 'right-0',
+  left: 'left-0',
+} as const;
+
+/** Edge sheet. Used for the mobile nav. `side` defaults to the RTL-aware 'end'. */
 export function Drawer({ open, onClose, title, side = 'end', children, className }: DrawerProps) {
   const ref = useDismissable(onClose, open);
   if (!open) return null;
@@ -124,7 +137,7 @@ export function Drawer({ open, onClose, title, side = 'end', children, className
         aria-label={title}
         className={cn(
           'absolute inset-y-0 flex w-[86%] max-w-sm flex-col bg-card p-6 shadow-2xl',
-          side === 'end' ? 'end-0' : 'start-0',
+          DRAWER_SIDE_CLASS[side],
           className,
         )}
       >

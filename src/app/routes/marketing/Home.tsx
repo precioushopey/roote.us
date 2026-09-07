@@ -55,7 +55,12 @@ function Hero() {
   const heroLogoReveal = useHeroLogoReveal();
   const [line1, line2] = pickLocalized(brandLines.headline, cl).split('\n');
   return (
-    <Section tone="teal" width="content" animate={false} className="overflow-hidden">
+    <Section
+      tone="teal"
+      width="content"
+      animate={false}
+      className="overflow-hidden pt-8 pb-24 sm:pt-12 md:pt-32 md:pb-32"
+    >
       <div className="relative">
         {/* Fixed-height spacer (not margin, so it can't collapse) — keeps the
             wordmark's `top-16` anchor fixed while pushing the image itself
