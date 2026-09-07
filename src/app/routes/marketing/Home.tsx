@@ -1,6 +1,8 @@
 import { Link } from 'react-router';
 import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useHeroLogoReveal } from '@/app/lib/useHeroLogoReveal';
+import { useReducedMotion } from '@/app/lib/useReducedMotion';
+import { cn } from '@/app/components/ui/utils';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import {
   Section,
@@ -58,7 +60,7 @@ function Hero() {
         {/* Fixed-height spacer (not margin, so it can't collapse) — keeps the
             wordmark's `top-16` anchor fixed while pushing the image itself
             down, so the logo reads against plain teal instead of the photo. */}
-        <div aria-hidden className="h-34.5" />
+        <div aria-hidden className="h-22 md:h-34.5" />
         <div
           role="img"
           aria-label={t('marketing.home.hero.mediaAlt')}
@@ -85,7 +87,7 @@ function Hero() {
           <Wordmark className="w-[min(88vw,64rem)]" />
         </Link>
       </div>
-      <div className="mx-auto flex w-full flex-col items-center gap-6 pt-32 text-center">
+      <div className="mx-auto flex w-full flex-col items-center gap-6 pt-12 md:pt-32 text-center">
         <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
           {t('marketing.home.hero.eyebrow')}
         </Eyebrow>
@@ -118,28 +120,54 @@ function Hero() {
 /* 2 — Trust / system strip ---------------------------------------------- */
 function SystemStrip() {
   const t = useT();
+  const reduce = useReducedMotion();
   const items = [
     t('marketing.home.strip.item1'),
     t('marketing.home.strip.item2'),
     t('marketing.home.strip.item3'),
     t('marketing.home.strip.item4'),
   ];
+  // Below `lg` the four items no longer fit one row — instead of wrapping to
+  // multiple lines, the strip scrolls. The track is the item list twice
+  // back-to-back so an exact -50% translate loops seamlessly; the second copy
+  // is aria-hidden so it isn't announced twice. Reduced-motion gets a single,
+  // plain, horizontally-scrollable copy instead of the auto-scroll.
+  const trackItems = reduce ? items : [...items, ...items];
+
+  const renderItem = (item: string, i: number) => (
+    <li
+      key={i}
+      aria-hidden={!reduce && i >= items.length ? true : undefined}
+      className="flex shrink-0 items-center gap-2 whitespace-nowrap"
+    >
+      <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+      {item}
+    </li>
+  );
+
   return (
     <Section
       tone="cream"
       space="tight"
       width="content"
       animate={false}
-      className="border-b border-gold-500 py-4 md:py-4"
+      className="overflow-hidden border-b border-gold-500 py-4 md:py-4"
     >
-      <ul className="grid gap-x-8 gap-y-3 font-body text-sm text-muted-foreground sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((item) => (
-          <li key={item} className="flex items-center gap-2">
-            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
-            {item}
-          </li>
-        ))}
+      {/* lg+: comfortably fits one static row */}
+      <ul className="hidden flex-wrap items-center justify-center gap-x-8 font-body text-sm text-muted-foreground lg:flex">
+        {items.map(renderItem)}
       </ul>
+      {/* below lg: auto-scrolling marquee, or a plain scrollable row when reduced motion is preferred */}
+      <div className={cn('lg:hidden', reduce ? 'overflow-x-auto' : 'overflow-hidden')}>
+        <ul
+          className={cn(
+            'flex w-max items-center gap-x-8 font-body text-sm text-muted-foreground',
+            !reduce && 'roote-marquee-track',
+          )}
+        >
+          {trackItems.map(renderItem)}
+        </ul>
+      </div>
     </Section>
   );
 }

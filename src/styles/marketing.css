@@ -101,3 +101,22 @@
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
 }
+
+/* System-strip marquee (Home hero trust strip) — below `lg` the four items no
+   longer fit one row, so they scroll instead of wrapping to multiple lines.
+   The track holds the item list twice back-to-back; translating it exactly
+   -50% of its own (doubled) width loops seamlessly. Skipped for
+   prefers-reduced-motion — the component renders a single, plain,
+   horizontally-scrollable copy instead (see `useReducedMotion` in Home.tsx). */
+@keyframes roote-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .roote-marquee-track {
+    animation: roote-marquee 22s linear infinite;
+  }
+  .roote-marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
