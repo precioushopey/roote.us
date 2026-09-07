@@ -91,7 +91,7 @@ export function Header() {
               </svg>
             </Link>
           </div>
-          <Button to={withLocale(PATHS.analysis)} size="sm" caps onInk className="hidden sm:inline-flex">
+          <Button to={withLocale(PATHS.analysis)} size="sm" caps onInk className="hidden sm:inline-flex text-xs sm:text-sm md:text-base">
             {t('marketing.nav.cta')}
           </Button>
           <IconButton
