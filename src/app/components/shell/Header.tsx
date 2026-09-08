@@ -15,6 +15,7 @@ const NAV: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.howItWorks', PATHS.howItWorks],
   ['marketing.nav.science', PATHS.science],
   ['marketing.nav.about', PATHS.about],
+  ['marketing.nav.hairScan', PATHS.hairScan],
 ];
 
 export function Header() {

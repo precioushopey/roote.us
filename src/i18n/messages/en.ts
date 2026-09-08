@@ -296,6 +296,7 @@ export const en = {
   'marketing.nav.products': 'Products',
   'marketing.nav.system': 'Our System',
   'marketing.nav.about': 'About',
+  'marketing.nav.hairScan': 'AI Chat',
   'marketing.nav.more': 'More',
   'marketing.nav.faq': 'FAQ',
   'marketing.nav.blog': 'Blog',

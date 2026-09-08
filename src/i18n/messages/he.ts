@@ -299,6 +299,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.nav.products': 'המוצרים',
   'marketing.nav.system': 'השיטה שלנו',
   'marketing.nav.about': 'אודות',
+  'marketing.nav.hairScan': 'צ׳אט AI',
   'marketing.nav.more': 'עוד',
   'marketing.nav.faq': 'שאלות נפוצות',
   'marketing.nav.blog': 'בלוג',

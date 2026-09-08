@@ -33,6 +33,7 @@ describe('Header', () => {
     expect(within(nav).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
     expect(within(nav).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/en-us/science');
     expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en-us/about');
+    expect(within(nav).getByRole('link', { name: 'AI Chat' })).toHaveAttribute('href', '/en-us/hair-scan');
     expect(screen.getByRole('link', { name: 'Start free hair analysis' })).toHaveAttribute('href', '/en-us/analysis');
   });
 
@@ -49,6 +50,7 @@ describe('Header', () => {
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(within(dialog).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
+    expect(within(dialog).getByRole('link', { name: 'AI Chat' })).toHaveAttribute('href', '/en-us/hair-scan');
     expect(within(dialog).getByRole('link', { name: 'Account' })).toHaveAttribute('href', '/en-us/account');
     expect(within(dialog).getAllByRole('link', { name: 'Start free hair analysis' })[0]).toHaveAttribute('href', '/en-us/analysis');
 
