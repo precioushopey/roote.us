@@ -63,7 +63,8 @@ type Action =
   | { type: 'TOGGLE_PROGRAM_TASK'; isoDate: string; taskKey: string }
   | { type: 'ADD_PROGRAM_PHOTO'; photo: ProgressPhoto }
   | { type: 'SET_PROGRAM_REMINDERS'; reminders: Reminder[] }
-  | { type: 'RESET' };
+  | { type: 'RESET' }
+  | { type: 'RESET_DIAGNOSIS' };
 
 function reducer(state: SessionState, action: Action): SessionState {
   switch (action.type) {
@@ -159,6 +160,11 @@ function reducer(state: SessionState, action: Action): SessionState {
     }
     case 'RESET':
       return EMPTY;
+    // "Start over" on the assessment only — unlike RESET, leaves account/program/
+    // draftDurationDays untouched, so it's safe to offer mid-flow even for a
+    // returning customer who already has a purchased program.
+    case 'RESET_DIAGNOSIS':
+      return { ...state, diagnosis: EMPTY.diagnosis, analysis: null, grayProfile: null, reportId: null };
     default:
       return state;
   }
@@ -186,6 +192,7 @@ const SessionContext = createContext<
     addProgramPhoto: (photo: ProgressPhoto) => void;
     setProgramReminders: (reminders: Reminder[]) => void;
     reset: () => void;
+    resetDiagnosis: () => void;
   }) | null
 >(null);
 
@@ -239,6 +246,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setProgramReminders: (reminders: Reminder[]) =>
         dispatch({ type: 'SET_PROGRAM_REMINDERS', reminders }),
       reset: () => dispatch({ type: 'RESET' }),
+      resetDiagnosis: () => dispatch({ type: 'RESET_DIAGNOSIS' }),
     }),
     [state],
   );

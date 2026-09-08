@@ -3,6 +3,8 @@ export const en = {
   'common.back': 'Back',
   'common.next': 'Next',
   'common.start': 'Start',
+  'common.cancel': 'Cancel',
+  'common.startOver': 'Start over',
   'common.progressLabel': 'Progress',
   'brand.tagline': 'Personalized Hair Growth System',
   'meta.title': 'Personalized Hair Growth System',
@@ -896,6 +898,11 @@ export const en = {
   'analysis.finalizing': 'Finalizing your analysis…',
 
   // --- Free Hair Analysis flow (WP5) ---
+  'analysis.nav.startOverTitle': 'Start over?',
+  'analysis.nav.startOverBody':
+    'This clears your answers and photos for this assessment. Your account and any purchased program are not affected.',
+  'analysis.nav.startOverConfirm': 'Yes, start over',
+
   'analysis.intro.title': 'Your hair analysis starts here.',
   'analysis.intro.point1': 'A few minutes',
   'analysis.intro.point2': 'Guided photos',

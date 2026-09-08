@@ -6,6 +6,8 @@ export const he: Record<MessageKey, string> = {
   'meta.title': 'ROOTÉ — מערכת אישית לצמיחת שיער',
   'common.next': 'הבא',
   'common.start': 'התחלה',
+  'common.cancel': 'ביטול',
+  'common.startOver': 'התחלה מחדש',
   'common.progressLabel': 'התקדמות',
   'brand.tagline': 'מערכת אישית לצמיחת שיער',
   'locale.toggle.toHe': 'עברית',
@@ -895,6 +897,11 @@ export const he: Record<MessageKey, string> = {
   'analysis.finalizing': 'מסיימים את הניתוח…',
 
   // --- Free Hair Analysis flow (WP5) ---
+  'analysis.nav.startOverTitle': 'להתחיל מחדש?',
+  'analysis.nav.startOverBody':
+    'פעולה זו תמחק את התשובות והתמונות שלך באבחון הנוכחי. החשבון שלך ותוכנית שכבר רכשת (אם יש) לא ייפגעו.',
+  'analysis.nav.startOverConfirm': 'כן, להתחיל מחדש',
+
   'analysis.intro.title': 'אבחון השיער שלך מתחיל כאן.',
   'analysis.intro.point1': 'כמה דקות',
   'analysis.intro.point2': 'תמונות מודרכות',

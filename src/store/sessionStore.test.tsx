@@ -52,6 +52,26 @@ describe('sessionStore', () => {
     expect(api.diagnosis.gender).toBeNull();
   });
 
+  it('resetDiagnosis clears the assessment but leaves account/program untouched', () => {
+    setup();
+    act(() => api.setGender('male'));
+    act(() => api.setHairGoal('stop-loss'));
+    act(() => api.setReportId('r-1'));
+    act(() => api.setEmail('demo@roote.us'));
+    act(() => api.setDraftDurationDays(180));
+
+    act(() => api.resetDiagnosis());
+
+    expect(api.diagnosis.gender).toBeNull();
+    expect(api.diagnosis.hairGoal).toBeNull();
+    expect(api.reportId).toBeNull();
+    expect(api.analysis).toBeNull();
+    expect(api.grayProfile).toBeNull();
+    // unaffected — a returning customer's account/program must survive "start over"
+    expect(api.account.email).toBe('demo@roote.us');
+    expect(api.draftDurationDays).toBe(180);
+  });
+
   it('stores a draft duration and, separately, a full program', () => {
     setup();
     act(() => api.setDraftDurationDays(180));

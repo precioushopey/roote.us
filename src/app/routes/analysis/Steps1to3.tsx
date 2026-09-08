@@ -81,7 +81,7 @@ export function GenderScreen() {
       {needPackaging ? (
         <>
           <h2 className="font-display text-md text-foreground">{t('analysis.gender.packagingTitle')}</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3">
             {PACKAGING_OPTIONS.map((o) => (
               <RadioCard
                 key={o.value}
@@ -95,7 +95,7 @@ export function GenderScreen() {
           </div>
         </>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-3">
           {GENDER_OPTIONS.map((o) => (
             <RadioCard
               key={o.value}

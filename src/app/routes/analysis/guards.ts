@@ -15,6 +15,24 @@ export type AnalysisStep = (typeof ANALYSIS_STEPS)[number];
 /** Which steps show on the progress rail (intro doesn't). */
 export const RAIL_STEPS: AnalysisStep[] = ['gender', 'goal', 'photos', 'scanning', 'questions', 'results'];
 
+const BACK_STEP: Partial<Record<AnalysisStep, AnalysisStep | 'intro'>> = {
+  gender: 'intro',
+  goal: 'gender',
+  photos: 'goal',
+  questions: 'photos',
+};
+
+/**
+ * Back target for a step, or null when the step has no sensible Back
+ * (scanning is transient/non-interactive; results→questions would just
+ * bounce forward again once analysis is computed — see redirectForAnalysisStep).
+ */
+export function backPathForAnalysisStep(step: AnalysisStep): string | null {
+  const target = BACK_STEP[step];
+  if (!target) return null;
+  return target === 'intro' ? PATHS.analysis : PATHS.analysisStep(target);
+}
+
 export function redirectForAnalysisStep(step: AnalysisStep, s: SessionState): string | null {
   const { gender, hairGoal, photos } = s.diagnosis;
   const hasResult = s.analysis !== null || s.grayProfile !== null;

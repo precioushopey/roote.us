@@ -7,7 +7,7 @@ import { SessionProvider } from '@/store/sessionStore';
 import { AuthProvider } from '@/store/auth';
 import { CartProvider } from '@/store/cart';
 import { analysisRoutes } from './analysisRoutes';
-import { redirectForAnalysisStep } from './guards';
+import { redirectForAnalysisStep, backPathForAnalysisStep } from './guards';
 import { deriveGrayProfile, type GrayAnswers } from '@/domain/analysis/grayProfile';
 import { mockHairAnalysisProvider } from '@/domain/analysis/provider';
 import type { SessionState } from '@/store/sessionStore';
@@ -65,6 +65,23 @@ describe('redirectForAnalysisStep', () => {
     });
     expect(redirectForAnalysisStep('results', base)).toBe('/analysis/scanning');
     expect(redirectForAnalysisStep('results', { ...base, grayProfile: deriveGrayProfile({ answers: {} as GrayAnswers }) })).toBeNull();
+  });
+});
+
+describe('backPathForAnalysisStep', () => {
+  it('steps back one at a time through the interactive rail steps', () => {
+    expect(backPathForAnalysisStep('gender')).toBe('/analysis');
+    expect(backPathForAnalysisStep('goal')).toBe('/analysis/gender');
+    expect(backPathForAnalysisStep('photos')).toBe('/analysis/goal');
+    expect(backPathForAnalysisStep('questions')).toBe('/analysis/photos');
+  });
+
+  it('has no Back target for the non-interactive/guard-conflicting steps', () => {
+    // scanning is transient/automatic; results→questions would just bounce
+    // forward again once analysis is computed (see redirectForAnalysisStep).
+    expect(backPathForAnalysisStep('scanning')).toBeNull();
+    expect(backPathForAnalysisStep('results')).toBeNull();
+    expect(backPathForAnalysisStep('intro')).toBeNull();
   });
 });
 
@@ -141,5 +158,61 @@ describe('assessment screens', () => {
   it('deep-linking results with no analysis bounces back', async () => {
     renderFlow('/analysis/results');
     expect(await screen.findByRole('heading', { name: /how should we personalize/i })).toBeInTheDocument();
+  });
+});
+
+describe('assessment nav: Back / Start Over', () => {
+  it('Back returns from Goal to Gender', async () => {
+    renderFlow('/analysis');
+    await userEvent.click(screen.getByRole('button', { name: /begin analysis/i }));
+    await userEvent.click(screen.getByText('Male'));
+    expect(await screen.findByRole('heading', { name: 'What is your main goal?' })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('link', { name: 'Back' }));
+    expect(await screen.findByRole('heading', { name: /how should we personalize/i })).toBeInTheDocument();
+  });
+
+  it('Back from Gender (the first rail step) returns to Intro', async () => {
+    renderFlow('/analysis');
+    await userEvent.click(screen.getByRole('button', { name: /begin analysis/i }));
+    expect(await screen.findByRole('heading', { name: /how should we personalize/i })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('link', { name: 'Back' }));
+    expect(await screen.findByRole('heading', { name: /hair analysis starts here/i })).toBeInTheDocument();
+  });
+
+
+  it('Start Over asks for confirmation, then clears the assessment and returns to intro', async () => {
+    renderFlow('/analysis');
+    await userEvent.click(screen.getByRole('button', { name: /begin analysis/i }));
+    await userEvent.click(screen.getByText('Male'));
+    expect(await screen.findByRole('heading', { name: 'What is your main goal?' })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Start over' }));
+    const dialog = await screen.findByRole('dialog', { name: /start over/i });
+    expect(dialog).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Yes, start over' }));
+    expect(await screen.findByRole('heading', { name: /hair analysis starts here/i })).toBeInTheDocument();
+
+    // the cleared diagnosis means Gender is unselected again
+    await userEvent.click(screen.getByRole('button', { name: /begin analysis/i }));
+    expect(await screen.findByRole('heading', { name: /how should we personalize/i })).toBeInTheDocument();
+    const maleOption = screen.getByRole('radio', { name: /^male$/i });
+    expect(maleOption).not.toBeChecked();
+  });
+
+  it('Cancel on the Start Over dialog leaves the assessment untouched', async () => {
+    renderFlow('/analysis');
+    await userEvent.click(screen.getByRole('button', { name: /begin analysis/i }));
+    await userEvent.click(screen.getByText('Male'));
+    expect(await screen.findByRole('heading', { name: 'What is your main goal?' })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Start over' }));
+    await screen.findByRole('dialog', { name: /start over/i });
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'What is your main goal?' })).toBeInTheDocument();
   });
 });
