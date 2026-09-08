@@ -15,7 +15,7 @@ import {
   BeforeAfterSlider,
   Card,
 } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getProduct } from '@/content/products';
 import { getSolution } from '@/content/solutions';
@@ -109,7 +109,8 @@ function Hero() {
         </Prose>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Button
-            to={withLocale(PATHS.analysis)}
+            to={EXTERNAL_ASSESSMENT_URL}
+            external
             size="lg"
             caps
             className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
@@ -203,7 +204,8 @@ function Concern() {
             key={c.value}
             title={pickLocalized(c.title, cl)}
             description={pickLocalized(c.description, cl)}
-            to={withLocale(`${PATHS.analysis}?concern=${c.value}`)}
+            to={EXTERNAL_ASSESSMENT_URL}
+            external
             cta={t('marketing.home.concern.cta')}
             mediaAlt={media[c.value]}
             mediaLabel={`${pickLocalized(c.title, cl)} — clinical crop, no face`}
@@ -439,7 +441,8 @@ function FinalCta() {
           {t('marketing.home.finalCta.body')}
         </Prose>
         <Button
-          to={withLocale(PATHS.analysis)}
+          to={EXTERNAL_ASSESSMENT_URL}
+          external
           size="lg"
           caps
           className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"

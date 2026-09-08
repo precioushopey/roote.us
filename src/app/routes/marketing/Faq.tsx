@@ -1,6 +1,6 @@
 import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Section, DisplayTitle, Prose, Eyebrow, Button, Accordion } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { HOME_FAQS } from '@/content/faqs';
 
@@ -40,7 +40,7 @@ export function Faq() {
           <Button to={withLocale(PATHS.support)} variant="secondary">
             {t('marketing.faq.support.cta')}
           </Button>
-          <Button to={withLocale(PATHS.analysis)} caps>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external caps>
             {t('marketing.nav.cta')}
           </Button>
         </div>

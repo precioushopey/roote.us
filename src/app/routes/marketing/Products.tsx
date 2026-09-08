@@ -12,7 +12,7 @@ import {
   PendingChip,
   MediaPlaceholder,
 } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { PRODUCTS, getProduct, type Product } from '@/content/products';
 import { SHOP_BUNDLES } from '@/content/bundles';
@@ -97,10 +97,11 @@ function AddToBagButton({ sku }: { sku: string }) {
    bundle cards, whose `gap-4` column already spaces it. */
 function FindYourMatchCta({ spaced = false }: { spaced?: boolean }) {
   const t = useT();
-  const withLocale = useLocalizedPath();
   return (
     <Link
-      to={withLocale(PATHS.analysis)}
+      to={EXTERNAL_ASSESSMENT_URL}
+      target="_blank"
+      rel="noopener noreferrer"
       className={spaced ? `mt-3 ${OUTLINE_CTA_CLASS}` : OUTLINE_CTA_CLASS}
     >
       {t('marketing.shop.findYourMatchCta')}
@@ -197,7 +198,6 @@ function BundleSection() {
 /* Closing CTA — mirrors the teal final-CTA band used on Home/About. */
 function ShopFinalCta() {
   const t = useT();
-  const withLocale = useLocalizedPath();
   return (
     <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
       <div className="flex flex-col items-center gap-5">
@@ -208,7 +208,8 @@ function ShopFinalCta() {
           {t('marketing.shop.finalCta.body')}
         </Prose>
         <Button
-          to={withLocale(PATHS.analysis)}
+          to={EXTERNAL_ASSESSMENT_URL}
+          external
           size="lg"
           caps
           className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
@@ -247,7 +248,8 @@ export function Products() {
               {t('marketing.shop.body')}
             </Prose>
             <Button
-              to={withLocale(PATHS.analysis)}
+              to={EXTERNAL_ASSESSMENT_URL}
+              external
               size="lg"
               caps
               className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"

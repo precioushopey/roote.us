@@ -32,11 +32,14 @@ describe('Home (redesigned)', () => {
     expect(screen.getByText('Personalized Hair Growth System')).toBeInTheDocument();
   });
 
-  it('the dominant CTA is Start free hair analysis → /analysis', () => {
+  it('the dominant CTA is Start free hair analysis → the HairHealth.ai quiz', () => {
     renderHome();
     const ctas = screen.getAllByRole('link', { name: 'Start free hair analysis' });
     expect(ctas.length).toBeGreaterThan(1);
-    for (const c of ctas) expect(c).toHaveAttribute('href', '/en-us/analysis');
+    for (const c of ctas) {
+      expect(c).toHaveAttribute('href', 'https://roote.vercel.app/test/landbot/fullpage');
+      expect(c).toHaveAttribute('target', '_blank');
+    }
   });
 
   it('offers the three concern paths into the assessment', () => {
@@ -45,13 +48,9 @@ describe('Home (redesigned)', () => {
     const section = heading.closest('section')!;
     const concernLinks = within(section)
       .getAllByRole('link')
-      .map((l) => l.getAttribute('href'))
-      .filter((h): h is string => !!h && h.startsWith('/en-us/analysis?concern='));
-    expect(concernLinks.sort()).toEqual([
-      '/en-us/analysis?concern=both',
-      '/en-us/analysis?concern=gray',
-      '/en-us/analysis?concern=thinning',
-    ]);
+      .filter((l) => l.getAttribute('href') === 'https://roote.vercel.app/test/landbot/fullpage');
+    expect(concernLinks).toHaveLength(3);
+    for (const l of concernLinks) expect(l).toHaveAttribute('target', '_blank');
   });
 
   it('shows the 5-step Analyze → Track sequence', () => {

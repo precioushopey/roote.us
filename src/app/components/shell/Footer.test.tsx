@@ -24,7 +24,9 @@ describe('Footer', () => {
     expect(within(footer).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en-us/about');
     expect(within(footer).getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', '/en-us/privacy');
     expect(within(footer).getByRole('link', { name: 'Medical Disclaimer' })).toHaveAttribute('href', '/en-us/medical-disclaimer');
-    expect(within(footer).getAllByRole('link', { name: 'Start free hair analysis' })[0]).toHaveAttribute('href', '/en-us/analysis');
+    const cta = within(footer).getAllByRole('link', { name: 'Start free hair analysis' })[0];
+    expect(cta).toHaveAttribute('href', 'https://roote.vercel.app/test/landbot/fullpage');
+    expect(cta).toHaveAttribute('target', '_blank');
     expect(within(footer).getByText(new RegExp(String(new Date().getFullYear())))).toBeInTheDocument();
   });
 

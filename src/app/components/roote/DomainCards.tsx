@@ -12,6 +12,7 @@ export function ConcernCard({
   title,
   description,
   to,
+  external = false,
   cta,
   mediaAlt,
   mediaLabel,
@@ -20,6 +21,8 @@ export function ConcernCard({
   title: string;
   description: string;
   to: string;
+  /** Opens `to` in a new tab (e.g. a third-party destination) instead of routing in-app. */
+  external?: boolean;
   cta: string;
   mediaAlt: string;
   mediaLabel: string;
@@ -27,7 +30,11 @@ export function ConcernCard({
   image?: string;
 }) {
   return (
-    <Link to={to} className="group flex flex-col items-center gap-4 text-center">
+    <Link
+      to={to}
+      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      className="group flex flex-col items-center gap-4 text-center"
+    >
       {image ? (
         <img
           src={image}

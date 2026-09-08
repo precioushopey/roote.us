@@ -9,7 +9,7 @@ import {
   Card,
   ProductCard,
 } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getSolution } from '@/content/solutions';
 import { getProduct } from '@/content/products';
@@ -39,7 +39,6 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
 
   const program = PROGRAMS[solution.relatedProgram];
   const products = solution.relatedProducts.map(getProduct).filter((p): p is NonNullable<typeof p> => !!p);
-  const concernQuery = solution.concern === 'gray' ? 'gray' : 'thinning';
 
   return (
     <>
@@ -57,7 +56,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
               {pickLocalized(solution.hero.body, cl)}
             </Prose>
             <div className="flex flex-wrap gap-3">
-              <Button to={withLocale(`${PATHS.analysis}?concern=${concernQuery}`)} caps>
+              <Button to={EXTERNAL_ASSESSMENT_URL} external caps>
                 {t('marketing.nav.cta')}
               </Button>
               <Button
@@ -139,7 +138,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
           {t('marketing.sol.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
-          <Button to={withLocale(`${PATHS.analysis}?concern=${concernQuery}`)} size="lg" caps>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps>
             {t('marketing.nav.cta')}
           </Button>
         </div>

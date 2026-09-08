@@ -1,4 +1,4 @@
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useContentLocale } from '@/i18n/LocaleProvider';
 import {
   Section,
   DisplayTitle,
@@ -9,7 +9,7 @@ import {
   IngredientCard,
   LegalNotice,
 } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getProduct } from '@/content/products';
 import type { ClaimStatus } from '@/content/claims';
@@ -26,7 +26,6 @@ const GROUPS: Array<{ labelKey: MessageKey; slug: string }> = [
 export function Science() {
   const t = useT();
   const cl = useContentLocale();
-  const withLocale = useLocalizedPath();
   const statusLabel: Record<ClaimStatus, string> = {
     approved: t('marketing.sci.status.approved'),
     working: t('marketing.sci.status.working'),
@@ -53,7 +52,8 @@ export function Science() {
               {t('marketing.sci.body')}
             </Prose>
             <Button
-              to={withLocale(PATHS.analysis)}
+              to={EXTERNAL_ASSESSMENT_URL}
+              external
               size="lg"
               caps
               className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
@@ -166,7 +166,7 @@ export function Science() {
           {t('marketing.sci.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
-          <Button to={withLocale(PATHS.analysis)} size="lg" caps>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps>
             {t('marketing.nav.cta')}
           </Button>
         </div>

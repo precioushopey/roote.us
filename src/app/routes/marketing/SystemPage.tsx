@@ -1,6 +1,6 @@
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useContentLocale } from '@/i18n/LocaleProvider';
 import { Section, DisplayTitle, Prose, Eyebrow, Button, Timeline, Card } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { systemSteps } from '@/content/brand';
 import type { MessageKey } from '@/i18n/messages';
@@ -16,7 +16,6 @@ const PILLARS: Array<{ titleKey: MessageKey; bodyKey: MessageKey }> = [
 export function SystemPage() {
   const t = useT();
   const cl = useContentLocale();
-  const withLocale = useLocalizedPath();
 
   const milestones = [
     { id: 'd0', dayLabel: t('marketing.sys.day', { n: 0 }), title: t('marketing.home.progress.baseline'), state: 'done' as const },
@@ -84,7 +83,7 @@ export function SystemPage() {
           {t('marketing.sys.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
-          <Button to={withLocale(PATHS.analysis)} size="lg" caps>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps>
             {t('marketing.nav.cta')}
           </Button>
         </div>

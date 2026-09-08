@@ -6,7 +6,7 @@ import { useHeroLogoReveal } from '@/app/lib/useHeroLogoReveal';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { Button, Drawer, IconButton, CountryLanguageSelector } from '@/app/components/roote';
 import { cn } from '@/app/components/ui/utils';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { countryDefault, type LocaleCode } from '@/i18n/locales';
 import type { MessageKey } from '@/i18n/messages';
 
@@ -94,7 +94,7 @@ export function Header() {
               </svg>
             </Link>
           </div>
-          <Button to={withLocale(PATHS.analysis)} size="lg" caps onInk className="hidden sm:inline-flex text-sm">
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps onInk className="hidden sm:inline-flex text-sm">
             {t('marketing.nav.cta')}
           </Button>
           <IconButton
@@ -145,7 +145,7 @@ export function Header() {
             onChangeLocale={onChangeLocale}
             labels={regionLabels}
           />
-          <Button to={withLocale(PATHS.analysis)} caps block className="mt-4 text-sm" onClick={() => setMenuOpen(false)}>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external caps block className="mt-4 text-sm" onClick={() => setMenuOpen(false)}>
             {t('marketing.nav.cta')}
           </Button>
         </div>

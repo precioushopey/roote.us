@@ -33,7 +33,9 @@ describe('Header', () => {
     expect(within(nav).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
     expect(within(nav).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/en-us/science');
     expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en-us/about');
-    expect(screen.getByRole('link', { name: 'Start free hair analysis' })).toHaveAttribute('href', '/en-us/analysis');
+    const cta = screen.getByRole('link', { name: 'Start free hair analysis' });
+    expect(cta).toHaveAttribute('href', 'https://roote.vercel.app/test/landbot/fullpage');
+    expect(cta).toHaveAttribute('target', '_blank');
   });
 
   it('links the wordmark home', () => {
@@ -50,7 +52,10 @@ describe('Header', () => {
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(within(dialog).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
     expect(within(dialog).getByRole('link', { name: 'Account' })).toHaveAttribute('href', '/en-us/account');
-    expect(within(dialog).getAllByRole('link', { name: 'Start free hair analysis' })[0]).toHaveAttribute('href', '/en-us/analysis');
+    expect(within(dialog).getAllByRole('link', { name: 'Start free hair analysis' })[0]).toHaveAttribute(
+      'href',
+      'https://roote.vercel.app/test/landbot/fullpage',
+    );
 
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

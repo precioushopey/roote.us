@@ -9,7 +9,7 @@ import {
   ScanCard,
   Accordion,
 } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { HOME_FAQS } from '@/content/faqs';
 import howItWorksHero from '@/assets/images/how-it-works-hero.png';
@@ -84,7 +84,8 @@ export function HowItWorks() {
               {t('marketing.howItWorks.hero.body')}
             </Prose>
             <Button
-              to={withLocale(PATHS.analysis)}
+              to={EXTERNAL_ASSESSMENT_URL}
+              external
               size="lg"
               caps
               className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
@@ -137,7 +138,7 @@ export function HowItWorks() {
             <Prose size="lg" className="max-w-lg">
               {t('marketing.home.analysis.body')}
             </Prose>
-            <Button to={withLocale(PATHS.analysis)} size="lg" className="mt-2">
+            <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" className="mt-2">
               {t('marketing.nav.cta')}
             </Button>
           </div>
@@ -205,7 +206,8 @@ export function HowItWorks() {
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
           <Button
-            to={withLocale(PATHS.analysis)}
+            to={EXTERNAL_ASSESSMENT_URL}
+            external
             size="lg"
             caps
             className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"

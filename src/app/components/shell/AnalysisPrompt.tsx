@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT } from '@/i18n/LocaleProvider';
 import { Modal, Button } from '@/app/components/roote';
 import { track } from '@/analytics/analytics';
-import { PATHS } from '@/app/paths';
+import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 
 const DISMISS_KEY = 'roote.popup.analysis.dismissed';
 
@@ -29,7 +29,6 @@ function isReturning(): boolean {
  */
 export function AnalysisPrompt() {
   const t = useT();
-  const withLocale = useLocalizedPath();
   const [open, setOpen] = useState(false);
   const [returning, setReturning] = useState(false);
 
@@ -80,7 +79,7 @@ export function AnalysisPrompt() {
         <p className="font-body text-sm text-muted-foreground">{t('marketing.popup.eyebrow')}</p>
         <h2 className="font-display text-xl text-foreground">{t('marketing.popup.title')}</h2>
         <p className="max-w-sm font-body text-sm text-muted-foreground">{t('marketing.popup.body')}</p>
-        <Button to={withLocale(PATHS.analysis)} caps block className="mt-2" onClick={dismiss}>
+        <Button to={EXTERNAL_ASSESSMENT_URL} external caps block className="mt-2" onClick={dismiss}>
           {returning ? t('marketing.popup.continueCta') : t('marketing.popup.cta')}
         </Button>
         <button

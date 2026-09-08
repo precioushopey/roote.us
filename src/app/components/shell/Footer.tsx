@@ -7,7 +7,7 @@ import { CONCERN_OPTIONS } from '@/content/assessment';
 import { pickLocalized } from '@/content/localized';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { CountryLanguageSelector } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { countryDefault, type LocaleCode } from '@/i18n/locales';
 
 type Col = { title: MessageKey; links: Array<[to: string, label: MessageKey]> };
@@ -33,7 +33,7 @@ const COLUMNS: Col[] = [
     title: 'marketing.footer.account',
     links: [
       [PATHS.account, 'marketing.nav.account'],
-      [PATHS.analysis, 'marketing.nav.cta'],
+      [EXTERNAL_ASSESSMENT_URL, 'marketing.nav.cta'],
     ],
   },
 ];
@@ -101,13 +101,26 @@ export function Footer() {
             <nav key={col.title} aria-label={t(col.title)}>
               <h2 className="u-caps font-body text-2xs font-semibold text-ink-foreground/60">{t(col.title)}</h2>
               <ul className="mt-3 space-y-2">
-                {col.links.map(([to, label]) => (
-                  <li key={to + label}>
-                    <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
-                      {t(label)}
-                    </Link>
-                  </li>
-                ))}
+                {col.links.map(([to, label]) =>
+                  to.startsWith('http') ? (
+                    <li key={to + label}>
+                      <a
+                        href={to}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-body text-sm text-ink-foreground hover:text-gold-500"
+                      >
+                        {t(label)}
+                      </a>
+                    </li>
+                  ) : (
+                    <li key={to + label}>
+                      <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                        {t(label)}
+                      </Link>
+                    </li>
+                  ),
+                )}
               </ul>
             </nav>
           ))}

@@ -1,13 +1,12 @@
-import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT } from '@/i18n/LocaleProvider';
 import { Section, DisplayTitle, Prose, Eyebrow, Button } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import favicon from '@/assets/favicon.png';
 import scanBaseline from '@/assets/images/scan-baseline.png';
 import step2Scan from '@/assets/images/step-2-scan.png';
 
 export function About() {
   const t = useT();
-  const withLocale = useLocalizedPath();
   const problems = [
     { title: t('marketing.about.problem.p1Title'), body: t('marketing.about.problem.p1Body') },
     { title: t('marketing.about.problem.p2Title'), body: t('marketing.about.problem.p2Body') },
@@ -56,7 +55,8 @@ export function About() {
               {t('marketing.about.mission.body')}
             </Prose>
             <Button
-              to={withLocale(PATHS.analysis)}
+              to={EXTERNAL_ASSESSMENT_URL}
+              external
               size="lg"
               caps
               className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
@@ -170,7 +170,8 @@ export function About() {
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
           <Button
-            to={withLocale(PATHS.analysis)}
+            to={EXTERNAL_ASSESSMENT_URL}
+            external
             size="lg"
             caps
             className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"

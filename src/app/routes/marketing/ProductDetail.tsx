@@ -14,7 +14,7 @@ import {
   LegalNotice,
   PendingChip,
 } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getProduct } from '@/content/products';
 import { rooteContent } from '@/content/roote.config';
@@ -124,7 +124,7 @@ export function ProductDetail() {
             {product.requiresMedicalReview ? (
               <Badge tone="review" onDark>{t('marketing.pdp.reviewBadge')}</Badge>
             ) : null}
-            <Button to={withLocale(PATHS.analysis)} caps className="mt-2">
+            <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="mt-2">
               {t('marketing.nav.cta')}
             </Button>
           </div>
@@ -190,7 +190,7 @@ export function ProductDetail() {
           {t('marketing.pdp.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
-          <Button to={withLocale(PATHS.analysis)} size="lg" caps>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps>
             {t('marketing.nav.cta')}
           </Button>
         </div>

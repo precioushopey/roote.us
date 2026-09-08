@@ -65,10 +65,10 @@ describe('WP4 marketing pages', () => {
     expect(screen.queryByText(/requires treatment review/i)).not.toBeInTheDocument();
   });
 
-  it('Solution page: routes into the assessment with a concern hint', () => {
+  it('Solution page: routes into the HairHealth.ai assessment quiz', () => {
     renderAt('/solutions/thinning');
     const ctas = screen.getAllByRole('link', { name: 'Start free hair analysis' });
-    expect(ctas.some((c) => c.getAttribute('href') === '/en-us/analysis?concern=thinning')).toBe(true);
+    expect(ctas.some((c) => c.getAttribute('href') === 'https://roote.vercel.app/test/landbot/fullpage')).toBe(true);
   });
 
   it('no forbidden marketing claim renders on the rebuilt pages', () => {
