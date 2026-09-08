@@ -8,15 +8,18 @@ import { analyzeHair } from './analyzeHair';
  *
  *   interface HairAnalysisProvider { analyze(input): Promise<HairAnalysisResult> }
  *
- * PO decision #23 (2026-09-04): the target provider is **HairHealth.ai HairScan**
- * (the consumer, phone-selfie product). Its API contract is `[PENDING]` — do NOT
- * reverse-engineer or guess the request/response schema; wait for the signed
- * contract + docs + credentials. Until then: mock in dev, qualitative production
- * bands only, never a fabricated number. Design the consumer for HairScan-level
- * fields (hair type, density estimate, thickness, loss stage, volume, overall
- * score, image-quality confidence). Do NOT surface trichoscope-grade *ScalpScan*
- * metrics (FU per cm², single/double/triple hair counts) from ordinary selfies
- * unless the vendor contract confirms HairScan returns them.
+ * PO decision #23 (2026-09-04) named HairHealth.ai HairScan as the presumed target
+ * for this seam. Corrected 2026-09-08: HairHealth.ai's actual, confirmed integration
+ * with ROOTÉ is an unrelated Landbot lead-gen widget that writes straight to ROOTÉ's
+ * HubSpot (see docs/superpowers/specs/2026-09-08-hairhealth-landbot-integration-design.md)
+ * — it offers no synchronous photo-analysis API back to ROOTÉ. The vendor for *this*
+ * seam is genuinely undecided. Until one is under contract: mock in dev, qualitative
+ * production bands only, never a fabricated number. Design the consumer for
+ * HairScan-level fields (hair type, density estimate, thickness, loss stage, volume,
+ * overall score, image-quality confidence) since that remains a plausible shape for
+ * whichever vendor is eventually contracted. Do NOT surface trichoscope-grade
+ * *ScalpScan* metrics (FU per cm², single/double/triple hair counts) from ordinary
+ * selfies unless a future vendor contract confirms its API returns them.
  *
  * Swap `setAnalysisProvider` when the real adapter is wired.
  */
@@ -44,8 +47,8 @@ export interface HairAnalysisProvider {
 
 /**
  * Development / concept-build provider. Delegates to `analyzeHair`, which itself
- * uses the deterministic questionnaire model (and the env-gated hairhealth.ai
- * adapter if it happens to be configured).
+ * uses the deterministic questionnaire model (and the env-gated remote CV-provider
+ * adapter if one happens to be configured).
  */
 export const mockHairAnalysisProvider: HairAnalysisProvider = {
   name: 'mock',
@@ -53,8 +56,8 @@ export const mockHairAnalysisProvider: HairAnalysisProvider = {
     const { analysis, source } = await analyzeHair({ gender, hairGoal, answers, photos: images });
     return {
       analysis,
-      source: source === 'hairhealth' ? 'provider' : 'mock',
-      isMock: source !== 'hairhealth',
+      source: source === 'remote' ? 'provider' : 'mock',
+      isMock: source !== 'remote',
     };
   },
 };

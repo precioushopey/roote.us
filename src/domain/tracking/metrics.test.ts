@@ -41,8 +41,8 @@ describe('qualitativeMetrics (locked decision: no numbers until a real provider)
   });
 
   it('carries the provider name and mock flag through unchanged', () => {
-    const real = qualitativeMetrics({ analysis, provider: 'hairhealth.ai', isMock: false, capturedAt: 'x' });
-    expect(real.every((m) => m.provider === 'hairhealth.ai' && m.isMock === false)).toBe(true);
+    const real = qualitativeMetrics({ analysis, provider: 'remote-provider', isMock: false, capturedAt: 'x' });
+    expect(real.every((m) => m.provider === 'remote-provider' && m.isMock === false)).toBe(true);
   });
 });
 
