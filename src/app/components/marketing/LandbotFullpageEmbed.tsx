@@ -3,7 +3,6 @@ import { useT } from '@/i18n/LocaleProvider';
 
 const LANDBOT_SCRIPT_SRC = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
 const LANDBOT_SCRIPT_ID = 'landbot-fullpage-sdk';
-const CONFIG_URL = import.meta.env.VITE_LANDBOT_CONFIG_URL as string | undefined;
 
 declare global {
   interface Window {
@@ -11,7 +10,14 @@ declare global {
   }
 }
 
-/** True only when a Landbot bot config URL is set via Vite env vars. */
+/**
+ * True only when a Landbot bot config URL is set via Vite env vars. Reads
+ * `import.meta.env` fresh on every call rather than caching it in a module-scoped
+ * const (unlike src/domain/analysis/remoteAnalysisAdapter.ts's pattern) — verified
+ * empirically that a module-scoped const does not observe a freshly `vi.stubEnv`'d
+ * value in this repo's test setup even after `vi.resetModules()` + re-import, while
+ * a fresh per-call read does.
+ */
 export function isLandbotConfigured(): boolean {
   const configUrl = import.meta.env.VITE_LANDBOT_CONFIG_URL as string | undefined;
   return typeof configUrl === 'string' && configUrl.length > 0;

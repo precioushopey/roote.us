@@ -15,7 +15,16 @@ afterEach(() => {
 async function renderEmbed() {
   const { LandbotFullpageEmbed } = await import('./LandbotFullpageEmbed');
   const router = createMemoryRouter(
-    [{ path: '/', element: <LocaleProvider localeRegion="en-us"><LandbotFullpageEmbed /></LocaleProvider> }],
+    [
+      {
+        path: '/',
+        element: (
+          <LocaleProvider localeRegion="en-us">
+            <LandbotFullpageEmbed />
+          </LocaleProvider>
+        ),
+      },
+    ],
     { initialEntries: ['/'] },
   );
   render(<RouterProvider router={router} />);
