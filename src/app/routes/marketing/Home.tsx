@@ -65,7 +65,7 @@ function Hero() {
         {/* Fixed-height spacer (not margin, so it can't collapse) — keeps the
             wordmark's `top-16` anchor fixed while pushing the image itself
             down, so the logo reads against plain teal instead of the photo. */}
-        <div aria-hidden className="h-22 md:h-34.5" />
+        <div aria-hidden className="h-32 sm:h-40 md:h-48" />
         <div
           role="img"
           aria-label={t('marketing.home.hero.mediaAlt')}
@@ -304,15 +304,15 @@ function ProgressSection() {
       <DisplayTitle as="h2" step="lg" onDark className="mt-2 max-w-2xl">
         {t('marketing.home.progress.heading')}
       </DisplayTitle>
-      <Prose onDark className="mt-4 max-w-2xl">{t('marketing.home.progress.body')}</Prose>
+      <Prose onDark size="lg" className="mt-4 max-w-2xl">{t('marketing.home.progress.body')}</Prose>
       <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <Timeline milestones={milestones} className="gap-3" onDark />
           <div className="mt-8 border-t border-cream-100/15 pt-6">
-            <p className="font-body text-xs font-semibold uppercase tracking-wide text-cream-100/70">
+            <p className="font-body text-sm font-semibold uppercase tracking-wide text-cream-100/70">
               {t('marketing.home.durations.includesHeading')}
             </p>
-            <ul className="mt-3 flex flex-col gap-1.5 font-body text-sm text-cream-100/85">
+            <ul className="mt-3 flex flex-col gap-1.5 font-body text-base text-cream-100/85">
               {includes.map((item) => (
                 <li key={item} className="flex items-start gap-2">
                   <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" />
@@ -351,7 +351,7 @@ function ProgressSection() {
               />
             }
           />
-          <p className="mt-2 font-body text-xs text-cream-100/70">{t('marketing.home.progress.compareCaption')}</p>
+          <p className="mt-2 font-body text-sm text-cream-100/70">{t('marketing.home.progress.compareCaption')}</p>
         </div>
       </div>
     </Section>

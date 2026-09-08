@@ -24,13 +24,13 @@ function renderHairScan() {
 describe('HairScan', () => {
   it('renders the title and a disclosure linking to Privacy', () => {
     renderHairScan();
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Chat with our AI hair scan');
-    expect(screen.getByText(/HairHealth\.ai/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Chat with HairHealth.ai');
+    expect(screen.getByText(/powered by our partner, HairHealth\.ai/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'See our Privacy Policy' })).toHaveAttribute('href', '/en-us/privacy');
   });
 
   it('renders the not-yet-configured placeholder when Landbot is unset', () => {
     renderHairScan();
-    expect(screen.getByText('Our AI chat is being connected — please check back soon.')).toBeInTheDocument();
+    expect(screen.getByText('Connecting you to HairHealth.ai — please check back soon.')).toBeInTheDocument();
   });
 });

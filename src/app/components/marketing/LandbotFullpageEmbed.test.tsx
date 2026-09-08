@@ -34,7 +34,7 @@ describe('LandbotFullpageEmbed', () => {
   it('renders a placeholder and injects no script when unconfigured', async () => {
     vi.stubEnv('VITE_LANDBOT_CONFIG_URL', '');
     await renderEmbed();
-    expect(screen.getByText('Our AI chat is being connected — please check back soon.')).toBeInTheDocument();
+    expect(screen.getByText('Connecting you to HairHealth.ai — please check back soon.')).toBeInTheDocument();
     expect(document.getElementById(SCRIPT_ID)).toBeNull();
   });
 

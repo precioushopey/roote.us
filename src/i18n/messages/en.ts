@@ -296,7 +296,7 @@ export const en = {
   'marketing.nav.products': 'Products',
   'marketing.nav.system': 'Our System',
   'marketing.nav.about': 'About',
-  'marketing.nav.hairScan': 'AI Chat',
+  'marketing.nav.hairScan': 'HairHealth.ai',
   'marketing.nav.more': 'More',
   'marketing.nav.faq': 'FAQ',
   'marketing.nav.blog': 'Blog',
@@ -322,6 +322,7 @@ export const en = {
   'marketing.footer.terms': 'Terms',
   'marketing.footer.privacy': 'Privacy',
   'marketing.footer.rights': 'All rights reserved.',
+  'marketing.footer.social': 'Follow us',
 
   'marketing.popup.eyebrow': 'Not sure where to start?',
   'marketing.popup.title': 'Find your program',
@@ -1241,10 +1242,10 @@ export const en = {
   'app.profile.password.error.weak': 'Use at least 8 characters.',
   'app.profile.logout': 'Log out',
 
-  'hairScan.notConfigured': 'Our AI chat is being connected — please check back soon.',
-  'hairScan.title': 'Chat with our AI hair scan',
+  'hairScan.notConfigured': 'Connecting you to HairHealth.ai — please check back soon.',
+  'hairScan.title': 'Chat with HairHealth.ai',
   'hairScan.intro':
-    "Answer a few quick questions and share a photo — our partner's AI will look at your hair and get back to our team.",
+    'Answer a few quick questions and share a photo — the HairHealth.ai team will look at your hair and get back to our team.',
   'hairScan.disclosure':
     'This chat is powered by our partner, HairHealth.ai. What you share here — your answers and photos — is sent to them and added to our contact list so our team can follow up.',
   'hairScan.disclosureLink': 'See our Privacy Policy',

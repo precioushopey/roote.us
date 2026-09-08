@@ -45,8 +45,8 @@ export function ConcernCard({
       )}
       <div className="flex flex-col gap-2">
         <h3 className="u-caps font-body text-sm text-foreground">{title}</h3>
-        <p className="font-body text-sm text-muted-foreground">{description}</p>
-        <span className="mt-1 font-body text-sm font-medium text-deep-800 underline decoration-1 underline-offset-4">
+        <p className="font-body text-base text-muted-foreground">{description}</p>
+        <span className="mt-2 inline-flex h-9 items-center justify-center rounded-full border border-border px-4 font-body text-sm font-medium text-deep-800 transition-colors group-hover:border-deep-700 group-hover:bg-cream-100">
           {cta}
         </span>
       </div>

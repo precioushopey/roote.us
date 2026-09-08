@@ -299,7 +299,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.nav.products': 'המוצרים',
   'marketing.nav.system': 'השיטה שלנו',
   'marketing.nav.about': 'אודות',
-  'marketing.nav.hairScan': 'צ׳אט AI',
+  'marketing.nav.hairScan': 'HairHealth.ai',
   'marketing.nav.more': 'עוד',
   'marketing.nav.faq': 'שאלות נפוצות',
   'marketing.nav.blog': 'בלוג',
@@ -325,6 +325,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.footer.terms': 'תנאים',
   'marketing.footer.privacy': 'פרטיות',
   'marketing.footer.rights': 'כל הזכויות שמורות.',
+  'marketing.footer.social': 'עקבו אחרינו',
 
   'marketing.popup.eyebrow': 'לא בטוח/ה מאיפה להתחיל?',
   'marketing.popup.title': 'למצוא את תוכנית ROOTÉ שלך',
@@ -1236,10 +1237,10 @@ export const he: Record<MessageKey, string> = {
   'app.profile.password.error.weak': 'יש להשתמש בלפחות 8 תווים.',
   'app.profile.logout': 'התנתקות',
 
-  'hairScan.notConfigured': 'הצ׳אט מבוסס הבינה המלאכותית שלנו בתהליך חיבור — נא לבדוק שוב בקרוב.',
-  'hairScan.title': 'שוחחו עם סורק השיער מבוסס הבינה המלאכותית שלנו',
+  'hairScan.notConfigured': 'מתחברים ל-HairHealth.ai — נא לבדוק שוב בקרוב.',
+  'hairScan.title': 'שוחחו עם HairHealth.ai',
   'hairScan.intro':
-    'ענו על כמה שאלות קצרות ושתפו תמונה — הבינה המלאכותית של השותפה שלנו תבחן את השיער שלכם ותעביר את התוצאה לצוות שלנו.',
+    'ענו על כמה שאלות קצרות ושתפו תמונה — הצוות של HairHealth.ai יבדוק את השיער שלכם ויעביר את התוצאה לצוות שלנו.',
   'hairScan.disclosure':
     'הצ׳אט הזה מופעל על ידי השותפה שלנו, HairHealth.ai. המידע שתשתפו כאן — התשובות והתמונות שלכם — נשלח אליה ומתווסף לרשימת אנשי הקשר שלנו כדי שהצוות שלנו יוכל ליצור איתכם קשר.',
   'hairScan.disclosureLink': 'קראו את מדיניות הפרטיות שלנו',

@@ -249,11 +249,13 @@ export function Products() {
               {t('marketing.nav.cta')}
             </Button>
           </div>
-          <img
-            src={catalogHero}
-            alt={t('marketing.shop.heroMediaAlt')}
-            className="aspect-[4/3] w-full rounded-xl object-cover"
-          />
+          <div className="aspect-[4/3] w-full overflow-hidden rounded-xl">
+            <img
+              src={catalogHero}
+              alt={t('marketing.shop.heroMediaAlt')}
+              className="h-full w-full scale-125 object-cover object-center"
+            />
+          </div>
         </div>
       </Section>
 

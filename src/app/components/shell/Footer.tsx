@@ -44,13 +44,43 @@ const SOLUTION_LINKS: Array<[to: string, label: string]> = [
   [PATHS.products, 'products'],
 ];
 
+/** Icon paths are simple, brand-agnostic glyphs (24x24, stroke style matching the
+ *  Header's icon set) — swap for the real brand marks if the client prefers those. */
+const SOCIAL_ICONS: Record<string, JSX.Element> = {
+  instagram: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+    </>
+  ),
+  facebook: <path d="M14 21v-8h2.5l.5-3H14V8c0-.9.3-1.5 1.6-1.5H17V4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.8 1.3-3.8 3.8V10H8v3h3v8h3Z" />,
+  tiktok: <path d="M14 3c.3 2 1.6 3.4 3.6 3.7v2.6c-1.3 0-2.5-.4-3.6-1.1v6.3c0 3-2.4 5-5.2 5-2.9 0-5.2-2.2-5.2-5s2.4-5 5.2-5c.3 0 .6 0 .9.1v2.7a2.5 2.5 0 1 0 1.8 2.4V3Z" />,
+  youtube: (
+    <>
+      <rect x="2.5" y="6" width="19" height="12" rx="3" />
+      <path d="M10.5 9.5v5l4.5-2.5-4.5-2.5Z" fill="currentColor" stroke="none" />
+    </>
+  ),
+};
+
+const SOCIAL_LABELS: Record<string, string> = {
+  instagram: 'Instagram',
+  facebook: 'Facebook',
+  tiktok: 'TikTok',
+  youtube: 'YouTube',
+};
+
 export function Footer() {
   const t = useT();
   const cl = useContentLocale();
   const withLocale = useLocalizedPath();
   const { locale, country, setLocale, setLocaleRegion } = useLocale();
   const year = new Date().getFullYear();
-  const { company } = rooteContent;
+  const { company, brand } = rooteContent;
+  const socialLinks = Object.entries(brand.social).filter(
+    (entry): entry is [string, string] => entry[1] !== null,
+  );
 
   const onChangeCountry = (c: string) => {
     setLocaleRegion(countryDefault(c).locale, c);
@@ -119,6 +149,25 @@ export function Footer() {
             </nav>
           ))}
         </div>
+
+        {socialLinks.length > 0 && (
+          <nav aria-label={t('marketing.footer.social')} className="mt-10 flex items-center gap-4">
+            {socialLinks.map(([key, href]) => (
+              <a
+                key={key}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={SOCIAL_LABELS[key] ?? key}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-ink-foreground/70 transition-colors hover:bg-ink-foreground/10 hover:text-ink-foreground"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                  {SOCIAL_ICONS[key]}
+                </svg>
+              </a>
+            ))}
+          </nav>
+        )}
 
         <div className="mt-12 flex flex-col gap-4 border-t border-ink-foreground/15 pt-8 text-xs text-ink-foreground/60 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">

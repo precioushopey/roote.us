@@ -5,6 +5,14 @@ export const rooteContent = {
     name: 'ROOTÉ',
     domain: 'ROOTÉ.US',
     tagline: { en: 'Personalized Hair Growth System', he: 'מערכת אישית לצמיחת שיער' } as LocalizedText,
+    /** Social profile URLs — null until the client supplies the real handles; the
+     *  footer only renders an icon for a platform whose value is non-null. */
+    social: {
+      instagram: null,
+      facebook: null,
+      tiktok: null,
+      youtube: null,
+    } as Record<string, string | null>,
   },
 
   /**
