@@ -26,7 +26,10 @@ export function isRemoteAnalysisConfigured(): boolean {
  * whichever real CV vendor is contracted later; confirm every field name, the auth scheme,
  * and the scale/severity vocabulary against that vendor's real API docs before relying on it.
  * While `VITE_CV_PROVIDER_API_URL` is unset, `isRemoteAnalysisConfigured()` is false and
- * `analyzeHair` uses the local questionnaire model instead.
+ * `analyzeHair` uses the local questionnaire model instead. Enabling this sends visitor photos
+ * to a third party — the privacy policy's `marketing.legal.privacy.s2.body`/`s5.body` (EN+HE)
+ * currently claim the in-app assessment never leaves the browser; that claim must be updated
+ * before this is set in any deployed environment.
  */
 type RemoteAnalysisResponse = {
   norwood_stage?: number;

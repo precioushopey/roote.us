@@ -174,7 +174,7 @@ VITE_LANDBOT_CONFIG_URL=
 |---|---|
 | Path | `PATHS.hairScan = '/hair-scan'` |
 | Mounting | Added to the existing `{ element: <FunnelShell />, children: [...] }` block in `App.tsx`, alongside `/login` and `/program/*`. Reuses `FunnelShell`'s wordmark + locale-toggle chrome — no new layout code. |
-| Nav entry | A second link in `Header.tsx`'s `NAV` array (desktop) + mobile drawer list, labeled distinctly from `marketing.nav.cta` ("Start free hair analysis") so visitors don't read the two as the same feature. Proposed key: `marketing.nav.hairChat` = "AI Hair Chat" (EN) / matching HE. |
+| Nav entry | A second link in `Header.tsx`'s `NAV` array (desktop) + mobile drawer list, labeled distinctly from `marketing.nav.cta` ("Start free hair analysis") so visitors don't read the two as the same feature. Shipped as `marketing.nav.hairScan` = "AI Chat" (EN) / "צ׳אט AI" (HE). |
 | Page copy | A short intro line above the embed disclosing it's powered by a partner (HairHealth.ai) and linking to Privacy — see §5.1. |
 
 ### 5.1 On-page disclosure
@@ -246,6 +246,11 @@ real remaining checklist is:
    agreement provides this, and it would be new scope.
 5. Verify the Landbot Fullpage widget's SPA-unmount behavior in a real browser once `configUrl` is
    live (§4's flagged limitation).
+6. Verify the on-page disclosure (the "powered by our partner HairHealth.ai" `LegalNotice` on
+   `/hair-scan`) is actually visible once a real `configUrl` is live — the Landbot Fullpage widget
+   appends its own full-viewport DOM to `document.body` with no container element (per §4), which
+   may cover the page's own title/intro/disclosure exactly when the widget (and the data sharing
+   it discloses) is active. Unverifiable until a real bot is connected; check alongside item 5.
 
 ---
 
@@ -256,8 +261,10 @@ real remaining checklist is:
   with the right `configUrl` after simulated `load`.
 - Route/nav: `/hair-scan` reachable and rendered inside `FunnelShell`; new nav link present and
   distinguishable from the existing analysis CTA in both `Header.test.tsx` assertions.
-- Rename fallout: existing `analyzeHair`/`provider`/`hairhealthAdapter` tests updated to new names,
-  behavior assertions unchanged.
+- Rename fallout: no dedicated test file exists for `analyzeHair`/`provider`/`remoteAnalysisAdapter`
+  (none existed for `hairhealthAdapter` either) — the rename is guarded entirely by the type system
+  (`AnalyzeHairResult['source']` is a literal union, so a missed reference is a compile error, not a
+  silent runtime bug) plus the full suite passing with zero regressions.
 - `src/i18n/messages.test.ts` (parity) and `src/content/pending.test.ts` stay green with the copy
   changes.
 - `pnpm typecheck` and `pnpm test` (52+ files) must both stay clean, per repo rules.
