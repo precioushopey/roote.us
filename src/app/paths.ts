@@ -24,6 +24,7 @@ export const PATHS = {
   bagSuccess: '/bag/success',
 
   login: '/login',
+  hairScan: '/hair-scan',
 
   analysis: '/analysis',
   analysisStep: (step: string) => `/analysis/${step}`,

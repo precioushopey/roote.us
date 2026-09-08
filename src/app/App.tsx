@@ -8,6 +8,7 @@ import { LocaleGate, BareOrLegacyPathRedirect, LocalizedNavigate } from './Local
 import { ReportPage } from './routes/report/ReportPage';
 import { LoginPage } from './routes/auth/LoginPage';
 import { FunnelShell } from './components/shell/FunnelShell';
+import { HairScan } from './routes/marketing/HairScan';
 import { marketingRoutes } from './routes/marketing/marketingRoutes';
 import { analysisRoutes } from './routes/analysis/analysisRoutes';
 import { StartLayout } from './routes/start/StartLayout';
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
         element: <FunnelShell />,
         children: [
           { path: 'login', element: <LoginPage /> },
+          { path: 'hair-scan', element: <HairScan /> },
           {
             path: 'program',
             element: <StartLayout />,
