@@ -125,6 +125,21 @@ export function AccountScans() {
         </Prose>
       </header>
 
+      <Card tone="cream">
+        <p className="font-display text-md text-foreground">{t('app.scans.hairhealthCta.title')}</p>
+        <Prose size="sm" className="mt-1">
+          {t('app.scans.hairhealthCta.body')}
+        </Prose>
+        <Button
+          to={withLocale(PATHS.accountHairHealthRescan)}
+          variant="secondary"
+          size="sm"
+          className="mt-3 w-fit"
+        >
+          {t('app.scans.hairhealthCta.cta')}
+        </Button>
+      </Card>
+
       {scans.some((s) => s.type === 'final') && (
         <Button to={withLocale(PATHS.accountSection('results'))} variant="secondary" size="sm" className="w-fit">
           {t('app.overview.viewResults')}

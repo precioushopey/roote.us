@@ -25,6 +25,7 @@ export const PATHS = {
 
   login: '/login',
   hairScan: '/hair-scan',
+  accountHairHealthRescan: '/account/hairhealth-rescan',
 
   analysis: '/analysis',
   analysisStep: (step: string) => `/analysis/${step}`,

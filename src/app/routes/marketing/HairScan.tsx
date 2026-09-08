@@ -6,6 +6,7 @@ import { funnelHeading } from '@/app/components/funnel/funnelStyles';
 export function HairScan() {
   const t = useT();
   const withLocale = useLocalizedPath();
+  const configUrl = import.meta.env.VITE_LANDBOT_CONFIG_URL as string | undefined;
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-6 py-12">
@@ -17,7 +18,7 @@ export function HairScan() {
         {t('hairScan.disclosure')}{' '}
         <TextLink to={withLocale('/privacy')}>{t('hairScan.disclosureLink')}</TextLink>
       </LegalNotice>
-      <LandbotFullpageEmbed />
+      <LandbotFullpageEmbed configUrl={configUrl} placeholder={t('hairScan.notConfigured')} />
     </main>
   );
 }

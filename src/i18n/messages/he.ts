@@ -1072,6 +1072,9 @@ export const he: Record<MessageKey, string> = {
 
   'app.scans.title': 'סריקות שיער',
   'app.scans.body': 'חלק מנקודות הבדיקה חוזרות על הסריקה המקורית כדי להשוות את אותן הזוויות לאורך זמן.',
+  'app.scans.hairhealthCta.title': 'מעדיפים סריקה חוזרת מודרכת?',
+  'app.scans.hairhealthCta.body': 'השותפה שלנו HairHealth.ai יכולה גם היא ללוות אתכם בסריקה חוזרת ולהעביר את התוצאה לצוות שלנו.',
+  'app.scans.hairhealthCta.cta': 'סריקה חוזרת עם HairHealth.ai',
   'app.scans.progressPrompt': 'הגיע הזמן לסריקת המעקב שלך',
   'app.scans.progressBody': 'נשווה את השיער שלך באמצעות אותן ארבע זוויות מהניתוח הראשון.',
   'app.scans.finalPrompt': 'סריקת השיער הסופית של ROOTÉ',
@@ -1244,4 +1247,11 @@ export const he: Record<MessageKey, string> = {
   'hairScan.disclosure':
     'הצ׳אט הזה מופעל על ידי השותפה שלנו, HairHealth.ai. המידע שתשתפו כאן — התשובות והתמונות שלכם — נשלח אליה ומתווסף לרשימת אנשי הקשר שלנו כדי שהצוות שלנו יוכל ליצור איתכם קשר.',
   'hairScan.disclosureLink': 'קראו את מדיניות הפרטיות שלנו',
+
+  'accountRescan.title': 'סריקה חוזרת עם HairHealth.ai',
+  'accountRescan.intro':
+    'בצעו סריקה חוזרת מהירה כדי שנוכל לעקוב אחר ההתקדמות שלכם. ענו על כמה שאלות ושתפו תמונה חדשה — השותפה שלנו HairHealth.ai בוחנת אותה ומעבירה את התוצאה לצוות שלנו.',
+  'accountRescan.disclosure':
+    'הסריקה החוזרת הזו מופעלת על ידי השותפה שלנו, HairHealth.ai. המידע שתשתפו כאן נשלח אליה ומתווסף לרשימת אנשי הקשר שלנו, ומותאם לחשבון שלכם לפי כתובת האימייל.',
+  'accountRescan.notConfigured': 'הסריקות החוזרות עדיין לא מחוברות — נא לבדוק שוב בקרוב.',
 };

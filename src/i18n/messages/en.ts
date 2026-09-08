@@ -1073,6 +1073,9 @@ export const en = {
 
   'app.scans.title': 'Hair scans',
   'app.scans.body': 'Some checkpoints repeat your original scan so you can compare the same views over time.',
+  'app.scans.hairhealthCta.title': 'Prefer a guided rescan?',
+  'app.scans.hairhealthCta.body': 'Our partner HairHealth.ai can also walk you through a rescan and send the result to our team.',
+  'app.scans.hairhealthCta.cta': 'Rescan with HairHealth.ai',
   'app.scans.progressPrompt': 'Time for your progress scan',
   'app.scans.progressBody': "Let's compare your hair using the same four views from your first analysis.",
   'app.scans.finalPrompt': 'Your final ROOTÉ hair scan',
@@ -1249,6 +1252,13 @@ export const en = {
   'hairScan.disclosure':
     'This chat is powered by our partner, HairHealth.ai. What you share here — your answers and photos — is sent to them and added to our contact list so our team can follow up.',
   'hairScan.disclosureLink': 'See our Privacy Policy',
+
+  'accountRescan.title': 'Rescan with HairHealth.ai',
+  'accountRescan.intro':
+    'Do a quick rescan so we can track your progress. Answer a few questions and share a new photo — our partner HairHealth.ai reviews it and sends the result to our team.',
+  'accountRescan.disclosure':
+    'This rescan is powered by our partner, HairHealth.ai. What you share here is sent to them and added to our contact list, matched to your account by your email address.',
+  'accountRescan.notConfigured': "Rescans aren't connected yet — please check back soon.",
 } as const;
 
 export type MessageKey = keyof typeof en;

@@ -1,50 +1,37 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router';
-import { LocaleProvider } from '@/i18n/LocaleProvider';
+import { LandbotFullpageEmbed } from './LandbotFullpageEmbed';
 
-const SCRIPT_ID = 'landbot-fullpage-sdk';
 const SCRIPT_SRC = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
 
+function getInjectedScript() {
+  return document.body.querySelector(`script[src="${SCRIPT_SRC}"]`) as HTMLScriptElement | null;
+}
+
 afterEach(() => {
-  vi.unstubAllEnvs();
-  document.getElementById(SCRIPT_ID)?.remove();
+  document.querySelectorAll(`script[src="${SCRIPT_SRC}"]`).forEach((el) => el.remove());
   vi.useRealTimers();
 });
 
-async function renderEmbed() {
-  const { LandbotFullpageEmbed } = await import('./LandbotFullpageEmbed');
-  const router = createMemoryRouter(
-    [
-      {
-        path: '/',
-        element: (
-          <LocaleProvider localeRegion="en-us">
-            <LandbotFullpageEmbed />
-          </LocaleProvider>
-        ),
-      },
-    ],
-    { initialEntries: ['/'] },
-  );
-  render(<RouterProvider router={router} />);
-}
-
 describe('LandbotFullpageEmbed', () => {
-  it('renders a placeholder and injects no script when unconfigured', async () => {
-    vi.stubEnv('VITE_LANDBOT_CONFIG_URL', '');
-    await renderEmbed();
-    expect(screen.getByText('Connecting you to HairHealth.ai — please check back soon.')).toBeInTheDocument();
-    expect(document.getElementById(SCRIPT_ID)).toBeNull();
+  it('renders the given placeholder and injects no script when configUrl is undefined', () => {
+    render(<LandbotFullpageEmbed configUrl={undefined} placeholder="Not yet connected." />);
+    expect(screen.getByText('Not yet connected.')).toBeInTheDocument();
+    expect(getInjectedScript()).toBeNull();
   });
 
-  it('injects the Landbot script and constructs Fullpage with configUrl when configured', async () => {
-    vi.stubEnv('VITE_LANDBOT_CONFIG_URL', 'https://landbot.example/config.json');
-    await renderEmbed();
+  it('renders the given placeholder and injects no script when configUrl is an empty string', () => {
+    render(<LandbotFullpageEmbed configUrl="" placeholder="Not yet connected." />);
+    expect(screen.getByText('Not yet connected.')).toBeInTheDocument();
+    expect(getInjectedScript()).toBeNull();
+  });
 
-    const script = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+  it('injects the Landbot script and constructs Fullpage with the given configUrl when configured', () => {
+    const url = 'https://landbot.example/config-a.json';
+    render(<LandbotFullpageEmbed configUrl={url} placeholder="Not yet connected." />);
+
+    const script = getInjectedScript();
     expect(script).not.toBeNull();
-    expect(script!.src).toBe(SCRIPT_SRC);
     expect(script!.type).toBe('module');
 
     const FullpageMock = vi.fn();
@@ -53,14 +40,23 @@ describe('LandbotFullpageEmbed', () => {
     script!.dispatchEvent(new Event('load'));
     vi.advanceTimersByTime(500);
 
-    expect(FullpageMock).toHaveBeenCalledWith({ configUrl: 'https://landbot.example/config.json' });
+    expect(FullpageMock).toHaveBeenCalledWith({ configUrl: url });
   });
 
-  it('does not inject a second script tag on repeated mounts', async () => {
-    vi.stubEnv('VITE_LANDBOT_CONFIG_URL', 'https://landbot.example/config.json');
-    await renderEmbed();
-    expect(document.querySelectorAll(`#${SCRIPT_ID}`)).toHaveLength(1);
-    await renderEmbed();
-    expect(document.querySelectorAll(`#${SCRIPT_ID}`)).toHaveLength(1);
+  it('does not inject a second script on remount with the same configUrl', () => {
+    const url = 'https://landbot.example/config-b.json';
+    const { unmount } = render(<LandbotFullpageEmbed configUrl={url} placeholder="Not yet connected." />);
+    expect(document.querySelectorAll(`script[src="${SCRIPT_SRC}"]`)).toHaveLength(1);
+    unmount();
+    render(<LandbotFullpageEmbed configUrl={url} placeholder="Not yet connected." />);
+    expect(document.querySelectorAll(`script[src="${SCRIPT_SRC}"]`)).toHaveLength(1);
+  });
+
+  it('injects a separate script for a different configUrl (two independent surfaces)', () => {
+    const urlA = 'https://landbot.example/config-c.json';
+    const urlB = 'https://landbot.example/config-d.json';
+    render(<LandbotFullpageEmbed configUrl={urlA} placeholder="Not yet connected." />);
+    render(<LandbotFullpageEmbed configUrl={urlB} placeholder="Not yet connected." />);
+    expect(document.querySelectorAll(`script[src="${SCRIPT_SRC}"]`)).toHaveLength(2);
   });
 });

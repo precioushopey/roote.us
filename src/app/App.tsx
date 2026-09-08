@@ -9,6 +9,7 @@ import { ReportPage } from './routes/report/ReportPage';
 import { LoginPage } from './routes/auth/LoginPage';
 import { FunnelShell } from './components/shell/FunnelShell';
 import { HairScan } from './routes/marketing/HairScan';
+import { AccountRescan } from './routes/app/AccountRescan';
 import { marketingRoutes } from './routes/marketing/marketingRoutes';
 import { analysisRoutes } from './routes/analysis/analysisRoutes';
 import { StartLayout } from './routes/start/StartLayout';
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
         children: [
           { path: 'login', element: <LoginPage /> },
           { path: 'hair-scan', element: <HairScan /> },
+          { path: 'account/hairhealth-rescan', element: <AccountRescan /> },
           {
             path: 'program',
             element: <StartLayout />,
