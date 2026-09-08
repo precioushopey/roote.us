@@ -161,7 +161,7 @@ export const rooteContent = {
     // HE strings are a plain translation of the EN liability disclaimers; still pending formal legal review.
     medical:        { en: 'This report is a preliminary, photo-based visual assessment. It is not a medical diagnosis.', he: 'הדוח הזה הוא הערכה חזותית ראשונית המבוססת על תמונות, ואינו מהווה אבחון רפואי.' } as LocalizedText, // TODO: legal review
     notADiagnosis:  { en: 'An AI visual estimate, not a medical diagnosis.', he: 'הערכה חזותית מבוססת בינה מלאכותית, לא אבחון רפואי.' } as LocalizedText,
-    demo:           { en: 'Demo: analysis figures are illustrative; production integrates hairhealth.ai.', he: 'הדגמה: הנתונים להמחשה בלבד; בגרסה המלאה משולבת מערכת hairhealth.ai.' } as LocalizedText,
+    demo:           { en: 'Demo: analysis figures are illustrative; production integrates a clinical analysis provider.', he: 'הדגמה: הנתונים להמחשה בלבד; בגרסה המלאה תשולב מערכת ניתוח קלינית.' } as LocalizedText,
     formulaPending: { en: 'Formulation under evaluation, pending regulatory review.', he: 'הפורמולה בבחינה, בכפוף לאישור רגולטורי.' } as LocalizedText,
   },
 } as const;
