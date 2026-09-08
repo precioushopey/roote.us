@@ -12,10 +12,13 @@ import {
   IngredientCard,
   ProductCard,
   LegalNotice,
+  PendingChip,
 } from '@/app/components/roote';
 import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getProduct } from '@/content/products';
+import { rooteContent } from '@/content/roote.config';
+import { formatMoney } from '@/domain/report/money';
 import type { ClaimStatus } from '@/content/claims';
 import { PRODUCT_FAQS_COMMON } from '@/content/faqs';
 import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
@@ -110,10 +113,16 @@ export function ProductDetail() {
             </Prose>
             <div className="flex flex-wrap items-center gap-3">
               <span className="font-body text-sm text-cream-100">{t('marketing.pdp.priceLabel')}</span>
-              <Badge tone="review">{t('marketing.pdp.pricePending')}</Badge>
+              <span className="font-display text-2xl font-bold text-cream-100">
+                {product.price === null ? (
+                  <PendingChip label="price" />
+                ) : (
+                  formatMoney(product.price, rooteContent.currency, cl).formatted
+                )}
+              </span>
             </div>
             {product.requiresMedicalReview ? (
-              <Badge tone="review">{t('marketing.pdp.reviewBadge')}</Badge>
+              <Badge tone="review" onDark>{t('marketing.pdp.reviewBadge')}</Badge>
             ) : null}
             <Button to={withLocale(PATHS.analysis)} caps className="mt-2">
               {t('marketing.nav.cta')}
@@ -166,7 +175,7 @@ export function ProductDetail() {
                 name={p.name}
                 subtitle={pickLocalized(p.subtitle, cl)}
                 to={withLocale(PATHS.product(p.slug))}
-                priceLabel={p.price === null ? null : `$${p.price}`}
+                priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
                 mediaAlt={`${p.name} packaging`}
                 mediaLabel={`${p.name} — product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}

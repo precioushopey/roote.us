@@ -16,6 +16,8 @@ import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { PRODUCTS, getProduct, type Product } from '@/content/products';
 import { SHOP_BUNDLES } from '@/content/bundles';
+import { rooteContent } from '@/content/roote.config';
+import { formatMoney } from '@/domain/report/money';
 import { useCart } from '@/store/cart';
 import catalogHero from '@/assets/images/catalog-hero.png';
 import level6 from '@/assets/images/Level 6.png';
@@ -141,7 +143,11 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
           <p className="font-body text-sm text-muted-foreground">{pickLocalized(bundle.summary, cl)}</p>
         </div>
         <div className="shrink-0 font-display text-3xl font-bold text-foreground">
-          {bundle.price === null ? <PendingChip label="price" /> : `$${bundle.price}`}
+          {bundle.price === null ? (
+            <PendingChip label="price" />
+          ) : (
+            formatMoney(bundle.price, rooteContent.currency, cl).formatted
+          )}
         </div>
       </div>
       {requiresReview ? (
@@ -281,7 +287,7 @@ export function Products() {
                 name={p.name}
                 subtitle={pickLocalized(p.subtitle, cl)}
                 to={withLocale(PATHS.product(p.slug))}
-                priceLabel={p.price === null ? null : `$${p.price}`}
+                priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
                 packaging={p.concern === 'gray' || p.concern === 'gray-support' ? 'women' : 'men'}
                 mediaAlt={`${p.name} packaging`}
                 mediaLabel={`${p.name} — product photography`}

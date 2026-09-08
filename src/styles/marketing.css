@@ -49,30 +49,6 @@
   filter: saturate(0.96) contrast(1.03);
 }
 
-/* --- editorial grid overlay (cream sections) --------------------------- */
-.bg-grid-lines {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 50% 100%, 100% 20rem;
-  background-position: center top;
-}
-.bg-grid-lines
-  :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption, span, a, strong, em) {
-  text-shadow:
-    0 0 2px var(--background),
-    0 0 2px var(--background),
-    0 0 3px var(--background),
-    0 0 4px var(--background),
-    0 0 8px var(--background),
-    0 0 14px var(--background);
-}
-.bg-grid-lines
-  :is(button, .bg-card, .bg-ink, .glass, .glass-dark, [class*='bg-ink'], [class*='bg-card'], [class*='bg-primary'], [class*='bg-accent'], [class*='bg-background'], [class*='bg-secondary'])
-  :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption, span, a, strong, em) {
-  text-shadow: none;
-}
-
 /* --- route-change rise-up reveal (single orchestrated moment) ---------
    `reveal-enabled` is added by JS before first paint, so no-JS stays visible.
    Skipped entirely for prefers-reduced-motion. */

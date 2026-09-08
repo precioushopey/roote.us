@@ -13,14 +13,19 @@ const TONE: Record<BadgeTone, string> = {
   review: 'bg-transparent text-foreground ring-1 ring-dashed ring-accent',
 };
 
-/** A small status marker. `review` is the "needs medical / legal review" flavour. */
+/** A small status marker. `review` is the "needs medical / legal review" flavour.
+ *  Every tone's text color assumes a light background — pass `onDark` when the
+ *  badge sits on a dark-anchor surface (e.g. a `Section tone="teal"` hero), or
+ *  the text renders unreadably dark-on-dark while the ring/background still show. */
 export function Badge({
   children,
   tone = 'neutral',
+  onDark = false,
   className,
 }: {
   children: ReactNode;
   tone?: BadgeTone;
+  onDark?: boolean;
   className?: string;
 }) {
   return (
@@ -28,6 +33,7 @@ export function Badge({
       className={cn(
         'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-body text-2xs font-semibold',
         TONE[tone],
+        onDark && 'text-cream-100',
         className,
       )}
     >

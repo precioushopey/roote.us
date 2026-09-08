@@ -14,6 +14,8 @@ import { pickLocalized } from '@/content/localized';
 import { getSolution } from '@/content/solutions';
 import { getProduct } from '@/content/products';
 import { PROGRAMS } from '@/content/programs';
+import { rooteContent } from '@/content/roote.config';
+import { formatMoney } from '@/domain/report/money';
 import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
 import thinningHero from '@/assets/images/thinning-hero.png';
 import grayHairHero from '@/assets/images/gray-hair-hero.png';
@@ -123,7 +125,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
               name={p.name}
               subtitle={pickLocalized(p.subtitle, cl)}
               to={withLocale(PATHS.product(p.slug))}
-              priceLabel={p.price === null ? null : `$${p.price}`}
+              priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
               mediaAlt={`${p.name} packaging`}
               mediaLabel={`${p.name} — product photography`}
             />

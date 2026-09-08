@@ -8,7 +8,7 @@ const TONE: Record<Tone, string> = {
   cream: 'bg-background text-foreground',
   plain: 'bg-card text-foreground',
   teal: 'bg-ink text-ink-foreground',
-  grid: 'bg-background text-foreground bg-grid-lines',
+  grid: 'bg-background text-foreground',
 };
 
 const WIDTH: Record<Width, string> = {

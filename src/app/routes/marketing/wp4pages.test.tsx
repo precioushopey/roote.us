@@ -41,23 +41,23 @@ describe('WP4 marketing pages', () => {
     }
     const catalogSection = screen.getByRole('heading', { name: 'Every product, in one place.' }).closest('section')!;
     expect(within(catalogSection).queryAllByText('[PENDING: price]').length).toBe(0);
-    for (const price of ['$47', '$50', '$53', '$38', '$40', '$52']) {
+    for (const price of ['$47.00', '$50.00', '$53.00', '$38.00', '$40.00', '$52.00']) {
       expect(within(catalogSection).getByText(price)).toBeInTheDocument();
     }
     // cosmetic SKUs get an add-to-bag; Density SKUs get no note/button (review-gated)
     expect(within(catalogSection).getAllByRole('button', { name: /add to bag|add/i }).length).toBe(3);
   });
 
-  it('Product detail: no invented price on the product itself, review badge on Density', () => {
+  it('Product detail: shows the product\'s real client-supplied price, review badge on Density', () => {
     renderAt('/products/density-10');
     const heading = screen.getByRole('heading', { level: 1, name: 'ROOTÉ Level 10' });
     expect(heading).toBeInTheDocument();
     expect(screen.getByText(/requires treatment review/i)).toBeInTheDocument();
-    // The viewed product's own price stays pending; related-product cards below
-    // now carry real, competitor-matched prices (content/products.ts), so the
-    // "no $ anywhere" check is scoped to the hero, not the whole page.
+    // content/products.ts has a real, client-supplied price for every SKU — the
+    // hero should show it directly, not a [PENDING] chip.
     const hero = heading.closest('section')!;
-    expect(within(hero).queryByText(/\$\d/)).not.toBeInTheDocument();
+    expect(within(hero).getByText('$50.00')).toBeInTheDocument();
+    expect(within(hero).queryByText('[PENDING: price]')).not.toBeInTheDocument();
   });
 
   it('Product detail: cosmetic SKU has no review badge', () => {
