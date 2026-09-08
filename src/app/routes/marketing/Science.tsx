@@ -56,7 +56,7 @@ export function Science() {
               to={withLocale(PATHS.analysis)}
               size="lg"
               caps
-              className="bg-gold-500 text-ink text-xs md:text-sm font-bold hover:bg-gold-600"
+              className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
             >
               {t('marketing.nav.cta')}
             </Button>

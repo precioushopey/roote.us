@@ -94,7 +94,7 @@ export function Header() {
               </svg>
             </Link>
           </div>
-          <Button to={withLocale(PATHS.analysis)} size="lg" caps onInk className="hidden sm:inline-flex text-xs md:text-sm">
+          <Button to={withLocale(PATHS.analysis)} size="lg" caps onInk className="hidden sm:inline-flex text-sm">
             {t('marketing.nav.cta')}
           </Button>
           <IconButton
@@ -145,7 +145,7 @@ export function Header() {
             onChangeLocale={onChangeLocale}
             labels={regionLabels}
           />
-          <Button to={withLocale(PATHS.analysis)} caps block className="mt-4 text-xs md:text-sm" onClick={() => setMenuOpen(false)}>
+          <Button to={withLocale(PATHS.analysis)} caps block className="mt-4 text-sm" onClick={() => setMenuOpen(false)}>
             {t('marketing.nav.cta')}
           </Button>
         </div>
