@@ -1239,6 +1239,8 @@ export const en = {
   'app.profile.password.error.wrong': 'Your current password is incorrect.',
   'app.profile.password.error.weak': 'Use at least 8 characters.',
   'app.profile.logout': 'Log out',
+
+  'hairScan.notConfigured': 'Our AI chat is being connected — please check back soon.',
 } as const;
 
 export type MessageKey = keyof typeof en;

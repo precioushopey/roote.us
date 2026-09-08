@@ -1234,4 +1234,6 @@ export const he: Record<MessageKey, string> = {
   'app.profile.password.error.wrong': 'הסיסמה הנוכחית שגויה.',
   'app.profile.password.error.weak': 'יש להשתמש בלפחות 8 תווים.',
   'app.profile.logout': 'התנתקות',
+
+  'hairScan.notConfigured': 'הצ׳אט מבוסס הבינה המלאכותית שלנו בתהליך חיבור — נא לבדוק שוב בקרוב.',
 };
