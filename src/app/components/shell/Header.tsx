@@ -15,7 +15,6 @@ const NAV: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.howItWorks', PATHS.howItWorks],
   ['marketing.nav.science', PATHS.science],
   ['marketing.nav.about', PATHS.about],
-  ['marketing.nav.hairScan', PATHS.hairScan],
 ];
 
 export function Header() {
@@ -95,7 +94,7 @@ export function Header() {
               </svg>
             </Link>
           </div>
-          <Button to={withLocale(PATHS.analysis)} size="sm" caps onInk className="hidden sm:inline-flex text-xs sm:text-sm md:text-base">
+          <Button to={withLocale(PATHS.analysis)} size="lg" caps onInk className="hidden sm:inline-flex text-xs md:text-sm">
             {t('marketing.nav.cta')}
           </Button>
           <IconButton
@@ -146,7 +145,7 @@ export function Header() {
             onChangeLocale={onChangeLocale}
             labels={regionLabels}
           />
-          <Button to={withLocale(PATHS.analysis)} caps block className="mt-4" onClick={() => setMenuOpen(false)}>
+          <Button to={withLocale(PATHS.analysis)} caps block className="mt-4 text-xs md:text-sm" onClick={() => setMenuOpen(false)}>
             {t('marketing.nav.cta')}
           </Button>
         </div>
