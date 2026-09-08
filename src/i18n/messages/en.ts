@@ -1241,6 +1241,12 @@ export const en = {
   'app.profile.logout': 'Log out',
 
   'hairScan.notConfigured': 'Our AI chat is being connected — please check back soon.',
+  'hairScan.title': 'Chat with our AI hair scan',
+  'hairScan.intro':
+    "Answer a few quick questions and share a photo — our partner's AI will look at your hair and get back to our team.",
+  'hairScan.disclosure':
+    'This chat is powered by our partner, HairHealth.ai. What you share here — your answers and photos — is sent to them and added to our contact list so our team can follow up.',
+  'hairScan.disclosureLink': 'See our Privacy Policy',
 } as const;
 
 export type MessageKey = keyof typeof en;
