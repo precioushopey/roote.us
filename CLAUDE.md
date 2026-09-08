@@ -30,7 +30,7 @@ shadcn/ui set under `src/app/components/ui/`).
 pnpm install
 pnpm dev          # Vite dev server
 pnpm build        # vite build -> dist/  (one ~640 kB chunk; the >500 kB warning is expected)
-pnpm test         # vitest run  — 52 files / 206 tests, must stay green
+pnpm test         # vitest run  — 67 files / 389 tests, must stay green
 pnpm test:watch
 pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
 ```
@@ -79,14 +79,18 @@ bare `pushState` won't notify it. `src/app/App.test.tsx` restores history in `af
 
 | Shell | Routes | Chrome |
 |---|---|---|
-| `MarketingShell` | `/`, `/how-it-works`, `/science`, `/products`, `/about`, `/faq`, `/support`, `/terms`, `/terms-of-sale`, `/privacy`, `/bag`, `/bag/checkout`, `/bag/success` | Header (condense-on-scroll, "More ▾" dropdown) + Footer + skip-link |
-| `FunnelShell` | `/login`; `/diagnosis` + `intro`/`gender`/`photos`/`analyzing`/`ready`; `/start` + `plan`/`checkout`/`success` (`StartLayout` nested) | wordmark (→ `/`) + `LocaleToggle` only |
+| `MarketingShell` | `/`, `/how-it-works`, `/solutions` (+ `/thinning`, `/gray-hair`), `/science`, `/system`, `/about`, `/faq`, `/support`, `/products` (+ `/:slug`), `/terms`, `/terms-of-sale`, `/privacy`, legal registry (`/shipping`, `/returns`, `/cancellation`, `/subscription-terms`, `/medical-disclaimer`, `/accessibility`, `/cookies`), `/bag`, `/bag/checkout`, `/bag/success` | Header (condense-on-scroll, "More ▾" dropdown) + Footer + skip-link |
+| `AnalysisShell` | `/analysis` (index) + `gender`/`goal`/`photos`/`scanning`/`questions`/`results` (WP2-era aliases `intro`/`concern`/`analyzing`/`ready` still redirect) | wordmark (→ `/`) + progress rail + `LocaleToggle` |
+| `FunnelShell` | `/login`; `/hair-scan`; `/program` + `plan`/`checkout`/`success` (`StartLayout` nested) | wordmark (→ `/`) + `LocaleToggle` only |
 | *(own inline)* | `/report/:reportId` | wordmark header + disclaimer footer |
-| `AppShell` | `/app` (index = Today), `/app/plan`, `/progress`, `/care`, `/rescan`, `/profile` | desktop sidebar / mobile scrollable tabs; guarded by `session.program` + `auth.email` |
+| `AppShell` | `/account` (index = Overview), plus `today`/`program`/`baseline`/`progress` (+ `/before-after`)/`results`/`renew`/`reminders`/`photos`/`scans`/`orders`/`subscription`/`care`/`profile` (WP2-era aliases `plan`→`program`, `rescan`→`scans` still redirect) | desktop sidebar / mobile scrollable tabs; guarded by `session.program` + `auth.email` |
 | — | `*` → `<Navigate to="/" replace/>` | — |
 
+`/diagnosis`, `/start`, and `/app` still work as old URLs — `LEGACY_PREFIX_REDIRECTS` in
+`src/app/paths.ts` maps each prefix to its new name (`/analysis`, `/program`, `/account`).
+
 Guards are plain functions returning a redirect path or `null`:
-`src/app/routes/diagnosis/guards.ts` (`redirectForStep`), `src/app/routes/start/guards.ts`
+`src/app/routes/analysis/guards.ts` (`redirectForAnalysisStep`), `src/app/routes/start/guards.ts`
 (`redirectForStartStep`). Route components call them and `<Navigate>` on a non-null result.
 
 ### Layers & folders (`src/`)
@@ -96,7 +100,7 @@ content/roote.config.ts   brand + company (entity facts) + formula + programDura
         catalog.ts         17-SKU product catalogue (prices are [PENDING])
         pending.ts          PENDING() / isPending() / collectPending()
 domain/analysis/           deriveAnalysis (pure, deterministic), analyzeHair (orchestrator + fallback),
-                           hairhealthAdapter (env-gated PLACEHOLDER contract), types
+                           remoteAnalysisAdapter (env-gated PLACEHOLDER contract, vendor TBD), types
        report/             buildReport (pure view-model builder), types, money (Intl currency)
        program/            types (Program, Treatment)
 i18n/                      LocaleProvider, interpolate ({var} only), messages/{en,he,index}
@@ -104,7 +108,7 @@ store/                     sessionStore (useReducer, localStorage['roote.session
                            auth (mock; non-crypto digest), cart (localStorage['roote.cart']),
                            checkout (unified Order union + stub submitPayment), orders (order history,
                            localStorage['roote.orders']), program (buildProgram), persistence, devSeed
-app/routes/                marketing/ · bag/ · auth/ · diagnosis/ · start/ · report/ · app/
+app/routes/                marketing/ · bag/ · auth/ · analysis/ · start/ · report/ · app/ · legal/
 app/components/            shell/ · marketing/ · brand/ · diagnosis/ · report/ · funnel/ · checkout/(CheckoutFields) · ui/(shadcn, mostly unused)
 app/lib/                   useRevealOnRoute, useReducedMotion, useScrollCondense
 styles/                    index.css → fonts.css, tailwind.css, theme.css, marketing.css ; tokens.ts (JS mirror of theme.css)
@@ -128,17 +132,20 @@ Four context providers, each initialised from and written back to storage:
 | `LocaleProvider` | `localStorage['roote.locale']` | default `'he'`; sets `<html lang dir>` + `document.title` |
 | `persistence` | IndexedDB `roote`/`blobs` | photo blobs keyed by uuid; thumbnails (data URLs) live in the JSON state |
 
-`import.meta.env.DEV` gates the dev seed on `/start` and the
+`import.meta.env.DEV` gates the dev seed on `/program` and the
 `localStorage['roote.debug.forceCheckoutFailure'] = '1'` switch (forces both checkout stubs to throw).
 
 ### Analysis engine
 
-`deriveAnalysis({gender, answers})` — pure, deterministic. Male → Norwood, female → Ludwig;
+`deriveAnalysis({gender, hairGoal, answers})` — pure, deterministic. Male → Norwood, female → Ludwig;
 severity from onset; `recommendedDurationDays` from `RECOMMENDED_DURATION_TABLE[severity:emphasis]`
 (90 is user-selectable but never AI-recommended). Full rule table: `docs/BUSINESS-RULES.md` §1.
-`analyzeHair` calls hairhealth.ai only when `VITE_HAIRHEALTH_API_URL` is set **and** photos exist,
-falling back to the local model on any failure. `hairhealthAdapter`'s request/response shape is a
-**guess** — confirm before relying on it.
+`analyzeHair` calls a remote CV provider only when `VITE_CV_PROVIDER_API_URL` is set **and** photos
+exist, falling back to the local model on any failure. No vendor is under contract for this seam —
+`remoteAnalysisAdapter`'s request/response shape is a **guess**, confirm before relying on it. This is
+unrelated to HairHealth.ai: their actual, confirmed integration with ROOTÉ is a separate lead-gen
+chatbot at `/hair-scan` (`LandbotFullpageEmbed`) whose results go straight to ROOTÉ's own HubSpot —
+see `docs/superpowers/specs/2026-09-08-hairhealth-landbot-integration-design.md`.
 
 ### Styling
 
@@ -166,25 +173,25 @@ via `motion`; every effect needs a `prefers-reduced-motion` static fallback (`us
   is web-only. `src/app/routes/report/ReportEmailPreview.tsx` exists but is **not routed**.
 - **One checkout, two order kinds.** `store/checkout.ts` has a single `Order` discriminated union
   (`{ kind: 'program' | 'bag', … }`), one `submitPayment(order)` (id prefixed `ord-`/`bag-` from
-  `kind`), and both `/start/checkout` and `/bag/checkout` render the shared
+  `kind`), and both `/program/checkout` and `/bag/checkout` render the shared
   `app/components/checkout/CheckoutFields.tsx` (contact + card form + shape validation). Successful
-  orders are appended to `store/orders.ts` history and shown on `/app/profile`. The bag is a **kept,
-  secondary "refills & add-ons" surface** (OQ-BIZ-7 direction, 2026-09-03) — discoverable via a cart
-  icon + badge in the marketing `Header` and a "Shop products" link in the `/app` sidebar. Keep the
-  single checkout machinery; don't fork it again.
+  orders are appended to `store/orders.ts` history and shown on `/account/profile`. The bag is a
+  **kept, secondary "refills & add-ons" surface** (OQ-BIZ-7 direction, 2026-09-03) — discoverable via
+  a cart icon + badge in the marketing `Header` and a "Shop products" link in the `/account` sidebar.
+  Keep the single checkout machinery; don't fork it again.
 - **Card data:** `CheckoutFields` builds `card` as `{ last4, expiry }` only — the full number and CVC
   must never enter the `Order`, be logged, or be stored.
-- `/app/*` has no dev seed that mints a `Program`, so in DEV it's only reachable by completing
-  `/start/checkout` (or hand-seeding `session.program`).
-- Photo gate inconsistency: `redirectForStep` needs ≥1 photo, `/diagnosis/photos` requires all 4 to
-  continue.
+- `/account/*` has no dev seed that mints a `Program`, so in DEV it's only reachable by completing
+  `/program/checkout` (or hand-seeding `session.program`).
+- Photo gate inconsistency: `redirectForAnalysisStep` needs ≥1 photo, `/analysis/photos` requires all
+  4 to continue.
 - `src/app/components/ui/` (shadcn) + many `package.json` deps (MUI, full Radix set, `recharts`,
   `canvas-confetti`, `react-hook-form`, `lucide-react`, …) are **unused** template baggage.
 
 ## Other notes
 
 - `guidelines/Guidelines.md` is the untouched Figma Make placeholder — ignore it.
-- `main` == `origin/main` == `09f68e4` (pushed 2026-09-03); working tree starts clean. Commit/push
+- `main` == `origin/main` == `e5b9fa0` (pushed 2026-09-08); working tree starts clean. Commit/push
   only when the user asks.
 - `docs/superpowers/specs/*` + `plans/*` are the original phase design intent; parts are superseded —
   the "Implementation vs. intent" table in `docs/DESIGN-SPECIFICATION.md` lists the deltas.
