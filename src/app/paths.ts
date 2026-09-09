@@ -15,6 +15,7 @@ export const PATHS = {
   about: '/about',
   faq: '/faq',
   support: '/support',
+  magazine: '/magazine',
 
   products: '/products',
   product: (slug: string) => `/products/${slug}`,

@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router';
 import { MarketingShell } from '@/app/components/shell/MarketingShell';
 import { Home } from './Home';
+import { Magazine } from './Magazine';
 import { HowItWorks } from './HowItWorks';
 import { Science } from './Science';
 import { Products } from './Products';
@@ -35,6 +36,7 @@ export const marketingRoutes: RouteObject = {
   children: [
     { index: true, element: <Home /> },
     { path: 'how-it-works', element: <HowItWorks /> },
+    { path: 'magazine', element: <Magazine /> },
 
     { path: 'solutions', element: <SolutionsIndex /> },
     { path: 'solutions/thinning', element: <SolutionPage slug="thinning" /> },
