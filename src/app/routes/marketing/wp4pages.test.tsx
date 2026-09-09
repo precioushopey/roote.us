@@ -11,6 +11,7 @@ function renderAt(path: string, locale: 'en' | 'he' = 'en') {
   const router = createMemoryRouter(
     [
       {
+        path: '/:localeRegion',
         element: (
           <LocaleProvider localeRegion={localeRegion}>
             <CartProvider>
@@ -21,7 +22,7 @@ function renderAt(path: string, locale: 'en' | 'he' = 'en') {
         children: [marketingRoutes],
       },
     ],
-    { initialEntries: [path] },
+    { initialEntries: [`/${localeRegion}${path}`] },
   );
   render(<RouterProvider router={router} />);
 }
@@ -60,6 +61,19 @@ describe('WP4 marketing pages', () => {
     expect(within(hero).queryByText('[PENDING: price]')).not.toBeInTheDocument();
   });
 
+  it('Products: bundles show a struck-through compare-at price and a Save badge', () => {
+    renderAt('/products');
+    const bundlesSection = screen.getByRole('heading', { name: 'Stock up once, skip the reorder.' }).closest('section')!;
+    // Complete System: $183 sum of components, discounted to $165 (~10% off, matches heyhair.co's pattern).
+    expect(within(bundlesSection).getAllByText('$183.00').length).toBeGreaterThan(0);
+    expect(within(bundlesSection).getAllByText('$165.00').length).toBeGreaterThan(0);
+    expect(within(bundlesSection).getAllByText('Save $18.00').length).toBeGreaterThan(0);
+    // Gray Support Bundle: competitor-matched $70 vs. its own $90 component sum (~22% off).
+    expect(within(bundlesSection).getAllByText('$90.00').length).toBeGreaterThan(0);
+    expect(within(bundlesSection).getAllByText('$70.00').length).toBeGreaterThan(0);
+    expect(within(bundlesSection).getAllByText('Save $20.00').length).toBeGreaterThan(0);
+  });
+
   it('Product detail: cosmetic SKU has no review badge', () => {
     renderAt('/products/regrowth-shampoo');
     expect(screen.queryByText(/requires treatment review/i)).not.toBeInTheDocument();
@@ -96,5 +110,14 @@ describe('WP4 marketing pages', () => {
   it('renders a rebuilt page in Hebrew', () => {
     renderAt('/system', 'he');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('לנתח. לטפל. לעקוב.');
+  });
+
+  it('Science: "Read more" on an ingredient card navigates to the Magazine', async () => {
+    const { default: userEvent } = await import('@testing-library/user-event');
+    const user = userEvent.setup();
+    renderAt('/science');
+    const readMoreButtons = screen.getAllByRole('button', { name: 'Read more' });
+    await user.click(readMoreButtons[0]);
+    expect(await screen.findByRole('heading', { level: 1, name: "Understand what's actually in your routine." })).toBeInTheDocument();
   });
 });

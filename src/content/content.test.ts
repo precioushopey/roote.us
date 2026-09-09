@@ -1,11 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { PRODUCTS, getProduct, ARCHIVED_CONCEPTS } from './products';
+import { SHOP_BUNDLES } from './bundles';
 import { PROGRAM_DURATIONS, PROGRAMS, HEADLINE_DURATIONS } from './programs';
 import { SOLUTIONS } from './solutions';
 import { HOME_FAQS, PRODUCT_FAQS_COMMON } from './faqs';
 import { LEGAL_PAGES } from './legal';
 import { THINNING_QUESTIONS, GRAY_QUESTIONS, HEALTH_HISTORY_QUESTION, questionsForHairGoal } from './assessment';
 import { containsForbiddenClaim } from './claims';
+import {
+  HAIR_LOSS_SCIENCE,
+  RESULTS_TIMELINE_CLAIM,
+  dedupedIngredients,
+  INGREDIENT_EXPLANATIONS,
+  FORMAT_EXPLANATIONS,
+} from './magazine';
 
 const localizedStrings = (v: unknown, acc: string[] = []): string[] => {
   if (v == null) return acc;
@@ -63,6 +71,38 @@ describe('products (6 launch SKUs, brief §8)', () => {
       for (const s of localizedStrings(p)) {
         expect(containsForbiddenClaim(s), `${p.slug}: "${s}"`).toBe(false);
       }
+    }
+  });
+});
+
+describe('shop bundles (à-la-carte "buy the set" sets)', () => {
+  it('compareAtPrice is exactly the sum of its own component SKU prices, never invented', () => {
+    for (const b of SHOP_BUNDLES) {
+      if (b.compareAtPrice === null) continue;
+      const sum = b.skus.reduce((total, slug) => total + (getProduct(slug)?.price ?? 0), 0);
+      expect(b.compareAtPrice, b.id).toBe(sum);
+    }
+  });
+
+  it('never shows a "discount" that is not actually a discount (price <= compareAtPrice)', () => {
+    for (const b of SHOP_BUNDLES) {
+      if (b.price === null || b.compareAtPrice === null) continue;
+      expect(b.price, b.id).toBeLessThanOrEqual(b.compareAtPrice);
+    }
+  });
+
+  it('prices are the confirmed values (competitor-matched, or ~10% off to match heyhair.co\'s bundle-discount pattern, 2026-09-08)', () => {
+    const expected: Record<string, { price: number; compareAtPrice: number | null }> = {
+      'complete-system-men': { price: 165, compareAtPrice: 183 },
+      'complete-system-women': { price: 165, compareAtPrice: 183 },
+      'gray-support-bundle-men': { price: 70, compareAtPrice: 90 },
+      'gray-support-bundle-women': { price: 70, compareAtPrice: 90 },
+      'hair-growth-bundle-men': { price: 84, compareAtPrice: 93 },
+      'hair-growth-bundle-women': { price: 84, compareAtPrice: 93 },
+    };
+    for (const b of SHOP_BUNDLES) {
+      expect(b.price, b.id).toBe(expected[b.id].price);
+      expect(b.compareAtPrice, b.id).toBe(expected[b.id].compareAtPrice);
     }
   });
 });
@@ -151,6 +191,33 @@ describe('assessment question sets', () => {
     expect(questionsForHairGoal('slow-graying')).toBe(GRAY_QUESTIONS);
     for (const goal of ['thicker-fuller', 'stop-loss', 'hair-growth', 'other'] as const) {
       expect(questionsForHairGoal(goal)).toBe(THINNING_QUESTIONS);
+    }
+  });
+});
+
+describe('magazine (content hub, /magazine)', () => {
+  it('carries no forbidden marketing claim anywhere in its copy', () => {
+    const all = [
+      HAIR_LOSS_SCIENCE,
+      RESULTS_TIMELINE_CLAIM.en.text,
+      RESULTS_TIMELINE_CLAIM.he.text,
+      ...Object.values(INGREDIENT_EXPLANATIONS),
+      ...Object.values(FORMAT_EXPLANATIONS),
+    ];
+    for (const node of all) {
+      for (const s of localizedStrings(node)) {
+        expect(containsForbiddenClaim(s), `"${s}"`).toBe(false);
+      }
+    }
+  });
+
+  it('never writes new copy for a supplier-proprietary ingredient (those stay requires-review/[PENDING])', () => {
+    const proprietary = dedupedIngredients().filter((i) => i.claimStatus === 'requires-review');
+    expect(proprietary.map((i) => i.name).sort()).toEqual(
+      ['Capixyl™', 'Darkenyl™', 'Greyverse™', 'Procapil®'].sort(),
+    );
+    for (const ing of proprietary) {
+      expect(INGREDIENT_EXPLANATIONS[ing.name], ing.name).toBeUndefined();
     }
   });
 });
