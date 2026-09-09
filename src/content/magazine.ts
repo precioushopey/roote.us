@@ -8,10 +8,16 @@ import { PRODUCTS, type Ingredient, type ProductFormat } from './products';
  * 2026-09-09-magazine-content-section-design.md). Ingredient names, claim
  * statuses, and source types are owned by `products.ts` — this file only adds
  * longer explanatory copy on top, keyed by ingredient name; it never overrides
- * an ingredient's real status. Every substantive claim here is paraphrased from
- * general ingredient literature, never copied from a competitor page, and
- * carries a `ClaimStatus` so wording can be approved centrally — the same rule
- * `products.ts` already follows.
+ * an ingredient's real status.
+ *
+ * Only `RESULTS_TIMELINE_CLAIM` below is wrapped in a `Claim` with its own
+ * `ClaimStatus`/`sourceType`. `HAIR_LOSS_SCIENCE`, `INGREDIENT_EXPLANATIONS`,
+ * and `FORMAT_EXPLANATIONS` are plain `LocalizedText` — general, non-brand-
+ * specific, factual copy reviewed at write-time rather than gated at
+ * render-time; `INGREDIENT_EXPLANATIONS` additionally never exists for a
+ * proprietary ingredient, so those always fall through to the ingredient's
+ * own real `requires-review` status and render [PENDING] via IngredientCard,
+ * unchanged.
  */
 
 export const HAIR_LOSS_SCIENCE: LocalizedText = L(
@@ -183,8 +189,8 @@ export const INGREDIENT_EXPLANATIONS: Record<string, LocalizedText> = {
  *  brand-specific or efficacy claim. */
 export const FORMAT_EXPLANATIONS: Record<ProductFormat, LocalizedText> = {
   'topical-solution': L(
-    'Topical solutions are applied directly to the scalp and are the most established at-home format for pattern hair loss — they let active ingredients reach the scalp and follicles directly, which is why products like ours in the Density line use this format for the highest-strength actives.',
-    'תמיסות מקומיות נמרחות ישירות על הקרקפת והן הפורמט הביתי המבוסס ביותר לנשירת שיער תורשתית — הן מאפשרות לרכיבים הפעילים להגיע ישירות לקרקפת ולזקיקים, ולכן מוצרים כמו קו Density שלנו משתמשים בפורמט זה לרכיבים הפעילים בעוצמה הגבוהה ביותר.',
+    'Topical solutions are applied directly to the scalp, letting active ingredients reach the scalp and follicles directly — this is the format our Density line uses for its core actives.',
+    'תמיסות מקומיות נמרחות ישירות על הקרקפת, ומאפשרות לרכיבים הפעילים להגיע ישירות לקרקפת ולזקיקים — זהו הפורמט שקו Density שלנו משתמש בו עבור הרכיבים הפעילים המרכזיים שלו.',
   ),
   'capsule-supplement': L(
     'Capsule supplements work from the inside — taken daily with food, they deliver vitamins, minerals, and botanical extracts through the digestive system rather than directly to the scalp, complementing a topical routine with broader nutritional support.',

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider, Outlet } from 'react-router';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { CartProvider } from '@/store/cart';

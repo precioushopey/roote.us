@@ -17,9 +17,17 @@ export function useRevealOnRoute() {
   const { pathname } = useLocation();
 
   // Every route change (nav item, footer link, CTA) lands at the top of the page,
-  // unless the URL targets an in-page anchor.
+  // unless the URL targets an in-page anchor — then scroll that element into
+  // view instead (rAF so it runs after the new route's DOM has painted).
   useEffect(() => {
-    if (typeof window === 'undefined' || window.location.hash) return;
+    if (typeof window === 'undefined') return;
+    if (window.location.hash) {
+      const id = window.location.hash.slice(1);
+      const raf = requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView();
+      });
+      return () => cancelAnimationFrame(raf);
+    }
     window.scrollTo(0, 0);
   }, [pathname]);
 

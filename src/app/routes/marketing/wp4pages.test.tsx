@@ -86,7 +86,7 @@ describe('WP4 marketing pages', () => {
   });
 
   it('no forbidden marketing claim renders on the rebuilt pages', () => {
-    for (const path of ['/science', '/solutions/gray-hair', '/products/gray-serum', '/system']) {
+    for (const path of ['/science', '/solutions/gray-hair', '/products/gray-serum', '/system', '/magazine']) {
       const router = createMemoryRouter(
         [
           {

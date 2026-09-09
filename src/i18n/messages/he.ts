@@ -320,7 +320,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.magazine.body':
     'מבט מקרוב על הסיבה לנשירת שיער, על תפקידו של כל רכיב, ועל האופן שבו כל טיפול של ROOTÉ משתלב בתוכנית שלכם.',
   'marketing.magazine.whyEyebrow': 'היסודות',
-  'marketing.magazine.whyHeading': 'למה נושרת שיער',
+  'marketing.magazine.whyHeading': 'למה שיער נושר',
   'marketing.magazine.timelineHeading': 'איך תוצאות מתפתחות בדרך כלל',
   'marketing.magazine.timelinePendingLabel': 'לוח זמנים לתוצאות',
   'marketing.magazine.ingredientsEyebrow': 'רכיב אחר רכיב',
