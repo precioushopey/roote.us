@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { HAIR_LOSS_SCIENCE, RESULTS_TIMELINE_CLAIM } from './magazine';
 import { containsForbiddenClaim } from './claims';
-import { PRODUCTS } from './products';
+import { PRODUCTS, type ProductFormat } from './products';
 import {
   dedupedIngredients,
   INGREDIENT_CATEGORY,
   INGREDIENT_EXPLANATIONS,
+  FORMAT_EXPLANATIONS,
 } from './magazine';
 
 describe('magazine content — hair-loss science + timeline claim', () => {
@@ -67,6 +68,20 @@ describe('magazine content — ingredient library', () => {
     for (const name of PROPRIETARY) {
       const ing = dedupedIngredients().find((i) => i.name === name)!;
       expect(ing.claimStatus, name).toBe('requires-review');
+    }
+  });
+});
+
+describe('magazine content — format explainers', () => {
+  const FORMATS: ProductFormat[] = ['topical-solution', 'capsule-supplement', 'shampoo', 'serum'];
+
+  it('has a real explanation in both languages for every product format', () => {
+    for (const f of FORMATS) {
+      expect(FORMAT_EXPLANATIONS[f], f).toBeDefined();
+      expect(FORMAT_EXPLANATIONS[f].en.length, f).toBeGreaterThan(20);
+      expect(FORMAT_EXPLANATIONS[f].he.length, f).toBeGreaterThan(20);
+      expect(containsForbiddenClaim(FORMAT_EXPLANATIONS[f].en), f).toBe(false);
+      expect(containsForbiddenClaim(FORMAT_EXPLANATIONS[f].he), f).toBe(false);
     }
   });
 });

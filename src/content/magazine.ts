@@ -1,6 +1,6 @@
 import { L, type LocalizedText } from './localized';
 import { claim, type Claim } from './claims';
-import { PRODUCTS, type Ingredient } from './products';
+import { PRODUCTS, type Ingredient, type ProductFormat } from './products';
 
 /**
  * Content for the "Magazine" hub (`/magazine`) — a single scrollable page, not a
@@ -176,5 +176,26 @@ export const INGREDIENT_EXPLANATIONS: Record<string, LocalizedText> = {
   Jojoba: L(
     "Jojoba oil closely resembles the scalp's own natural oils, which is why it's widely used to condition hair and scalp without feeling heavy or greasy.",
     'שמן ג\'וג\'ובה דומה מאוד לשמנים הטבעיים של הקרקפת עצמה, ולכן הוא בשימוש נרחב להזנת השיער והקרקפת מבלי להרגיש כבד או שמנוני.',
+  ),
+};
+
+/** One explainer per real product format — general delivery-method info, not a
+ *  brand-specific or efficacy claim. */
+export const FORMAT_EXPLANATIONS: Record<ProductFormat, LocalizedText> = {
+  'topical-solution': L(
+    'Topical solutions are applied directly to the scalp and are the most established at-home format for pattern hair loss — they let active ingredients reach the scalp and follicles directly, which is why products like ours in the Density line use this format for the highest-strength actives.',
+    'תמיסות מקומיות נמרחות ישירות על הקרקפת והן הפורמט הביתי המבוסס ביותר לנשירת שיער תורשתית — הן מאפשרות לרכיבים הפעילים להגיע ישירות לקרקפת ולזקיקים, ולכן מוצרים כמו קו Density שלנו משתמשים בפורמט זה לרכיבים הפעילים בעוצמה הגבוהה ביותר.',
+  ),
+  'capsule-supplement': L(
+    'Capsule supplements work from the inside — taken daily with food, they deliver vitamins, minerals, and botanical extracts through the digestive system rather than directly to the scalp, complementing a topical routine with broader nutritional support.',
+    'תוספי קפסולות פועלים מבפנים — נלקחים מדי יום עם אוכל, הם מספקים ויטמינים, מינרלים ותמציות צמחיות דרך מערכת העיכול, ולא ישירות לקרקפת, ומשלימים שגרה מקומית בתמיכה תזונתית רחבה יותר.',
+  ),
+  serum: L(
+    "Serums are lightweight, leave-in formulas usually applied once daily and left on the scalp — they're formulated to sit on the skin longer than a rinse-off product, which is typically why cosmetic (non-prescription) actives are delivered this way.",
+    'סרומים הם תכשירים קלים, שאינם נשטפים, הנמרחים בדרך כלל פעם ביום ונשארים על הקרקפת — הם מיועדים להישאר על העור זמן ארוך יותר ממוצר הנשטף, וזו בדרך כלל הסיבה שרכיבים קוסמטיים (ללא מרשם) מועברים בדרך זו.',
+  ),
+  shampoo: L(
+    'Shampoos are a daily cleanse step — used in place of a regular shampoo, a scalp-focused formula clears buildup and delivers conditioning actives with brief, repeated contact each time you wash.',
+    'שמפו הוא שלב הניקוי היומי — בשימוש במקום שמפו רגיל, פורמולה הממוקדת בקרקפת מנקה הצטברות ומעבירה רכיבי הזנה במגע קצר וחוזר בכל שטיפה.',
   ),
 };
