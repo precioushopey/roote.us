@@ -93,7 +93,7 @@ export function AppShell() {
       className="min-h-screen bg-background text-foreground lg:grid lg:grid-cols-[248px_minmax(0,1fr)]"
     >
       <aside className="sticky top-0 hidden h-screen flex-col border-e border-ink-foreground/15 bg-ink px-4 py-6 text-ink-foreground lg:flex">
-        <Wordmark className="w-24" onInk />
+        <Wordmark className="w-24" />
         <nav aria-label={t('app.nav.label')} className="mt-8 flex flex-col gap-1">
           {TABS.map(([to, key]) => (
             <NavLink key={to} to={withLocale(to)} end={to === PATHS.account} className={navLinkClass}>
@@ -130,7 +130,7 @@ export function AppShell() {
 
       <header className="glass-dark sticky top-0 z-40 border-b border-ink-foreground/15 lg:hidden">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
-          <Wordmark className="w-24" onInk />
+          <Wordmark className="w-24" />
           <div className="flex items-center gap-1">
             <CartLink label={t('cart.open')} count={cart.count} />
             <button type="button" onClick={logout} className="font-body text-xs text-ink-foreground/70 underline">

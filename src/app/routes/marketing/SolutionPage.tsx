@@ -46,24 +46,20 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
       <Section tone="teal" width="content" animate={false}>
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
               {pickLocalized(solution.hero.eyebrow, cl)}
             </Eyebrow>
-            <DisplayTitle as="h1" step="lg" onDark>
+            <DisplayTitle as="h1" step="lg">
               {pickLocalized(solution.hero.title, cl)}
             </DisplayTitle>
-            <Prose onDark size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg">
               {pickLocalized(solution.hero.body, cl)}
             </Prose>
             <div className="flex flex-wrap gap-3">
               <Button to={EXTERNAL_ASSESSMENT_URL} external caps>
                 {t('marketing.nav.cta')}
               </Button>
-              <Button
-                to={withLocale(PATHS.system)}
-                variant="secondary"
-                className="border-cream-100/30 text-cream-100 hover:border-cream-100"
-              >
+              <Button to={withLocale(PATHS.system)} variant="secondary">
                 {t('marketing.sol.exploreSystem')}
               </Button>
             </div>
@@ -133,8 +129,8 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
       </Section>
 
       {/* closing CTA */}
-      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
-        <DisplayTitle as="h2" step="lg" onDark align="center">
+      <Section tone="teal" width="readable" className="border-b border-accent text-center">
+        <DisplayTitle as="h2" step="lg" align="center">
           {t('marketing.sol.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
@@ -156,13 +152,13 @@ export function SolutionsIndex() {
   return (
     <>
       <Section tone="teal" width="content" animate={false} className="text-center">
-        <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+        <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
           {t('marketing.nav.solutions')}
         </Eyebrow>
-        <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto mt-2 max-w-2xl">
+        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto mt-2 max-w-2xl">
           {t('marketing.sol.indexHeading')}
         </DisplayTitle>
-        <Prose onDark size="lg" className="mx-auto mt-4 text-center">
+        <Prose size="lg" className="mx-auto mt-4 text-center">
           {t('marketing.sol.indexBody')}
         </Prose>
       </Section>

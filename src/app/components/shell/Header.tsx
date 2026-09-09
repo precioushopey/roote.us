@@ -10,11 +10,13 @@ import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { countryDefault, type LocaleCode } from '@/i18n/locales';
 import type { MessageKey } from '@/i18n/messages';
 
+// 2026-09-08 nav sketch: Magazine | Products | AI Section. Process/Science/About
+// are dropped from the header nav (still fully built and reachable via Footer +
+// direct URL — see docs/../roote-header-nav-sketch memory for the decision).
 const NAV: Array<[key: MessageKey, to: string]> = [
+  ['marketing.nav.magazine', PATHS.magazine],
   ['marketing.nav.products', PATHS.products],
-  ['marketing.nav.howItWorks', PATHS.howItWorks],
-  ['marketing.nav.science', PATHS.science],
-  ['marketing.nav.about', PATHS.about],
+  ['marketing.nav.aiSection', PATHS.hairScan],
 ];
 
 export function Header() {
@@ -94,7 +96,7 @@ export function Header() {
               </svg>
             </Link>
           </div>
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps onInk className="hidden sm:inline-flex text-sm">
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="hidden sm:inline-flex text-sm">
             {t('marketing.nav.cta')}
           </Button>
           <IconButton
@@ -120,7 +122,7 @@ export function Header() {
           }}
           className="absolute inset-x-0 mx-auto w-fit"
         >
-          <Wordmark className="w-24 md:w-28 lg:w-32" onInk />
+          <Wordmark className="w-24 md:w-28 lg:w-32" />
         </Link>
       </div>
 

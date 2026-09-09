@@ -11,13 +11,13 @@ export function Faq() {
   return (
     <>
       <Section tone="teal" width="content" animate={false} className="text-center">
-        <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+        <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
           {t('marketing.home.faq.eyebrow')}
         </Eyebrow>
-        <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto mt-2 max-w-2xl">
+        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto mt-2 max-w-2xl">
           {t('marketing.faq.hero.title')}
         </DisplayTitle>
-        <Prose onDark size="lg" className="mx-auto mt-4 text-center">
+        <Prose size="lg" className="mx-auto mt-4 text-center">
           {t('marketing.faq.hero.body')}
         </Prose>
       </Section>

@@ -14,9 +14,9 @@ const TONE: Record<BadgeTone, string> = {
 };
 
 /** A small status marker. `review` is the "needs medical / legal review" flavour.
- *  Every tone's text color assumes a light background — pass `onDark` when the
- *  badge sits on a dark-anchor surface (e.g. a `Section tone="teal"` hero), or
- *  the text renders unreadably dark-on-dark while the ring/background still show. */
+ *  Every tone's text color assumes a light background. `onDark` is unused since
+ *  the 2026-09-08 retint dropped the site's dark "anchor" surfaces — kept in
+ *  case a future dark surface needs it. */
 export function Badge({
   children,
   tone = 'neutral',

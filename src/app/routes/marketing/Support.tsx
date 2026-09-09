@@ -56,10 +56,10 @@ export function Support() {
   return (
     <>
       <Section tone="teal" width="content" animate={false} className="text-center">
-        <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto max-w-2xl">
+        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto max-w-2xl">
           {t('marketing.support.hero.title')}
         </DisplayTitle>
-        <Prose onDark size="lg" className="mx-auto mt-4 text-center">
+        <Prose size="lg" className="mx-auto mt-4 text-center">
           {t('marketing.support.hero.body')}
         </Prose>
       </Section>
@@ -104,10 +104,10 @@ export function Support() {
       <Section tone="teal" width="content">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col items-start gap-4">
-            <DisplayTitle as="h2" step="md" onDark className="max-w-sm">
+            <DisplayTitle as="h2" step="md" className="max-w-sm">
               {t('marketing.support.form.title')}
             </DisplayTitle>
-            <Prose size="lg" onDark className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
+            <Prose size="lg" className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
           </div>
           <div className="rounded-2xl border border-ink-foreground/15 bg-background p-6 text-foreground sm:p-8">
             <ContactForm />

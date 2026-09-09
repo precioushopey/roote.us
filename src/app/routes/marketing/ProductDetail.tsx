@@ -86,7 +86,7 @@ export function ProductDetail() {
       <Section tone="teal" width="content" animate={false}>
         <div className="grid items-start gap-10 lg:grid-cols-2">
           {PRODUCT_PHOTOS[product.slug] ? (
-            <div className="aspect-square w-full rounded-2xl border border-gold-500 bg-white p-8">
+            <div className="aspect-square w-full rounded-2xl border border-accent bg-white p-8">
               <img
                 src={PRODUCT_PHOTOS[product.slug]}
                 alt={`${product.name} packaging`}
@@ -102,18 +102,18 @@ export function ProductDetail() {
             />
           )}
           <div className="flex flex-col items-start gap-4">
-            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
               {pickLocalized(product.subtitle, cl)}
             </Eyebrow>
-            <DisplayTitle as="h1" step="md" onDark>
+            <DisplayTitle as="h1" step="md">
               {product.name}
             </DisplayTitle>
-            <Prose onDark size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg">
               {pickLocalized(product.heroCopy, cl)}
             </Prose>
             <div className="flex flex-wrap items-center gap-3">
-              <span className="font-body text-sm text-cream-100">{t('marketing.pdp.priceLabel')}</span>
-              <span className="font-display text-2xl font-bold text-cream-100">
+              <span className="font-body text-sm text-foreground">{t('marketing.pdp.priceLabel')}</span>
+              <span className="font-display text-2xl font-bold text-foreground">
                 {product.price === null ? (
                   <PendingChip label="price" />
                 ) : (
@@ -122,7 +122,7 @@ export function ProductDetail() {
               </span>
             </div>
             {product.requiresMedicalReview ? (
-              <Badge tone="review" onDark>{t('marketing.pdp.reviewBadge')}</Badge>
+              <Badge tone="review">{t('marketing.pdp.reviewBadge')}</Badge>
             ) : null}
             <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="mt-2">
               {t('marketing.nav.cta')}
@@ -185,8 +185,8 @@ export function ProductDetail() {
         </Section>
       ) : null}
 
-      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
-        <DisplayTitle as="h2" step="lg" onDark align="center">
+      <Section tone="teal" width="readable" className="border-b border-accent text-center">
+        <DisplayTitle as="h2" step="lg" align="center">
           {t('marketing.pdp.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">

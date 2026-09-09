@@ -29,10 +29,9 @@ describe('Header', () => {
   it('shows the primary nav links and the analysis CTA', () => {
     renderHeader();
     const nav = screen.getByRole('navigation', { name: 'Primary' });
-    expect(within(nav).getByRole('link', { name: 'Process' })).toHaveAttribute('href', '/en-us/how-it-works');
+    expect(within(nav).getByRole('link', { name: 'Magazine' })).toHaveAttribute('href', '/en-us/magazine');
     expect(within(nav).getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/en-us/products');
-    expect(within(nav).getByRole('link', { name: 'Science' })).toHaveAttribute('href', '/en-us/science');
-    expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en-us/about');
+    expect(within(nav).getByRole('link', { name: 'AI Section' })).toHaveAttribute('href', '/en-us/hair-scan');
     const cta = screen.getByRole('link', { name: 'Start free hair analysis' });
     expect(cta).toHaveAttribute('href', 'https://roote.vercel.app/test/landbot/fullpage');
     expect(cta).toHaveAttribute('target', '_blank');

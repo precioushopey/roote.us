@@ -45,13 +45,13 @@ export function About() {
       <Section tone="teal" width="content" animate={false}>
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
               {t('marketing.nav.about')}
             </Eyebrow>
-            <DisplayTitle as="h1" step="lg" onDark>
+            <DisplayTitle as="h1" step="lg">
               {t('marketing.about.hero.title')}
             </DisplayTitle>
-            <Prose onDark size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg">
               {t('marketing.about.mission.body')}
             </Prose>
             <Button
@@ -59,7 +59,7 @@ export function About() {
               external
               size="lg"
               caps
-              className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+              className="text-sm font-bold"
             >
               {t('marketing.nav.cta')}
             </Button>
@@ -164,8 +164,8 @@ export function About() {
         </div>
       </Section>
 
-      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
-        <DisplayTitle as="h2" step="lg" onDark align="center">
+      <Section tone="teal" width="readable" className="border-b border-accent text-center">
+        <DisplayTitle as="h2" step="lg" align="center">
           {t('marketing.about.cta.title')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
@@ -174,7 +174,7 @@ export function About() {
             external
             size="lg"
             caps
-            className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+            className="text-sm font-bold"
           >
             {t('marketing.nav.cta')}
           </Button>

@@ -17,7 +17,7 @@ export function CartLink({ label, count }: { label: string; count: number }) {
         <path d="M9 8V6a3 3 0 0 1 6 0v2" strokeLinecap="round" />
       </svg>
       {count > 0 && (
-        <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 text-[10px] font-semibold text-ink">
+        <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-semibold text-accent-foreground">
           {count}
         </span>
       )}

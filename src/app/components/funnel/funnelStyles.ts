@@ -1,5 +1,5 @@
 // Shared class strings so the diagnosis + start funnel matches the marketing
-// site's branding (Playfair display headings, gold accent, pill CTAs, editorial
+// site's branding (display headings, emerald accent, pill CTAs, editorial
 // cards).
 
 export const funnelHeading = 'font-display text-3xl font-medium tracking-[-0.01em] md:text-4xl';

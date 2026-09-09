@@ -1,8 +1,9 @@
 /**
  * ROOTÉ primitive system (WP1). Distinctive, intentional building blocks for
- * the redesign — teal/cream/gold, glass only for genuine depth, the
- * three-strand mark as the recurring motif. Pages compose these; they never
- * reach into content config or i18n for domain content themselves.
+ * the redesign — cream/ivory ground, emerald as the one accent, glass only
+ * for genuine depth, the three-strand mark as the recurring motif. Pages
+ * compose these; they never reach into content config or i18n for domain
+ * content themselves.
  */
 
 export { Button, IconButton, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';

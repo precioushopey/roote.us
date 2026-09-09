@@ -69,7 +69,7 @@ function Hero() {
         <div
           role="img"
           aria-label={t('marketing.home.hero.mediaAlt')}
-          className="relative aspect-[16/9] w-full overflow-hidden border border-gold-500 [border-radius:50%_50%_0_0/100%_100%_0_0]"
+          className="relative aspect-[16/9] w-full overflow-hidden border border-accent [border-radius:50%_50%_0_0/100%_100%_0_0]"
         >
           <img src={heroSystem} alt="" className="h-full w-full object-cover object-top" />
         </div>
@@ -93,18 +93,18 @@ function Hero() {
         </Link>
       </div>
       <div className="mx-auto flex w-full flex-col items-center gap-6 pt-12 md:pt-32 text-center">
-        <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+        <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
           {t('marketing.home.hero.eyebrow')}
         </Eyebrow>
         <h1
-          className="font-normal leading-[1.15] text-cream-100"
+          className="font-normal leading-[1.15]"
           style={{ fontSize: 'clamp(2.25rem, 5.5vw, 3.75rem)', fontFamily: "'Frank Ruhl Libre', serif" }}
         >
           {renderWithEmphasis(line1)}
           <br />
           {renderWithEmphasis(line2)}
         </h1>
-        <Prose onDark size="lg" className="max-w-xl">
+        <Prose size="lg" className="max-w-xl">
           {t('marketing.home.hero.support')}
         </Prose>
         <div className="flex flex-wrap items-center justify-center gap-3">
@@ -113,7 +113,7 @@ function Hero() {
             external
             size="lg"
             caps
-            className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+            className="text-sm font-bold"
           >
             {t('marketing.nav.cta')}
           </Button>
@@ -157,7 +157,7 @@ function SystemStrip() {
       space="tight"
       width="content"
       animate={false}
-      className="overflow-hidden border-b border-gold-500 py-4 md:py-4"
+      className="overflow-hidden border-b border-accent py-4 md:py-4"
     >
       {/* lg+: comfortably fits one static row */}
       <ul className="hidden flex-wrap items-center justify-center gap-x-8 font-body text-sm text-muted-foreground lg:flex">
@@ -228,10 +228,10 @@ function HowItWorksSection() {
         {t('marketing.home.how.heading')}
       </DisplayTitle>
       <ol className="relative mt-12 flex flex-col gap-10 lg:flex-row lg:gap-2">
-        <span aria-hidden className="absolute left-[10%] right-[10%] top-5 hidden h-px bg-gold-500/40 lg:block" />
+        <span aria-hidden className="absolute left-[10%] right-[10%] top-5 hidden h-px bg-accent/40 lg:block" />
         {systemSteps.map((step) => (
           <li key={step.key} className="relative flex flex-1 gap-4 lg:flex-col lg:items-center lg:gap-3 lg:text-center">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-500 bg-background font-display text-sm text-accent">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent bg-background font-display text-sm text-accent">
               {String(step.n).padStart(2, '0')}
             </span>
             <div className="flex flex-col gap-1">
@@ -251,13 +251,13 @@ function PersonalizedSystem() {
   const t = useT();
   return (
     <Section tone="teal" width="content">
-      <Eyebrow onDark>{t('marketing.home.system.eyebrow')}</Eyebrow>
-      <DisplayTitle as="h2" step="lg" onDark className="mt-2 max-w-2xl">
+      <Eyebrow>{t('marketing.home.system.eyebrow')}</Eyebrow>
+      <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
         {t('marketing.home.system.heading')}
       </DisplayTitle>
-      <Prose onDark className="mt-4 max-w-2xl">{t('marketing.home.system.body')}</Prose>
+      <Prose className="mt-4 max-w-2xl">{t('marketing.home.system.body')}</Prose>
       <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <Card padded={false} radius="2xl" className="overflow-hidden border-gold-500" data-pack="men">
+        <Card padded={false} radius="2xl" className="overflow-hidden border-accent" data-pack="men">
           <div className="aspect-[4/3] w-full bg-background p-6">
             <img
               src={systemMen}
@@ -267,7 +267,7 @@ function PersonalizedSystem() {
           </div>
           <p className="p-5 text-center font-display text-lg font-bold text-foreground">{t('marketing.home.system.men')}</p>
         </Card>
-        <Card padded={false} radius="2xl" className="overflow-hidden border-gold-500" data-pack="women">
+        <Card padded={false} radius="2xl" className="overflow-hidden border-accent" data-pack="women">
           <div className="aspect-[4/3] w-full bg-background p-6">
             <img
               src={systemWomen}
@@ -302,22 +302,22 @@ function ProgressSection() {
   ];
   return (
     <Section tone="teal" width="content">
-      <Eyebrow onDark>{t('marketing.home.progress.eyebrow')}</Eyebrow>
-      <DisplayTitle as="h2" step="lg" onDark className="mt-2 max-w-2xl">
+      <Eyebrow>{t('marketing.home.progress.eyebrow')}</Eyebrow>
+      <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
         {t('marketing.home.progress.heading')}
       </DisplayTitle>
-      <Prose onDark size="lg" className="mt-4 max-w-2xl">{t('marketing.home.progress.body')}</Prose>
+      <Prose size="lg" className="mt-4 max-w-2xl">{t('marketing.home.progress.body')}</Prose>
       <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
-          <Timeline milestones={milestones} className="gap-3" onDark />
-          <div className="mt-8 border-t border-cream-100/15 pt-6">
-            <p className="font-body text-sm font-semibold uppercase tracking-wide text-cream-100/70">
+          <Timeline milestones={milestones} className="gap-3" />
+          <div className="mt-8 border-t border-ink-foreground/15 pt-6">
+            <p className="font-body text-sm font-semibold uppercase tracking-wide text-ink-foreground/70">
               {t('marketing.home.durations.includesHeading')}
             </p>
-            <ul className="mt-3 flex flex-col gap-1.5 font-body text-base text-cream-100/85">
+            <ul className="mt-3 flex flex-col gap-1.5 font-body text-base text-ink-foreground/85">
               {includes.map((item) => (
                 <li key={item} className="flex items-start gap-2">
-                  <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" />
+                  <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                   {item}
                 </li>
               ))}
@@ -327,7 +327,7 @@ function ProgressSection() {
             to={withLocale(PATHS.system)}
             variant="secondary"
             size="sm"
-            className="mt-6 border-cream-100/30 text-cream-100 hover:border-gold-500"
+            className="mt-6"
           >
             {t('marketing.home.progress.cta')}
           </Button>
@@ -337,7 +337,7 @@ function ProgressSection() {
             ariaLabel={`${t('marketing.home.progress.before')} / ${t('marketing.home.progress.after')}`}
             beforeLabel={t('marketing.home.progress.before')}
             afterLabel={t('marketing.home.progress.after')}
-            className="border-gold-500/50"
+            className="border-accent/50"
             before={
               <img
                 src={scanBaseline}
@@ -353,7 +353,7 @@ function ProgressSection() {
               />
             }
           />
-          <p className="mt-2 font-body text-sm text-cream-100/70">{t('marketing.home.progress.compareCaption')}</p>
+          <p className="mt-2 font-body text-sm text-ink-foreground/70">{t('marketing.home.progress.compareCaption')}</p>
         </div>
       </div>
     </Section>
@@ -376,7 +376,7 @@ function DensitySystem() {
       <div className="mt-10 grid gap-6 md:grid-cols-3">
         {thinning.severityLevels.map((lvl) => (
           <div key={lvl.id} className="flex flex-col items-center gap-4 text-center">
-            <div className="aspect-[3/4] w-full border border-gold-500 bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
+            <div className="aspect-[3/4] w-full border border-accent bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
               <img src={DENSITY_LEVEL_PHOTOS[lvl.id]} alt="" className="h-full w-full object-contain" />
             </div>
             <div className="flex flex-col gap-2">
@@ -411,7 +411,7 @@ function GraySystem() {
         </div>
         {packs.map((pack) => (
           <div key={pack.id} className="flex flex-col items-center gap-4 text-center">
-            <div className="aspect-[3/4] w-full border border-gold-500 bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
+            <div className="aspect-[3/4] w-full border border-accent bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
               <img src={pack.image} alt={t('marketing.home.gray.mediaAlt')} className="h-full w-full object-contain" />
             </div>
             <div className="flex flex-col gap-2">
@@ -432,12 +432,12 @@ function FinalCta() {
   const t = useT();
   const withLocale = useLocalizedPath();
   return (
-    <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
+    <Section tone="teal" width="readable" className="border-b border-accent text-center">
       <div className="flex flex-col items-center gap-5">
-        <DisplayTitle as="h2" step="xl" onDark align="center">
+        <DisplayTitle as="h2" step="xl" align="center">
           {t('marketing.home.finalCta.heading')}
         </DisplayTitle>
-        <Prose onDark size="lg" className="mx-auto text-center">
+        <Prose size="lg" className="mx-auto text-center">
           {t('marketing.home.finalCta.body')}
         </Prose>
         <Button
@@ -445,7 +445,7 @@ function FinalCta() {
           external
           size="lg"
           caps
-          className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+          className="text-sm font-bold"
         >
           {t('marketing.nav.cta')}
         </Button>

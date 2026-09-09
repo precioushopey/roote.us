@@ -30,14 +30,11 @@ type CommonProps = {
   /** render label in CSS uppercase on Latin locales (brand CTA style) */
   caps?: boolean;
   block?: boolean;
-  /** Placement on a dark-emerald anchor surface (Header, Footer CTA — same
-   * surfaces `Wordmark({ onInk })` targets). The default `primary` fill
-   * (bg-primary / hover:bg-deep-900) is emerald-800/900 — both read as
-   * near-invisible against the emerald-950 `ink` background (~1.5:1 /
-   * ~1.2:1), well under the WCAG 1.4.11 3:1 boundary-contrast minimum. This
-   * swaps to a lighter emerald-600 fill (~3.2:1 against ink) with a
-   * gold-ringed emerald-700 hover — darkening the fill alone on hover still
-   * fails 3:1 (~2:1), so the gold-500 ring supplies the boundary contrast. */
+  /** Placement on a dark-emerald anchor surface. Unused since the 2026-09-08
+   * retint dropped the site's dark "anchor" surfaces (Header, Footer, hero
+   * bands are a light taupe now, not near-black) — kept in case a future
+   * dark surface needs it; the default `primary` fill has poor contrast
+   * against a genuinely dark background, which is what this compensates for. */
   onInk?: boolean;
   children: ReactNode;
   className?: string;
@@ -60,7 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   const classes = cn(
     BASE,
     VARIANT[variant],
-    variant === 'primary' && onInk && 'bg-deep-600 hover:bg-deep-700 hover:ring-2 hover:ring-gold-500',
+    variant === 'primary' && onInk && 'bg-deep-600 hover:bg-deep-700 hover:ring-2 hover:ring-accent',
     SIZE[size],
     block && 'w-full',
     caps && 'u-caps',

@@ -15,8 +15,12 @@ export const primitives = {
   cream100: '#F6EFE4',
   cream200: '#EDE1CF',
   cream300: '#E6DAC6',
+  // Kept only for the logo artwork's own on-ink silhouette (Wordmark
+  // `onInk`) — no longer used as a UI accent anywhere else (2026-09-08).
   gold500: '#C6A15A',
   gold600: '#A98343',
+  // Warm taupe "anchor" tone — replaces the near-black emerald ink band.
+  taupe500: '#C7B6A8',
   ink: '#172022',
   body: '#333A3C',
   muted: '#6F7676',
@@ -33,13 +37,13 @@ export const palette = {
   secondary: primitives.cream100,
   muted: primitives.cream200,
   mutedForeground: primitives.muted,
-  accent: primitives.gold500, // non-text / ≥24px only
-  accentForeground: primitives.ink,
+  accent: primitives.emerald800, // the one accent color (2026-09-08: replaces gold)
+  accentForeground: primitives.cream50,
   border: primitives.cream300,
-  ring: primitives.gold500,
-  ink: primitives.emerald950, // dark editorial band
-  inkForeground: primitives.cream100,
-  accentGhost: '#E6D8BD',
+  ring: primitives.emerald600,
+  ink: primitives.taupe500, // editorial "anchor" band — warm taupe, not dark
+  inkForeground: primitives.ink,
+  accentGhost: '#D7E6DC',
   inkGhost: '#284A3A',
   destructive: '#B3261E',
   success: '#1F7A53',
@@ -50,7 +54,7 @@ export const palette = {
 /** Glass surfaces — genuine depth only (sticky nav, floating result card, modals). */
 export const glass = {
   light: 'rgba(255, 255, 255, 0.62)',
-  dark: 'rgba(10, 42, 28, 0.85)',
+  dark: 'rgba(199, 182, 168, 0.85)',
   border: 'rgba(255, 255, 255, 0.18)',
   borderDark: 'rgba(255, 255, 255, 0.1)',
   blur: '20px',

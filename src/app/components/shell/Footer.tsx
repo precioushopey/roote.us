@@ -108,14 +108,14 @@ export function Footer() {
                         href={to}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-body text-sm text-ink-foreground hover:text-gold-500"
+                        className="font-body text-sm text-ink-foreground hover:text-accent"
                       >
                         {t(label)}
                       </a>
                     </li>
                   ) : (
                     <li key={to + label}>
-                      <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                      <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-accent">
                         {t(label)}
                       </Link>
                     </li>
@@ -132,7 +132,7 @@ export function Footer() {
             <ul className="mt-3 space-y-2">
               {SOLUTION_LINKS.map(([to, kind]) => (
                 <li key={to}>
-                  <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                  <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-accent">
                     {kind === 'products'
                       ? t('marketing.nav.products')
                       : pickLocalized(CONCERN_OPTIONS.find((c) => c.value === kind)!.title, cl)}
@@ -153,7 +153,7 @@ export function Footer() {
               <ul className="mt-3 space-y-2">
                 {links.map((link) => (
                   <li key={link.key}>
-                    <Link to={withLocale(link.to)} className="font-body text-sm text-ink-foreground hover:text-gold-500">
+                    <Link to={withLocale(link.to)} className="font-body text-sm text-ink-foreground hover:text-accent">
                       {link.label}
                     </Link>
                   </li>
@@ -184,7 +184,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-ink-foreground/15 pt-8 text-xs text-ink-foreground/60 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
-            <Wordmark className="w-20" onInk />
+            <Wordmark className="w-20" />
             <CountryLanguageSelector
               country={country}
               locale={locale as LocaleCode}

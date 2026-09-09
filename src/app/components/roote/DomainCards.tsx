@@ -39,7 +39,7 @@ export function ConcernCard({
         <img
           src={image}
           alt={mediaAlt}
-          className="aspect-[3/4] w-full border border-gold-500 object-cover [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+          className="aspect-[3/4] w-full border border-accent object-cover [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
         />
       ) : (
         <MediaPlaceholder
@@ -47,7 +47,7 @@ export function ConcernCard({
           label={mediaLabel}
           ratio="3 / 4"
           rounded="none"
-          className="w-full border border-gold-500 [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+          className="w-full border border-accent [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
         />
       )}
       <div className="flex flex-col gap-2">
@@ -91,7 +91,7 @@ export function ProductCard({
   return (
     <Link to={to} data-pack={packaging} className="group flex flex-col gap-4">
       {image ? (
-        <div className="aspect-[3/4] w-full border border-gold-500 bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
+        <div className="aspect-[3/4] w-full border border-accent bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
           <img src={image} alt={mediaAlt} className="h-full w-full object-contain" />
         </div>
       ) : (
@@ -101,7 +101,7 @@ export function ProductCard({
           ratio="3 / 4"
           rounded="none"
           tone={packaging === 'men' ? 'teal' : 'cream'}
-          className="w-full border border-gold-500 [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+          className="w-full border border-accent [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
         />
       )}
       <div className="flex items-start justify-between gap-4">

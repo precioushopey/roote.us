@@ -74,13 +74,13 @@ export function HowItWorks() {
       <Section tone="teal" width="content" animate={false}>
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
               {t('marketing.nav.howItWorks')}
             </Eyebrow>
-            <DisplayTitle as="h1" step="lg" onDark>
+            <DisplayTitle as="h1" step="lg">
               {t('marketing.howItWorks.hero.title')}
             </DisplayTitle>
-            <Prose onDark size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg">
               {t('marketing.howItWorks.hero.body')}
             </Prose>
             <Button
@@ -88,7 +88,7 @@ export function HowItWorks() {
               external
               size="lg"
               caps
-              className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+              className="text-sm font-bold"
             >
               {t('marketing.nav.cta')}
             </Button>
@@ -119,7 +119,7 @@ export function HowItWorks() {
                 className="aspect-square w-full rounded-xl object-cover"
               />
               <div className="flex flex-row items-center gap-3 sm:flex-col sm:items-start sm:gap-2">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-500 font-display text-xs text-accent">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-accent font-display text-xs text-accent">
                   {i + 1}
                 </span>
                 <p className="font-display text-lg font-medium text-foreground">{step.title}</p>
@@ -159,10 +159,10 @@ export function HowItWorks() {
           {t('marketing.howItWorks.timeline.title')}
         </DisplayTitle>
         <ol className="relative mt-12 grid gap-10 sm:grid-cols-3">
-          <span aria-hidden className="absolute left-[10%] right-[10%] top-5 hidden h-px bg-gold-500/40 sm:block" />
+          <span aria-hidden className="absolute left-[10%] right-[10%] top-5 hidden h-px bg-accent/40 sm:block" />
           {phases.map((phase) => (
             <li key={phase.action} className="relative flex flex-col gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold-500 bg-background font-display text-sm text-accent">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-accent bg-background font-display text-sm text-accent">
                 {String(phase.n).padStart(2, '0')}
               </span>
               <div>
@@ -200,8 +200,8 @@ export function HowItWorks() {
         />
       </Section>
 
-      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
-        <DisplayTitle as="h2" step="lg" onDark align="center">
+      <Section tone="teal" width="readable" className="border-b border-accent text-center">
+        <DisplayTitle as="h2" step="lg" align="center">
           {t('marketing.howItWorks.cta.title')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
@@ -210,7 +210,7 @@ export function HowItWorks() {
             external
             size="lg"
             caps
-            className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+            className="text-sm font-bold"
           >
             {t('marketing.nav.cta')}
           </Button>

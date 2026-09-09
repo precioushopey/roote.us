@@ -29,13 +29,13 @@ export function SystemPage() {
   return (
     <>
       <Section tone="teal" width="content" animate={false} className="text-center">
-        <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+        <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
           {t('marketing.nav.system')}
         </Eyebrow>
-        <DisplayTitle as="h1" step="lg" onDark align="center" className="mx-auto mt-2 max-w-2xl">
+        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto mt-2 max-w-2xl">
           {t('marketing.sys.heading')}
         </DisplayTitle>
-        <Prose onDark size="lg" className="mx-auto mt-4 text-center">
+        <Prose size="lg" className="mx-auto mt-4 text-center">
           {t('marketing.sys.body')}
         </Prose>
       </Section>
@@ -78,8 +78,8 @@ export function SystemPage() {
         </div>
       </Section>
 
-      <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
-        <DisplayTitle as="h2" step="lg" onDark align="center">
+      <Section tone="teal" width="readable" className="border-b border-accent text-center">
+        <DisplayTitle as="h2" step="lg" align="center">
           {t('marketing.sys.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">

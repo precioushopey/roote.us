@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { primitives, palette, glass, fonts, displaySizes, radii, layout } from './tokens';
 
 describe('primitive scales (brief §6)', () => {
-  it('carries the pinned emerald / cream / gold / ink values', () => {
+  it('carries the pinned emerald / cream / gold / taupe / ink values', () => {
     expect(primitives).toMatchObject({
       emerald950: '#0A2A1C',
       emerald900: '#123726',
@@ -13,6 +13,7 @@ describe('primitive scales (brief §6)', () => {
       cream100: '#F6EFE4',
       gold500: '#C6A15A',
       gold600: '#A98343',
+      taupe500: '#C7B6A8',
       ink: '#172022',
       body: '#333A3C',
       muted: '#6F7676',
@@ -37,10 +38,10 @@ describe('semantic palette', () => {
     expect(palette.foreground).toBe('#172022');
   });
 
-  it('keeps gold as an accent (non-text) and deep emerald for the ink band', () => {
-    expect(palette.accent).toBe('#C6A15A');
-    expect(palette.ink).toBe('#0A2A1C');
-    expect(palette.inkForeground).toBe('#F6EFE4');
+  it('uses deep emerald as the one accent, and a warm taupe for the ink band', () => {
+    expect(palette.accent).toBe('#1B4B32');
+    expect(palette.ink).toBe('#C7B6A8');
+    expect(palette.inkForeground).toBe('#172022');
   });
 
   it('exposes the four semantic status colours', () => {
@@ -53,7 +54,7 @@ describe('semantic palette', () => {
 describe('glass tokens', () => {
   it('are the brief §6 values and are used for depth only', () => {
     expect(glass.light).toBe('rgba(255, 255, 255, 0.62)');
-    expect(glass.dark).toBe('rgba(10, 42, 28, 0.85)');
+    expect(glass.dark).toBe('rgba(199, 182, 168, 0.85)');
     expect(glass.border).toBe('rgba(255, 255, 255, 0.18)');
     expect(glass.blur).toBe('20px');
   });

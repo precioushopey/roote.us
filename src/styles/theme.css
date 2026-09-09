@@ -2,8 +2,10 @@
 
 /* =========================================================================
    ROOTÉ — Personalized Hair Growth System
-   Design tokens. Deep-emerald science surfaces, warm-cream "you" surfaces,
-   gold only at the seam. Glass for genuine depth only.
+   Design tokens. Cream/ivory ground throughout (2026-09-08 retint, matched to
+   MDhair's colour structure — see brainstorming chat), emerald reserved for
+   buttons + accents (the role gold/teal used to play), a warm taupe "anchor"
+   tone for header/footer/sidebar/hero bands instead of a dark ink fill.
    Source of truth for colour + radius. src/styles/tokens.ts mirrors the
    palette for JS; src/styles/tokens.test.ts keeps them honest.
    ========================================================================= */
@@ -21,8 +23,16 @@
   --roote-cream-200: #ede1cf;
   --roote-cream-300: #e6dac6;
 
+  /* Kept only for the logo artwork's own on-ink silhouette (Wordmark
+     `onInk`) — the brand mark itself stays gold on purpose (2026-09-08
+     decision). No longer used as a UI accent color anywhere else. */
   --roote-gold-500: #c6a15a;
   --roote-gold-600: #a98343;
+
+  /* Warm taupe "anchor" tone — replaces the near-black emerald ink band.
+     Matches the mid/dark surface MDhair itself uses (its hero band and
+     footer sample at #d5c2b5 / #c2b1a8). */
+  --roote-taupe-500: #c7b6a8;
 
   --roote-ink: #172022;
   --roote-body: #333a3c;
@@ -64,10 +74,10 @@
   --muted: var(--roote-cream-200);
   --muted-foreground: var(--roote-muted);
 
-  /* Gold — rules, numerals, active state, the three-strand mark.
-     NON-TEXT or ≥24px only (contrast on cream is ~2.3:1). */
-  --accent: var(--roote-gold-500);
-  --accent-foreground: var(--roote-ink);
+  /* Emerald — rules, numerals, active state, buttons. The one accent
+     color (2026-09-08: replaces gold everywhere except the logo itself). */
+  --accent: var(--roote-emerald-800);
+  --accent-foreground: var(--roote-cream-50);
 
   --destructive: #b3261e;
   --destructive-foreground: #ffffff;
@@ -82,29 +92,31 @@
   --input: var(--roote-cream-300);
   --input-background: #ffffff;
   --switch-background: #cbc0ac;
-  --ring: var(--roote-gold-500);
+  --ring: var(--roote-emerald-600);
 
-  /* Dark editorial band — now deep emerald (F6EFE4 on 0A2A1C ≈ 13.5:1). */
-  --ink: var(--roote-emerald-950);
-  --ink-foreground: var(--roote-cream-100);
+  /* Editorial "anchor" band — header, footer, AppShell sidebar, marketing
+     hero/closing-CTA sections. Warm taupe, not a dark fill (2026-09-08:
+     ink text on taupe-500 is ~7.8:1, comfortably AA/AAA for body text). */
+  --ink: var(--roote-taupe-500);
+  --ink-foreground: var(--roote-ink);
 
   /* Decorative two-tone "ghost" display words (aria-hidden). */
-  --accent-ghost: #e6d8bd;
+  --accent-ghost: #d7e6dc;
   --ink-ghost: #284a3a;
 
   /* --- glass (genuine depth only) ------------------------------------- */
   --surface-glass: rgba(255, 255, 255, 0.62);
-  --surface-glass-dark: rgba(10, 42, 28, 0.85);
+  --surface-glass-dark: rgba(199, 182, 168, 0.85);
   --surface-glass-border: rgba(255, 255, 255, 0.18);
   --surface-glass-border-dark: rgba(255, 255, 255, 0.1);
   --glass-blur: 20px;
 
-  /* --- charts / data viz — emerald→gold→cream spectrum ------------------- */
+  /* --- charts / data viz — emerald→cream spectrum ------------------- */
   --chart-1: #1b4b32;
   --chart-2: #34805a;
   --chart-3: #5fa97f;
-  --chart-4: #c6a15a;
-  --chart-5: #a98343;
+  --chart-4: #c7b6a8;
+  --chart-5: #e6dac6;
 
   /* --- radius (Liquid-Glass large radii) ---------------------------- */
   --radius: 1rem;
@@ -123,7 +135,7 @@
   --sidebar-accent: var(--roote-cream-200);
   --sidebar-accent-foreground: var(--roote-ink);
   --sidebar-border: var(--roote-cream-300);
-  --sidebar-ring: var(--roote-gold-500);
+  --sidebar-ring: var(--roote-emerald-600);
 }
 
 .dark {
@@ -139,12 +151,12 @@
   --secondary-foreground: var(--roote-cream-100);
   --muted: var(--roote-emerald-800);
   --muted-foreground: #9fb3b2;
-  --accent: var(--roote-gold-500);
+  --accent: var(--roote-cream-100);
   --accent-foreground: var(--roote-emerald-950);
   --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.12);
   --input-background: var(--roote-emerald-900);
-  --ring: var(--roote-gold-500);
+  --ring: var(--roote-cream-100);
   --ink: var(--roote-emerald-950);
   --ink-foreground: var(--roote-cream-100);
   --sidebar: var(--roote-emerald-900);

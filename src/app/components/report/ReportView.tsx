@@ -297,7 +297,7 @@ export function ReportView({
 
         {/* 13 — CTA */}
         <div className="mt-10 rounded-2xl bg-ink p-8 text-center text-ink-foreground">
-          <p className="text-display text-cream-100" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
+          <p className="text-display" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
             {model.intro.greeting}
           </p>
           <Button to={withLocale(model.cta.href)} size="lg" caps className="mt-6">

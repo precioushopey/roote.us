@@ -64,7 +64,7 @@ function matches(p: Product, f: Filter) {
 }
 
 const OUTLINE_CTA_CLASS =
-  'inline-flex w-full items-center justify-center rounded-full border border-gold-500 px-4 py-2.5 font-body text-sm font-medium tracking-wide text-gold-600 transition-colors hover:bg-gold-500 hover:text-white';
+  'inline-flex w-full items-center justify-center rounded-full border border-accent px-4 py-2.5 font-body text-sm font-medium tracking-wide text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
 
 function AddToBagButton({ sku }: { sku: string }) {
   const t = useT();
@@ -111,7 +111,9 @@ function FindYourMatchCta({ spaced = false }: { spaced?: boolean }) {
 
 /* A fixed "buy the set" bundle — one product line in one packaging colorway.
    Price stays [PENDING] until the client supplies a price list — never
-   invented. */
+   invented. `compareAtPrice` (the real sum of the bundle's own components)
+   renders struck through with a "Save $X" badge when it's set and higher
+   than `price` — both are derived numbers, never invented (see bundles.ts). */
 function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   const t = useT();
   const cl = useContentLocale();
@@ -121,11 +123,12 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   const [added, setAdded] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(timer.current), []);
+  const hasDiscount = bundle.price !== null && bundle.compareAtPrice !== null && bundle.compareAtPrice > bundle.price;
 
   return (
     <div className="flex flex-col gap-4">
       {image ? (
-        <div className="aspect-[3/4] w-full border border-gold-500 bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
+        <div className="aspect-[3/4] w-full border border-accent bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
           <img src={image} alt={pickLocalized(bundle.name, cl)} className="h-full w-full object-contain" />
         </div>
       ) : (
@@ -135,7 +138,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
           ratio="3 / 4"
           rounded="none"
           tone={bundle.packaging === 'men' ? 'teal' : 'cream'}
-          className="w-full border border-gold-500 [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+          className="w-full border border-accent [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
         />
       )}
       <div className="flex items-start justify-between gap-4">
@@ -143,11 +146,25 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
           <h3 className="font-display text-md text-foreground">{pickLocalized(bundle.name, cl)}</h3>
           <p className="font-body text-sm text-muted-foreground">{pickLocalized(bundle.summary, cl)}</p>
         </div>
-        <div className="shrink-0 font-display text-3xl font-bold text-foreground">
-          {bundle.price === null ? (
-            <PendingChip label="price" />
-          ) : (
-            formatMoney(bundle.price, rooteContent.currency, cl).formatted
+        <div className="flex shrink-0 flex-col items-end gap-0.5">
+          {hasDiscount && (
+            <span className="font-body text-sm text-muted-foreground line-through">
+              {formatMoney(bundle.compareAtPrice!, rooteContent.currency, cl).formatted}
+            </span>
+          )}
+          <span className="font-display text-3xl font-bold text-foreground">
+            {bundle.price === null ? (
+              <PendingChip label="price" />
+            ) : (
+              formatMoney(bundle.price, rooteContent.currency, cl).formatted
+            )}
+          </span>
+          {hasDiscount && (
+            <span className="rounded-full bg-accent/10 px-2 py-0.5 font-body text-2xs font-semibold text-accent">
+              {t('marketing.shop.bundles.save', {
+                amount: formatMoney(bundle.compareAtPrice! - bundle.price!, rooteContent.currency, cl).formatted,
+              })}
+            </span>
           )}
         </div>
       </div>
@@ -199,12 +216,12 @@ function BundleSection() {
 function ShopFinalCta() {
   const t = useT();
   return (
-    <Section tone="teal" width="readable" className="border-b border-gold-500 text-center">
+    <Section tone="teal" width="readable" className="border-b border-accent text-center">
       <div className="flex flex-col items-center gap-5">
-        <DisplayTitle as="h2" step="xl" onDark align="center">
+        <DisplayTitle as="h2" step="xl" align="center">
           {t('marketing.shop.finalCta.heading')}
         </DisplayTitle>
-        <Prose onDark size="lg" className="mx-auto text-center">
+        <Prose size="lg" className="mx-auto text-center">
           {t('marketing.shop.finalCta.body')}
         </Prose>
         <Button
@@ -212,7 +229,7 @@ function ShopFinalCta() {
           external
           size="lg"
           caps
-          className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+          className="text-sm font-bold"
         >
           {t('marketing.nav.cta')}
         </Button>
@@ -238,13 +255,13 @@ export function Products() {
       <Section tone="teal" width="content" animate={false}>
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow onDark className="rounded-full border border-gold-500 px-4 py-1.5">
+            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
               {t('marketing.nav.products')}
             </Eyebrow>
-            <DisplayTitle as="h1" step="lg" onDark>
+            <DisplayTitle as="h1" step="lg">
               {t('marketing.shop.heading')}
             </DisplayTitle>
-            <Prose onDark size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg">
               {t('marketing.shop.body')}
             </Prose>
             <Button
@@ -252,7 +269,7 @@ export function Products() {
               external
               size="lg"
               caps
-              className="bg-gold-500 text-ink text-sm font-bold hover:bg-gold-600"
+              className="text-sm font-bold"
             >
               {t('marketing.nav.cta')}
             </Button>
