@@ -1,6 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { HAIR_LOSS_SCIENCE, RESULTS_TIMELINE_CLAIM } from './magazine';
 import { containsForbiddenClaim } from './claims';
+import { PRODUCTS } from './products';
+import {
+  dedupedIngredients,
+  INGREDIENT_CATEGORY,
+  INGREDIENT_EXPLANATIONS,
+} from './magazine';
 
 describe('magazine content — hair-loss science + timeline claim', () => {
   it('hair-loss science copy is real in both languages and carries no forbidden claim', () => {
@@ -17,6 +23,50 @@ describe('magazine content — hair-loss science + timeline claim', () => {
       expect(c.sourceType).toBe('ingredient-literature');
       expect(c.text.length).toBeGreaterThan(20);
       expect(containsForbiddenClaim(c.text)).toBe(false);
+    }
+  });
+});
+
+describe('magazine content — ingredient library', () => {
+  const PROPRIETARY = ['Procapil®', 'Greyverse™', 'Darkenyl™', 'Capixyl™'];
+
+  it('dedupedIngredients() has exactly the 24 unique ingredient names from the real catalog', () => {
+    const allNames = new Set(PRODUCTS.flatMap((p) => p.ingredients.map((i) => i.name)));
+    const deduped = dedupedIngredients();
+    expect(deduped.length).toBe(allNames.size);
+    expect(new Set(deduped.map((i) => i.name))).toEqual(allNames);
+  });
+
+  it('every deduped ingredient has a category assigned', () => {
+    for (const ing of dedupedIngredients()) {
+      expect(INGREDIENT_CATEGORY[ing.name], ing.name).toBeDefined();
+    }
+  });
+
+  it('every non-proprietary ingredient has a real explanation in both languages; proprietary ones have none', () => {
+    for (const ing of dedupedIngredients()) {
+      const explanation = INGREDIENT_EXPLANATIONS[ing.name];
+      if (PROPRIETARY.includes(ing.name)) {
+        expect(explanation, ing.name).toBeUndefined();
+      } else {
+        expect(explanation, ing.name).toBeDefined();
+        expect(explanation!.en.length, ing.name).toBeGreaterThan(20);
+        expect(explanation!.he.length, ing.name).toBeGreaterThan(20);
+      }
+    }
+  });
+
+  it('no ingredient explanation carries a forbidden claim term', () => {
+    for (const [name, text] of Object.entries(INGREDIENT_EXPLANATIONS)) {
+      expect(containsForbiddenClaim(text.en), name).toBe(false);
+      expect(containsForbiddenClaim(text.he), name).toBe(false);
+    }
+  });
+
+  it('proprietary ingredients keep their real requires-review status untouched (not overridden here)', () => {
+    for (const name of PROPRIETARY) {
+      const ing = dedupedIngredients().find((i) => i.name === name)!;
+      expect(ing.claimStatus, name).toBe('requires-review');
     }
   });
 });
