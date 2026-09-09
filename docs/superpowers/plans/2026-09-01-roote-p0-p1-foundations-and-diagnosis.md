@@ -505,7 +505,7 @@ export function Landing() {
       </h1>
       <Link
         to="/diagnosis"
-        className="inline-flex items-center rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm tracking-wide"
+        className="inline-flex items-center rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm"
       >
         Start Free Diagnosis · אבחון שיער חינם
       </Link>
@@ -1478,7 +1478,7 @@ export function LocaleToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={() => setLocale(next)}
-      className={cn('text-xs tracking-wide underline underline-offset-4 text-muted-foreground', className)}
+      className={cn('text-xs underline underline-offset-4 text-muted-foreground', className)}
       aria-label={`Switch language to ${label}`}
     >
       {label}
@@ -1512,7 +1512,7 @@ export function ProgressRail({ steps, current }: { steps: string[]; current: num
           key={label}
           aria-current={i === current ? 'step' : undefined}
           className={cn(
-            'flex-1 rounded-full px-2 py-1 text-center text-[11px] tracking-wide',
+            'flex-1 rounded-full px-2 py-1 text-center text-[11px]',
             i === current ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground',
           )}
         >
@@ -1601,7 +1601,7 @@ export function Landing() {
         </h1>
         <Link
           to="/diagnosis"
-          className="inline-flex items-center rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm tracking-wide"
+          className="inline-flex items-center rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm"
         >
           {t('landing.cta')}
         </Link>
@@ -2308,7 +2308,7 @@ export function IntroStep() {
       <button
         type="button"
         onClick={() => navigate('/diagnosis/gender')}
-        className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm tracking-wide"
+        className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm"
       >
         {t('common.start')}
       </button>
@@ -2800,7 +2800,7 @@ export function PhotosStep() {
         type="button"
         disabled={!canContinue}
         onClick={() => navigate('/diagnosis/analyzing')}
-        className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm tracking-wide disabled:opacity-40"
+        className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm disabled:opacity-40"
       >
         {t('common.continue')}
       </button>
@@ -3385,7 +3385,7 @@ export function ReadyStep() {
           className="rounded-md border border-input bg-input-background px-4 py-3 text-sm"
           aria-label={t('ready.email.placeholder')}
         />
-        <button type="submit" className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm tracking-wide">
+        <button type="submit" className="rounded-md bg-primary text-primary-foreground px-8 py-4 text-sm">
           {t('ready.email.submit')}
         </button>
         {error && <p role="alert" className="text-xs text-destructive">{error}</p>}

@@ -83,7 +83,7 @@ export function CheckoutFields({
       </label>
 
       <h2 className="mt-2 text-sm font-medium">{t('checkout.paymentTitle')}</h2>
-      <p className="text-xs text-muted-foreground">{t('checkout.testNotice')}</p>
+      <p className="text-sm text-muted-foreground">{t('checkout.testNotice')}</p>
       <label className="flex flex-col gap-1 text-sm">
         {t('checkout.cardName')}
         <input required value={cardName} onChange={(e) => setCardName(e.target.value)} className={funnelField} />
@@ -103,12 +103,12 @@ export function CheckoutFields({
         </label>
       </div>
       {/* TODO: confirm with client — which alternate payment methods to actually offer */}
-      <button type="button" disabled className="rounded-md border border-border px-4 py-2 text-xs text-muted-foreground opacity-50">
+      <button type="button" disabled className="rounded-xs border border-border px-4 py-2 text-sm text-muted-foreground opacity-50">
         {t('checkout.altPayment')}
       </button>
 
       {shown && <p role="alert" className="text-sm text-destructive">{shown}</p>}
-      <p className="text-xs text-muted-foreground">
+      <p className="text-sm text-muted-foreground">
         {t('checkout.termsAgree')}{' '}
         <Link to={withLocale('/terms-of-sale')} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>.
       </p>

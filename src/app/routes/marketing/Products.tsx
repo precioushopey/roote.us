@@ -19,19 +19,19 @@ import { SHOP_BUNDLES } from '@/content/bundles';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
 import { useCart } from '@/store/cart';
-import catalogHero from '@/assets/images/catalog-hero.png';
-import level6 from '@/assets/images/Level 6.png';
-import level10 from '@/assets/images/Level 10.png';
-import level15 from '@/assets/images/Level 15.png';
-import graySupport from '@/assets/images/Gray Support.png';
-import regrowthShampoo from '@/assets/images/Regrowth Shampoo.png';
-import graySerum from '@/assets/images/Gray Serum.png';
-import grayBundleWomen from '@/assets/images/gray-bundle-women.png';
-import grayBundleMen from '@/assets/images/gray-bundle-men.png';
-import systemWomen from '@/assets/images/system-women.png';
-import systemMen from '@/assets/images/system-men.png';
-import regrowthBundleMen from '@/assets/images/regrowth-bundle-men.png';
-import regrowthBundleWomen from '@/assets/images/regrowth-bundle-women.png';
+import catalogHero from '@/assets/heroes/catalog-hero.png';
+import level6 from '@/assets/products/Level 6.png';
+import level10 from '@/assets/products/Level 10.png';
+import level15 from '@/assets/products/Level 15.png';
+import graySupport from '@/assets/products/Gray Support.png';
+import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
+import graySerum from '@/assets/products/Gray Serum.png';
+import grayBundleWomen from '@/assets/bundles/gray-bundle-women.png';
+import grayBundleMen from '@/assets/bundles/gray-bundle-men.png';
+import systemWomen from '@/assets/bundles/system-women.png';
+import systemMen from '@/assets/bundles/system-men.png';
+import regrowthBundleMen from '@/assets/bundles/regrowth-bundle-men.png';
+import regrowthBundleWomen from '@/assets/bundles/regrowth-bundle-women.png';
 
 const PRODUCT_PHOTOS: Record<string, string> = {
   'density-6': level6,
@@ -64,29 +64,63 @@ function matches(p: Product, f: Filter) {
 }
 
 const OUTLINE_CTA_CLASS =
-  'inline-flex w-full items-center justify-center rounded-full border border-accent px-4 py-2.5 font-body text-sm font-medium tracking-wide text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
+  'inline-flex w-full items-center justify-center rounded-xs border border-accent px-4 py-2.5 font-body text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
+
+const MAX_QTY = 20;
+
+/** Pre-add quantity picker — matches the same +/- stepper already used to
+ *  edit line quantities on /bag (BagPage.tsx), just not yet in the cart. */
+function QuantityStepper({ qty, onChange }: { qty: number; onChange: (qty: number) => void }) {
+  const t = useT();
+  return (
+    <div className="inline-flex w-fit items-center self-start rounded-xs border border-border">
+      <button
+        type="button"
+        aria-label={t('cart.decrease')}
+        onClick={() => onChange(Math.max(1, qty - 1))}
+        className="px-3 py-2.5 text-sm"
+      >
+        –
+      </button>
+      <span className="min-w-7 text-center text-sm tabular-nums">{qty}</span>
+      <button
+        type="button"
+        aria-label={t('cart.increase')}
+        onClick={() => onChange(Math.min(MAX_QTY, qty + 1))}
+        className="px-3 py-2.5 text-sm"
+      >
+        +
+      </button>
+    </div>
+  );
+}
 
 function AddToBagButton({ sku }: { sku: string }) {
   const t = useT();
   const cart = useCart();
+  const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(timer.current), []);
 
   return (
-    <button
-      type="button"
-      aria-live="polite"
-      onClick={() => {
-        cart.add(sku);
-        setAdded(true);
-        clearTimeout(timer.current);
-        timer.current = setTimeout(() => setAdded(false), 1600);
-      }}
-      className={`mt-3 ${OUTLINE_CTA_CLASS}`}
-    >
-      {added ? t('cart.added') : t('cart.add')}
-    </button>
+    <div className="mt-3 flex flex-row items-center gap-2">
+      <QuantityStepper qty={qty} onChange={setQty} />
+      <button
+        type="button"
+        aria-live="polite"
+        onClick={() => {
+          for (let i = 0; i < qty; i += 1) cart.add(sku);
+          setAdded(true);
+          setQty(1);
+          clearTimeout(timer.current);
+          timer.current = setTimeout(() => setAdded(false), 1600);
+        }}
+        className={`flex-1 ${OUTLINE_CTA_CLASS}`}
+      >
+        {added ? t('cart.added') : t('cart.add')}
+      </button>
+    </div>
   );
 }
 
@@ -120,25 +154,23 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   const cart = useCart();
   const requiresReview = bundleRequiresReview(bundle);
   const image = BUNDLE_PHOTOS[bundle.id];
+  const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(timer.current), []);
   const hasDiscount = bundle.price !== null && bundle.compareAtPrice !== null && bundle.compareAtPrice > bundle.price;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col place-content-between gap-4">
       {image ? (
-        <div className="aspect-[3/4] w-full border border-accent bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
-          <img src={image} alt={pickLocalized(bundle.name, cl)} className="h-full w-full object-contain" />
-        </div>
+        <img src={image} alt={pickLocalized(bundle.name, cl)} className="aspect-[3/4] w-full rounded-sm object-contain" />
       ) : (
         <MediaPlaceholder
           alt={pickLocalized(bundle.name, cl)}
-          label={`${pickLocalized(bundle.name, cl)} — product photography`}
+          label={`${pickLocalized(bundle.name, cl)}: product photography`}
           ratio="3 / 4"
-          rounded="none"
           tone={bundle.packaging === 'men' ? 'teal' : 'cream'}
-          className="w-full border border-accent [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+          className="w-full"
         />
       )}
       <div className="flex items-start justify-between gap-4">
@@ -160,7 +192,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
             )}
           </span>
           {hasDiscount && (
-            <span className="rounded-full bg-accent/10 px-2 py-0.5 font-body text-2xs font-semibold text-accent">
+            <span className="rounded-full bg-accent/10 px-2 py-0.5 font-body text-sm font-semibold text-accent">
               {t('marketing.shop.bundles.save', {
                 amount: formatMoney(bundle.compareAtPrice! - bundle.price!, rooteContent.currency, cl).formatted,
               })}
@@ -171,19 +203,25 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
       {requiresReview ? (
         <FindYourMatchCta />
       ) : (
-        <button
-          type="button"
-          aria-live="polite"
-          onClick={() => {
-            for (const sku of bundle.skus) cart.add(sku);
-            setAdded(true);
-            clearTimeout(timer.current);
-            timer.current = setTimeout(() => setAdded(false), 1600);
-          }}
-          className={OUTLINE_CTA_CLASS}
-        >
-          {added ? t('cart.added') : t('marketing.shop.bundles.cta')}
-        </button>
+        <div className="flex flex-row items-center gap-2">
+          <QuantityStepper qty={qty} onChange={setQty} />
+          <button
+            type="button"
+            aria-live="polite"
+            onClick={() => {
+              for (let i = 0; i < qty; i += 1) {
+                for (const sku of bundle.skus) cart.add(sku);
+              }
+              setAdded(true);
+              setQty(1);
+              clearTimeout(timer.current);
+              timer.current = setTimeout(() => setAdded(false), 1600);
+            }}
+            className={`flex-1 ${OUTLINE_CTA_CLASS}`}
+          >
+            {added ? t('cart.added') : t('marketing.shop.bundles.cta')}
+          </button>
+        </div>
       )}
     </div>
   );
@@ -221,7 +259,7 @@ function ShopFinalCta() {
         <DisplayTitle as="h2" step="xl" align="center">
           {t('marketing.shop.finalCta.heading')}
         </DisplayTitle>
-        <Prose size="lg" className="mx-auto text-center">
+        <Prose size="lg" className="mx-auto text-center text-ink-foreground/75">
           {t('marketing.shop.finalCta.body')}
         </Prose>
         <Button
@@ -252,16 +290,13 @@ export function Products() {
 
   return (
     <>
-      <Section tone="teal" width="content" animate={false}>
+      <Section tone="teal" width="content" animate={false} className="py-12 md:py-12">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
-              {t('marketing.nav.products')}
-            </Eyebrow>
-            <DisplayTitle as="h1" step="lg">
+            <DisplayTitle as="h1" step="lg" className="!font-medium">
               {t('marketing.shop.heading')}
             </DisplayTitle>
-            <Prose size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg text-ink-foreground/75">
               {t('marketing.shop.body')}
             </Prose>
             <Button
@@ -269,18 +304,16 @@ export function Products() {
               external
               size="lg"
               caps
-              className="text-sm font-bold"
+              className="text-sm"
             >
               {t('marketing.nav.cta')}
             </Button>
           </div>
-          <div className="aspect-[4/3] w-full overflow-hidden rounded-xl">
-            <img
-              src={catalogHero}
-              alt={t('marketing.shop.heroMediaAlt')}
-              className="h-full w-full scale-125 object-cover object-center"
-            />
-          </div>
+          <img
+            src={catalogHero}
+            alt={t('marketing.shop.heroMediaAlt')}
+            className="aspect-[4/3] w-full object-contain drop-shadow-[0_30px_40px_rgba(6,46,49,0.18)]"
+          />
         </div>
       </Section>
 
@@ -309,7 +342,7 @@ export function Products() {
                 priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
                 packaging={p.concern === 'gray' || p.concern === 'gray-support' ? 'women' : 'men'}
                 mediaAlt={`${p.name} packaging`}
-                mediaLabel={`${p.name} — product photography`}
+                mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
               {p.requiresMedicalReview ? <FindYourMatchCta spaced /> : <AddToBagButton sku={p.slug} />}

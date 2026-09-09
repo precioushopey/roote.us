@@ -82,7 +82,7 @@ export function AccountPhotos() {
                   <button
                     type="button"
                     onClick={() => tracking.skipCheckpoint(cp.id, true)}
-                    className="font-body text-2xs text-muted-foreground underline"
+                    className="font-body text-sm text-muted-foreground underline"
                   >
                     {t('app.checkpoint.skip')}
                   </button>
@@ -91,7 +91,7 @@ export function AccountPhotos() {
                   <button
                     type="button"
                     onClick={() => tracking.skipCheckpoint(cp.id, false)}
-                    className="font-body text-2xs text-muted-foreground underline"
+                    className="font-body text-sm text-muted-foreground underline"
                   >
                     {t('app.checkpoint.unskip')}
                   </button>
@@ -113,12 +113,12 @@ export function AccountPhotos() {
                         {existing ? (
                           <img src={existing.thumb} alt={viewLabel(v)} className="h-full w-full object-cover" />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-2xs text-muted-foreground">
+                          <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-sm text-muted-foreground">
                             {t('app.photos.notYet')}
                           </div>
                         )}
                       </div>
-                      <figcaption className="px-2 py-1.5 font-body text-2xs text-muted-foreground">{viewLabel(v)}</figcaption>
+                      <figcaption className="px-2 py-1.5 font-body text-sm text-muted-foreground">{viewLabel(v)}</figcaption>
                     </figure>
                   );
                 }
@@ -154,7 +154,7 @@ export function AccountPhotos() {
                 <button
                   type="button"
                   onClick={() => tracking.completeCheckpoint(cp.id, today)}
-                  className="w-fit rounded-full bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
+                  className="w-fit rounded-xs bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
                 >
                   {t('app.photos.markCheckpointDone')}
                 </button>

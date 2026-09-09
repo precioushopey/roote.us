@@ -544,8 +544,8 @@ The wordmark link (around line 83–85):
 ```tsx
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      'font-body text-sm tracking-wide transition-colors',
-      isActive ? 'text-ink-foreground' : 'text-ink-foreground/70 hover:text-ink-foreground',
+      'font-body text-sm transition-colors',
+      isActive ? 'text-ink-foreground' : 'text-ink-foreground hover:text-ink-foreground',
     );
 ```
 
@@ -565,7 +565,7 @@ function CartLink({ label, count }: { label: string; count: number }) {
         <path d="M9 8V6a3 3 0 0 1 6 0v2" strokeLinecap="round" />
       </svg>
       {count > 0 && (
-        <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 text-[10px] font-semibold text-ink">
+        <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 text-xs font-semibold text-ink">
           {count}
         </span>
       )}
@@ -585,9 +585,9 @@ those component files):
             onChangeCountry={onChangeCountry}
             onChangeLocale={onChangeLocale}
             labels={regionLabels}
-            className="hidden text-ink-foreground/70 hover:text-ink-foreground md:inline-flex"
+            className="hidden text-ink-foreground hover:text-ink-foreground md:inline-flex"
           />
-          <NavLink to={PATHS.account} className="hidden font-body text-sm text-ink-foreground/70 hover:text-ink-foreground md:inline">
+          <NavLink to={PATHS.account} className="hidden font-body text-sm text-ink-foreground hover:text-ink-foreground md:inline">
             {t('marketing.nav.account')}
           </NavLink>
           <CartLink label={t('cart.open')} count={cart.count} />
@@ -647,10 +647,10 @@ The `<footer>` root (line 61):
 Every column header (4 occurrences of the identical string, lines 66/80/97/117):
 
 ```tsx
-              <h2 className="u-caps font-body text-2xs font-semibold text-ink-foreground/60">{t(col.title)}</h2>
+              <h2 className="u-caps font-body text-2xs font-semibold text-ink-foreground">{t(col.title)}</h2>
 ```
 (and the equivalent 3 hand-written ones for solutions/legal/start — same class swap:
-`text-muted-foreground` → `text-ink-foreground/60`)
+`text-muted-foreground` → `text-ink-foreground`)
 
 Every column link (3 occurrences of the identical string, lines 70/86/103/109):
 
@@ -663,13 +663,13 @@ background isn't a legible hover cue; gold is the token's accent/active-state co
 The "start" column body copy (line 120):
 
 ```tsx
-            <p className="mt-3 font-body text-sm text-ink-foreground/60">{t('marketing.footer.startBody')}</p>
+            <p className="mt-3 font-body text-sm text-ink-foreground">{t('marketing.footer.startBody')}</p>
 ```
 
 The bottom row (line 127):
 
 ```tsx
-        <div className="mt-12 flex flex-col gap-4 border-t border-ink-foreground/15 pt-8 text-xs text-ink-foreground/60 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-ink-foreground/15 pt-8 text-xs text-ink-foreground md:flex-row md:items-center md:justify-between">
 ```
 
 The wordmark + region selector (lines 128–130):
@@ -682,7 +682,7 @@ The wordmark + region selector (lines 128–130):
               locale={locale as LocaleCode}
               onChangeCountry={onChangeCountry}
               onChangeLocale={(l) => setLocale(l)}
-              className="text-ink-foreground/60 hover:text-ink-foreground"
+              className="text-ink-foreground hover:text-ink-foreground"
               labels={{
                 open: t('marketing.region.trigger'),
                 title: t('marketing.region.title'),
@@ -737,11 +737,11 @@ needs fixing (it referenced a cream primitive directly, which won't respond to g
 ```tsx
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      'shrink-0 rounded-full px-4 py-2 font-body text-sm tracking-wide transition-colors',
+      'shrink-0 rounded-full px-4 py-2 font-body text-sm transition-colors',
       'lg:w-full lg:rounded-lg lg:px-3 lg:py-2.5',
       isActive
         ? 'bg-primary text-primary-foreground'
-        : 'text-ink-foreground/70 hover:text-ink-foreground lg:hover:bg-ink-foreground/10',
+        : 'text-ink-foreground hover:text-ink-foreground lg:hover:bg-ink-foreground/10',
     );
 ```
 
@@ -758,24 +758,24 @@ except the button element for logout):
 ```tsx
           <NavLink
             to={PATHS.accountSection('scans')}
-            className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
+            className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.care.rescanLink')}
           </NavLink>
           <NavLink
             to={PATHS.products}
-            className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
+            className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.nav.shop')}
           </NavLink>
           <button
             type="button"
             onClick={logout}
-            className="rounded-lg px-3 py-2 text-start font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
+            className="rounded-lg px-3 py-2 text-start font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.profile.logout')}
           </button>
-          <LocaleToggle className="text-ink-foreground/60 hover:text-ink-foreground" />
+          <LocaleToggle className="text-ink-foreground hover:text-ink-foreground" />
 ```
 
 The mobile `<header>` (line 122–130):
@@ -785,10 +785,10 @@ The mobile `<header>` (line 122–130):
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
           <Wordmark className="w-24" onInk />
           <div className="flex items-center gap-3">
-            <button type="button" onClick={logout} className="font-body text-xs text-ink-foreground/70 underline">
+            <button type="button" onClick={logout} className="font-body text-xs text-ink-foreground underline">
               {t('app.profile.logout')}
             </button>
-            <LocaleToggle className="text-ink-foreground/70 hover:text-ink-foreground" />
+            <LocaleToggle className="text-ink-foreground hover:text-ink-foreground" />
           </div>
         </div>
 ```

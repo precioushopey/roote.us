@@ -103,8 +103,8 @@ export const en = {
   'report.gray.routineBody': 'The Gray routine pairs a daily supplement with a topical serum, used consistently. It is not a claim to slow or reverse graying.',
   'report.safety.reviewRequired': 'This plan includes a prescription-strength component. Eligibility and directions are confirmed at a treatment review before anything ships.',
   'report.safety.notRequired': 'This plan is made up of support products and does not require a treatment review.',
-  'report.plan.review.requiresReview': 'Your goal needs a little more information before we can recommend the right program. Your analysis results below are ready — we’ll follow up on the product recommendation.',
-  'report.plan.review.professional': 'Based on what you told us, we recommend a professional evaluation before starting any treatment. We’ve held the automatic product recommendation — your analysis results below are still ready to view.',
+  'report.plan.review.requiresReview': 'Your goal needs a little more information before we can recommend the right program. Your analysis results below are ready; we’ll follow up on the product recommendation.',
+  'report.plan.review.professional': 'Based on what you told us, we recommend a professional evaluation before starting any treatment. We’ve held the automatic product recommendation; your analysis results below are still ready to view.',
   'report.plan.review.pendingApproval': 'Your Hair Growth treatment plan has been matched to your pattern and is finalizing clinical review before we can show it here. Your analysis results below are ready in the meantime.',
   'recommend.rationale.thickerFuller': 'Matched to your goal of thicker, fuller-looking hair.',
   'recommend.rationale.slowGraying': 'Matched to your goal of slowing further graying.',
@@ -208,7 +208,7 @@ export const en = {
   'role.proprietary-support': 'Proprietary support',
   'usage.apply-scalp-affected': 'Apply to the scalp areas identified in your scan',
   'frequency.twice-daily': 'Twice daily',
-  'usage.derma-stim': 'Optional scalp-care guidance — not a treatment, and not a regrowth claim',
+  'usage.derma-stim': 'Optional scalp-care guidance: not a treatment, and not a regrowth claim',
   'frequency.weekly': 'Weekly',
   'usage.cleanse': 'Use in place of your regular shampoo',
   'frequency.daily': 'Daily',
@@ -230,6 +230,8 @@ export const en = {
   'start.account.magicLink': 'Email me a sign-in link instead (coming soon)',
   'start.account.haveAccount': 'Already have an account?',
   'start.account.signInCta': 'Sign in',
+  'auth.signUp.title': 'Sign up',
+  'auth.signUp.orderNote': 'Sign up to track order {orderId} and see it in your account.',
   'auth.login.title': 'Sign in',
   'auth.login.submit': 'Sign in',
   'auth.login.noAccount': "Don't have an account yet?",
@@ -299,6 +301,7 @@ export const en = {
   'marketing.nav.system': 'Our System',
   'marketing.nav.about': 'About',
   'marketing.nav.hairScan': 'HairHealth.ai',
+  'marketing.nav.home': 'Home',
   'marketing.nav.magazine': 'Magazine',
   'marketing.nav.aiSection': 'AI Section',
   'marketing.nav.more': 'More',
@@ -307,6 +310,7 @@ export const en = {
   'marketing.nav.support': 'Support',
   'marketing.nav.shop': 'Shop',
   'marketing.nav.account': 'Account',
+  'marketing.nav.bag': 'Bag',
   'marketing.nav.cta': 'Start free hair analysis',
   'marketing.nav.secondaryCta': 'See how it works',
   'marketing.nav.openMenu': 'Open menu',
@@ -316,8 +320,10 @@ export const en = {
   'marketing.magazine.title': "Understand what's actually in your routine.",
   'marketing.magazine.body':
     'A closer look at why hair loss happens, what each ingredient does, and how every ROOTÉ treatment fits into your plan.',
+  'marketing.magazine.heroMediaAlt': 'Botanical ingredients and lab glassware, active formulas under studio light',
   'marketing.magazine.whyEyebrow': 'The basics',
   'marketing.magazine.whyHeading': 'Why hair loss happens',
+  'marketing.magazine.whyMediaAlt': 'Close crop of a thinning hairline, no face',
   'marketing.magazine.timelineHeading': 'How results typically develop',
   'marketing.magazine.timelinePendingLabel': 'results timeline',
   'marketing.magazine.ingredientsEyebrow': 'Ingredient by ingredient',
@@ -327,6 +333,7 @@ export const en = {
   'marketing.magazine.productsEyebrow': 'The full lineup',
   'marketing.magazine.productsHeading': 'Every ROOTÉ treatment',
   'marketing.magazine.ctaHeading': 'Ready to find your plan?',
+  'marketing.magazine.ctaBody': 'See how these ingredients fit your hair with a free, personalized analysis.',
   'marketing.magazine.formatLabel.topicalSolution': 'Topical solutions',
   'marketing.magazine.formatLabel.capsuleSupplement': 'Capsule supplements',
   'marketing.magazine.formatLabel.serum': 'Serums',
@@ -342,7 +349,9 @@ export const en = {
   'marketing.footer.solutions': 'Solutions',
   'marketing.footer.company': 'Company',
   'marketing.footer.legal': 'Legal',
+  'marketing.footer.policies': 'Policies',
   'marketing.footer.account': 'Your account',
+  'marketing.footer.getStarted': 'Get started',
   'marketing.footer.terms': 'Terms',
   'marketing.footer.privacy': 'Privacy',
   'marketing.footer.rights': 'All rights reserved.',
@@ -368,15 +377,16 @@ export const en = {
 
   'marketing.home.hero.eyebrow': 'Personalized Hair Growth System',
   'marketing.home.hero.support':
-    'Start with a guided hair analysis, receive a personalized program, and track your progress to the final result.',
+    'Take a short quiz and a photo of your scalp for a free AI hair analysis and a personalized treatment plan.',
   'marketing.home.hero.mediaAlt':
-    'The product system in dark-teal and cream packaging under clinical studio light',
+    'ROOTÉ Level 6, 10, and 15 bottles in deep-emerald and cream packaging, standing on stone pedestals',
 
   'marketing.home.strip.item1': 'AI-assisted hair analysis',
   'marketing.home.strip.item2': 'Personalized program',
   'marketing.home.strip.item3': 'Progress tracking',
   'marketing.home.strip.item4': 'Ongoing treatment journey',
 
+  'marketing.home.concern.eyebrow': 'Choose your concern',
   'marketing.home.concern.heading': 'What would you like to understand?',
   'marketing.home.concern.cta': 'Start analysis',
   'marketing.home.concern.thinningMediaAlt': 'Close crop of a thinning hairline, no face',
@@ -386,6 +396,7 @@ export const en = {
   'marketing.home.how.eyebrow': 'How it works',
   'marketing.home.how.heading': 'A treatment journey built around your hair.',
   'marketing.home.how.mediaAlt': 'Five-step sequence: Analyze, Understand, Personalize, Treat, Track',
+  'marketing.home.how.step5MediaAlt': 'A scalp scan comparison from a baseline check-in to a later one',
 
   'marketing.home.analysis.eyebrow': 'Hair analysis',
   'marketing.home.analysis.heading': 'Your starting point is your data.',
@@ -506,8 +517,8 @@ export const en = {
   'marketing.sci.evidenceLabels.heading': 'How we label the evidence.',
   'marketing.sci.evidenceLabels.body': 'Every ingredient claim on this site carries one of three labels, so you can see how confident we are before you read it.',
   'marketing.sci.evidenceLabels.approvedBody': 'Reviewed and cleared for use exactly as written.',
-  'marketing.sci.evidenceLabels.workingBody': "Our own accurate description — not an efficacy claim, and not yet formally signed off.",
-  'marketing.sci.evidenceLabels.requiresReviewBody': 'Needs substantiation or legal review before we make any claim — shown as [PENDING] until then.',
+  'marketing.sci.evidenceLabels.workingBody': "Our own accurate description: not an efficacy claim, and not yet formally signed off.",
+  'marketing.sci.evidenceLabels.requiresReviewBody': 'Needs substantiation or legal review before we make any claim; shown as [PENDING] until then.',
   'marketing.sci.oversightEyebrow': 'Oversight',
   'marketing.sci.oversightHeading': 'Medical oversight',
   'marketing.sci.oversightBody': 'Formulation and claims are reviewed against dermatology literature before anything ships. Programs with a prescription-strength component include a treatment-review step.',
@@ -517,7 +528,7 @@ export const en = {
 
   // --- Our system (WP4) ---
   'marketing.sys.heading': 'Analyze. Treat. Track.',
-  'marketing.sys.body': 'One connected journey — from your first scan to your final result, and every day in between.',
+  'marketing.sys.body': 'One connected journey, from your first scan to your final result, and every day in between.',
   'marketing.sys.day': 'Day {n}',
   'marketing.sys.trackBody': 'Your program includes photo check-ins and scans on a set schedule. The dates appear in your account once your program starts.',
   'marketing.sys.ctaHeading': 'Begin the journey.',
@@ -540,7 +551,7 @@ export const en = {
   'marketing.shop.findYourMatchCta': 'See if this is right for you',
   'marketing.shop.bundles.eyebrow': 'Bundle & save',
   'marketing.shop.bundles.heading': 'Stock up once, skip the reorder.',
-  'marketing.shop.bundles.body': 'Complete System, Gray Support, and Hair Growth — each bundle in men’s and women’s packaging. Density-based bundles are added to your program after a treatment review.',
+  'marketing.shop.bundles.body': 'Complete System, Gray Support, and Hair Growth: each bundle in men’s and women’s packaging. Density-based bundles are added to your program after a treatment review.',
   'marketing.shop.bundles.cta': 'Add to bag',
   'marketing.shop.bundles.save': 'Save {amount}',
   'marketing.shop.finalCta.heading': 'Not sure what you need?',
@@ -604,6 +615,23 @@ export const en = {
   'marketing.howItWorks.faq.q2': 'Is the photo analysis private?',
   'marketing.howItWorks.faq.a2': 'Your photos are used only to build your plan and track your own progress.',
   'marketing.howItWorks.cta.title': 'Ready to see your own plan?',
+
+  'marketing.aiSection.hero.title': 'What your AI hair scan actually does',
+  'marketing.aiSection.hero.body':
+    "A quick quiz, four guided photos, and a scan mapped against a recognized hair-loss scale: here's what happens before you ever see a plan.",
+  'marketing.aiSection.scan.eyebrow': 'The scan',
+  'marketing.aiSection.scan.heading': 'A short quiz, then four guided photos.',
+  'marketing.aiSection.cta.heading': 'Ready to see your own results?',
+  'marketing.aiSection.cta.body': "It takes a few minutes, and there's no commitment.",
+  'marketing.aiSection.timeline.progressPhotoAlt': 'A guided progress scan photo, taken partway through a program',
+  'marketing.aiSection.measures.intro': 'Every scan looks at the same three things.',
+  'marketing.aiSection.measures.densityBody': 'How much visible coverage you have, zone by zone across the scalp.',
+  'marketing.aiSection.measures.patternBody':
+    'Where thinning shows up, read against the Norwood scale for men or the Ludwig scale for women.',
+  'marketing.aiSection.measures.progressionBody':
+    'A baseline for comparison: every guided photo after this one measures against where you started.',
+  'marketing.aiSection.measures.progressionMediaAlt': 'A phone screen comparing two scalp photos side by side',
+  'marketing.aiSection.measures.densityMediaAlt': 'A top-down scalp photo showing hair density and coverage',
 
   'marketing.science.hero.title': 'The science behind your plan',
   'marketing.science.hero.body': 'Every active ingredient in your formula traces to a published mechanism of action.',
@@ -693,7 +721,8 @@ export const en = {
   'bag.success.next': 'What happens next',
   'bag.success.next1': 'You will get an email confirmation shortly.',
   'bag.success.next2': 'We pack and ship within two business days.',
-  'bag.success.next3': 'Tracking arrives by email once your order is on the way.',
+  'bag.success.next3': 'Track your order any time from your account.',
+  'bag.success.trackOrder': 'Track my order',
   'bag.success.continue': 'Continue shopping',
   'bag.success.home': 'Back to home',
 
@@ -711,7 +740,7 @@ export const en = {
   'marketing.about.problem.p3Body': 'Without consistent photos or scans, it is hard to tell if anything is actually working.',
   'marketing.about.solution.eyebrow': 'How we solve it',
   'marketing.about.solution.heading': 'One scan. One plan built around it.',
-  'marketing.about.solution.body': 'You complete a short assessment and upload four guided photos. We map what is visible against a recognized hair-loss scale, then put together a plan — the products, the routine, and whether a treatment review applies to you.',
+  'marketing.about.solution.body': 'You complete a short assessment and upload four guided photos. We map what is visible against a recognized hair-loss scale, then put together a plan: the products, the routine, and whether a treatment review applies to you.',
   'marketing.about.solution.mediaAlt': 'The four guided scan angles: hairline, crown, top, and side',
   'marketing.about.benefits.eyebrow': 'What you get',
   'marketing.about.benefits.heading': 'Built around your scan, not a shelf of the same bottle.',
@@ -744,7 +773,7 @@ export const en = {
   'marketing.about.promise.eyebrow': 'Our promise',
   'marketing.about.promise.heading': 'What we commit to, in writing.',
   'marketing.about.promise.p1Title': 'Nothing invented',
-  'marketing.about.promise.p1Body': "If we don't have real information yet, it stays marked pending — never guessed at.",
+  'marketing.about.promise.p1Body': "If we don't have real information yet, it stays marked pending, never guessed at.",
   'marketing.about.promise.p2Title': 'A review before anything prescription-strength',
   'marketing.about.promise.p2Body': 'Every prescription-strength component is confirmed by a treatment review before it ships.',
   'marketing.about.promise.p3Title': 'Every claim labeled',
@@ -779,6 +808,7 @@ export const en = {
   'marketing.faq.ingredients.q1': 'Are the ingredients safe?',
   'marketing.faq.ingredients.a1': 'Every active is a well-studied compound for pattern hair loss. See the Science page for details.',
   'marketing.faq.support.title': 'Still have questions?',
+  'marketing.faq.cta.body': 'Start with a free hair analysis and get a plan built around your results.',
   'marketing.faq.support.cta': 'Contact support',
 
   'marketing.support.hero.title': 'Support',
@@ -821,15 +851,15 @@ export const en = {
   'marketing.legal.privacy.intro':
     'This policy explains what information we handle and how. This service is operated by 91 ENTERPRISE LLC (see the “Company details” section on our Terms pages), which is the data controller.',
   'marketing.legal.privacy.s1.body':
-    'When you use this service you may provide: the photos you upload for your hair assessment; your answers to the assessment questionnaire; your email address; and, if you create an account or place an order, your name, contact and delivery details and a masked reference to your payment card (only the last four digits and expiry date — never the full card number or security code). From this, we generate an assessment result and, after a purchase, a program record.',
+    'When you use this service you may provide: the photos you upload for your hair assessment; your answers to the assessment questionnaire; your email address; and, if you create an account or place an order, your name, contact and delivery details and a masked reference to your payment card (only the last four digits and expiry date, never the full card number or security code). From this, we generate an assessment result and, after a purchase, a program record.',
   'marketing.legal.privacy.s2.body':
     'Your photos and questionnaire answers are used only to produce your hair assessment and personalized plan, and to show you before/after comparisons over time. In this preview build the assessment runs entirely in your browser and never leaves your device. If you separately use our AI hair chat, see the Third-party sharing section below for how that data is handled. We do not use your photos for advertising, model training, or any purpose you have not agreed to.',
   'marketing.legal.privacy.s3.body':
-    'In this preview build, everything you enter — photos, answers, email, account, cart, and program — is stored only in your own browser (its local storage and database) and remains on your device until you clear it. Nothing is kept on our servers. Once real accounts and orders are introduced, the retention period for each type of data will be published here.', // TODO: confirm retention periods with client once a backend exists
+    'In this preview build, everything you enter (photos, answers, email, account, cart, and program) is stored only in your own browser (its local storage and database) and remains on your device until you clear it. Nothing is kept on our servers. Once real accounts and orders are introduced, the retention period for each type of data will be published here.', // TODO: confirm retention periods with client once a backend exists
   'marketing.legal.privacy.s4.body':
     'You can view and delete the information held in your browser at any time by clearing this site’s data in your browser settings; doing so removes your assessment, account, and program from this device. Where applicable law gives you rights to access, correct, export, or erase personal data, or to object to or restrict its processing, you can exercise them by contacting us using the details below.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
   'marketing.legal.privacy.s5.body':
-    'We do not sell your personal data. In this preview build the third parties involved are Google Fonts, which serves the site’s typefaces, and — if you use our AI hair chat — our partner HairHealth.ai, which receives what you share there (your answers and photos) and adds it to our contact list via HubSpot so our team can follow up with you. Production services for payment, shipping, email, and hosting will be listed here as they are added.', // TODO: confirm the production sub-processor list with client
+    'We do not sell your personal data. In this preview build the third parties involved are Google Fonts, which serves the site’s typefaces, and, if you use our AI hair chat, our partner HairHealth.ai, which receives what you share there (your answers and photos) and adds it to our contact list via HubSpot so our team can follow up with you. Production services for payment, shipping, email, and hosting will be listed here as they are added.', // TODO: confirm the production sub-processor list with client
   'marketing.legal.privacy.s6.body':
     'For any privacy question or request, contact us at support@roote.us or +1 (310) 651-7283.',
 
@@ -839,7 +869,7 @@ export const en = {
   'marketing.legal.terms.s2.body':
     'We provide an AI-assisted, photo-based hair assessment and a personalized product regimen. You must be at least 18 years old and provide accurate information. You may not misuse the service, upload photos of anyone other than yourself, attempt to reverse-engineer the analysis, or resell any part of the service.',
   'marketing.legal.terms.s3.body':
-    'The analysis and report are a preliminary visual estimate, not a medical diagnosis, and do not replace advice from a licensed physician. Consult a doctor before starting, changing, or stopping any treatment — especially if you are pregnant or nursing, take medication, or have a scalp or skin condition. Stop use and seek medical advice if you experience an adverse reaction.',
+    'The analysis and report are a preliminary visual estimate, not a medical diagnosis, and do not replace advice from a licensed physician. Consult a doctor before starting, changing, or stopping any treatment, especially if you are pregnant or nursing, take medication, or have a scalp or skin condition. Stop use and seek medical advice if you experience an adverse reaction.',
   'marketing.legal.terms.s4.body':
     'Purchases of products and program subscriptions are governed by our Terms of Sale, which cover pricing, payment, shipping, returns, refunds, and subscription auto-renewal. Please review the Terms of Sale before you buy.',
   'marketing.legal.terms.s5.body':
@@ -854,7 +884,7 @@ export const en = {
   'marketing.legal.company.entityTypeLabel': 'Entity type',
   'marketing.legal.company.entityType': 'Limited Liability Company (LLC), taxed as an S Corporation',
   'marketing.legal.company.countryLabel': 'Country of registration',
-  'marketing.legal.company.country': 'United States — California',
+  'marketing.legal.company.country': 'United States, California',
   'marketing.legal.company.regNumberLabel': 'Registration number',
   'marketing.legal.company.einLabel': 'Tax ID (EIN)',
   'marketing.legal.company.incorporatedLabel': 'Date incorporated',
@@ -871,7 +901,7 @@ export const en = {
     "These Terms of Sale govern your purchase of products and program subscriptions from 91 ENTERPRISE LLC (“we”, “us”). They apply together with our Terms of Service and Privacy Policy. Please read them before placing an order.",
   'marketing.legalSale.s1.title': 'Orders and order acceptance',
   'marketing.legalSale.s1.body':
-    'Placing an order is an offer to buy. Your order is accepted, and a contract is formed, only when we send an order-confirmation email or dispatch the products, whichever is first. We may decline or cancel an order — for example if an item is out of stock, a price is shown in error, or we cannot verify payment or delivery details — and will refund any amount already charged.',
+    'Placing an order is an offer to buy. Your order is accepted, and a contract is formed, only when we send an order-confirmation email or dispatch the products, whichever is first. We may decline or cancel an order (for example if an item is out of stock, a price is shown in error, or we cannot verify payment or delivery details) and will refund any amount already charged.',
   'marketing.legalSale.s2.title': 'Prices, taxes, and currency',
   'marketing.legalSale.s2.body':
     'Prices are shown at checkout in the displayed currency and may change at any time, but the price confirmed when you order is the price you pay. Unless stated otherwise, prices exclude taxes, customs duties, and import fees, which are calculated at checkout or charged on delivery according to the destination.',
@@ -904,7 +934,7 @@ export const en = {
     'To the fullest extent permitted by law, our liability for any claim connected to a purchase is limited to the amount you paid for the affected order or, for a subscription, the amount paid in the twelve months before the claim. We are not liable for indirect or consequential losses. Nothing here limits liability for death or personal injury caused by our negligence, for fraud, or for anything that cannot be limited under applicable law.',
   'marketing.legalSale.s12.title': 'Governing law and disputes',
   'marketing.legalSale.s12.body':
-    'These Terms of Sale are governed by the laws of the State of California, USA. We will try to resolve any complaint informally first — email support@roote.us. Disputes that cannot be resolved that way will be subject to the state or federal courts located in Los Angeles County, California, without prejudice to any mandatory consumer-protection rights in your country of residence.',
+    'These Terms of Sale are governed by the laws of the State of California, USA. We will try to resolve any complaint informally first: email support@roote.us. Disputes that cannot be resolved that way will be subject to the state or federal courts located in Los Angeles County, California, without prejudice to any mandatory consumer-protection rights in your country of residence.',
   'marketing.legalSale.contact':
     'Questions about an order or a return? Email support@roote.us or call +1 (310) 651-7283.',
 
@@ -1044,7 +1074,7 @@ export const en = {
   'app.overview.allCheckpointsDone': 'All checkpoints complete',
   'app.overview.reorderDue': "It's time to reorder.",
   'app.overview.programComplete': 'Your program is complete',
-  'app.overview.programCompleteBody': 'Your full results report is ready — before and after, initial and final analysis, and your adherence.',
+  'app.overview.programCompleteBody': 'Your full results report is ready: before and after, initial and final analysis, and your adherence.',
   'app.overview.viewResults': 'View your results',
 
   'app.status.onTrack': 'On track',
@@ -1183,7 +1213,7 @@ export const en = {
   'app.results.next.newAnalysis': 'Run a new hair analysis',
   'app.results.next.careTeam': 'Message the care team',
   'app.results.actions.download': 'Download PDF',
-  'app.results.actions.downloadHint': 'Opens your browser print dialog — save as PDF.',
+  'app.results.actions.downloadHint': 'Opens your browser print dialog; save as PDF.',
   'app.results.actions.email': 'Email PDF',
   'app.results.actions.emailStub': 'Emailing the report connects when the mail service is live.',
   'app.results.pdfTitle': 'ROOTÉ Program Results Report',
@@ -1192,7 +1222,7 @@ export const en = {
   'app.renew.eyebrow': 'Your next program',
   'app.renew.title': 'Review my next program',
   'app.renew.body':
-    'Your program is complete. Your hair profile carries forward — decide how you want to continue.',
+    'Your program is complete. Your hair profile carries forward; decide how you want to continue.',
   'app.renew.profileTitle': 'Your hair profile now',
   'app.renew.profileNote': 'Carried forward from your latest scan. Qualitative until an analysis service is connected.',
   'app.renew.chooseTitle': 'How would you like to continue?',
@@ -1275,20 +1305,20 @@ export const en = {
   'app.profile.password.error.weak': 'Use at least 8 characters.',
   'app.profile.logout': 'Log out',
 
-  'hairScan.notConfigured': 'Connecting you to HairHealth.ai — please check back soon.',
+  'hairScan.notConfigured': 'Connecting you to HairHealth.ai; please check back soon.',
   'hairScan.title': 'Chat with HairHealth.ai',
   'hairScan.intro':
-    'Answer a few quick questions and share a photo — the HairHealth.ai team will look at your hair and get back to our team.',
+    'Answer a few quick questions and share a photo, and the HairHealth.ai team will look at your hair and get back to our team.',
   'hairScan.disclosure':
-    'This chat is powered by our partner, HairHealth.ai. What you share here — your answers and photos — is sent to them and added to our contact list so our team can follow up.',
+    'This chat is powered by our partner, HairHealth.ai. What you share here (your answers and photos) is sent to them and added to our contact list so our team can follow up.',
   'hairScan.disclosureLink': 'See our Privacy Policy',
 
   'accountRescan.title': 'Rescan with HairHealth.ai',
   'accountRescan.intro':
-    'Do a quick rescan so we can track your progress. Answer a few questions and share a new photo — our partner HairHealth.ai reviews it and sends the result to our team.',
+    'Do a quick rescan so we can track your progress. Answer a few questions and share a new photo, and our partner HairHealth.ai reviews it and sends the result to our team.',
   'accountRescan.disclosure':
     'This rescan is powered by our partner, HairHealth.ai. What you share here is sent to them and added to our contact list, matched to your account by your email address.',
-  'accountRescan.notConfigured': "Rescans aren't connected yet — please check back soon.",
+  'accountRescan.notConfigured': "Rescans aren't connected yet; please check back soon.",
 } as const;
 
 export type MessageKey = keyof typeof en;

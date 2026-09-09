@@ -17,10 +17,15 @@ export function Timeline({
   milestones,
   className,
   onDark = false,
+  dayLabelClassName,
 }: {
   milestones: TimelineMilestone[];
   className?: string;
   onDark?: boolean;
+  /** Override the day-label color — the default `muted-foreground` gray is
+   *  tuned for the cream background and reads too faint on other surfaces
+   *  (e.g. the sand "anchor" band). */
+  dayLabelClassName?: string;
 }) {
   return (
     <ol className={cn('relative flex flex-col gap-6 ps-6', className)}>
@@ -36,12 +41,18 @@ export function Timeline({
               m.state === 'upcoming' && (onDark ? 'border-cream-100/30 bg-transparent' : 'border-border bg-cream-50'),
             )}
           />
-          <p className={cn('u-caps font-body text-2xs font-semibold', onDark ? 'text-cream-100/70' : 'text-muted-foreground')}>
+          <p
+            className={cn(
+              'u-caps font-body text-sm font-semibold',
+              onDark ? 'text-cream-100' : 'text-muted-foreground',
+              dayLabelClassName,
+            )}
+          >
             {m.dayLabel}
           </p>
           <p className={cn('mt-0.5 font-body font-medium', onDark ? 'text-cream-100' : 'text-foreground')}>{m.title}</p>
           {m.caption ? (
-            <p className={cn('font-body text-sm', onDark ? 'text-cream-100/70' : 'text-muted-foreground')}>{m.caption}</p>
+            <p className={cn('font-body text-sm', onDark ? 'text-cream-100' : 'text-muted-foreground')}>{m.caption}</p>
           ) : null}
           {m.media ? <div className="mt-2">{m.media}</div> : null}
         </li>
@@ -67,7 +78,7 @@ export function TreatmentChecklist({
     <ul className={cn('flex flex-col gap-2', className)}>
       {tasks.map((task) => (
         <li key={task.key}>
-          <label className="flex items-start gap-3 rounded-lg border border-border bg-card p-4">
+          <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-border bg-card p-4">
             <input
               type="checkbox"
               checked={task.done}
@@ -84,7 +95,7 @@ export function TreatmentChecklist({
                 {task.name}
               </span>
               {task.detail ? (
-                <span className="mt-0.5 block font-body text-xs text-muted-foreground">{task.detail}</span>
+                <span className="mt-0.5 block font-body text-sm text-muted-foreground">{task.detail}</span>
               ) : null}
             </span>
           </label>
@@ -111,14 +122,14 @@ export function ProgressPhotoCard({
     <figure className="overflow-hidden rounded-lg border border-border bg-cream-100">
       <div className="aspect-square w-full">
         {thumbUrl ? (
-          <img src={thumbUrl} alt={`${angleLabel} — ${dateLabel}`} className="h-full w-full object-cover" />
+          <img src={thumbUrl} alt={`${angleLabel}, ${dateLabel}`} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center px-3 text-center font-body text-xs text-muted-foreground">
+          <div className="flex h-full w-full items-center justify-center px-3 text-center font-body text-sm text-muted-foreground">
             {emptyLabel}
           </div>
         )}
       </div>
-      <figcaption className="flex items-center justify-between gap-2 px-3 py-2 font-body text-2xs text-muted-foreground">
+      <figcaption className="flex items-center justify-between gap-2 px-3 py-2 font-body text-sm text-muted-foreground">
         <span>{angleLabel}</span>
         <span>{dateLabel}</span>
       </figcaption>

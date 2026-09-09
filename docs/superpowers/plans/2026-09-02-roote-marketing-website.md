@@ -672,8 +672,8 @@ git commit -m "feat: add marketing Footer with nav columns and pending disclaime
 
 **Interfaces:**
 - Produces:
-  - `Section({ children, id?, index?, tone = 'light', motif = false, className? })` — `<section>` with `id`; padding `py-20 md:py-28` (light) or `py-24 md:py-32 bg-ink text-ink-foreground` (ink); inner `mx-auto max-w-6xl px-6 md:px-10`; when `index` given, renders `<span aria-hidden class="mb-4 block font-body text-xs tracking-[0.18em] text-accent">{index}</span>` (e.g. `"01"`); when `motif`, renders `<ArcMotif/>` absolutely positioned behind content. **No animation here** — entrance animation is layered in Phase 5 by wrapping children; `Section` just exposes a stable `data-animate="section"` attribute on the `<section>`.
-  - `Eyebrow({ children })` — `<p class="font-body text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">`.
+  - `Section({ children, id?, index?, tone = 'light', motif = false, className? })` — `<section>` with `id`; padding `py-20 md:py-28` (light) or `py-24 md:py-32 bg-ink text-ink-foreground` (ink); inner `mx-auto max-w-6xl px-6 md:px-10`; when `index` given, renders `<span aria-hidden class="mb-4 block font-body text-xs text-accent">{index}</span>` (e.g. `"01"`); when `motif`, renders `<ArcMotif/>` absolutely positioned behind content. **No animation here** — entrance animation is layered in Phase 5 by wrapping children; `Section` just exposes a stable `data-animate="section"` attribute on the `<section>`.
+  - `Eyebrow({ children })` — `<p class="font-body text-xs font-medium uppercase text-muted-foreground">`.
   - `ArcMotif()` — decorative concentric-arc inline `<svg aria-hidden="true" class="pointer-events-none absolute …">` (three stroked circles, `stroke="var(--accent)"`, low opacity).
 
 - [ ] **Step 1: Write the failing test**
@@ -786,7 +786,7 @@ git commit -m "feat: add DisplayHeading (two-tone) + Prose marketing primitives"
 **Interfaces:**
 - Consumes: `useT`, `DisplayHeading`, `Section`, `CtaButton`.
 - Produces:
-  - `CtaButton({ to, children, size = 'md' })` — `<Link to={to} class="inline-flex items-center rounded-full bg-primary text-primary-foreground {size==='lg'?'px-8 py-4 text-sm':'px-6 py-3 text-sm'} tracking-wide">`.
+  - `CtaButton({ to, children, size = 'md' })` — `<Link to={to} class="inline-flex items-center rounded-full bg-primary text-primary-foreground {size==='lg'?'px-8 py-4 text-sm':'px-6 py-3 text-sm'}">`.
   - `ArrowLink({ to, children })` — `<Link to={to} class="group inline-flex items-center gap-2 font-body text-sm text-foreground">` + `<span>` label + an inline arrow `<svg>` that translates on `group-hover` (`transition-transform group-hover:translate-x-1` — and in RTL the arrow is `-scale-x-100` via a `rtl:-scale-x-100` utility). Underline: `border-b border-accent/50 group-hover:border-accent`.
   - `CtaBand({ headingKey, bodyKey? })` — `<Section tone="ink" className="text-center">` with `<DisplayHeading as="h2" size="m" onInk text={t(headingKey)} />`, optional `<Prose>` , and `<CtaButton to="/diagnosis" size="lg">{t('marketing.nav.cta')}</CtaButton>`.
 
@@ -1059,7 +1059,7 @@ Ends with: How It Works, Science, Products, Results & Reviews, About fully built
 **Interfaces:**
 - `Milestone = { label: string; outcome: string | PendingMarker }`
 - `Timeline({ milestones })` — horizontal (stacked on mobile) rail with a dot per milestone; label real, outcome via `PendingChip` when pending.
-- `BeforeAfter({ before, after, beforeLabel, afterLabel, caption? })` — 2-col images (`img-editorial rounded-xl`), each with an absolutely-positioned pill label (`bg-background/90 … text-xs uppercase tracking-wide`), optional `<figcaption>`; no interactive slider.
+- `BeforeAfter({ before, after, beforeLabel, afterLabel, caption? })` — 2-col images (`img-editorial rounded-xl`), each with an absolutely-positioned pill label (`bg-background/90 … text-xs uppercase`), optional `<figcaption>`; no interactive slider.
 
 - [ ] Steps: failing test (Timeline shows N labels + a pending outcome chip; BeforeAfter shows both labels + a caption) → implement → run → commit `feat: add Timeline + BeforeAfter marketing components`.
 

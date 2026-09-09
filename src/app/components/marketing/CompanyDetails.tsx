@@ -28,8 +28,8 @@ export function CompanyDetails({ onInk = false }: { onInk?: boolean }) {
   ];
 
   const dt = cn(
-    'text-xs uppercase tracking-[0.1em]',
-    onInk ? 'text-ink-foreground/60' : 'text-muted-foreground',
+    'text-sm uppercase',
+    onInk ? 'text-ink-foreground' : 'text-muted-foreground',
   );
   const dd = cn('text-sm', onInk ? 'text-ink-foreground' : 'text-foreground');
   const link = cn('underline', onInk ? 'text-ink-foreground' : 'text-accent');

@@ -1,4 +1,4 @@
-import { NavLink, Navigate, Outlet, useNavigate } from 'react-router';
+import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
@@ -39,11 +39,20 @@ export function AppShell() {
   const auth = useAuth();
   const cart = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
   useRevealOnRoute();
   useTrackingMigration();
   useDocumentMeta();
 
-  if (!session.program) {
+  // Order history doesn't depend on having an active program — a guest who
+  // only bought from the à-la-carte bag (no program) still needs to reach
+  // this one page after signing up to see the order they just placed
+  // (store/orders.ts is a flat, unauthenticated list; any account "sees"
+  // every order already in this browser). Every other /account/* page
+  // still requires a program.
+  const isOrdersRoute = location.pathname.endsWith('/orders');
+
+  if (!session.program && !isOrdersRoute) {
     if (import.meta.env.DEV) {
       return (
         <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
@@ -75,11 +84,11 @@ export function AppShell() {
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      'shrink-0 rounded-full px-4 py-2 font-body text-sm tracking-wide transition-colors',
-      'lg:w-full lg:rounded-lg lg:px-3 lg:py-2.5',
+      'shrink-0 rounded-xs px-4 py-2 font-body text-sm transition-colors',
+      'lg:w-full lg:px-3 lg:py-2.5',
       isActive
         ? 'bg-primary text-primary-foreground'
-        : 'text-ink-foreground/70 hover:text-ink-foreground lg:hover:bg-ink-foreground/10',
+        : 'text-ink-foreground hover:text-ink-foreground lg:hover:bg-ink-foreground/10',
     );
 
   function logout() {
@@ -92,7 +101,9 @@ export function AppShell() {
       data-pack={pack}
       className="min-h-screen bg-background text-foreground lg:grid lg:grid-cols-[248px_minmax(0,1fr)]"
     >
-      <aside className="sticky top-0 hidden h-screen flex-col border-e border-ink-foreground/15 bg-ink px-4 py-6 text-ink-foreground lg:flex">
+      {/* bg-cream-100, not bg-ink (taupe) — taupe is too close in value to
+          the gold wordmark below for it to read; see brand/Wordmark.tsx. */}
+      <aside className="sticky top-0 hidden h-screen flex-col border-e border-ink-foreground/15 bg-cream-100 px-4 py-6 text-ink-foreground lg:flex">
         <Wordmark className="w-24" />
         <nav aria-label={t('app.nav.label')} className="mt-8 flex flex-col gap-1">
           {TABS.map(([to, key]) => (
@@ -104,14 +115,14 @@ export function AppShell() {
         <div className="mt-auto flex flex-col gap-2 border-t border-ink-foreground/15 pt-4">
           <NavLink
             to={withLocale(PATHS.accountSection('scans'))}
-            className="rounded-lg px-3 py-2 font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
+            className="rounded-xs px-3 py-2 font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.care.rescanLink')}
           </NavLink>
           <div className="flex items-center justify-between ps-3 pe-1">
             <NavLink
               to={withLocale(PATHS.products)}
-              className="rounded-lg py-2 font-body text-sm text-ink-foreground/70 hover:text-ink-foreground"
+              className="rounded-lg py-2 font-body text-sm text-ink-foreground hover:text-ink-foreground"
             >
               {t('app.nav.shop')}
             </NavLink>
@@ -120,23 +131,23 @@ export function AppShell() {
           <button
             type="button"
             onClick={logout}
-            className="rounded-lg px-3 py-2 text-start font-body text-sm text-ink-foreground/70 hover:bg-ink-foreground/10 hover:text-ink-foreground"
+            className="rounded-xs px-3 py-2 text-start font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.profile.logout')}
           </button>
-          <LocaleToggle className="text-ink-foreground/60 hover:text-ink-foreground" />
+          <LocaleToggle className="text-ink-foreground hover:text-ink-foreground" />
         </div>
       </aside>
 
-      <header className="glass-dark sticky top-0 z-40 border-b border-ink-foreground/15 lg:hidden">
+      <header className="bg-white sticky top-0 z-40 border-b border-ink-foreground/15 lg:hidden">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
           <Wordmark className="w-24" />
           <div className="flex items-center gap-1">
             <CartLink label={t('cart.open')} count={cart.count} />
-            <button type="button" onClick={logout} className="font-body text-xs text-ink-foreground/70 underline">
+            <button type="button" onClick={logout} className="font-body text-sm text-ink-foreground underline">
               {t('app.profile.logout')}
             </button>
-            <LocaleToggle className="text-ink-foreground/70 hover:text-ink-foreground" />
+            <LocaleToggle className="text-ink-foreground hover:text-ink-foreground" />
           </div>
         </div>
         <nav aria-label={t('app.nav.label')} className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-4 pb-2">

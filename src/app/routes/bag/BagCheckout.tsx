@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router';
-import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useCart } from '@/store/cart';
 import { findProduct } from '@/content/catalog';
+import { rooteContent } from '@/content/roote.config';
+import { formatMoney } from '@/domain/report/money';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type BagOrder, type Contact, type CardRef } from '@/store/checkout';
 import { recordOrder } from '@/store/orders';
@@ -11,6 +13,7 @@ import { PendingChip } from '@/app/components/brand/PendingChip';
 
 export function BagCheckout() {
   const t = useT();
+  const cl = useContentLocale();
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const cart = useCart();
@@ -18,6 +21,12 @@ export function BagCheckout() {
   const lines = cart.lines
     .map((l) => ({ line: l, product: findProduct(l.sku) }))
     .filter((x): x is { line: typeof x.line; product: NonNullable<typeof x.product> } => !!x.product);
+  // See BagPage.tsx — real arithmetic on already-supplied per-SKU prices, not
+  // invented; stays [PENDING] if any line lacks one, or (for the total) since
+  // shipping has no supplied rate yet.
+  const subtotal = lines.every(({ product }) => product.price !== null)
+    ? lines.reduce((sum, { line, product }) => sum + product.price! * line.qty, 0)
+    : null;
 
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -59,7 +68,7 @@ export function BagCheckout() {
       <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1fr]">
         <div className="flex flex-col gap-3">
           <CheckoutFields className="max-w-lg" submitting={submitting} error={error} onSubmit={onSubmit} />
-          <Link to={withLocale('/bag')} className="max-w-lg text-center text-xs text-muted-foreground underline">
+          <Link to={withLocale('/bag')} className="max-w-lg text-center text-sm text-muted-foreground underline">
             {t('bag.checkout.back')}
           </Link>
         </div>
@@ -67,7 +76,7 @@ export function BagCheckout() {
         <aside className="h-fit rounded-xl border border-border bg-background p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium">{t('bag.checkout.summaryTitle')}</h2>
-            <Link to={withLocale('/bag')} className="text-xs text-accent underline">{t('bag.checkout.edit')}</Link>
+            <Link to={withLocale('/bag')} className="text-sm text-accent underline">{t('bag.checkout.edit')}</Link>
           </div>
           <ul className="mt-4 flex flex-col divide-y divide-border">
             {lines.map(({ line, product }) => (
@@ -75,15 +84,25 @@ export function BagCheckout() {
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-cream-100" />
                 <div className="flex flex-1 flex-col">
                   <span className="text-sm">{product.name}</span>
-                  <span className="text-xs text-muted-foreground">{t('bag.checkout.qty', { qty: String(line.qty) })}</span>
+                  <span className="text-sm text-muted-foreground">{t('bag.checkout.qty', { qty: String(line.qty) })}</span>
                 </div>
-                <PendingChip label={`${product.name} price`} />
+                {product.price === null ? (
+                  <PendingChip label={`${product.name} price`} />
+                ) : (
+                  <span className="text-sm font-medium text-foreground">
+                    {formatMoney(product.price * line.qty, rooteContent.currency, cl).formatted}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
           <div className="mt-4 flex items-center justify-between text-sm">
             <span>{t('cart.subtotal')}</span>
-            <PendingChip label="bag subtotal" />
+            {subtotal === null ? (
+              <PendingChip label="bag subtotal" />
+            ) : (
+              <span className="text-foreground">{formatMoney(subtotal, rooteContent.currency, cl).formatted}</span>
+            )}
           </div>
           <div className="mt-1 flex items-center justify-between text-sm text-muted-foreground">
             <span>{t('bag.shipping')}</span>

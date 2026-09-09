@@ -31,8 +31,8 @@ export function RadioCard({
     <label
       htmlFor={id}
       className={cn(
-        'group relative flex cursor-pointer items-start gap-4 rounded-xl border border-border bg-card p-5 text-start transition-colors',
-        'hover:border-deep-700 has-[:checked]:border-deep-800 has-[:checked]:bg-cream-100',
+        'group relative flex cursor-pointer items-start gap-4 rounded-sm bg-card p-5 text-start transition-colors',
+        'hover:ring-1 hover:ring-deep-700 has-[:checked]:ring-1 has-[:checked]:ring-deep-800 has-[:checked]:bg-cream-100',
         'has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring',
         disabled && 'cursor-not-allowed opacity-50',
         className,
@@ -85,7 +85,7 @@ export function SegmentedControl<T extends string>({
     <div
       role="radiogroup"
       aria-label={label}
-      className={cn('inline-flex rounded-full border border-border bg-cream-100 p-1', className)}
+      className={cn('inline-flex rounded-xs border border-border bg-cream-100 p-1', className)}
     >
       {options.map((opt) => {
         const selected = opt.value === value;
@@ -97,7 +97,7 @@ export function SegmentedControl<T extends string>({
             aria-checked={selected}
             onClick={() => onChange(opt.value)}
             className={cn(
-              'rounded-full px-4 py-1.5 font-body text-sm transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
+              'rounded-xs px-4 py-1.5 font-body text-sm transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
               selected ? 'bg-deep-950 text-cream-100' : 'text-muted-foreground hover:text-foreground',
             )}
           >

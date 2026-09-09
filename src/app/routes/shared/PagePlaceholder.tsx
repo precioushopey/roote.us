@@ -28,7 +28,7 @@ export function PagePlaceholder({
         </DisplayTitle>
         {body ? <Prose className="mx-auto text-center">{body}</Prose> : null}
         {wp && import.meta.env?.DEV ? (
-          <p className="rounded-full bg-cream-200 px-3 py-1 font-body text-2xs text-muted-foreground">
+          <p className="rounded-full bg-cream-200 px-3 py-1 font-body text-sm text-muted-foreground">
             Full build: {wp}
           </p>
         ) : null}

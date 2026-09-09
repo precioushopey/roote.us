@@ -38,8 +38,8 @@ export const PROGRAMS: Record<ProgramKind, ProgramDef> = {
     kind: 'gray',
     name: L('Gray Program', 'תוכנית Gray'),
     summary: L(
-      'Gray Support capsules and Gray Serum — a coordinated inside + topical routine.',
-      'קפסולות Gray Support וסרום Gray — שגרה מתואמת מבפנים ומבחוץ.',
+      'Gray Support capsules and Gray Serum: a coordinated inside + topical routine.',
+      'קפסולות Gray Support וסרום Gray: שגרה מתואמת מבפנים ומבחוץ.',
     ),
     coreSlots: ['gray-support', 'gray-serum'],
     supportingSlugs: [],

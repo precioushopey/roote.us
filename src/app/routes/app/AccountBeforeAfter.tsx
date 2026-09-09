@@ -141,14 +141,14 @@ export function AccountBeforeAfter() {
             <figure key={col.key} className="w-40 shrink-0">
               <div className="aspect-square w-full overflow-hidden rounded-lg border border-border bg-cream-100">
                 {col.photo ? (
-                  <Frame src={col.photo.thumb} alt={`${viewName} — ${col.label}`} />
+                  <Frame src={col.photo.thumb} alt={`${viewName}, ${col.label}`} />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-2xs text-muted-foreground">
+                  <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-sm text-muted-foreground">
                     {t('app.photos.notYet')}
                   </div>
                 )}
               </div>
-              <figcaption className="mt-1 font-body text-2xs text-muted-foreground">{col.label}</figcaption>
+              <figcaption className="mt-1 font-body text-sm text-muted-foreground">{col.label}</figcaption>
             </figure>
           ))}
         </div>
@@ -158,8 +158,8 @@ export function AccountBeforeAfter() {
         <Prose size="sm">{t('app.beforeAfter.missingCompare')}</Prose>
       ) : mode === 'slider' ? (
         <BeforeAfterSlider
-          before={<Frame src={beforePhoto.thumb} alt={`${viewName} — ${t('app.baseline.badge')}`} />}
-          after={<Frame src={afterPhoto.thumb} alt={`${viewName} — ${dayLabel(compareCp.day)}`} />}
+          before={<Frame src={beforePhoto.thumb} alt={`${viewName}, ${t('app.baseline.badge')}`} />}
+          after={<Frame src={afterPhoto.thumb} alt={`${viewName}, ${dayLabel(compareCp.day)}`} />}
           beforeLabel={t('app.baseline.badge')}
           afterLabel={dayLabel(compareCp.day)}
           ariaLabel={t('app.beforeAfter.reveal')}
@@ -173,9 +173,9 @@ export function AccountBeforeAfter() {
           ].map((cell) => (
             <figure key={cell.label}>
               <div className="aspect-square w-full overflow-hidden rounded-lg border border-border bg-cream-100">
-                <Frame src={cell.photo.thumb} alt={`${viewName} — ${cell.label}`} />
+                <Frame src={cell.photo.thumb} alt={`${viewName}, ${cell.label}`} />
               </div>
-              <figcaption className="mt-1 font-body text-2xs text-muted-foreground">{cell.label}</figcaption>
+              <figcaption className="mt-1 font-body text-sm text-muted-foreground">{cell.label}</figcaption>
             </figure>
           ))}
         </div>

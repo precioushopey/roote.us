@@ -68,7 +68,7 @@ export function Modal({ open, onClose, title, hideTitle, children, footer, class
       <div
         aria-hidden
         onClick={onClose}
-        className="absolute inset-0 bg-deep-950/40 backdrop-blur-[2px]"
+        className="absolute inset-0 cursor-pointer bg-deep-950/40 backdrop-blur-[2px]"
       />
       <div
         ref={ref}
@@ -86,7 +86,7 @@ export function Modal({ open, onClose, title, hideTitle, children, footer, class
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="ms-auto inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-cream-100"
+            className="ms-auto inline-flex h-9 w-9 items-center justify-center rounded-xs text-muted-foreground hover:bg-cream-100"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
               <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -129,7 +129,7 @@ export function Drawer({ open, onClose, title, side = 'end', children, className
   if (!open) return null;
   return createPortal(
     <div className="fixed inset-0 z-50">
-      <div aria-hidden onClick={onClose} className="absolute inset-0 bg-deep-950/40" />
+      <div aria-hidden onClick={onClose} className="absolute inset-0 cursor-pointer bg-deep-950/40" />
       <div
         ref={ref}
         role="dialog"
@@ -147,7 +147,7 @@ export function Drawer({ open, onClose, title, side = 'end', children, className
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-cream-100"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-xs text-muted-foreground hover:bg-cream-100"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
               <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />

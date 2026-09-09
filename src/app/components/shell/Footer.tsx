@@ -7,42 +7,41 @@ import { CONCERN_OPTIONS } from '@/content/assessment';
 import { pickLocalized } from '@/content/localized';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { CountryLanguageSelector } from '@/app/components/roote';
-import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import { countryDefault, type LocaleCode } from '@/i18n/locales';
 
 type Col = { title: MessageKey; links: Array<[to: string, label: MessageKey]> };
 
 const COLUMNS: Col[] = [
   {
-    title: 'marketing.footer.explore',
-    links: [
-      [PATHS.howItWorks, 'marketing.nav.howItWorks'],
-      [PATHS.science, 'marketing.nav.science'],
-      [PATHS.system, 'marketing.nav.system'],
-    ],
-  },
-  {
     title: 'marketing.footer.company',
     links: [
-      [PATHS.about, 'marketing.nav.about'],
+      [PATHS.home, 'marketing.nav.home'],
+      [PATHS.magazine, 'marketing.nav.magazine'],
+      [PATHS.products, 'marketing.nav.products'],
+      [PATHS.hairScan, 'marketing.nav.aiSection'],
       [PATHS.faq, 'marketing.nav.faq'],
-      [PATHS.support, 'marketing.nav.support'],
-    ],
-  },
-  {
-    title: 'marketing.footer.account',
-    links: [
-      [PATHS.account, 'marketing.nav.account'],
-      [EXTERNAL_ASSESSMENT_URL, 'marketing.nav.cta'],
     ],
   },
 ];
 
-const SOLUTION_LINKS: Array<[to: string, label: string]> = [
+const ACCOUNT_LINKS: Col['links'] = [
+  [PATHS.support, 'marketing.nav.support'],
+  [PATHS.account, 'marketing.nav.account'],
+  [PATHS.bag, 'marketing.nav.bag'],
+];
+
+/** 'thinning' / 'gray' resolve via CONCERN_OPTIONS (localized). */
+const SOLUTION_LINKS: Array<[to: string, kind: string]> = [
   [PATHS.solutionThinning, 'thinning'],
   [PATHS.solutionGray, 'gray'],
-  [PATHS.products, 'products'],
 ];
+
+/** The legal links list is split into two columns purely so it doesn't run
+ *  too tall in one column — each half gets its own real heading (not a
+ *  second hidden "Legal" label) since they read as two distinct groups:
+ *  purchase-facing policies vs. program/compliance policies. */
+const LEGAL_COLUMN_TITLES: [MessageKey, MessageKey] = ['marketing.footer.legal', 'marketing.footer.policies'];
 
 /** Icon paths are simple, brand-agnostic glyphs (24x24, stroke style matching the
  *  Header's icon set) — swap for the real brand marks if the client prefers those. */
@@ -86,6 +85,14 @@ export function Footer() {
     setLocaleRegion(countryDefault(c).locale, c);
   };
 
+  const getStartedLinks = [
+    ...SOLUTION_LINKS.map(([to, kind]) => ({
+      to,
+      label: pickLocalized(CONCERN_OPTIONS.find((c) => c.value === kind)!.title, cl),
+    })),
+    ...ACCOUNT_LINKS.map(([to, label]) => ({ to, label: t(label) })),
+  ];
+
   const legalLinks = [
     ...LEGAL_PAGES.map((p) => ({ key: p.slug, to: PATHS.legal(p.slug), label: pickLocalized(p.title, cl) })),
     { key: 'terms-of-sale', to: '/terms-of-sale', label: t('marketing.footer.termsOfSale') },
@@ -94,12 +101,15 @@ export function Footer() {
   const legalColumns = [legalLinks.slice(0, legalMid), legalLinks.slice(legalMid)];
 
   return (
-    <footer className="border-t border-ink-foreground/15 bg-ink px-6 py-16 text-ink-foreground md:px-10">
+    // bg-cream-100, not bg-ink (taupe) — the taupe anchor tone is too close
+    // in value to the gold wordmark rendered below for it to read; see
+    // src/app/components/brand/Wordmark.tsx.
+    <footer className="border-t border-ink-foreground/15 bg-cream-100 px-6 py-16 text-ink-foreground md:px-10">
       <div className="mx-auto max-w-[80rem]">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           {COLUMNS.map((col) => (
             <nav key={col.title} aria-label={t(col.title)}>
-              <h2 className="u-caps font-body text-2xs font-semibold text-ink-foreground/60">{t(col.title)}</h2>
+              <h2 className="u-caps font-body text-sm font-semibold text-ink-foreground">{t(col.title)}</h2>
               <ul className="mt-3 space-y-2">
                 {col.links.map(([to, label]) =>
                   to.startsWith('http') ? (
@@ -125,30 +135,38 @@ export function Footer() {
             </nav>
           ))}
 
-          <nav aria-label={t('marketing.footer.solutions')}>
-            <h2 className="u-caps font-body text-2xs font-semibold text-ink-foreground/60">
-              {t('marketing.footer.solutions')}
+          <nav aria-label={t('marketing.footer.getStarted')}>
+            <h2 className="u-caps font-body text-sm font-semibold text-ink-foreground">
+              {t('marketing.footer.getStarted')}
             </h2>
             <ul className="mt-3 space-y-2">
-              {SOLUTION_LINKS.map(([to, kind]) => (
-                <li key={to}>
-                  <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-accent">
-                    {kind === 'products'
-                      ? t('marketing.nav.products')
-                      : pickLocalized(CONCERN_OPTIONS.find((c) => c.value === kind)!.title, cl)}
-                  </Link>
-                </li>
-              ))}
+              {getStartedLinks.map(({ to, label }) =>
+                to.startsWith('http') ? (
+                  <li key={to + label}>
+                    <a
+                      href={to}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-body text-sm text-ink-foreground hover:text-accent"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ) : (
+                  <li key={to + label}>
+                    <Link to={withLocale(to)} className="font-body text-sm text-ink-foreground hover:text-accent">
+                      {label}
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           </nav>
 
           {legalColumns.map((links, i) => (
-            <nav key={i} aria-label={t('marketing.footer.legal')}>
-              <h2
-                aria-hidden={i > 0 || undefined}
-                className={`u-caps font-body text-2xs font-semibold text-ink-foreground/60 ${i > 0 ? 'opacity-0' : ''}`}
-              >
-                {t('marketing.footer.legal')}
+            <nav key={i} aria-label={t(LEGAL_COLUMN_TITLES[i])}>
+              <h2 className="u-caps font-body text-sm font-semibold text-ink-foreground">
+                {t(LEGAL_COLUMN_TITLES[i])}
               </h2>
               <ul className="mt-3 space-y-2">
                 {links.map((link) => (
@@ -172,7 +190,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={SOCIAL_LABELS[key] ?? key}
-                className="flex h-9 w-9 items-center justify-center rounded-full text-ink-foreground/70 transition-colors hover:bg-ink-foreground/10 hover:text-ink-foreground"
+                className="flex h-9 w-9 items-center justify-center rounded-xs text-ink-foreground transition-colors hover:bg-ink-foreground/10 hover:text-ink-foreground"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
                   {SOCIAL_ICONS[key]}
@@ -182,7 +200,7 @@ export function Footer() {
           </nav>
         )}
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-ink-foreground/15 pt-8 text-xs text-ink-foreground/60 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-ink-foreground/15 pt-8 text-sm text-ink-foreground md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <Wordmark className="w-20" />
             <CountryLanguageSelector
@@ -190,7 +208,7 @@ export function Footer() {
               locale={locale as LocaleCode}
               onChangeCountry={onChangeCountry}
               onChangeLocale={(l) => setLocale(l)}
-              className="text-ink-foreground/60 hover:text-ink-foreground"
+              className="text-ink-foreground hover:text-ink-foreground"
               labels={{
                 open: t('marketing.region.trigger'),
                 title: t('marketing.region.title'),

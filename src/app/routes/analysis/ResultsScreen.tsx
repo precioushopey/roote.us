@@ -86,11 +86,11 @@ export function ResultsScreen() {
           placeholder="you@example.com"
         />
         {error && (
-          <p role="alert" className="font-body text-xs text-destructive">
+          <p role="alert" className="font-body text-sm text-destructive">
             {error}
           </p>
         )}
-        <label className="flex items-start gap-2 font-body text-xs text-muted-foreground">
+        <label className="flex cursor-pointer items-start gap-2 font-body text-sm text-muted-foreground">
           <input
             type="checkbox"
             checked={wantResults}
@@ -102,7 +102,7 @@ export function ResultsScreen() {
           />
           <span>{t('analysis.results.consentResults')}</span>
         </label>
-        <label className="flex items-start gap-2 font-body text-xs text-muted-foreground">
+        <label className="flex cursor-pointer items-start gap-2 font-body text-sm text-muted-foreground">
           <input
             type="checkbox"
             checked={wantMarketing}
@@ -114,7 +114,7 @@ export function ResultsScreen() {
         <Button block type="submit" caps>
           {t('analysis.results.emailCta')}
         </Button>
-        <p className="font-body text-xs text-muted-foreground">{t('analysis.results.consentLine')}</p>
+        <p className="font-body text-sm text-muted-foreground">{t('analysis.results.consentLine')}</p>
       </form>
     </section>
   );

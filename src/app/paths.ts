@@ -6,13 +6,9 @@
 
 export const PATHS = {
   home: '/',
-  howItWorks: '/how-it-works',
   solutions: '/solutions',
   solutionThinning: '/solutions/thinning',
   solutionGray: '/solutions/gray-hair',
-  science: '/science',
-  system: '/system',
-  about: '/about',
   faq: '/faq',
   support: '/support',
   magazine: '/magazine',

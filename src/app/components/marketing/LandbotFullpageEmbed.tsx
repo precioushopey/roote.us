@@ -11,10 +11,14 @@ declare global {
 
 /**
  * Fullpage-embeds a Landbot widget for a given bot `configUrl` — see
- * docs/superpowers/specs/2026-09-08-hairhealth-landbot-integration-design.md. Used by
- * two independent HairHealth.ai surfaces: the marketing lead-gen page (`/hair-scan`,
- * `VITE_LANDBOT_CONFIG_URL`) and the logged-in rescan page (`VITE_LANDBOT_RESCAN_CONFIG_URL`)
- * — neither is connected to ROOTÉ's own `/analysis` flow, session state, or each other.
+ * docs/superpowers/specs/2026-09-08-hairhealth-landbot-integration-design.md. Used by the
+ * logged-in HairHealth.ai rescan page (`AccountRescan`, `VITE_LANDBOT_RESCAN_CONFIG_URL`),
+ * which is not connected to ROOTÉ's own `/analysis` flow or session state. The marketing
+ * `/hair-scan` page previously embedded a second instance of this widget for anonymous
+ * lead-gen (`VITE_LANDBOT_CONFIG_URL`); as of 2026-09-09 that page is a static explainer
+ * instead (`HairScan.tsx`) and no longer reads that env var — every "Start free hair
+ * analysis" CTA already routes to `EXTERNAL_ASSESSMENT_URL`, HairHealth.ai's own hosted
+ * quiz, so an embed on this page would have been a redundant second entry point.
  *
  * Renders `placeholder` until a non-empty `configUrl` is passed in — the caller owns
  * reading its own env var so each surface can be configured (or left unconfigured)
@@ -22,8 +26,7 @@ declare global {
  *
  * Known limitation: Landbot's public docs describe no destroy/unmount API, so navigating
  * away from a page using this in this client-routed SPA may not tear down whatever DOM
- * the widget injects — including between the two different surfaces above, if a visitor
- * reaches both in one session. Verify once real configUrls are connected.
+ * the widget injects. Verify once a real configUrl is connected.
  */
 export function LandbotFullpageEmbed({
   configUrl,

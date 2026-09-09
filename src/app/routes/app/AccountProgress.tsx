@@ -110,17 +110,17 @@ export function AccountProgress() {
                     {t(METRIC_LABEL[b.key] ?? METRIC_LABEL_FALLBACK)}
                   </p>
                   <div className="mt-2 flex items-baseline justify-between gap-3">
-                    <span className="font-body text-2xs text-muted-foreground">{t('app.progress.baselineLabel')}</span>
+                    <span className="font-body text-sm text-muted-foreground">{t('app.progress.baselineLabel')}</span>
                     <span className="font-display text-md text-foreground">{t(b.status as 'severity.mild')}</span>
                   </div>
                   <div className="mt-1 flex items-baseline justify-between gap-3">
-                    <span className="font-body text-2xs text-muted-foreground">{t('app.progress.latestLabel')}</span>
+                    <span className="font-body text-sm text-muted-foreground">{t('app.progress.latestLabel')}</span>
                     <span className="font-display text-md text-foreground">
-                      {l ? t(l.status as 'severity.mild') : <span className="text-muted-foreground">—</span>}
+                      {l ? t(l.status as 'severity.mild') : <span className="text-muted-foreground">-</span>}
                     </span>
                   </div>
                   {cmp.numericChange != null && (
-                    <p className="mt-1 text-end font-body text-2xs text-accent">
+                    <p className="mt-1 text-end font-body text-sm text-accent">
                       {cmp.numericChange > 0 ? '+' : ''}
                       {cmp.numericChange}
                     </p>

@@ -29,10 +29,12 @@
   --roote-gold-500: #c6a15a;
   --roote-gold-600: #a98343;
 
-  /* Warm taupe "anchor" tone — replaces the near-black emerald ink band.
-     Matches the mid/dark surface MDhair itself uses (its hero band and
-     footer sample at #d5c2b5 / #c2b1a8). */
-  --roote-taupe-500: #c7b6a8;
+  /* Warm sand "anchor" tone — replaces the near-black emerald ink band.
+     2026-09-09: retinted from a grayer taupe (#c7b6a8) to a warmer, more
+     golden sand sampled from hero-system.png's own background, then
+     lightened ~15% (mixed toward white) per feedback that the first pass
+     read a little heavy/dark across large bands. */
+  --roote-taupe-500: #e0c9b6;
 
   --roote-ink: #172022;
   --roote-body: #333a3c;
@@ -103,13 +105,6 @@
   /* Decorative two-tone "ghost" display words (aria-hidden). */
   --accent-ghost: #d7e6dc;
   --ink-ghost: #284a3a;
-
-  /* --- glass (genuine depth only) ------------------------------------- */
-  --surface-glass: rgba(255, 255, 255, 0.62);
-  --surface-glass-dark: rgba(199, 182, 168, 0.85);
-  --surface-glass-border: rgba(255, 255, 255, 0.18);
-  --surface-glass-border-dark: rgba(255, 255, 255, 0.1);
-  --glass-blur: 20px;
 
   /* --- charts / data viz — emerald→cream spectrum ------------------- */
   --chart-1: #1b4b32;
@@ -224,10 +219,6 @@
   --text-display-lg: var(--display-lg);
   --text-display-xl: var(--display-xl);
   --text-display-2xl: var(--display-2xl);
-
-  /* Small "eyebrow" label size — used by Footer column headings (u-caps). */
-  --text-2xs: 0.6875rem; /* 11px */
-  --text-2xs--line-height: 1rem;
 
   --radius-sm: calc(var(--radius) - 8px);
   --radius-md: calc(var(--radius) - 4px);

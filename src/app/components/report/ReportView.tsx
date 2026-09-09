@@ -65,8 +65,8 @@ export function ReportView({
         {
           heading: model.titles.plan,
           lines: [
-            ...model.plan.core.map((c) => `${pdfText(c.name)} — ${c.usage} · ${c.frequency}`),
-            ...model.plan.supporting.map((s) => `${pdfText(s.name)} — ${s.usage} · ${s.frequency}`),
+            ...model.plan.core.map((c) => `${pdfText(c.name)}: ${c.usage} · ${c.frequency}`),
+            ...model.plan.supporting.map((s) => `${pdfText(s.name)}: ${s.usage} · ${s.frequency}`),
           ],
         },
       ],
@@ -77,22 +77,22 @@ export function ReportView({
 
   return (
     <div className="min-h-screen bg-background font-body text-foreground">
-      <header className="glass sticky top-0 z-40 border-b border-border">
+      <header className="bg-white sticky top-0 z-40 border-b border-border">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
           <Wordmark className="w-24" />
-          <span className="font-body text-2xs text-muted-foreground">
+          <span className="font-body text-sm text-muted-foreground">
             #{model.meta.reportId.slice(0, 8)} · {generated}
           </span>
         </div>
       </header>
 
       <article className="mx-auto max-w-3xl px-6 py-10">
-        <p className="u-caps font-body text-2xs font-semibold text-muted-foreground">{model.titles.cover}</p>
+        <p className="u-caps font-body text-sm font-semibold text-muted-foreground">{model.titles.cover}</p>
         <h1 className="text-display mt-2 text-foreground" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
           {model.intro.greeting}
         </h1>
         <p className="mt-3 max-w-xl font-body text-md text-muted-foreground">{model.intro.body}</p>
-        <p className="mt-2 font-body text-xs text-muted-foreground">{model.meta.scaleLine}</p>
+        <p className="mt-2 font-body text-sm text-muted-foreground">{model.meta.scaleLine}</p>
         <div className="mt-4">
           <Button onClick={downloadPdf} variant="secondary" size="sm">
             {t('report.pdf.download')}
@@ -105,8 +105,8 @@ export function ReportView({
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {model.photos.map((p) => (
                 <figure key={p.angleKey} className="flex flex-col gap-1">
-                  <img src={p.dataUrl} alt={p.caption} className="aspect-square w-full rounded-lg object-cover" />
-                  <figcaption className="text-center text-2xs text-muted-foreground">{p.caption}</figcaption>
+                  <img src={p.dataUrl} alt={p.caption} className="aspect-square w-full rounded-sm object-cover" />
+                  <figcaption className="text-center text-sm text-muted-foreground">{p.caption}</figcaption>
                 </figure>
               ))}
             </div>
@@ -121,7 +121,7 @@ export function ReportView({
               <span
                 key={st.stageKey}
                 className={
-                  'flex h-8 w-8 items-center justify-center rounded-full border text-xs ' +
+                  'flex h-8 w-8 items-center justify-center rounded-full border text-sm ' +
                   (st.isCurrent ? 'border-accent bg-accent/15 font-medium text-deep-900' : 'border-border text-muted-foreground')
                 }
               >
@@ -156,7 +156,7 @@ export function ReportView({
             {model.analysis.flagged.map((f) => (
               <li key={f.zoneLabel} className="rounded-lg border border-border bg-card p-3 text-foreground">
                 <span className="font-medium">{f.zoneLabel}</span>
-                <span className="text-muted-foreground"> — {f.severityLabel}: {f.note}</span>
+                <span className="text-muted-foreground">, {f.severityLabel}: {f.note}</span>
               </li>
             ))}
           </ul>
@@ -179,15 +179,15 @@ export function ReportView({
           <Sec n={next()} title={t('report.gray.title')}>
             <div className="grid gap-2 sm:grid-cols-3">
               <div>
-                <p className="text-2xs uppercase tracking-wide">{t('report.gray.stage')}</p>
+                <p className="text-sm uppercase">{t('report.gray.stage')}</p>
                 <p className="font-body text-foreground">{t(`analysis.results.grayStage.${grayProfile.stage}` as 'analysis.results.grayStage.early')}</p>
               </div>
               <div>
-                <p className="text-2xs uppercase tracking-wide">{t('report.gray.area')}</p>
+                <p className="text-sm uppercase">{t('report.gray.area')}</p>
                 <p className="font-body text-foreground">{t(grayProfile.visibleAreaKey as 'gray.area.temples')}</p>
               </div>
               <div>
-                <p className="text-2xs uppercase tracking-wide">{t('report.gray.pace')}</p>
+                <p className="text-sm uppercase">{t('report.gray.pace')}</p>
                 <p className="font-body text-foreground">{t(grayProfile.paceKey as 'gray.pace.slow')}</p>
               </div>
             </div>
@@ -231,7 +231,7 @@ export function ReportView({
                 {model.plan.core.map((it, i) => (
                   <li key={`c${i}`} className="flex flex-wrap items-baseline justify-between gap-2">
                     <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
-                    <span className="text-2xs text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {model.plan.labels.applicationFrequency}: {it.frequency}
                     </span>
                   </li>
@@ -248,7 +248,7 @@ export function ReportView({
               {model.plan.supporting.map((it, i) => (
                 <li key={`s${i}`} className="flex flex-wrap items-baseline justify-between gap-2">
                   <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
-                  <span className="text-2xs text-muted-foreground">{it.usage} · {it.frequency}</span>
+                  <span className="text-sm text-muted-foreground">{it.usage} · {it.frequency}</span>
                 </li>
               ))}
             </ul>
@@ -271,7 +271,7 @@ export function ReportView({
                 <div key={r.days} className="flex items-center justify-between">
                   <span>
                     {r.label}
-                    {r.isRecommended && <span className="ms-2 text-2xs text-deep-800">{model.pricing.recommendedBadge}</span>}
+                    {r.isRecommended && <span className="ms-2 text-sm text-deep-800">{model.pricing.recommendedBadge}</span>}
                   </span>
                   {isPending(r.price) ? <PendingChip label={r.price.label} /> : <span className="text-foreground">{r.price.formatted}</span>}
                 </div>
@@ -305,7 +305,7 @@ export function ReportView({
           </Button>
         </div>
 
-        <footer className="mt-8 flex flex-col gap-1 border-t border-border pt-6 text-2xs text-muted-foreground">
+        <footer className="mt-8 flex flex-col gap-1 border-t border-border pt-6 text-sm text-muted-foreground">
           <p><Val value={model.disclaimers.demo} /></p>
           <p><Val value={model.disclaimers.formulaPending} /></p>
           <p className="mt-1">#{model.meta.reportId} · {generated}</p>

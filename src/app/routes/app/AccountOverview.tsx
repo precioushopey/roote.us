@@ -39,7 +39,7 @@ export function AccountOverview() {
   return (
     <div data-animate className="flex flex-col gap-8">
       <header className="flex flex-col gap-4">
-        <p className="u-caps font-body text-2xs font-semibold text-accent">{t('app.overview.eyebrow')}</p>
+        <p className="u-caps font-body text-sm font-semibold text-accent">{t('app.overview.eyebrow')}</p>
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <DisplayTitle as="h1" step="sm">
             {t('app.overview.dayOf', { day: up.currentDay, total: up.durationDays })}
@@ -91,7 +91,7 @@ export function AccountOverview() {
             }
           />
           {next && (
-            <p className="mt-1 font-body text-2xs text-muted-foreground">
+            <p className="mt-1 font-body text-sm text-muted-foreground">
               {t(`app.checkpoint.state.${checkpointState(next, up.currentDay)}` as 'app.checkpoint.state.due')}
             </p>
           )}

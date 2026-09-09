@@ -25,7 +25,7 @@ export function AppCare() {
         <section className="flex flex-col gap-3">
           {unlocked.map((m) => (
             <article key={m.key} className="rounded-xl border border-border bg-card p-4 shadow-sm">
-              <p className="text-xs font-medium uppercase tracking-[0.1em] text-accent">
+              <p className="text-sm font-medium uppercase text-accent">
                 {t('app.care.dayTag', { day: m.day })}
               </p>
               <p className="mt-1 text-sm">{t(m.key as MessageKey)}</p>
@@ -51,7 +51,7 @@ export function AppCare() {
               />
               <button
                 type="submit"
-                className="inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground"
+                className="inline-flex w-full items-center justify-center rounded-xs bg-primary px-6 py-3 text-sm text-primary-foreground"
               >
                 {t('app.care.compose.send')}
               </button>

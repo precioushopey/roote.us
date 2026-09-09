@@ -45,7 +45,7 @@ export function AppProfile() {
     navigate(withLocale('/'));
   }
 
-  const memberSince = auth.since ? new Date(auth.since).toLocaleDateString() : '—';
+  const memberSince = auth.since ? new Date(auth.since).toLocaleDateString() : '-';
   const fieldClass =
     'rounded-md border border-input bg-input-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-accent';
 
@@ -59,11 +59,11 @@ export function AppProfile() {
         <h2 className="font-display text-lg font-medium">{t('app.profile.account.title')}</h2>
         <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
           <div className="flex flex-col">
-            <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">{t('app.profile.email')}</dt>
+            <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.email')}</dt>
             <dd>{auth.email}</dd>
           </div>
           <div className="flex flex-col">
-            <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">{t('app.profile.memberSince')}</dt>
+            <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.memberSince')}</dt>
             <dd>{memberSince}</dd>
           </div>
         </dl>
@@ -73,15 +73,15 @@ export function AppProfile() {
         <h2 className="font-display text-lg font-medium">{t('app.profile.program.title')}</h2>
         <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
           <div className="flex flex-col">
-            <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">{t('app.profile.orderId')}</dt>
+            <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.orderId')}</dt>
             <dd className="tabular-nums">{program.orderId}</dd>
           </div>
           <div className="flex flex-col">
-            <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">{t('app.profile.duration')}</dt>
+            <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.duration')}</dt>
             <dd>{t('report.duration.label', { days: program.durationDays })}</dd>
           </div>
           <div className="flex flex-col sm:col-span-2">
-            <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">{t('app.profile.dates')}</dt>
+            <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.dates')}</dt>
             <dd>{program.startDate} → {program.endDate}</dd>
           </div>
         </dl>
@@ -108,11 +108,11 @@ export function AppProfile() {
               <li key={o.id} className="flex items-center justify-between gap-3 py-2.5">
                 <span className="flex flex-col">
                   <span className="tabular-nums" dir="ltr">{o.id}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-sm text-muted-foreground">
                     {t(o.kind === 'program' ? 'app.profile.orders.program' : 'app.profile.orders.bag')} · {o.label}
                   </span>
                 </span>
-                <span className="shrink-0 text-xs text-muted-foreground">
+                <span className="shrink-0 text-sm text-muted-foreground">
                   {new Date(o.at).toLocaleDateString(locale === 'he' ? 'he-IL' : 'en-US')}
                 </span>
               </li>
@@ -148,7 +148,7 @@ export function AppProfile() {
           {pwOk && <p role="status" className="text-sm text-muted-foreground">{t('app.profile.password.success')}</p>}
           <button
             type="submit"
-            className="inline-flex w-fit items-center justify-center rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground"
+            className="inline-flex w-fit items-center justify-center rounded-xs bg-primary px-6 py-3 text-sm text-primary-foreground"
           >
             {t('app.profile.password.submit')}
           </button>
@@ -158,7 +158,7 @@ export function AppProfile() {
       <button
         type="button"
         onClick={logout}
-        className="inline-flex w-fit items-center justify-center rounded-full border border-border px-6 py-3 text-sm text-foreground transition-colors hover:border-accent"
+        className="inline-flex w-fit items-center justify-center rounded-xs border border-border px-6 py-3 text-sm text-foreground transition-colors hover:border-accent"
       >
         {t('app.profile.logout')}
       </button>

@@ -71,21 +71,21 @@ export function GuidedPhotoCapture({
           </>
         )}
         {busy && (
-          <div className="absolute inset-0 flex items-center justify-center bg-cream-50/70 font-body text-xs text-muted-foreground">
+          <div className="absolute inset-0 flex items-center justify-center bg-cream-50/70 font-body text-sm text-muted-foreground">
             {t('photo.uploading')}
           </div>
         )}
       </div>
-      <p className="font-body text-2xs text-muted-foreground">{instruction}</p>
+      <p className="font-body text-sm text-muted-foreground">{instruction}</p>
       {error && (
-        <p role="alert" className="font-body text-2xs text-destructive">
+        <p role="alert" className="font-body text-sm text-destructive">
           {error}
         </p>
       )}
       <div className="flex items-center gap-3">
         <label
           htmlFor={inputId}
-          className="cursor-pointer font-body text-xs font-medium text-deep-800 underline underline-offset-4"
+          className="cursor-pointer font-body text-sm font-medium text-deep-800 underline underline-offset-4"
         >
           {currentThumb ? t('photo.retake') : t('photo.add')}
         </label>
@@ -94,7 +94,7 @@ export function GuidedPhotoCapture({
           <button
             type="button"
             onClick={onRemove}
-            className="font-body text-xs text-muted-foreground underline"
+            className="font-body text-sm text-muted-foreground underline"
           >
             {t('common.remove')}
           </button>

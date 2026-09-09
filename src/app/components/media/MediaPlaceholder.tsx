@@ -20,7 +20,7 @@ interface MediaPlaceholderProps {
   tone?: MediaTone;
   className?: string;
   /** Corner rounding; matches the surrounding card radius by default. */
-  rounded?: 'lg' | 'xl' | '2xl' | 'none';
+  rounded?: 'sm' | 'lg' | 'xl' | '2xl' | 'none';
 }
 
 const KIND_LABEL: Record<MediaKind, string> = {
@@ -37,6 +37,7 @@ const TONE_CLASS: Record<MediaTone, string> = {
 };
 
 const ROUND_CLASS = {
+  sm: 'rounded-sm',
   lg: 'rounded-lg',
   xl: 'rounded-xl',
   '2xl': 'rounded-2xl',
@@ -55,7 +56,7 @@ export function MediaPlaceholder({
   kind = 'image',
   tone = 'cream',
   className,
-  rounded = 'xl',
+  rounded = 'sm',
 }: MediaPlaceholderProps) {
   const isDev = Boolean(import.meta.env?.DEV);
   return (
@@ -73,10 +74,10 @@ export function MediaPlaceholder({
     >
       {isDev && (
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 p-4 text-center">
-          <span className="text-2xs font-semibold uppercase tracking-[0.16em] opacity-70">
+          <span className="text-sm font-semibold uppercase opacity-70">
             {KIND_LABEL[kind]}
           </span>
-          <span className="max-w-[42ch] text-xs leading-snug opacity-80">{label}</span>
+          <span className="max-w-[42ch] text-sm leading-snug opacity-80">{label}</span>
         </div>
       )}
     </div>

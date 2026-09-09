@@ -17,13 +17,13 @@ export function LegalNotice({
   return (
     <aside
       className={cn(
-        'rounded-lg border border-border bg-cream-100 p-4 font-body text-xs leading-relaxed text-muted-foreground',
+        'rounded-lg border border-border bg-cream-100 p-4 font-body text-sm leading-relaxed text-muted-foreground',
         className,
       )}
     >
       {showMarker ? (
-        <span className="mb-1 block font-semibold uppercase tracking-wide text-warning">
-          Legal review required — draft, not approved
+        <span className="mb-1 block font-semibold uppercase text-warning">
+          Legal review required: draft, not approved
         </span>
       ) : null}
       {children}
@@ -56,7 +56,7 @@ export function ConsentPanel({
   const detailId = useId();
   return (
     <div className={cn('rounded-xl border border-border bg-card p-4', className)}>
-      <label className="flex items-start gap-3">
+      <label className="flex cursor-pointer items-start gap-3">
         <input
           type="checkbox"
           checked={checked}
@@ -65,7 +65,7 @@ export function ConsentPanel({
         />
         <span className="min-w-0">
           <span className="block font-body text-sm text-foreground">{label}</span>
-          <span className="mt-0.5 block font-body text-xs text-muted-foreground">{summary}</span>
+          <span className="mt-0.5 block font-body text-sm text-muted-foreground">{summary}</span>
         </span>
       </label>
       <button
@@ -73,11 +73,11 @@ export function ConsentPanel({
         aria-expanded={open}
         aria-controls={detailId}
         onClick={() => setOpen((v) => !v)}
-        className="mt-3 font-body text-xs font-medium text-deep-800 underline underline-offset-4"
+        className="mt-3 font-body text-sm font-medium text-deep-800 underline underline-offset-4"
       >
         {open ? 'Hide details' : 'What this means'}
       </button>
-      <div id={detailId} hidden={!open} className="mt-2 font-body text-xs leading-relaxed text-muted-foreground">
+      <div id={detailId} hidden={!open} className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
         {details}
       </div>
     </div>

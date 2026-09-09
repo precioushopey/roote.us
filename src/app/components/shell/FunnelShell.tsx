@@ -9,7 +9,7 @@ export function FunnelShell() {
   const withLocale = useLocalizedPath();
   return (
     <div className="flex min-h-screen flex-col bg-background font-body text-foreground">
-      <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border bg-white">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
           <Link to={withLocale('/')} aria-label="ROOTÉ">
             <Wordmark className="w-28" />

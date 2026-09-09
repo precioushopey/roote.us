@@ -161,7 +161,7 @@ export function AccountScans() {
                 setPhase('capturing');
                 track('progress_scan_started', { day: dueCheckpoint.day });
               }}
-              className="mt-3 w-fit rounded-full bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
+              className="mt-3 w-fit rounded-xs bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
             >
               {t('app.scans.startCapture')}
             </button>
@@ -184,7 +184,7 @@ export function AccountScans() {
                 type="button"
                 disabled={!allShot}
                 onClick={runScan}
-                className="mt-4 w-fit rounded-full bg-primary px-5 py-2 font-body text-sm text-primary-foreground disabled:opacity-40"
+                className="mt-4 w-fit rounded-xs bg-primary px-5 py-2 font-body text-sm text-primary-foreground disabled:opacity-40"
               >
                 {t('app.scans.runAnalysis')}
               </button>
@@ -213,7 +213,7 @@ export function AccountScans() {
                 <button
                   type="button"
                   onClick={() => tracking.skipCheckpoint(c.id, true)}
-                  className="font-body text-2xs text-muted-foreground underline"
+                  className="font-body text-sm text-muted-foreground underline"
                 >
                   {t('app.checkpoint.skip')}
                 </button>
@@ -231,7 +231,7 @@ export function AccountScans() {
                 <button
                   type="button"
                   onClick={() => tracking.skipCheckpoint(c.id, false)}
-                  className="font-body text-2xs text-muted-foreground underline"
+                  className="font-body text-sm text-muted-foreground underline"
                 >
                   {t('app.checkpoint.unskip')}
                 </button>

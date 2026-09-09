@@ -19,8 +19,8 @@ export const primitives = {
   // `onInk`) — no longer used as a UI accent anywhere else (2026-09-08).
   gold500: '#C6A15A',
   gold600: '#A98343',
-  // Warm taupe "anchor" tone — replaces the near-black emerald ink band.
-  taupe500: '#C7B6A8',
+  // Warm sand "anchor" tone — replaces the near-black emerald ink band.
+  taupe500: '#E0C9B6',
   ink: '#172022',
   body: '#333A3C',
   muted: '#6F7676',
@@ -49,15 +49,6 @@ export const palette = {
   success: '#1F7A53',
   warning: '#A8681C',
   info: primitives.emerald700,
-} as const;
-
-/** Glass surfaces — genuine depth only (sticky nav, floating result card, modals). */
-export const glass = {
-  light: 'rgba(255, 255, 255, 0.62)',
-  dark: 'rgba(199, 182, 168, 0.85)',
-  border: 'rgba(255, 255, 255, 0.18)',
-  borderDark: 'rgba(255, 255, 255, 0.1)',
-  blur: '20px',
 } as const;
 
 export const fonts = {

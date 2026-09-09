@@ -17,12 +17,67 @@ import { PROGRAMS } from '@/content/programs';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
 import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
-import thinningHero from '@/assets/images/thinning-hero.png';
-import grayHairHero from '@/assets/images/gray-hair-hero.png';
+import thinningHero from '@/assets/heroes/thinning-hero.png';
+import grayHairHero from '@/assets/heroes/gray-hair-hero.png';
+import concernThinning from '@/assets/concerns/concern-thinning.png';
+import concernGray from '@/assets/concerns/concern-gray.png';
+import solutionThinningCrown from '@/assets/concerns/solution-thinning-crown.png';
+import solutionThinningDiffuse from '@/assets/concerns/solution-thinning-diffuse.png';
+import solutionGrayPigmentation from '@/assets/concerns/solution-gray-pigmentation.png';
+import solutionGrayRoutine from '@/assets/concerns/solution-gray-routine.png';
+import solutionGrayEarly from '@/assets/concerns/solution-gray-early.png';
+import solutionGrayModerate from '@/assets/concerns/solution-gray-moderate.png';
+import solutionGrayAdvanced from '@/assets/concerns/solution-gray-advanced.png';
+import scanBaseline from '@/assets/scans/scan-baseline.png';
+import scanProgress from '@/assets/scans/scan-progress.png';
+import scanFinal from '@/assets/scans/scan-final.png';
+import level6 from '@/assets/products/Level 6.png';
+import level10 from '@/assets/products/Level 10.png';
+import level15 from '@/assets/products/Level 15.png';
+import graySupport from '@/assets/products/Gray Support.png';
+import graySerum from '@/assets/products/Gray Serum.png';
+import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
 
 const SOLUTION_PHOTOS: Record<string, string> = {
   thinning: thinningHero,
   'gray-hair': grayHairHero,
+};
+
+/** Education cards, keyed by `${solution.slug}:${education.id}`. Thinning's
+ *  three cards each have a distinct real close-up crop (concern-thinning.png
+ *  for the hairline macro, solution-thinning-crown.png and
+ *  solution-thinning-diffuse.png for the other two). Gray-hair's three real
+ *  macro crops match: concern-gray.png (progression), a root-transition
+ *  macro (pigmentation), and a dropper-application macro (routine). */
+const EDUCATION_PHOTOS: Record<string, string> = {
+  'thinning:hairline': concernThinning,
+  'thinning:crown': solutionThinningCrown,
+  'thinning:diffuse': solutionThinningDiffuse,
+  'gray-hair:progression': concernGray,
+  'gray-hair:pigmentation': solutionGrayPigmentation,
+  'gray-hair:routine': solutionGrayRoutine,
+};
+
+/** Severity-level cards. Thinning's three real top-down scan crops form a
+ *  genuine progression (fullest → thinnest), so they map cleanly to
+ *  higher/moderate/advanced. Gray-hair's three real macro crops form a
+ *  matching progression (mostly-pigmented → fully gray). */
+const SEVERITY_PHOTOS: Record<string, string> = {
+  'thinning:higher': scanFinal,
+  'thinning:moderate': scanProgress,
+  'thinning:advanced': scanBaseline,
+  'gray-hair:early': solutionGrayEarly,
+  'gray-hair:moderate': solutionGrayModerate,
+  'gray-hair:advanced': solutionGrayAdvanced,
+};
+
+const PRODUCT_PHOTOS: Record<string, string> = {
+  'density-6': level6,
+  'density-10': level10,
+  'density-15': level15,
+  'gray-support': graySupport,
+  'gray-serum': graySerum,
+  'regrowth-shampoo': regrowthShampoo,
 };
 
 /** Thinning + gray-hair solution pages (brief §18, §19). Educate → route to the
@@ -43,31 +98,23 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
   return (
     <>
       {/* hero */}
-      <Section tone="teal" width="content" animate={false}>
+      <Section tone="teal" width="content" animate={false} className="py-12 md:py-12">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
-              {pickLocalized(solution.hero.eyebrow, cl)}
-            </Eyebrow>
-            <DisplayTitle as="h1" step="lg">
+            <DisplayTitle as="h1" step="lg" className="!font-medium">
               {pickLocalized(solution.hero.title, cl)}
             </DisplayTitle>
-            <Prose size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg text-ink-foreground/75">
               {pickLocalized(solution.hero.body, cl)}
             </Prose>
-            <div className="flex flex-wrap gap-3">
-              <Button to={EXTERNAL_ASSESSMENT_URL} external caps>
-                {t('marketing.nav.cta')}
-              </Button>
-              <Button to={withLocale(PATHS.system)} variant="secondary">
-                {t('marketing.sol.exploreSystem')}
-              </Button>
-            </div>
+            <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm sm:w-auto">
+              {t('marketing.nav.cta')}
+            </Button>
           </div>
           <img
             src={SOLUTION_PHOTOS[solution.slug]}
             alt={solution.media[0].alt}
-            className="aspect-[4/3] w-full rounded-xl object-cover"
+            className="aspect-[4/3] w-full rounded-sm object-cover"
           />
         </div>
       </Section>
@@ -78,13 +125,21 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
           {t('marketing.sol.understandHeading')}
         </DisplayTitle>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {solution.education.map((e, i) => (
-            <Card key={e.id}>
-              <span className="font-display text-xl text-accent">{String(i + 1).padStart(2, '0')}</span>
-              <p className="mt-1 font-display text-md text-foreground">{pickLocalized(e.title, cl)}</p>
-              <p className="mt-2 font-body text-sm text-muted-foreground">{pickLocalized(e.body, cl)}</p>
-            </Card>
-          ))}
+          {solution.education.map((e, i) => {
+            const photo = EDUCATION_PHOTOS[`${solution.slug}:${e.id}`];
+            return (
+              <div key={e.id} className="flex flex-col gap-3">
+                <img src={photo} alt="" aria-hidden className="aspect-[4/3] w-full rounded-sm object-cover" />
+                <div className="flex flex-row items-center gap-3">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-accent font-display text-sm text-accent">
+                    {i + 1}
+                  </span>
+                  <p className="font-display text-md text-foreground">{pickLocalized(e.title, cl)}</p>
+                </div>
+                <p className="font-body text-sm text-muted-foreground">{pickLocalized(e.body, cl)}</p>
+              </div>
+            );
+          })}
         </div>
       </Section>
 
@@ -93,17 +148,21 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
         <DisplayTitle as="h2" step="md" className="max-w-2xl">
           {pickLocalized(solution.severityHeading, cl)}
         </DisplayTitle>
+        <Prose className="mt-4 max-w-2xl">{pickLocalized(solution.severityNote, cl)}</Prose>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {solution.severityLevels.map((lvl) => (
-            <Card key={lvl.id}>
-              <p className="font-display text-md text-foreground">{pickLocalized(lvl.title, cl)}</p>
-              <p className="mt-2 font-body text-sm text-muted-foreground">{pickLocalized(lvl.description, cl)}</p>
-            </Card>
-          ))}
+          {solution.severityLevels.map((lvl) => {
+            const photo = SEVERITY_PHOTOS[`${solution.slug}:${lvl.id}`];
+            return (
+              <div key={lvl.id} className="flex flex-col gap-4 text-center">
+                <img src={photo} alt="" aria-hidden className="aspect-[3/4] w-full rounded-sm object-cover" />
+                <div className="flex flex-col gap-2">
+                  <h3 className="u-caps font-body text-sm text-foreground">{pickLocalized(lvl.title, cl)}</h3>
+                  <p className="font-body text-sm text-muted-foreground">{pickLocalized(lvl.description, cl)}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <p className="mt-6 max-w-2xl font-body text-xs text-muted-foreground">
-          {pickLocalized(solution.severityNote, cl)}
-        </p>
       </Section>
 
       {/* the system + related products */}
@@ -122,7 +181,8 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
               to={withLocale(PATHS.product(p.slug))}
               priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
               mediaAlt={`${p.name} packaging`}
-              mediaLabel={`${p.name} — product photography`}
+              mediaLabel={`${p.name}: product photography`}
+              image={PRODUCT_PHOTOS[p.slug]}
             />
           ))}
         </div>
@@ -134,7 +194,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
           {t('marketing.sol.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         </div>
@@ -151,14 +211,11 @@ export function SolutionsIndex() {
   const solutions = (['thinning', 'gray-hair'] as const).map(getSolution).filter((s): s is NonNullable<typeof s> => !!s);
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="text-center">
-        <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
-          {t('marketing.nav.solutions')}
-        </Eyebrow>
-        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto mt-2 max-w-2xl">
+      <Section tone="teal" width="content" animate={false} className="py-12 md:py-24 text-center">
+        <DisplayTitle as="h1" step="md" align="center" className="mx-auto !font-normal max-w-2xl">
           {t('marketing.sol.indexHeading')}
         </DisplayTitle>
-        <Prose size="lg" className="mx-auto mt-4 text-center">
+        <Prose size="lg" className="mx-auto mt-4 text-center text-ink-foreground/75">
           {t('marketing.sol.indexBody')}
         </Prose>
       </Section>

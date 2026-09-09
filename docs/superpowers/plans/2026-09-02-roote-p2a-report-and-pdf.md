@@ -1156,7 +1156,7 @@ export function ReportClaims({ model }: { model: ReportModel }) {
     <section className="grid grid-cols-3 gap-2 px-4 py-4">
       {model.claims.map((c) => (
         <div key={c.key} className="rounded-lg border border-border p-2 text-center">
-          <p className="text-[10px] uppercase text-muted-foreground">{c.label}</p>
+          <p className="text-xs uppercase text-muted-foreground">{c.label}</p>
           <p className="mt-1 text-sm"><TextOrPending value={c.valueLabel} /></p>
         </div>
       ))}
@@ -1179,7 +1179,7 @@ export function ReportCta({ model }: { model: ReportModel }) {
 
 export function ReportFooter({ model }: { model: ReportModel }) {
   return (
-    <footer className="flex flex-col gap-1 border-t border-border px-4 py-4 text-[10px] text-muted-foreground">
+    <footer className="flex flex-col gap-1 border-t border-border px-4 py-4 text-xs text-muted-foreground">
       <p><TextOrPending value={model.disclaimers.medical} /></p>
       <p><TextOrPending value={model.disclaimers.notADiagnosis} /></p>
       <p>{model.disclaimers.demo}</p>

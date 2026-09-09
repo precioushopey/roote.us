@@ -31,7 +31,7 @@ export function AccountBaseline() {
     <div data-animate className="flex flex-col gap-8">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="u-caps font-body text-2xs font-semibold text-accent">{t('marketing.sys.day', { n: 0 })}</p>
+          <p className="u-caps font-body text-sm font-semibold text-accent">{t('marketing.sys.day', { n: 0 })}</p>
           <DisplayTitle as="h1" step="sm">
             {t('app.baseline.title')}
           </DisplayTitle>
@@ -63,12 +63,12 @@ export function AccountBaseline() {
                   {p ? (
                     <img src={p.thumb} alt={photoLabel(angle)} className="h-full w-full object-cover" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-2xs text-muted-foreground">
+                    <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-sm text-muted-foreground">
                       {t('app.photos.notYet')}
                     </div>
                   )}
                 </div>
-                <figcaption className="px-2 py-1.5 font-body text-2xs text-muted-foreground">{photoLabel(angle)}</figcaption>
+                <figcaption className="px-2 py-1.5 font-body text-sm text-muted-foreground">{photoLabel(angle)}</figcaption>
               </figure>
             );
           })}

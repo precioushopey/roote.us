@@ -9,7 +9,7 @@ export function LocaleToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={() => setLocale(next)}
-      className={cn('text-xs tracking-wide underline underline-offset-4 text-muted-foreground', className)}
+      className={cn('text-sm underline underline-offset-4 text-muted-foreground', className)}
       aria-label={`Switch language to ${label}`}
     >
       {label}

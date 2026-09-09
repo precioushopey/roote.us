@@ -24,7 +24,7 @@ export function Stepper({ steps, current, label, className }: Props) {
             <span
               aria-current={state === 'current' ? 'step' : undefined}
               className={cn(
-                'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border font-body text-2xs font-semibold',
+                'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border font-body text-sm font-semibold',
                 state === 'done' && 'border-deep-800 bg-deep-800 text-cream-50',
                 state === 'current' && 'border-deep-800 text-deep-900',
                 state === 'upcoming' && 'border-border text-muted-foreground',
@@ -40,7 +40,7 @@ export function Stepper({ steps, current, label, className }: Props) {
             </span>
             <span
               className={cn(
-                'hidden truncate font-body text-xs sm:block',
+                'hidden truncate font-body text-sm sm:block',
                 state === 'current' ? 'text-foreground' : 'text-muted-foreground',
               )}
             >

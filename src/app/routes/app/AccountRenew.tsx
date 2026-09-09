@@ -50,7 +50,7 @@ export function AccountRenew() {
       </header>
 
       <Card>
-        <p className="u-caps font-body text-2xs font-semibold text-muted-foreground">
+        <p className="u-caps font-body text-sm font-semibold text-muted-foreground">
           {t('app.renew.profileTitle')}
         </p>
         <dl className="mt-3 divide-y divide-border/60">
@@ -63,7 +63,7 @@ export function AccountRenew() {
             </div>
           ))}
         </dl>
-        <p className="mt-3 font-body text-2xs text-muted-foreground">{t('app.renew.profileNote')}</p>
+        <p className="mt-3 font-body text-sm text-muted-foreground">{t('app.renew.profileNote')}</p>
       </Card>
 
       <fieldset className="flex flex-col gap-3">

@@ -22,12 +22,12 @@ import { formatMoney } from '@/domain/report/money';
 import type { ClaimStatus } from '@/content/claims';
 import { PRODUCT_FAQS_COMMON } from '@/content/faqs';
 import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
-import level6 from '@/assets/images/Level 6.png';
-import level10 from '@/assets/images/Level 10.png';
-import level15 from '@/assets/images/Level 15.png';
-import graySupport from '@/assets/images/Gray Support.png';
-import regrowthShampoo from '@/assets/images/Regrowth Shampoo.png';
-import graySerum from '@/assets/images/Gray Serum.png';
+import level6 from '@/assets/products/Level 6.png';
+import level10 from '@/assets/products/Level 10.png';
+import level15 from '@/assets/products/Level 15.png';
+import graySupport from '@/assets/products/Gray Support.png';
+import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
+import graySerum from '@/assets/products/Gray Serum.png';
 
 const PRODUCT_PHOTOS: Record<string, string> = {
   'density-6': level6,
@@ -83,32 +83,32 @@ export function ProductDetail() {
 
   return (
     <>
-      <Section tone="teal" width="content" animate={false}>
+      <Section tone="teal" width="content" animate={false} className="py-12 md:py-12">
         <div className="grid items-start gap-10 lg:grid-cols-2">
           {PRODUCT_PHOTOS[product.slug] ? (
-            <div className="aspect-square w-full rounded-2xl border border-accent bg-white p-8">
-              <img
-                src={PRODUCT_PHOTOS[product.slug]}
-                alt={`${product.name} packaging`}
-                className="h-full w-full object-contain"
-              />
-            </div>
+            <img
+              src={PRODUCT_PHOTOS[product.slug]}
+              alt={`${product.name} packaging`}
+              className="aspect-square w-full rounded-sm object-contain"
+            />
           ) : (
             <MediaPlaceholder
               tone={product.concern === 'gray' || product.concern === 'gray-support' ? 'cream' : 'card'}
               ratio="1"
               alt={`${product.name} packaging`}
-              label={`${product.name} — product photography, ${product.requiresMedicalReview ? 'dark-teal' : 'cream'} packaging`}
+              label={`${product.name}: product photography, ${product.requiresMedicalReview ? 'dark-teal' : 'cream'} packaging`}
             />
           )}
           <div className="flex flex-col items-start gap-4">
+            {/* Kept — unlike other pages' generic nav-label eyebrow, this one
+                carries the product's own subtitle (real content). */}
             <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
               {pickLocalized(product.subtitle, cl)}
             </Eyebrow>
-            <DisplayTitle as="h1" step="md">
+            <DisplayTitle as="h1" step="md" className="!font-normal">
               {product.name}
             </DisplayTitle>
-            <Prose size="lg" className="max-w-lg">
+            <Prose size="lg" className="max-w-lg text-ink-foreground/75">
               {pickLocalized(product.heroCopy, cl)}
             </Prose>
             <div className="flex flex-wrap items-center gap-3">
@@ -124,7 +124,7 @@ export function ProductDetail() {
             {product.requiresMedicalReview ? (
               <Badge tone="review">{t('marketing.pdp.reviewBadge')}</Badge>
             ) : null}
-            <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="mt-2">
+            <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="mt-2 w-full sm:w-auto">
               {t('marketing.nav.cta')}
             </Button>
           </div>
@@ -177,7 +177,7 @@ export function ProductDetail() {
                 to={withLocale(PATHS.product(p.slug))}
                 priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
                 mediaAlt={`${p.name} packaging`}
-                mediaLabel={`${p.name} — product photography`}
+                mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
             ))}
@@ -190,7 +190,7 @@ export function ProductDetail() {
           {t('marketing.pdp.ctaHeading')}
         </DisplayTitle>
         <div className="mt-6 flex justify-center">
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         </div>

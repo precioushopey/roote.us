@@ -3,7 +3,7 @@ import type { MessageKey } from './en';
 export const he: Record<MessageKey, string> = {
   'common.continue': 'המשך',
   'common.back': 'חזרה',
-  'meta.title': 'ROOTÉ — מערכת אישית לצמיחת שיער',
+  'meta.title': 'ROOTÉ: מערכת אישית לצמיחת שיער',
   'common.next': 'הבא',
   'common.start': 'התחלה',
   'common.cancel': 'ביטול',
@@ -106,8 +106,8 @@ export const he: Record<MessageKey, string> = {
   'report.gray.routineBody': 'שגרת Gray משלבת תוסף יומי עם סרום מקומי, בשימוש עקבי. אין בכך טענה להאטה או להיפוך של ההאפרה.',
   'report.safety.reviewRequired': 'התוכנית הזו כוללת רכיב בעוצמת מרשם. ההתאמה וההנחיות נקבעות בבדיקת טיפול לפני כל שילוח.',
   'report.safety.notRequired': 'התוכנית הזו מורכבת ממוצרי תמיכה ואינה מחייבת בדיקת טיפול.',
-  'report.plan.review.requiresReview': 'המטרה שלך דורשת מעט מידע נוסף לפני שנוכל להמליץ על התוכנית המתאימה. תוצאות הניתוח שלך למטה מוכנות — נחזור אליך בנוגע להמלצת המוצר.',
-  'report.plan.review.professional': 'בהתאם למה ששיתפת, אנו ממליצים על הערכה מקצועית לפני תחילת כל טיפול. עצרנו את המלצת המוצר האוטומטית — תוצאות הניתוח שלך למטה עדיין זמינות לצפייה.',
+  'report.plan.review.requiresReview': 'המטרה שלך דורשת מעט מידע נוסף לפני שנוכל להמליץ על התוכנית המתאימה. תוצאות הניתוח שלך למטה מוכנות, ונחזור אליך בנוגע להמלצת המוצר.',
+  'report.plan.review.professional': 'בהתאם למה ששיתפת, אנו ממליצים על הערכה מקצועית לפני תחילת כל טיפול. עצרנו את המלצת המוצר האוטומטית, ותוצאות הניתוח שלך למטה עדיין זמינות לצפייה.',
   'report.plan.review.pendingApproval': 'תוכנית טיפול צמיחת השיער שלך הותאמה לדפוס שלך וממתינה לסיום בדיקה קלינית לפני שנוכל להציג אותה כאן. תוצאות הניתוח שלך למטה מוכנות בינתיים.',
   'recommend.rationale.thickerFuller': 'הותאם למטרה שלך של שיער סמיך ומלא יותר.',
   'recommend.rationale.slowGraying': 'הותאם למטרה שלך של האטת הזדקנות שיער נוספת.',
@@ -211,7 +211,7 @@ export const he: Record<MessageKey, string> = {
   'role.proprietary-support': 'רכיב תומך ייחודי',
   'usage.apply-scalp-affected': 'למרוח על אזורי הקרקפת שזוהו בסריקה שלך',
   'frequency.twice-daily': 'פעמיים ביום',
-  'usage.derma-stim': 'הנחיות רשות לטיפוח הקרקפת — לא טיפול, ולא הבטחה לצמיחת שיער',
+  'usage.derma-stim': 'הנחיות רשות לטיפוח הקרקפת: לא טיפול, ולא הבטחה לצמיחת שיער',
   'frequency.weekly': 'שבועי',
   'usage.cleanse': 'להשתמש במקום שמפו רגיל',
   'frequency.daily': 'יומי',
@@ -233,6 +233,8 @@ export const he: Record<MessageKey, string> = {
   'start.account.magicLink': 'שליחת קישור כניסה למייל במקום (בקרוב)',
   'start.account.haveAccount': 'כבר יש לך חשבון?',
   'start.account.signInCta': 'כניסה',
+  'auth.signUp.title': 'הרשמה',
+  'auth.signUp.orderNote': 'הירשמו כדי לעקוב אחר הזמנה {orderId} ולראות אותה בחשבון שלכם.',
   'auth.login.title': 'כניסה',
   'auth.login.submit': 'כניסה',
   'auth.login.noAccount': 'עדיין אין לך חשבון?',
@@ -302,6 +304,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.nav.system': 'השיטה שלנו',
   'marketing.nav.about': 'אודות',
   'marketing.nav.hairScan': 'HairHealth.ai',
+  'marketing.nav.home': 'בית',
   'marketing.nav.magazine': 'מגזין',
   'marketing.nav.aiSection': 'הבינה המלאכותית',
   'marketing.nav.more': 'עוד',
@@ -310,6 +313,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.nav.support': 'תמיכה',
   'marketing.nav.shop': 'חנות',
   'marketing.nav.account': 'חשבון',
+  'marketing.nav.bag': 'תיק',
   'marketing.nav.cta': 'להתחלת אבחון שיער חינם',
   'marketing.nav.secondaryCta': 'איך זה עובד',
   'marketing.nav.openMenu': 'פתיחת תפריט',
@@ -319,8 +323,10 @@ export const he: Record<MessageKey, string> = {
   'marketing.magazine.title': 'הבינו מה באמת נמצא בשגרה שלכם.',
   'marketing.magazine.body':
     'מבט מקרוב על הסיבה לנשירת שיער, על תפקידו של כל רכיב, ועל האופן שבו כל טיפול של ROOTÉ משתלב בתוכנית שלכם.',
+  'marketing.magazine.heroMediaAlt': 'רכיבים צמחיים וכלי זכוכית מעבדתיים, פורמולות פעילות בתאורת סטודיו',
   'marketing.magazine.whyEyebrow': 'היסודות',
   'marketing.magazine.whyHeading': 'למה שיער נושר',
+  'marketing.magazine.whyMediaAlt': 'תקריב של קו שיער דליל, ללא פנים',
   'marketing.magazine.timelineHeading': 'איך תוצאות מתפתחות בדרך כלל',
   'marketing.magazine.timelinePendingLabel': 'לוח זמנים לתוצאות',
   'marketing.magazine.ingredientsEyebrow': 'רכיב אחר רכיב',
@@ -330,6 +336,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.magazine.productsEyebrow': 'המערך המלא',
   'marketing.magazine.productsHeading': 'כל טיפול של ROOTÉ',
   'marketing.magazine.ctaHeading': 'מוכנים למצוא את התוכנית שלכם?',
+  'marketing.magazine.ctaBody': 'גלו איך הרכיבים האלה מתאימים לשיער שלכם, עם ניתוח אישי וחינמי.',
   'marketing.magazine.formatLabel.topicalSolution': 'תמיסות מקומיות',
   'marketing.magazine.formatLabel.capsuleSupplement': 'תוספי קפסולות',
   'marketing.magazine.formatLabel.serum': 'סרומים',
@@ -345,7 +352,9 @@ export const he: Record<MessageKey, string> = {
   'marketing.footer.solutions': 'פתרונות',
   'marketing.footer.company': 'החברה',
   'marketing.footer.legal': 'משפטי',
+  'marketing.footer.policies': 'מדיניות',
   'marketing.footer.account': 'החשבון שלך',
+  'marketing.footer.getStarted': 'להתחיל',
   'marketing.footer.terms': 'תנאים',
   'marketing.footer.privacy': 'פרטיות',
   'marketing.footer.rights': 'כל הזכויות שמורות.',
@@ -371,14 +380,16 @@ export const he: Record<MessageKey, string> = {
 
   'marketing.home.hero.eyebrow': 'מערכת אישית לצמיחת שיער',
   'marketing.home.hero.support':
-    'מתחילים באבחון שיער מודרך, מקבלים תוכנית אישית, ועוקבים אחר ההתקדמות עד לתוצאה הסופית.',
-  'marketing.home.hero.mediaAlt': 'מערכת מוצרי ROOTÉ באריזות טורקיז כהה וקרם בתאורת סטודיו קלינית',
+    'ענו על שאלון קצר וצרפו תמונה של הקרקפת לקבלת אבחון שיער חינם בסיוע בינה מלאכותית ותוכנית טיפול מותאמת אישית.',
+  'marketing.home.hero.mediaAlt':
+    'בקבוקי ROOTÉ ברמות 6, 10 ו-15 באריזות ירוק אמרלד כהה וקרם, עומדים על בסיסי אבן',
 
   'marketing.home.strip.item1': 'אבחון שיער בסיוע בינה מלאכותית',
   'marketing.home.strip.item2': 'תוכנית אישית',
   'marketing.home.strip.item3': 'מעקב התקדמות',
   'marketing.home.strip.item4': 'מסע טיפול מתמשך',
 
+  'marketing.home.concern.eyebrow': 'בחרו את התחום שמעניין אתכם',
   'marketing.home.concern.heading': 'מה תרצה/י להבין?',
   'marketing.home.concern.cta': 'להתחלת אבחון',
   'marketing.home.concern.thinningMediaAlt': 'תקריב של קו שיער דליל, ללא פנים',
@@ -388,6 +399,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.how.eyebrow': 'איך ROOTÉ עובד',
   'marketing.home.how.heading': 'מסע טיפול שנבנה סביב השיער שלך.',
   'marketing.home.how.mediaAlt': 'רצף של חמישה שלבים: לנתח, להבין, להתאים, לטפל, לעקוב',
+  'marketing.home.how.step5MediaAlt': 'השוואת סריקת קרקפת מבדיקת הבסיס לבדיקה מאוחרת יותר',
 
   'marketing.home.analysis.eyebrow': 'אבחון שיער של ROOTÉ',
   'marketing.home.analysis.heading': 'נקודת ההתחלה שלך היא הנתונים שלך.',
@@ -506,8 +518,8 @@ export const he: Record<MessageKey, string> = {
   'marketing.sci.evidenceLabels.heading': 'איך אנחנו מתייגים את הראיות.',
   'marketing.sci.evidenceLabels.body': 'לכל טענה על רכיב באתר הזה יש אחד משלושה תיוגים, כדי שתוכלו לראות כמה אנחנו בטוחים בה לפני שאתם קוראים אותה.',
   'marketing.sci.evidenceLabels.approvedBody': 'נבדק ואושר לשימוש בדיוק כפי שנכתב.',
-  'marketing.sci.evidenceLabels.workingBody': 'התיאור שלנו — מדויק, אך אינו טענת יעילות ועדיין לא אושר רשמית.',
-  'marketing.sci.evidenceLabels.requiresReviewBody': 'דורש ביסוס או בדיקה משפטית לפני שנציג טענה כלשהי — מוצג כ-[ממתין] עד אז.',
+  'marketing.sci.evidenceLabels.workingBody': 'התיאור שלנו: מדויק, אך אינו טענת יעילות ועדיין לא אושר רשמית.',
+  'marketing.sci.evidenceLabels.requiresReviewBody': 'דורש ביסוס או בדיקה משפטית לפני שנציג טענה כלשהי, ומוצג כ-[ממתין] עד אז.',
   'marketing.sci.oversightEyebrow': 'פיקוח',
   'marketing.sci.oversightHeading': 'פיקוח רפואי',
   'marketing.sci.oversightBody': 'הפורמולה והטענות נבדקות מול ספרות רפואת עור לפני כל שילוח. תוכניות עם רכיב בעוצמת מרשם כוללות שלב של בדיקת טיפול.',
@@ -517,7 +529,7 @@ export const he: Record<MessageKey, string> = {
 
   // --- Our system (WP4) ---
   'marketing.sys.heading': 'לנתח. לטפל. לעקוב.',
-  'marketing.sys.body': 'מסע אחד מחובר — מהסריקה הראשונה ועד לתוצאה הסופית, וכל יום שביניהם.',
+  'marketing.sys.body': 'מסע אחד מחובר, מהסריקה הראשונה ועד לתוצאה הסופית, וכל יום שביניהם.',
   'marketing.sys.day': 'יום {n}',
   'marketing.sys.trackBody': 'התוכנית שלך כוללת נקודות סריקה וצילום בלוח זמנים קבוע. התאריכים מופיעים בחשבון עם תחילת התוכנית.',
   'marketing.sys.ctaHeading': 'להתחיל את המסע.',
@@ -540,7 +552,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.shop.findYourMatchCta': 'בדקו אם זה מתאים לכם',
   'marketing.shop.bundles.eyebrow': 'צרור וחסכון',
   'marketing.shop.bundles.heading': 'להצטייד פעם אחת, לדלג על ההזמנה החוזרת.',
-  'marketing.shop.bundles.body': 'המערכת המלאה, Gray Support, וצמיחת שיער — כל חבילה באריזה לגברים ולנשים. חבילות המבוססות על Density מתווספות לתוכנית שלך לאחר בדיקת טיפול.',
+  'marketing.shop.bundles.body': 'המערכת המלאה, Gray Support, וצמיחת שיער: כל חבילה באריזה לגברים ולנשים. חבילות המבוססות על Density מתווספות לתוכנית שלך לאחר בדיקת טיפול.',
   'marketing.shop.bundles.cta': 'הוספה לסל',
   'marketing.shop.bundles.save': 'חיסכון של {amount}',
   'marketing.shop.finalCta.heading': 'לא בטוחים במה אתם צריכים?',
@@ -604,6 +616,21 @@ export const he: Record<MessageKey, string> = {
   'marketing.howItWorks.faq.q2': 'האם ניתוח התמונות פרטי?',
   'marketing.howItWorks.faq.a2': 'התמונות שלך משמשות רק לבניית התוכנית שלך ולמעקב אחר ההתקדמות שלך.',
   'marketing.howItWorks.cta.title': 'מוכנים לראות את התוכנית שלכם?',
+
+  'marketing.aiSection.hero.title': 'איך עובדת סריקת השיער עם הבינה המלאכותית',
+  'marketing.aiSection.hero.body':
+    'שאלון קצר, ארבע תמונות מודרכות, וסריקה שממופה מול סולם נשירת שיער מוכר: כך זה עובד לפני שמקבלים תוכנית.',
+  'marketing.aiSection.scan.eyebrow': 'הסריקה',
+  'marketing.aiSection.scan.heading': 'שאלון קצר, ואז ארבע תמונות מודרכות.',
+  'marketing.aiSection.cta.heading': 'מוכנים לראות את התוצאות שלכם?',
+  'marketing.aiSection.cta.body': 'זה לוקח כמה דקות, וללא התחייבות.',
+  'marketing.aiSection.timeline.progressPhotoAlt': 'תמונת סריקת התקדמות מודרכת, שצולמה באמצע התוכנית',
+  'marketing.aiSection.measures.intro': 'כל סריקה בודקת את אותם שלושה דברים.',
+  'marketing.aiSection.measures.densityBody': 'כמה כיסוי נראה לעין יש לך, אזור אחר אזור על פני הקרקפת.',
+  'marketing.aiSection.measures.patternBody': 'היכן מופיעה הדלילות, בהתאם לסולם נורווד לגברים או לסולם לודוויג לנשים.',
+  'marketing.aiSection.measures.progressionBody': 'בסיס להשוואה: כל תמונה מודרכת אחרי זו נמדדת מול נקודת ההתחלה שלך.',
+  'marketing.aiSection.measures.progressionMediaAlt': 'מסך טלפון המשווה בין שתי תמונות קרקפת זו לצד זו',
+  'marketing.aiSection.measures.densityMediaAlt': 'תמונת קרקפת מלמעלה המראה את צפיפות השיער והכיסוי',
 
   'marketing.science.hero.title': 'המדע שמאחורי התוכנית שלך',
   'marketing.science.hero.body': 'כל רכיב פעיל בפורמולה שלך מתועד למנגנון פעולה מפורסם.',
@@ -693,7 +720,8 @@ export const he: Record<MessageKey, string> = {
   'bag.success.next': 'מה קורה עכשיו',
   'bag.success.next1': 'אישור יישלח לאימייל שלך בקרוב.',
   'bag.success.next2': 'אנחנו אורזים ושולחים תוך שני ימי עסקים.',
-  'bag.success.next3': 'קישור מעקב יישלח לאימייל ברגע שההזמנה יוצאת לדרך.',
+  'bag.success.next3': 'עקבו אחרי ההזמנה בכל עת מהחשבון שלכם.',
+  'bag.success.trackOrder': 'לעקוב אחרי ההזמנה שלי',
   'bag.success.continue': 'המשך קנייה',
   'bag.success.home': 'חזרה לדף הבית',
 
@@ -711,7 +739,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.about.problem.p3Body': 'בלי תמונות או סריקות עקביות, קשה לדעת אם משהו באמת עובד.',
   'marketing.about.solution.eyebrow': 'איך אנחנו פותרים את זה',
   'marketing.about.solution.heading': 'סריקה אחת. תוכנית אחת שנבנית סביבה.',
-  'marketing.about.solution.body': 'אתם משלימים אבחון קצר ומעלים ארבע תמונות מודרכות. אנו ממפים את מה שנראה לעין מול סולם נשירת שיער מוכר, ולאחר מכן מרכיבים תוכנית — המוצרים, השגרה, והאם בדיקת טיפול חלה עליכם.',
+  'marketing.about.solution.body': 'אתם משלימים אבחון קצר ומעלים ארבע תמונות מודרכות. אנו ממפים את מה שנראה לעין מול סולם נשירת שיער מוכר, ולאחר מכן מרכיבים תוכנית: המוצרים, השגרה, והאם בדיקת טיפול חלה עליכם.',
   'marketing.about.solution.mediaAlt': 'ארבע זוויות הסריקה המודרכת: קו השיער, הקודקוד, מלמעלה והצד',
   'marketing.about.benefits.eyebrow': 'מה תקבלו',
   'marketing.about.benefits.heading': 'נבנה סביב הסריקה שלכם, לא מדף עם אותו בקבוק לכולם.',
@@ -744,7 +772,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.about.promise.eyebrow': 'ההתחייבות שלנו',
   'marketing.about.promise.heading': 'למה אנחנו מתחייבים, בכתב.',
   'marketing.about.promise.p1Title': 'כלום לא מומצא',
-  'marketing.about.promise.p1Body': 'אם אין לנו עדיין מידע אמיתי, הוא מסומן כממתין — לעולם לא מנוחש.',
+  'marketing.about.promise.p1Body': 'אם אין לנו עדיין מידע אמיתי, הוא מסומן כממתין, לעולם לא מנוחש.',
   'marketing.about.promise.p2Title': 'בדיקה לפני כל דבר בעוצמת מרשם',
   'marketing.about.promise.p2Body': 'כל רכיב בעוצמת מרשם מאושר בבדיקת טיפול לפני המשלוח.',
   'marketing.about.promise.p3Title': 'כל טענה מתויגת',
@@ -779,6 +807,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.faq.ingredients.q1': 'האם הרכיבים בטוחים?',
   'marketing.faq.ingredients.a1': 'כל רכיב פעיל הוא תרכובת נחקרת היטב לנשירת שיער מדפוס. ראו את עמוד המדע לפרטים.',
   'marketing.faq.support.title': 'עדיין יש לכם שאלות?',
+  'marketing.faq.cta.body': 'התחילו באבחון שיער חינם וקבלו תוכנית שנבנתה סביב התוצאות שלכם.',
   'marketing.faq.support.cta': 'צרו קשר עם התמיכה',
 
   'marketing.support.hero.title': 'תמיכה',
@@ -820,15 +849,15 @@ export const he: Record<MessageKey, string> = {
   'marketing.legal.privacy.intro':
     'מדיניות זו מסבירה איזה מידע ROOTÉ מנהל וכיצד. ROOTÉ הוא מותג המופעל על ידי 91 ENTERPRISE LLC (ראו את סעיף ״פרטי החברה״ בעמודי התנאים שלנו), שהיא בעלת השליטה במידע.',
   'marketing.legal.privacy.s1.body':
-    'בעת השימוש ב-ROOTÉ אתם עשויים למסור: את התמונות שאתם מעלים להערכת השיער; את התשובות לשאלון ההערכה; את כתובת האימייל שלכם; ואם אתם יוצרים חשבון או מבצעים הזמנה — את שמכם, פרטי ההתקשרות והמסירה, וסימון חלקי של כרטיס התשלום (רק ארבע הספרות האחרונות ותאריך התוקף — לעולם לא מספר הכרטיס המלא או קוד האבטחה). מתוך מידע זה ROOTÉ מפיקה תוצאת הערכה, ולאחר רכישה — רשומת תוכנית.',
+    'בעת השימוש ב-ROOTÉ אתם עשויים למסור: את התמונות שאתם מעלים להערכת השיער; את התשובות לשאלון ההערכה; את כתובת האימייל שלכם; ואם אתם יוצרים חשבון או מבצעים הזמנה, את שמכם, פרטי ההתקשרות והמסירה, וסימון חלקי של כרטיס התשלום (רק ארבע הספרות האחרונות ותאריך התוקף, לעולם לא מספר הכרטיס המלא או קוד האבטחה). מתוך מידע זה ROOTÉ מפיקה תוצאת הערכה, ולאחר רכישה, רשומת תוכנית.',
   'marketing.legal.privacy.s2.body':
     'התמונות והתשובות לשאלון משמשות אך ורק להפקת הערכת השיער והתוכנית האישית שלכם, ולהצגת השוואות ״לפני ואחרי״ לאורך זמן. בגרסת התצוגה הזו ההערכה מתבצעת כולה בדפדפן שלכם ואינה עוזבת את המכשיר שלכם. אם אתם משתמשים בנפרד בצ׳אט השיער מבוסס הבינה המלאכותית שלנו, ראו את הסעיף ״שיתוף עם צדדים שלישיים״ בהמשך לגבי אופן הטיפול במידע הזה. איננו משתמשים בתמונות שלכם לפרסום, לאימון מודלים, או לכל מטרה שלא הסכמתם לה.',
   'marketing.legal.privacy.s3.body':
-    'בגרסת התצוגה הזו, כל מה שאתם מזינים — תמונות, תשובות, אימייל, חשבון, סל ותוכנית — נשמר רק בדפדפן שלכם (באחסון המקומי ובמסד הנתונים שלו) ונשאר במכשירכם עד שתמחקו אותו. דבר אינו נשמר בשרת של ROOTÉ. עם הכנסת חשבונות והזמנות אמיתיים, תקופת השמירה לכל סוג מידע תפורסם כאן.', // TODO: confirm retention periods with client once a backend exists
+    'בגרסת התצוגה הזו, כל מה שאתם מזינים (תמונות, תשובות, אימייל, חשבון, סל ותוכנית) נשמר רק בדפדפן שלכם (באחסון המקומי ובמסד הנתונים שלו) ונשאר במכשירכם עד שתמחקו אותו. דבר אינו נשמר בשרת של ROOTÉ. עם הכנסת חשבונות והזמנות אמיתיים, תקופת השמירה לכל סוג מידע תפורסם כאן.', // TODO: confirm retention periods with client once a backend exists
   'marketing.legal.privacy.s4.body':
-    'תוכלו לצפות במידע השמור בדפדפן שלכם ולמחוק אותו בכל עת על ידי ניקוי נתוני האתר בהגדרות הדפדפן; פעולה זו מסירה מהמכשיר את ההערכה, החשבון והתוכנית שלכם. במקום שבו הדין החל מקנה לכם זכויות לעיין במידע אישי, לתקנו, לייצאו או למחקו, או להתנגד לעיבודו או להגבילו — תוכלו לממש אותן בפנייה אלינו בפרטים שלהלן.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
+    'תוכלו לצפות במידע השמור בדפדפן שלכם ולמחוק אותו בכל עת על ידי ניקוי נתוני האתר בהגדרות הדפדפן; פעולה זו מסירה מהמכשיר את ההערכה, החשבון והתוכנית שלכם. במקום שבו הדין החל מקנה לכם זכויות לעיין במידע אישי, לתקנו, לייצאו או למחקו, או להתנגד לעיבודו או להגבילו, תוכלו לממש אותן בפנייה אלינו בפרטים שלהלן.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
   'marketing.legal.privacy.s5.body':
-    'איננו מוכרים את המידע האישי שלכם. בגרסת התצוגה הזו הצדדים השלישיים המעורבים הם Google Fonts, המספק את הגופנים של האתר, וכן — אם אתם משתמשים בצ׳אט השיער מבוסס הבינה המלאכותית שלנו — השותפה שלנו HairHealth.ai, המקבלת את מה ששיתפתם שם (התשובות והתמונות שלכם) ומוסיפה זאת לרשימת אנשי הקשר שלנו דרך HubSpot כדי שצוותנו יוכל ליצור איתכם קשר. שירותי הייצור לתשלום, משלוח, אימייל ואירוח יפורטו כאן עם הוספתם.', // TODO: confirm the production sub-processor list with client
+    'איננו מוכרים את המידע האישי שלכם. בגרסת התצוגה הזו הצדדים השלישיים המעורבים הם Google Fonts, המספק את הגופנים של האתר, וכן, אם אתם משתמשים בצ׳אט השיער מבוסס הבינה המלאכותית שלנו, השותפה שלנו HairHealth.ai, המקבלת את מה ששיתפתם שם (התשובות והתמונות שלכם) ומוסיפה זאת לרשימת אנשי הקשר שלנו דרך HubSpot כדי שצוותנו יוכל ליצור איתכם קשר. שירותי הייצור לתשלום, משלוח, אימייל ואירוח יפורטו כאן עם הוספתם.', // TODO: confirm the production sub-processor list with client
   'marketing.legal.privacy.s6.body':
     'לכל שאלה או בקשה בנושא פרטיות, פנו אל ROOTÉ בכתובת support@roote.us או בטלפון ‎+1 (310) 651-7283‎.',
 
@@ -838,7 +867,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.legal.terms.s2.body':
     'ROOTÉ מספקת הערכת שיער מבוססת-תמונות בסיוע בינה מלאכותית ומשלב מוצרים מותאם אישית. עליכם להיות בני 18 לפחות ולמסור מידע מדויק. אין לעשות שימוש לרעה בשירות, להעלות תמונות של אדם אחר מלבדכם, לנסות לבצע הנדסה לאחור של הניתוח, או למכור מחדש חלק כלשהו מהשירות.',
   'marketing.legal.terms.s3.body':
-    'הניתוח והדוח הם הערכה חזותית ראשונית, אינם אבחון רפואי, ואינם מחליפים ייעוץ של רופא מוסמך. התייעצו עם רופא לפני התחלה, שינוי או הפסקה של טיפול — במיוחד אם אתם בהיריון או מניקות, נוטלים תרופות, או סובלים ממצב עורי או של הקרקפת. הפסיקו את השימוש ופנו לייעוץ רפואי אם מופיעה תגובה שלילית.',
+    'הניתוח והדוח הם הערכה חזותית ראשונית, אינם אבחון רפואי, ואינם מחליפים ייעוץ של רופא מוסמך. התייעצו עם רופא לפני התחלה, שינוי או הפסקה של טיפול, במיוחד אם אתם בהיריון או מניקות, נוטלים תרופות, או סובלים ממצב עורי או של הקרקפת. הפסיקו את השימוש ופנו לייעוץ רפואי אם מופיעה תגובה שלילית.',
   'marketing.legal.terms.s4.body':
     'רכישת מוצרים ומינויי תוכנית כפופים לתנאי המכר שלנו, המסדירים תמחור, תשלום, משלוח, החזרות, החזרים כספיים וחידוש אוטומטי של מינוי. אנא עיינו בתנאי המכר לפני הרכישה.',
   'marketing.legal.terms.s5.body':
@@ -853,7 +882,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.legal.company.entityTypeLabel': 'סוג הישות',
   'marketing.legal.company.entityType': 'חברה בערבון מוגבל (LLC), ממוסה כ-S Corporation',
   'marketing.legal.company.countryLabel': 'מדינת הרישום',
-  'marketing.legal.company.country': 'ארצות הברית — קליפורניה',
+  'marketing.legal.company.country': 'ארצות הברית, קליפורניה',
   'marketing.legal.company.regNumberLabel': 'מספר רישום',
   'marketing.legal.company.einLabel': 'מספר מס פדרלי (EIN)',
   'marketing.legal.company.incorporatedLabel': 'תאריך ההתאגדות',
@@ -870,7 +899,7 @@ export const he: Record<MessageKey, string> = {
     'תנאי מכר אלה מסדירים את רכישת מוצרי ROOTÉ ומינויי התוכנית מ-91 ENTERPRISE LLC (״ROOTÉ״, ״אנחנו״, ״אנו״). הם חלים יחד עם תנאי השימוש ומדיניות הפרטיות שלנו. אנא קראו אותם לפני ביצוע הזמנה.',
   'marketing.legalSale.s1.title': 'הזמנות וקבלת הזמנה',
   'marketing.legalSale.s1.body':
-    'ביצוע הזמנה מהווה הצעה לרכישה. ההזמנה מתקבלת, וחוזה נכרת, רק כאשר אנו שולחים אימייל אישור הזמנה או שולחים את המוצרים — לפי המוקדם. אנו רשאים לדחות או לבטל הזמנה — למשל אם פריט אינו במלאי, אם מחיר הוצג בטעות, או אם לא ניתן לאמת את פרטי התשלום או המסירה — ונחזיר כל סכום שכבר חויב.',
+    'ביצוע הזמנה מהווה הצעה לרכישה. ההזמנה מתקבלת, וחוזה נכרת, רק כאשר אנו שולחים אימייל אישור הזמנה או שולחים את המוצרים, לפי המוקדם. אנו רשאים לדחות או לבטל הזמנה (למשל אם פריט אינו במלאי, אם מחיר הוצג בטעות, או אם לא ניתן לאמת את פרטי התשלום או המסירה) ונחזיר כל סכום שכבר חויב.',
   'marketing.legalSale.s2.title': 'מחירים, מסים ומטבע',
   'marketing.legalSale.s2.body':
     'המחירים מוצגים בעת התשלום במטבע המוצג ועשויים להשתנות בכל עת, אך המחיר שאושר בעת ההזמנה הוא המחיר שתשלמו. אלא אם צוין אחרת, המחירים אינם כוללים מסים, מכסים ודמי יבוא, המחושבים בעת התשלום או נגבים במסירה בהתאם ליעד.',
@@ -885,7 +914,7 @@ export const he: Record<MessageKey, string> = {
     'ניתן להחזיר מוצרים סגורים ובלתי-משומשים באריזתם המקורית בתוך 30 יום ממועד המסירה, לקבלת החזר של מחיר המוצר. לפתיחת החזרה, שלחו אימייל אל support@roote.us עם מספר ההזמנה. דמי משלוח ההחזרה חלים עליכם, אלא אם המוצר היה פגום, ניזוק או נשלח בטעות. מטעמי היגיינה ובטיחות, מוצרים מקומיים או לבליעה שנפתחו אינם ניתנים להחזרה אלא אם הם פגומים. ניתוח מותאם אישית שכבר סופק אינו ניתן להחזר כספי.',
   'marketing.legalSale.s6.title': 'החזרים כספיים',
   'marketing.legalSale.s6.body':
-    'החזרים שאושרו מבוצעים לאמצעי התשלום המקורי בתוך 14 יום מרגע שקיבלנו את הפריט המוחזר או הסכמנו להחזר. ההחזר מכסה את מחיר המוצר, ובמקרה שההחזרה נובעת מטעות שלנו או מפגם — גם את עלות המשלוח הרגיל המקורי. מסים ומכסים מוחזרים כנדרש בחוק.',
+    'החזרים שאושרו מבוצעים לאמצעי התשלום המקורי בתוך 14 יום מרגע שקיבלנו את הפריט המוחזר או הסכמנו להחזר. ההחזר מכסה את מחיר המוצר, ובמקרה שההחזרה נובעת מטעות שלנו או מפגם, גם את עלות המשלוח הרגיל המקורי. מסים ומכסים מוחזרים כנדרש בחוק.',
   'marketing.legalSale.s7.title': 'תוכניות מינוי וחידוש אוטומטי',
   'marketing.legalSale.s7.body':
     'תוכנית ROOTÉ היא מינוי. בהרשמה אתם מאשרים חיובים חוזרים עבור תקופת התוכנית שבחרתם. אלא אם תבטלו לפני מועד החידוש, המינוי מתחדש אוטומטית לתקופה נוספת באותו אורך ובמחיר התקף באותה עת, ואנו שולחים תזכורת לפני כל חידוש כנדרש בחוק. כל חידוש שולח אספקה חדשה.',
@@ -900,10 +929,10 @@ export const he: Record<MessageKey, string> = {
     'אנו מתחייבים שהמוצרים נקיים מפגמים בחומרים ובעבודה בעת המסירה ותואמים לתיאורם. אם מוצר פגום או אינו כמתואר, שלחו אימייל אל support@roote.us בתוך זמן סביר, ואנו נחליף אותו או נחזיר את תמורתו. אין בכך כדי לפגוע בזכויותיכם על פי דין.',
   'marketing.legalSale.s11.title': 'אחריותנו',
   'marketing.legalSale.s11.body':
-    'במידה המרבית המותרת בחוק, אחריותנו לכל תביעה הקשורה לרכישה מוגבלת לסכום ששילמתם עבור ההזמנה הרלוונטית, או — במינוי — לסכום ששולם בשנים-עשר החודשים שקדמו לתביעה. איננו אחראים לנזקים עקיפים או תוצאתיים. אין באמור כדי להגביל אחריות למוות או לנזקי גוף שנגרמו ברשלנותנו, למרמה, או לכל דבר שאינו ניתן להגבלה לפי הדין החל.',
+    'במידה המרבית המותרת בחוק, אחריותנו לכל תביעה הקשורה לרכישה מוגבלת לסכום ששילמתם עבור ההזמנה הרלוונטית, או, במינוי, לסכום ששולם בשנים-עשר החודשים שקדמו לתביעה. איננו אחראים לנזקים עקיפים או תוצאתיים. אין באמור כדי להגביל אחריות למוות או לנזקי גוף שנגרמו ברשלנותנו, למרמה, או לכל דבר שאינו ניתן להגבלה לפי הדין החל.',
   'marketing.legalSale.s12.title': 'דין חל ומחלוקות',
   'marketing.legalSale.s12.body':
-    'תנאי מכר אלה כפופים לדיני מדינת קליפורניה, ארה״ב. תחילה ננסה ליישב כל תלונה באופן בלתי-פורמלי — שלחו אימייל אל support@roote.us. מחלוקות שלא ניתן ליישב כך יידונו בבתי המשפט המדינתיים או הפדרליים במחוז לוס אנג׳לס, קליפורניה, מבלי לגרוע מזכויות צרכניות מחייבות במדינת מגוריכם.',
+    'תנאי מכר אלה כפופים לדיני מדינת קליפורניה, ארה״ב. תחילה ננסה ליישב כל תלונה באופן בלתי-פורמלי: שלחו אימייל אל support@roote.us. מחלוקות שלא ניתן ליישב כך יידונו בבתי המשפט המדינתיים או הפדרליים במחוז לוס אנג׳לס, קליפורניה, מבלי לגרוע מזכויות צרכניות מחייבות במדינת מגוריכם.',
   'marketing.legalSale.contact':
     'שאלות על הזמנה או החזרה? כתבו אל support@roote.us או חייגו ‎+1 (310) 651-7283‎.',
 
@@ -1043,7 +1072,7 @@ export const he: Record<MessageKey, string> = {
   'app.overview.allCheckpointsDone': 'כל נקודות הבדיקה הושלמו',
   'app.overview.reorderDue': 'הגיע הזמן להזמין מחדש.',
   'app.overview.programComplete': 'התוכנית שלך הושלמה',
-  'app.overview.programCompleteBody': 'דוח התוצאות המלא שלך מוכן — לפני ואחרי, ניתוח ראשוני וסופי, וההתמדה שלך.',
+  'app.overview.programCompleteBody': 'דוח התוצאות המלא שלך מוכן: לפני ואחרי, ניתוח ראשוני וסופי, וההתמדה שלך.',
   'app.overview.viewResults': 'לצפייה בתוצאות שלך',
 
   'app.status.onTrack': 'במסלול',
@@ -1154,7 +1183,7 @@ export const he: Record<MessageKey, string> = {
   'app.results.title': 'תוצאות תוכנית ROOTÉ שלך',
   'app.results.notReady.title': 'דוח התוצאות שלך בהכנה',
   'app.results.notReady.body':
-    'כאן ייפגשו הלפני והאחרי, הניתוח הראשוני והסופי וההתמדה שלך — לאחר שהתוכנית והסריקה הסופית יושלמו.',
+    'כאן ייפגשו הלפני והאחרי, הניתוח הראשוני והסופי וההתמדה שלך, לאחר שהתוכנית והסריקה הסופית יושלמו.',
   'app.results.notReady.cta': 'חזרה לסקירה',
   'app.results.summary.duration': 'משך התוכנית',
   'app.results.summary.dates': 'תאריכים',
@@ -1180,7 +1209,7 @@ export const he: Record<MessageKey, string> = {
   'app.results.next.reviewNext': 'סקירת התוכנית הבאה שלי',
   'app.results.next.careTeam': 'הודעה לצוות הליווי',
   'app.results.actions.download': 'הורדת PDF',
-  'app.results.actions.downloadHint': 'פותח את חלון ההדפסה של הדפדפן — לשמירה כ-PDF.',
+  'app.results.actions.downloadHint': 'פותח את חלון ההדפסה של הדפדפן, לשמירה כ-PDF.',
   'app.results.actions.email': 'שליחת PDF במייל',
   'app.results.actions.emailStub': 'שליחת הדוח במייל תתחבר כששירות הדואר יופעל.',
   'app.results.pdfTitle': 'דוח תוצאות תוכנית ROOTÉ',
@@ -1188,7 +1217,7 @@ export const he: Record<MessageKey, string> = {
   // --- לוח בקרה: סקירת התוכנית הבאה (PO #19) ---
   'app.renew.eyebrow': 'התוכנית הבאה שלך',
   'app.renew.title': 'סקירת התוכנית הבאה שלי',
-  'app.renew.body': 'התוכנית שלך הושלמה. פרופיל השיער שלך ממשיך איתך — בחרו כיצד להמשיך.',
+  'app.renew.body': 'התוכנית שלך הושלמה. פרופיל השיער שלך ממשיך איתך; בחרו כיצד להמשיך.',
   'app.renew.profileTitle': 'פרופיל השיער שלך עכשיו',
   'app.renew.profileNote': 'ממשיך מהסריקה האחרונה שלך. איכותני עד לחיבור שירות ניתוח.',
   'app.renew.chooseTitle': 'כיצד תרצו להמשיך?',
@@ -1270,18 +1299,18 @@ export const he: Record<MessageKey, string> = {
   'app.profile.password.error.weak': 'יש להשתמש בלפחות 8 תווים.',
   'app.profile.logout': 'התנתקות',
 
-  'hairScan.notConfigured': 'מתחברים ל-HairHealth.ai — נא לבדוק שוב בקרוב.',
+  'hairScan.notConfigured': 'מתחברים ל-HairHealth.ai, נא לבדוק שוב בקרוב.',
   'hairScan.title': 'שוחחו עם HairHealth.ai',
   'hairScan.intro':
-    'ענו על כמה שאלות קצרות ושתפו תמונה — הצוות של HairHealth.ai יבדוק את השיער שלכם ויעביר את התוצאה לצוות שלנו.',
+    'ענו על כמה שאלות קצרות ושתפו תמונה, והצוות של HairHealth.ai יבדוק את השיער שלכם ויעביר את התוצאה לצוות שלנו.',
   'hairScan.disclosure':
-    'הצ׳אט הזה מופעל על ידי השותפה שלנו, HairHealth.ai. המידע שתשתפו כאן — התשובות והתמונות שלכם — נשלח אליה ומתווסף לרשימת אנשי הקשר שלנו כדי שהצוות שלנו יוכל ליצור איתכם קשר.',
+    'הצ׳אט הזה מופעל על ידי השותפה שלנו, HairHealth.ai. המידע שתשתפו כאן (התשובות והתמונות שלכם) נשלח אליה ומתווסף לרשימת אנשי הקשר שלנו כדי שהצוות שלנו יוכל ליצור איתכם קשר.',
   'hairScan.disclosureLink': 'קראו את מדיניות הפרטיות שלנו',
 
   'accountRescan.title': 'סריקה חוזרת עם HairHealth.ai',
   'accountRescan.intro':
-    'בצעו סריקה חוזרת מהירה כדי שנוכל לעקוב אחר ההתקדמות שלכם. ענו על כמה שאלות ושתפו תמונה חדשה — השותפה שלנו HairHealth.ai בוחנת אותה ומעבירה את התוצאה לצוות שלנו.',
+    'בצעו סריקה חוזרת מהירה כדי שנוכל לעקוב אחר ההתקדמות שלכם. ענו על כמה שאלות ושתפו תמונה חדשה, והשותפה שלנו HairHealth.ai בוחנת אותה ומעבירה את התוצאה לצוות שלנו.',
   'accountRescan.disclosure':
     'הסריקה החוזרת הזו מופעלת על ידי השותפה שלנו, HairHealth.ai. המידע שתשתפו כאן נשלח אליה ומתווסף לרשימת אנשי הקשר שלנו, ומותאם לחשבון שלכם לפי כתובת האימייל.',
-  'accountRescan.notConfigured': 'הסריקות החוזרות עדיין לא מחוברות — נא לבדוק שוב בקרוב.',
+  'accountRescan.notConfigured': 'הסריקות החוזרות עדיין לא מחוברות, נא לבדוק שוב בקרוב.',
 };

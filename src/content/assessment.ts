@@ -96,7 +96,7 @@ export const HAIR_GOAL_OPTIONS: Array<{
   {
     value: 'other',
     title: L('Something else', 'משהו אחר'),
-    description: L('Not sure yet, or a different goal — we’ll still run your analysis.', 'עוד לא בטוח/ה, או מטרה אחרת — עדיין נבצע את הניתוח עבורך.'),
+    description: L('Not sure yet, or a different goal; we’ll still run your analysis.', 'עוד לא בטוח/ה, או מטרה אחרת, עדיין נבצע את הניתוח עבורך.'),
   },
 ];
 

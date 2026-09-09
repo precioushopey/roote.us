@@ -37,7 +37,7 @@ export function ProgramProgressBar({ currentDay, durationDays, dayLabel, checkpo
           style={{ insetInlineStart: `${pct}%` }}
         />
       </div>
-      <div className="mt-2 flex items-center justify-between font-body text-2xs text-muted-foreground">
+      <div className="mt-2 flex items-center justify-between font-body text-sm text-muted-foreground">
         <span>{dayLabel(0)}</span>
         <span className="font-medium text-foreground">{dayLabel(currentDay)}</span>
         <span>{dayLabel(durationDays)}</span>

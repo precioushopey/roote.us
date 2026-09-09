@@ -44,7 +44,7 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     id: 'complete-system-men',
     packaging: 'men',
     skus: ['density-15', 'gray-support', 'gray-serum', 'regrowth-shampoo'],
-    name: L('Complete System — Men', 'המערכת המלאה — לגברים'),
+    name: L('Complete System: Men', 'המערכת המלאה: לגברים'),
     summary: L(
       'The full thinning and gray routine, in men’s packaging.',
       'שגרת הצפיפות והשיער האפור המלאה, באריזה לגברים.',
@@ -58,7 +58,7 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     id: 'complete-system-women',
     packaging: 'women',
     skus: ['density-15', 'gray-support', 'gray-serum', 'regrowth-shampoo'],
-    name: L('Complete System — Women', 'המערכת המלאה — לנשים'),
+    name: L('Complete System: Women', 'המערכת המלאה: לנשים'),
     summary: L(
       'The full thinning and gray routine, in women’s packaging.',
       'שגרת הצפיפות והשיער האפור המלאה, באריזה לנשים.',
@@ -72,7 +72,7 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     id: 'gray-support-bundle-men',
     packaging: 'men',
     skus: ['gray-support', 'gray-serum'],
-    name: L('Gray Support Bundle — Men', 'חבילת Gray Support — לגברים'),
+    name: L('Gray Support Bundle: Men', 'חבילת Gray Support: לגברים'),
     summary: L(
       'Gray Support and Gray Serum, in men’s packaging.',
       'Gray Support ו-Gray Serum, באריזה לגברים.',
@@ -86,7 +86,7 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     id: 'gray-support-bundle-women',
     packaging: 'women',
     skus: ['gray-support', 'gray-serum'],
-    name: L('Gray Support Bundle — Women', 'חבילת Gray Support — לנשים'),
+    name: L('Gray Support Bundle: Women', 'חבילת Gray Support: לנשים'),
     summary: L(
       'Gray Support and Gray Serum, in women’s packaging.',
       'Gray Support ו-Gray Serum, באריזה לנשים.',
@@ -100,7 +100,7 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     id: 'hair-growth-bundle-men',
     packaging: 'men',
     skus: ['density-15', 'regrowth-shampoo'],
-    name: L('Hair Growth Bundle — Men', 'חבילת צמיחת שיער — לגברים'),
+    name: L('Hair Growth Bundle: Men', 'חבילת צמיחת שיער: לגברים'),
     summary: L(
       'Density treatment and Regrowth Shampoo, in men’s packaging.',
       'טיפול Density ושמפו Regrowth, באריזה לגברים.',
@@ -114,7 +114,7 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     id: 'hair-growth-bundle-women',
     packaging: 'women',
     skus: ['density-15', 'regrowth-shampoo'],
-    name: L('Hair Growth Bundle — Women', 'חבילת צמיחת שיער — לנשים'),
+    name: L('Hair Growth Bundle: Women', 'חבילת צמיחת שיער: לנשים'),
     summary: L(
       'Density treatment and Regrowth Shampoo, in women’s packaging.',
       'טיפול Density ושמפו Regrowth, באריזה לנשים.',

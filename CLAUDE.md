@@ -30,8 +30,6 @@ shadcn/ui set under `src/app/components/ui/`).
 pnpm install
 pnpm dev          # Vite dev server
 pnpm build        # vite build -> dist/  (one ~640 kB chunk; the >500 kB warning is expected)
-pnpm test         # vitest run  — 67 files / 389 tests, must stay green
-pnpm test:watch
 pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
 ```
 
@@ -42,21 +40,26 @@ pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
   build. Keep `pnpm typecheck` green.
 - **No lint or format tooling exists.** Don't add ESLint/Prettier unless asked (it's a known gap —
   see `docs/TECHNICAL-SPECIFICATION.md` §10 / OQ-TECH-6).
+- **No test suite exists.** All `*.test.ts(x)` files were deliberately removed 2026-09-10 (user
+  request). Vitest and Testing Library are still `devDependencies` and `pnpm test`/`pnpm test:watch`
+  still exist as scripts, but `pnpm test` now exits 1 with "No test files found" — don't treat that
+  as a regression to fix. There is no automated regression coverage of any kind (i18n EN/HE parity,
+  the pending-content gate, domain logic, routing) — verify changes by reading the code and checking
+  the app in a browser. Don't add tests back unless asked.
 
 ## Hard rules (do not violate)
 
 1. **Never invent product content.** Prices, effectiveness %, time-to-results, testimonials, study
    results, advisory names, press logos, medical/legal copy — if the client hasn't supplied it, it
    stays `null` in `src/content/roote.config.ts` and renders as a `<PendingChip>` → `[PENDING: label]`.
-   `src/content/pending.test.ts` fails if a claim/price/stat renders from raw null. This is a
-   regulatory constraint, not a style preference.
+   This is a regulatory constraint, not a style preference. (No longer test-enforced — see Commands.)
 2. **EN/HE parity.** Every key added to `src/i18n/messages/en.ts` needs the same key in `he.ts`, and
-   no value may be `""`. `src/i18n/messages.test.ts` enforces both. Write real Hebrew (first-pass is
-   fine); flag legal HE as "pending formal legal review" (the pattern `roote.config.disclaimers` uses).
+   no value may be `""`. Write real Hebrew (first-pass is fine); flag legal HE as "pending formal
+   legal review" (the pattern `roote.config.disclaimers` uses).
 3. **Domain layer stays pure.** `src/domain/**`, `src/content/pending.ts`, `src/domain/report/money.ts`,
    `src/app/routes/app/programProgress.ts` — no imports of React, the DOM, storage, or the i18n
    *provider*. They take typed inputs and return typed outputs (analysis returns **keys**, not display
-   strings). They have isolated unit tests; add to those when you change behaviour.
+   strings).
 4. **Renderers consume view-models, not config.** `buildReport()` / `resolvePlanTreatments()` produce
    fully-resolved, already-localized, pending-flagged structures; components render those. Don't reach
    into `roote.config` or call `t()` for domain content inside a report/plan renderer.
@@ -71,9 +74,9 @@ pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
 `src/app/App.tsx` → `LocaleProvider` › `AuthProvider` › `SessionProvider` › `CartProvider` ›
 `RouterProvider`.
 
-The router is a **module-scoped `createBrowserRouter`** created once at import. Tests drive it by
-`window.history.pushState(...)` **plus** `window.dispatchEvent(new PopStateEvent('popstate'))` — a
-bare `pushState` won't notify it. `src/app/App.test.tsx` restores history in `afterEach`.
+The router is a **module-scoped `createBrowserRouter`** created once at import. Drive it
+programmatically by `window.history.pushState(...)` **plus**
+`window.dispatchEvent(new PopStateEvent('popstate'))` — a bare `pushState` won't notify it.
 
 ### Routing & shells
 
@@ -152,7 +155,7 @@ see `docs/superpowers/specs/2026-09-08-hairhealth-landbot-integration-design.md`
 `src/styles/index.css` imports (in order) `fonts.css`, `tailwind.css`, `theme.css`, `marketing.css`.
 Tailwind **v4** (`@tailwindcss/vite`) — no `tailwind.config`, `postcss.config.mjs` is intentionally
 empty. Tokens are CSS custom properties in `theme.css` (shadcn variable names) + an `@theme inline`
-map; **keep `src/styles/tokens.ts` in sync** (`tokens.test.ts` checks it). Light-only in practice —
+map; **keep `src/styles/tokens.ts` in sync**. Light-only in practice —
 the `.dark` block exists but nothing toggles it. Palette: cream `#fcf9f3` ground, `#172022` text, deep
 emerald `#1b4b32` primary CTA / `#0a2a1c` ink bands (header, footer, AppShell sidebar — anchor, not
 dominant; body content stays on cream), gold `#c6a15a` accent (non-text / ≥24 px only, logo exempt).

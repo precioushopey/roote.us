@@ -40,7 +40,7 @@ function TaskRow({
         aria-label={doneStyle ? t('app.today.markPending') : t('app.today.markDone')}
         onClick={() => onSet(doneStyle ? 'pending' : 'done')}
         className={
-          'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ' +
+          'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-xs border ' +
           (doneStyle ? 'border-deep-800 bg-deep-800 text-cream-50' : 'border-border')
         }
       >
@@ -60,14 +60,14 @@ function TaskRow({
         >
           {task.name}
         </p>
-        <p className="mt-0.5 font-body text-2xs text-muted-foreground">
+        <p className="mt-0.5 font-body text-sm text-muted-foreground">
           {t(task.doseLabel as MessageKey)} · {task.frequencyLabel}
         </p>
         {!doneStyle && (
           <button
             type="button"
             onClick={() => onSet(skippedStyle ? 'pending' : 'skipped')}
-            className="mt-1 font-body text-2xs text-muted-foreground underline"
+            className="mt-1 font-body text-sm text-muted-foreground underline"
           >
             {skippedStyle ? t('app.today.unskip') : t('app.today.skip')}
           </button>
@@ -111,7 +111,7 @@ export function AccountToday() {
   return (
     <div data-animate className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <p className="u-caps font-body text-2xs font-semibold text-accent">
+        <p className="u-caps font-body text-sm font-semibold text-accent">
           {t('app.today.dayLabel', { day: up.currentDay, total: up.durationDays })}
         </p>
         <div className="flex items-baseline justify-between">
@@ -128,7 +128,7 @@ export function AccountToday() {
         {slots.map((slot) =>
           routine[slot].length === 0 ? null : (
             <section key={slot} className="flex flex-col gap-2">
-              <h2 className="u-caps font-body text-2xs font-semibold text-muted-foreground">{t(SLOT_KEY[slot])}</h2>
+              <h2 className="u-caps font-body text-sm font-semibold text-muted-foreground">{t(SLOT_KEY[slot])}</h2>
               <ul className="flex flex-col gap-2">
                 {routine[slot].map((task) => (
                   <TaskRow key={task.key} task={task} onSet={(s) => setStatus(task, s)} />
@@ -143,23 +143,23 @@ export function AccountToday() {
         <p className="font-body text-sm text-foreground">
           {t('app.today.adherence.label')}: {up.adherencePct}%
         </p>
-        <p className="mt-1 font-body text-2xs text-muted-foreground">{t('app.today.adherence.note')}</p>
+        <p className="mt-1 font-body text-sm text-muted-foreground">{t('app.today.adherence.note')}</p>
       </Card>
 
       {nextReminders.length > 0 && (
         <Card>
-          <p className="u-caps font-body text-2xs font-semibold text-muted-foreground">
+          <p className="u-caps font-body text-sm font-semibold text-muted-foreground">
             {t('app.reminders.upcoming')}
           </p>
           <ul className="mt-2 flex flex-col gap-1">
             {nextReminders.map((r) => (
               <li key={r.id} className="flex items-baseline justify-between gap-4 font-body text-sm">
                 <span className="text-foreground">{t(r.labelKey as MessageKey)}</span>
-                <span className="text-2xs text-muted-foreground">{r.dueDate}</span>
+                <span className="text-sm text-muted-foreground">{r.dueDate}</span>
               </li>
             ))}
           </ul>
-          <Link to={withLocale('/account/reminders')} className="mt-2 inline-block font-body text-2xs text-accent underline">
+          <Link to={withLocale('/account/reminders')} className="mt-2 inline-block font-body text-sm text-accent underline">
             {t('app.reminders.manage')}
           </Link>
         </Card>

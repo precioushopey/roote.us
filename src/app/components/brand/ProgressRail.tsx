@@ -19,7 +19,7 @@ export function ProgressRail({ steps, current }: { steps: string[]; current: num
             <span
               aria-current={state === 'current' ? 'step' : undefined}
               className={cn(
-                'text-[11px] tracking-[0.12em]',
+                'text-sm',
                 state === 'current' ? 'font-medium text-foreground' : 'text-muted-foreground',
               )}
             >

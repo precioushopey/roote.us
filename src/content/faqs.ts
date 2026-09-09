@@ -43,8 +43,8 @@ export const HOME_FAQS: Faq[] = [
     id: 'density-difference',
     q: L('What is the difference between Density 6, 10, and 15?', 'מה ההבדל בין Density 6, 10 ו-15?'),
     a: L(
-      'They are treatment tiers, not a good/better/best scale. The right tier is decided through a treatment review based on your profile — it is never chosen automatically from a score.',
-      'אלה דרגות טיפול, לא סולם של טוב/טוב יותר. הדרגה המתאימה נקבעת בבדיקת טיפול לפי הפרופיל שלך — לעולם לא נבחרת אוטומטית לפי ניקוד.',
+      'They are treatment tiers, not a good/better/best scale. The right tier is decided through a treatment review based on your profile; it is never chosen automatically from a score.',
+      'אלה דרגות טיפול, לא סולם של טוב/טוב יותר. הדרגה המתאימה נקבעת בבדיקת טיפול לפי הפרופיל שלך, לעולם לא נבחרת אוטומטית לפי ניקוד.',
     ),
   },
   {

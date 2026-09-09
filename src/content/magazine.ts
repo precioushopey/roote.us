@@ -21,8 +21,8 @@ import { PRODUCTS, type Ingredient, type ProductFormat } from './products';
  */
 
 export const HAIR_LOSS_SCIENCE: LocalizedText = L(
-  "Pattern hair loss (androgenetic alopecia) is largely driven by genetics and hormones. In people with a genetic sensitivity, the hormone DHT (dihydrotestosterone) gradually shrinks — or \"miniaturizes\" — hair follicles over repeated growth cycles. Each cycle, the affected hairs grow back finer, shorter, and lighter, until some follicles stop producing visible hair altogether. This process typically shows up first as a widening part, a receding hairline, or thinning at the crown, and tends to progress gradually rather than all at once. Gray hair is a separate, distinct process — it happens as pigment-producing cells in the follicle slow down or stop over time, unrelated to the DHT pathway.",
-  'נשירת שיער תורשתית (אלופציה אנדרוגנטית) מונעת ברובה על ידי גנטיקה והורמונים. אצל אנשים עם רגישות גנטית, ההורמון DHT (דיהידרוטסטוסטרון) מכווץ בהדרגה — או "מצטמק" — את זקיקי השיער לאורך מחזורי צמיחה חוזרים. בכל מחזור, השיער הנפגע צומח דק, קצר ובהיר יותר, עד שחלק מהזקיקים מפסיקים לייצר שיער נראה לעין לחלוטין. תהליך זה בדרך כלל מתבטא תחילה בהרחבת השבילה, בנסיגת קו השיער, או בדילול בקודקוד, ונוטה להתקדם בהדרגה ולא בבת אחת. שיער אפור הוא תהליך נפרד ושונה לחלוטין — הוא מתרחש כאשר תאי הפיגמנט בזקיק מאטים או מפסיקים לפעול עם הזמן, ואינו קשור למסלול ה-DHT.',
+  "Pattern hair loss (androgenetic alopecia) is largely driven by genetics and hormones. In people with a genetic sensitivity, the hormone DHT (dihydrotestosterone) gradually shrinks (or \"miniaturizes\") hair follicles over repeated growth cycles. Each cycle, the affected hairs grow back finer, shorter, and lighter, until some follicles stop producing visible hair altogether. This process typically shows up first as a widening part, a receding hairline, or thinning at the crown, and tends to progress gradually rather than all at once. Gray hair is a separate, distinct process: it happens as pigment-producing cells in the follicle slow down or stop over time, unrelated to the DHT pathway.",
+  'נשירת שיער תורשתית (אלופציה אנדרוגנטית) מונעת ברובה על ידי גנטיקה והורמונים. אצל אנשים עם רגישות גנטית, ההורמון DHT (דיהידרוטסטוסטרון) מכווץ בהדרגה (או "מצטמק") את זקיקי השיער לאורך מחזורי צמיחה חוזרים. בכל מחזור, השיער הנפגע צומח דק, קצר ובהיר יותר, עד שחלק מהזקיקים מפסיקים לייצר שיער נראה לעין לחלוטין. תהליך זה בדרך כלל מתבטא תחילה בהרחבת השבילה, בנסיגת קו השיער, או בדילול בקודקוד, ונוטה להתקדם בהדרגה ולא בבת אחת. שיער אפור הוא תהליך נפרד ושונה לחלוטין: הוא מתרחש כאשר תאי הפיגמנט בזקיק מאטים או מפסיקים לפעול עם הזמן, ואינו קשור למסלול ה-DHT.',
 );
 
 /**
@@ -108,24 +108,24 @@ export const INGREDIENT_EXPLANATIONS: Record<string, LocalizedText> = {
     'מינוקסידיל הוא רכיב מקומי הנחקר זה זמן רב, לשימוש בנשירת שיער תורשתית. משוער שהוא פועל על ידי הרחבת כלי הדם בקרקפת והארכת שלב הצמיחה הפעיל (אנגן) במחזור השיער, אם כי מנגנון הפעולה המדויק שלו אינו מובן במלואו.',
   ),
   Finasteride: L(
-    "Finasteride works within the DHT pathway linked to pattern hair loss — it's designed to reduce the conversion of testosterone into DHT, the hormone associated with follicle miniaturization in genetically susceptible hair.",
-    'פינסטריד פועל במסלול ה-DHT הקשור לנשירת שיער תורשתית — הוא מיועד להפחית את המרת הטסטוסטרון ל-DHT, ההורמון הקשור להצטמקות זקיקי השיער אצל בעלי רגישות גנטית.',
+    "Finasteride works within the DHT pathway linked to pattern hair loss: it's designed to reduce the conversion of testosterone into DHT, the hormone associated with follicle miniaturization in genetically susceptible hair.",
+    'פינסטריד פועל במסלול ה-DHT הקשור לנשירת שיער תורשתית: הוא מיועד להפחית את המרת הטסטוסטרון ל-DHT, ההורמון הקשור להצטמקות זקיקי השיער אצל בעלי רגישות גנטית.',
   ),
   'Azelaic Acid': L(
-    "Azelaic acid is included here as a DHT-pathway support ingredient — it's referenced in the hair-care literature for a mild inhibitory effect on the same enzyme pathway finasteride targets, alongside its more established use as a skin-care active.",
-    'חומצה אזלאית נכללת כאן כרכיב תמיכה במסלול ה-DHT — היא מוזכרת בספרות הטיפוח לתפקיד מתון בעיכוב אותו מסלול אנזימטי שפינסטריד פועל עליו, לצד השימוש המבוסס יותר שלה כרכיב טיפוח עור.',
+    "Azelaic acid is included here as a DHT-pathway support ingredient: it's referenced in the hair-care literature for a mild inhibitory effect on the same enzyme pathway finasteride targets, alongside its more established use as a skin-care active.",
+    'חומצה אזלאית נכללת כאן כרכיב תמיכה במסלול ה-DHT: היא מוזכרת בספרות הטיפוח לתפקיד מתון בעיכוב אותו מסלול אנזימטי שפינסטריד פועל עליו, לצד השימוש המבוסס יותר שלה כרכיב טיפוח עור.',
   ),
   'Saw Palmetto': L(
-    "Saw palmetto is a botanical extract commonly referenced in the DHT-pathway supplement category, alongside pharmaceutical actives like finasteride — its effect is considered milder and less established in the research.",
-    'Saw Palmetto הוא תמצית צמחית המוזכרת לעיתים קרובות בקטגוריית התוספים למסלול ה-DHT, לצד רכיבים תרופתיים כמו פינסטריד — האפקט שלה נחשב מתון יותר ופחות מבוסס במחקר.',
+    "Saw palmetto is a botanical extract commonly referenced in the DHT-pathway supplement category, alongside pharmaceutical actives like finasteride; its effect is considered milder and less established in the research.",
+    'Saw Palmetto הוא תמצית צמחית המוזכרת לעיתים קרובות בקטגוריית התוספים למסלול ה-DHT, לצד רכיבים תרופתיים כמו פינסטריד; האפקט שלה נחשב מתון יותר ופחות מבוסס במחקר.',
   ),
   'Nettle Root': L(
     'Nettle root is a botanical often paired with saw palmetto in DHT-pathway supplement blends, referenced for a similar supporting role in the same category of hair-loss nutrition.',
     'שורש סרפד הוא רכיב צמחי המשולב לעיתים קרובות עם Saw Palmetto בתוספים למסלול ה-DHT, ומוזכר לתפקיד תומך דומה באותה קטגוריה של תזונה לנשירת שיער.',
   ),
   Caffeine: L(
-    'Caffeine is a common scalp-serum and shampoo ingredient, studied in the hair-care literature for a stimulating effect on hair follicles when applied topically — distinct from its better-known effects when consumed.',
-    'קפאין הוא רכיב נפוץ בסרומים ובשמפו לקרקפת, הנחקר בספרות הטיפוח לאפקט מגרה על זקיקי השיער בעת מריחה מקומית — בשונה מהאפקטים המוכרים יותר שלו בצריכה.',
+    'Caffeine is a common scalp-serum and shampoo ingredient, studied in the hair-care literature for a stimulating effect on hair follicles when applied topically, distinct from its better-known effects when consumed.',
+    'קפאין הוא רכיב נפוץ בסרומים ובשמפו לקרקפת, הנחקר בספרות הטיפוח לאפקט מגרה על זקיקי השיער בעת מריחה מקומית, בשונה מהאפקטים המוכרים יותר שלו בצריכה.',
   ),
   Ginseng: L(
     'Ginseng is a botanical used in many scalp-care formulas, referenced for supporting circulation and general scalp vitality alongside its long history in traditional herbal use.',
@@ -136,24 +136,24 @@ export const INGREDIENT_EXPLANATIONS: Record<string, LocalizedText> = {
     'תמצית רוזמרין בשימוש במוצרי טיפוח לקרקפת, ומוזכרת במחקר השוואתי מסוים לצד מינוקסידיל לתמיכה במחזור הדם בקרקפת, אם כי בסיס הראיות קטן ופחות מבוסס.',
   ),
   'Fo-Ti': L(
-    'Fo-Ti (He Shou Wu) is a botanical with a long history in traditional use for hair and, informally, for supporting natural hair color — it appears in both our anti-gray serum and supplement for that traditional association.',
-    'Fo-Ti (הא שואו וו) הוא רכיב צמחי בעל היסטוריה ארוכה בשימוש מסורתי לשיער, ובאופן לא רשמי לתמיכה בצבע השיער הטבעי — הוא מופיע הן בסרום והן בתוסף שלנו לשיער אפור בשל אותו קשר מסורתי.',
+    'Fo-Ti (He Shou Wu) is a botanical with a long history in traditional use for hair and, informally, for supporting natural hair color; it appears in both our anti-gray serum and supplement for that traditional association.',
+    'Fo-Ti (הא שואו וו) הוא רכיב צמחי בעל היסטוריה ארוכה בשימוש מסורתי לשיער, ובאופן לא רשמי לתמיכה בצבע השיער הטבעי, הוא מופיע הן בסרום והן בתוסף שלנו לשיער אפור בשל אותו קשר מסורתי.',
   ),
   Biotin: L(
     'Biotin is a B-vitamin commonly included in hair and nail supplements; it plays a role in normal keratin production, though supplementation mainly helps where an existing deficiency is present.',
     'ביוטין הוא ויטמין מקבוצת B הנכלל לעיתים קרובות בתוספים לשיער וציפורניים; הוא ממלא תפקיד בייצור קרטין תקין, אם כי נטילת תוסף עוזרת בעיקר כאשר קיים מחסור קיים.',
   ),
   Catalase: L(
-    'Catalase is an enzyme referenced in the anti-gray supplement category — the theory ties it to breaking down hydrogen peroxide that can otherwise build up in the hair follicle and interfere with natural pigment.',
-    'קטלאז הוא אנזים המוזכר בקטגוריית התוספים לשיער אפור — התיאוריה מקשרת אותו לפירוק מי חמצן שעלולים להצטבר בזקיק השיער ולפגוע בפיגמנט הטבעי.',
+    'Catalase is an enzyme referenced in the anti-gray supplement category: the theory ties it to breaking down hydrogen peroxide that can otherwise build up in the hair follicle and interfere with natural pigment.',
+    'קטלאז הוא אנזים המוזכר בקטגוריית התוספים לשיער אפור: התיאוריה מקשרת אותו לפירוק מי חמצן שעלולים להצטבר בזקיק השיער ולפגוע בפיגמנט הטבעי.',
   ),
   'L-Tyrosine': L(
-    "L-Tyrosine is an amino acid involved in the body's pigment-production pathway, as a precursor in melanin synthesis — it's included here for that nutritional role.",
-    'L-Tyrosine היא חומצת אמינו המעורבת במסלול ייצור הפיגמנט בגוף, כחומר מוצא בסינתזת מלנין — היא נכללת כאן בשל תפקיד תזונתי זה.',
+    "L-Tyrosine is an amino acid involved in the body's pigment-production pathway, as a precursor in melanin synthesis; it's included here for that nutritional role.",
+    'L-Tyrosine היא חומצת אמינו המעורבת במסלול ייצור הפיגמנט בגוף, כחומר מוצא בסינתזת מלנין, היא נכללת כאן בשל תפקיד תזונתי זה.',
   ),
   PABA: L(
-    "PABA (para-aminobenzoic acid) is a compound included in some hair supplements, informally associated with pigment support — its role here is nutritional, not medicinal.",
-    'PABA (חומצה פארא-אמינובנזואית) היא תרכובת הנכללת בחלק מתוספי השיער, ומקושרת באופן לא רשמי לתמיכה בפיגמנט — תפקידה כאן הוא תזונתי, לא רפואי.',
+    "PABA (para-aminobenzoic acid) is a compound included in some hair supplements, informally associated with pigment support; its role here is nutritional, not medicinal.",
+    'PABA (חומצה פארא-אמינובנזואית) היא תרכובת הנכללת בחלק מתוספי השיער, ומקושרת באופן לא רשמי לתמיכה בפיגמנט; תפקידה כאן הוא תזונתי, לא רפואי.',
   ),
   Zinc: L(
     'Zinc is a mineral that contributes to normal hair tissue growth and repair, and is a common inclusion in general hair and scalp supplements.',
@@ -189,19 +189,19 @@ export const INGREDIENT_EXPLANATIONS: Record<string, LocalizedText> = {
  *  brand-specific or efficacy claim. */
 export const FORMAT_EXPLANATIONS: Record<ProductFormat, LocalizedText> = {
   'topical-solution': L(
-    'Topical solutions are applied directly to the scalp, letting active ingredients reach the scalp and follicles directly — this is the format our Density line uses for its core actives.',
-    'תמיסות מקומיות נמרחות ישירות על הקרקפת, ומאפשרות לרכיבים הפעילים להגיע ישירות לקרקפת ולזקיקים — זהו הפורמט שקו Density שלנו משתמש בו עבור הרכיבים הפעילים המרכזיים שלו.',
+    'Applied directly to the scalp so active ingredients reach the follicles directly: the format our Density line uses for its core actives.',
+    'נמרחות ישירות על הקרקפת כדי שהרכיבים הפעילים יגיעו ישירות לזקיקים: הפורמט שקו Density שלנו משתמש בו עבור הרכיבים הפעילים המרכזיים.',
   ),
   'capsule-supplement': L(
-    'Capsule supplements work from the inside — taken daily with food, they deliver vitamins, minerals, and botanical extracts through the digestive system rather than directly to the scalp, complementing a topical routine with broader nutritional support.',
-    'תוספי קפסולות פועלים מבפנים — נלקחים מדי יום עם אוכל, הם מספקים ויטמינים, מינרלים ותמציות צמחיות דרך מערכת העיכול, ולא ישירות לקרקפת, ומשלימים שגרה מקומית בתמיכה תזונתית רחבה יותר.',
+    'Taken daily with food, delivering vitamins, minerals, and botanical extracts through the digestive system to complement a topical routine.',
+    'נלקחות מדי יום עם אוכל, ומספקות ויטמינים, מינרלים ותמציות צמחיות דרך מערכת העיכול, כהשלמה לשגרה מקומית.',
   ),
   serum: L(
-    "Serums are lightweight, leave-in formulas usually applied once daily and left on the scalp — they're formulated to sit on the skin longer than a rinse-off product, which is typically why cosmetic (non-prescription) actives are delivered this way.",
-    'סרומים הם תכשירים קלים, שאינם נשטפים, הנמרחים בדרך כלל פעם ביום ונשארים על הקרקפת — הם מיועדים להישאר על העור זמן ארוך יותר ממוצר הנשטף, וזו בדרך כלל הסיבה שרכיבים קוסמטיים (ללא מרשם) מועברים בדרך זו.',
+    'Lightweight, leave-in formulas applied once daily and left on the scalp longer than a rinse-off product: how non-prescription cosmetic actives are typically delivered.',
+    'תכשירים קלים ושאינם נשטפים, הנמרחים פעם ביום ונשארים על הקרקפת זמן ארוך יותר ממוצר נשטף: כך בדרך כלל מועברים רכיבים קוסמטיים ללא מרשם.',
   ),
   shampoo: L(
-    'Shampoos are a daily cleanse step — used in place of a regular shampoo, a scalp-focused formula clears buildup and delivers conditioning actives with brief, repeated contact each time you wash.',
-    'שמפו הוא שלב הניקוי היומי — בשימוש במקום שמפו רגיל, פורמולה הממוקדת בקרקפת מנקה הצטברות ומעבירה רכיבי הזנה במגע קצר וחוזר בכל שטיפה.',
+    'A daily cleanse used in place of your regular shampoo: clears buildup and delivers conditioning actives with each wash.',
+    'ניקוי יומי במקום השמפו הרגיל: מנקה הצטברות ומעביר רכיבי הזנה בכל שטיפה.',
   ),
 };

@@ -15,7 +15,7 @@ export function AppPlan() {
   return (
     <div data-animate className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent">
+        <p className="text-sm font-medium uppercase text-accent">
           {t('report.section.plan.matchedBadge')}
         </p>
         <h1 className="font-display text-3xl font-medium lg:text-4xl">{t('report.section.plan.title')}</h1>
@@ -31,7 +31,7 @@ export function AppPlan() {
             <div key={tr.key} className="rounded-xl border border-accent bg-accent/5 p-4 shadow-sm">
               <p className="font-medium">{tr.name}</p>
               <p className="mt-1 text-sm text-muted-foreground">{tr.usage}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {t('report.plan.applicationFrequencyLabel')}: {tr.frequency}
                 {tr.appliesToLabels.length ? ` · ${t('report.plan.appliesToLabel')}: ${tr.appliesToLabels.join(', ')}` : ''}
               </p>
@@ -45,7 +45,7 @@ export function AppPlan() {
             <div key={tr.key} className="rounded-xl border border-border bg-card p-4 shadow-sm">
               <p className="font-medium">{tr.name}</p>
               <p className="mt-1 text-sm text-muted-foreground">{tr.usage}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {t('report.plan.applicationFrequencyLabel')}: {tr.frequency}
               </p>
             </div>
@@ -54,13 +54,13 @@ export function AppPlan() {
       </div>
 
       <section className="rounded-xl border border-border bg-card p-5 text-center shadow-sm">
-        <p className="text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">
+        <p className="text-sm font-medium uppercase text-muted-foreground">
           {t('report.section.duration.title')}
         </p>
         <p className="mt-1 font-display text-2xl font-medium">
           {t('report.duration.label', { days: program.durationDays })}
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           {program.startDate} → {program.endDate}
         </p>
       </section>

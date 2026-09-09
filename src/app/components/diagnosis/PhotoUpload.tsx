@@ -55,7 +55,7 @@ export function PhotoUpload({
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={inputId} className="text-xs font-medium text-muted-foreground">
+      <label htmlFor={inputId} className="text-sm font-medium text-muted-foreground">
         {t(`photo.angle.${angleKey}` as never)}
       </label>
       {value ? (
@@ -64,7 +64,7 @@ export function PhotoUpload({
           <button
             type="button"
             onClick={handleRemove}
-            className="absolute end-2 top-2 rounded bg-card/90 px-2 py-1 text-xs backdrop-blur-sm"
+            className="absolute end-2 top-2 rounded-xs bg-card/90 px-2 py-1 text-sm backdrop-blur-sm"
           >
             {t('common.remove')}
           </button>
@@ -72,7 +72,7 @@ export function PhotoUpload({
       ) : (
         <label
           htmlFor={inputId}
-          className="flex h-32 cursor-pointer items-center justify-center rounded-lg border border-dashed border-border bg-card text-xs text-muted-foreground transition-colors hover:border-accent hover:bg-accent/5"
+          className="flex h-32 cursor-pointer items-center justify-center rounded-lg border border-dashed border-border bg-card text-sm text-muted-foreground transition-colors hover:border-accent hover:bg-accent/5"
         >
           {busy ? t('photo.uploading') : t('photo.add')}
         </label>
@@ -85,7 +85,7 @@ export function PhotoUpload({
         className="sr-only"
         onChange={handleChange}
       />
-      {error && <p role="alert" className="text-xs text-destructive">{error}</p>}
+      {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
     </div>
   );
 }

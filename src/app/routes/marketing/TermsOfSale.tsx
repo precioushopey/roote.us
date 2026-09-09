@@ -1,8 +1,9 @@
 import { useT } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
-import { Section, DisplayTitle, Prose, Eyebrow, LegalNotice } from '@/app/components/roote';
+import { Section, DisplayTitle, Prose, Button, LegalNotice } from '@/app/components/roote';
 import { CompanyDetails } from '@/app/components/marketing/CompanyDetails';
+import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 
 const SECTION_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12'] as const;
 
@@ -10,17 +11,19 @@ export function TermsOfSale() {
   const t = useT();
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="text-center">
-        <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
-          {t('marketing.footer.legal')}
-        </Eyebrow>
-        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto mt-2 max-w-2xl">
+      <Section tone="teal" width="content" animate={false} className="py-12 md:py-24 text-center">
+        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto !font-medium max-w-2xl">
           {t('marketing.legalSale.title')}
         </DisplayTitle>
-        <Prose size="lg" className="mx-auto mt-4 text-center">{t('marketing.legalSale.intro')}</Prose>
-        <p className="mt-3 font-body text-xs text-muted-foreground">
+        <Prose size="lg" className="mx-auto mt-4 max-w-2xl text-center text-ink-foreground/75">{t('marketing.legalSale.intro')}</Prose>
+        <p className="mt-3 font-body text-sm text-ink-foreground/75">
           {t('marketing.legal.updated')}: {rooteContent.company.legalUpdated}
         </p>
+        <div className="mt-6 flex justify-center">
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm sm:w-auto">
+            {t('marketing.nav.cta')}
+          </Button>
+        </div>
       </Section>
 
       <Section tone="cream" width="content">
@@ -42,7 +45,7 @@ export function TermsOfSale() {
                 <p className="font-display text-lg font-medium text-ink-foreground">
                   {t(`marketing.legalSale.${s}.title` as MessageKey)}
                 </p>
-                <Prose className="mt-3">{t(`marketing.legalSale.${s}.body` as MessageKey)}</Prose>
+                <Prose className="mt-3 text-ink-foreground/75">{t(`marketing.legalSale.${s}.body` as MessageKey)}</Prose>
               </div>
             </div>
           ))}

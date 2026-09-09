@@ -53,13 +53,13 @@ export function LegalPageView({ slug: slugProp }: { slug?: string } = {}) {
         ))}
       </ol>
 
-      <p className="mt-10 border-t border-border pt-6 font-body text-xs text-muted-foreground">
+      <p className="mt-10 border-t border-border pt-6 font-body text-sm text-muted-foreground">
         A brand of{' '}
         <span dir="ltr">
           {company.legalName} · {company.address.join(', ')} · {company.support.email}
         </span>
         <br />
-        <span className="text-2xs">Last updated: {company.legalUpdated}</span>
+        <span className="text-sm">Last updated: {company.legalUpdated}</span>
       </p>
     </Section>
   );

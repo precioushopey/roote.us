@@ -58,7 +58,7 @@ export function PhotosScreen() {
       </div>
 
       {!canContinue && (
-        <p className="font-body text-xs text-muted-foreground">
+        <p className="font-body text-sm text-muted-foreground">
           {!consented
             ? t('analysis.photos.needConsent')
             : t('analysis.photos.needAll', { have, total: ANGLES.length })}

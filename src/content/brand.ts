@@ -22,7 +22,7 @@ export const brandLines = {
   /** `*word*` marks a word/phrase to render in italic (see Hero's renderWithEmphasis) —
    *  left to each locale to place, since the emphasised word doesn't always land in
    *  the same position once translated. */
-  headline: L('Your hair is *individual*.\nYour *treatment* should be too.', 'השיער שלך *ייחודי*.\nגם *הטיפול* שלך צריך להיות.'),
+  headline: L('A hair growth system,\ncustomized for *you*.', 'מערכת לצמיחת שיער,\nמותאמת אישית *בשבילך*.'),
   secondary: L('From your first scan to your final result.', 'מהסריקה הראשונה ועד לתוצאה הסופית.'),
   supporting: [
     L('Understand your hair. Personalize your path.', 'להבין את השיער. להתאים את הדרך.'),
@@ -49,8 +49,8 @@ export const cta = {
  */
 export const threeStrand = {
   concept: L(
-    'Three strands from one root — hair science, your three concern territories, and Analyze / Treat / Track.',
-    'שלוש שערות משורש אחד — מדע השיער, שלושת תחומי העניין שלך, ולנתח / לטפל / לעקוב.',
+    'Three strands from one root: hair science, your three concern territories, and Analyze / Treat / Track.',
+    'שלוש שערות משורש אחד: מדע השיער, שלושת תחומי העניין שלך, ולנתח / לטפל / לעקוב.',
   ),
   triad: [
     { key: 'analyze', label: L('Analyze', 'לנתח') },

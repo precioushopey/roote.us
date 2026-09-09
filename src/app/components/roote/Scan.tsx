@@ -21,7 +21,7 @@ export function AnalysisMetric({
   const filled = level === 'low' ? 1 : level === 'medium' ? 2 : level === 'high' ? 3 : 0;
   return (
     <div className="flex items-center justify-between gap-4 py-2">
-      <span className={cn('font-body text-sm', onDark ? 'text-cream-100/80' : 'text-muted-foreground')}>{label}</span>
+      <span className={cn('font-body text-sm', onDark ? 'text-cream-100' : 'text-muted-foreground')}>{label}</span>
       {level === null ? (
         <PendingChip label={label} />
       ) : (
@@ -62,8 +62,8 @@ export function ScanCard({
     <GlassCard tone={tone} className={cn('w-full', className)}>
       <p
         className={cn(
-          'u-caps font-body text-2xs font-semibold',
-          tone === 'dark' ? 'text-cream-100/60' : 'text-muted-foreground',
+          'u-caps font-body text-sm font-semibold',
+          tone === 'dark' ? 'text-cream-100' : 'text-muted-foreground',
         )}
       >
         {title}
@@ -71,7 +71,7 @@ export function ScanCard({
       <dl className="mt-3 divide-y divide-border/60">
         {rows.map((r) => (
           <div key={r.label} className="flex items-baseline justify-between gap-4 py-2.5">
-            <dt className={cn('font-body text-sm', tone === 'dark' ? 'text-cream-100/80' : 'text-muted-foreground')}>
+            <dt className={cn('font-body text-sm', tone === 'dark' ? 'text-cream-100' : 'text-muted-foreground')}>
               {r.label}
             </dt>
             <dd className={cn('font-display text-md', tone === 'dark' ? 'text-cream-100' : 'text-foreground')}>
@@ -81,7 +81,7 @@ export function ScanCard({
         ))}
       </dl>
       {footnote ? (
-        <p className={cn('mt-3 font-body text-xs', tone === 'dark' ? 'text-cream-100/55' : 'text-muted-foreground')}>
+        <p className={cn('mt-3 font-body text-sm', tone === 'dark' ? 'text-cream-100' : 'text-muted-foreground')}>
           {footnote}
         </p>
       ) : null}

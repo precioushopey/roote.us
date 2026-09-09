@@ -36,7 +36,7 @@ export function BeforeAfterSlider({
       {/* after fills the frame */}
       <div className="relative">
         {after}
-        <span className="pointer-events-none absolute bottom-3 end-3 rounded-full bg-cream-50/90 px-2.5 py-1 font-body text-2xs font-semibold text-foreground">
+        <span className="pointer-events-none absolute bottom-3 end-3 rounded-full bg-cream-50/90 px-2.5 py-1 font-body text-sm font-semibold text-foreground">
           {afterLabel}
         </span>
       </div>
@@ -48,7 +48,7 @@ export function BeforeAfterSlider({
         aria-hidden
       >
         {before}
-        <span className="pointer-events-none absolute bottom-3 start-3 rounded-full bg-cream-50/90 px-2.5 py-1 font-body text-2xs font-semibold text-foreground">
+        <span className="pointer-events-none absolute bottom-3 start-3 rounded-full bg-cream-50/90 px-2.5 py-1 font-body text-sm font-semibold text-foreground">
           {beforeLabel}
         </span>
       </div>

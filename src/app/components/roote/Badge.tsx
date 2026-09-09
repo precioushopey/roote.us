@@ -31,7 +31,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-body text-2xs font-semibold',
+        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-body text-sm font-semibold',
         TONE[tone],
         onDark && 'text-cream-100',
         className,
@@ -55,7 +55,7 @@ export function Pill({
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full border px-3 py-1 font-body text-xs',
+        'inline-flex items-center rounded-full border px-3 py-1 font-body text-sm',
         active ? 'border-deep-800 bg-deep-950 text-cream-100' : 'border-border bg-transparent text-muted-foreground',
         className,
       )}

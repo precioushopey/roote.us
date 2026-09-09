@@ -4,7 +4,8 @@ import { L, type LocalizedText } from './localized';
 /**
  * À-la-carte catalogue — the "refills & add-ons" surface (`/bag`). Derived from
  * the six launch SKUs in `products.ts` so there is one product source of truth.
- * Prices are `null` → [PENDING].
+ * `price` mirrors each SKU's real, client-supplied price; `null` only for a
+ * SKU that hasn't been priced yet, and renders as [PENDING].
  */
 export type CatalogProduct = {
   sku: string;

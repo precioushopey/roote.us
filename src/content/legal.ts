@@ -95,7 +95,7 @@ export function getLegalPage(slug: string): LegalPage | undefined {
 
 /** Dev-only marker string. Rendered by legal pages while `reviewRequired` and
  *  `import.meta.env.DEV`; never shown in a production build. */
-export const LEGAL_REVIEW_MARKER = 'LEGAL REVIEW REQUIRED — draft, not approved';
+export const LEGAL_REVIEW_MARKER = 'LEGAL REVIEW REQUIRED: draft, not approved';
 
 /* ---------------------------------------------------------------------------
    Draft section bodies (WP9). Operational patterns only — nothing is copied
@@ -120,8 +120,8 @@ export const LEGAL_BODIES: Record<string, LegalSection[]> = {
       'Photos are used only to build your hair profile and your report. You are asked to consent before any upload. You can ask for deletion at any time. [TODO: confirm retention period and processor once a backend exists.]',
       'התמונות משמשות רק לבניית פרופיל השיער והדוח שלך. מבקשים את הסכמתך לפני כל העלאה. אפשר לבקש מחיקה בכל עת. [TODO: לאשר תקופת שמירה וספק עיבוד כשיהיה שרת.]'),
     S('how-we-use', 'How we use it', 'כיצד אנחנו משתמשים בכך',
-      'To produce your analysis and program recommendation, to operate your account, and — only if you opt in — to email you about your program. We do not sell personal data.',
-      'ליצירת האבחון והמלצת התוכנית, להפעלת החשבון, ורק אם תבחר להצטרף — לשליחת דוא"ל על התוכנית שלך. איננו מוכרים נתונים אישיים.'),
+      'To produce your analysis and program recommendation, to operate your account, and, only if you opt in, to email you about your program. We do not sell personal data.',
+      'ליצירת האבחון והמלצת התוכנית, להפעלת החשבון, ורק אם תבחר להצטרף, לשליחת דוא"ל על התוכנית שלך. איננו מוכרים נתונים אישיים.'),
     S('sharing', 'Sharing', 'שיתוף',
       'In production, limited data would be shared with processors for payment, shipping, email, and hosting. [TODO: confirm the sub-processor list.]',
       'בגרסה המלאה, נתונים מוגבלים ישותפו עם ספקי עיבוד לתשלום, משלוח, דוא"ל ואחסון. [TODO: לאשר את רשימת ספקי המשנה.]'),
@@ -222,8 +222,8 @@ export const LEGAL_BODIES: Record<string, LegalSection[]> = {
       'You are charged when each reorder is prepared. The amount equals the program price shown at the time. [TODO: confirm renewal price policy.]',
       'החיוב מתבצע בעת הכנת כל הזמנה חוזרת. הסכום שווה למחיר התוכנית שהוצג. [TODO: לאשר מדיניות מחיר חידוש.]'),
     S('renewal-and-reminders', 'Renewal & reminders', 'חידוש ותזכורות',
-      '[TODO: confirm reminder policy — e.g. an email a set number of days before each renewal.]',
-      '[TODO: לאשר מדיניות תזכורת — למשל דוא"ל מספר ימים קבוע לפני כל חידוש.]'),
+      '[TODO: confirm reminder policy, e.g. an email a set number of days before each renewal.]',
+      '[TODO: לאשר מדיניות תזכורת, למשל דוא"ל מספר ימים קבוע לפני כל חידוש.]'),
     S('price-changes', 'Price changes', 'שינויי מחיר',
       'We will notify you before any price change takes effect on your subscription.',
       'נודיע לך לפני כל שינוי מחיר שייכנס לתוקף במנוי שלך.'),

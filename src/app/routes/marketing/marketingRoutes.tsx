@@ -2,18 +2,17 @@ import type { RouteObject } from 'react-router';
 import { MarketingShell } from '@/app/components/shell/MarketingShell';
 import { Home } from './Home';
 import { Magazine } from './Magazine';
-import { HowItWorks } from './HowItWorks';
-import { Science } from './Science';
+import { HairScan } from './HairScan';
 import { Products } from './Products';
 import { ProductDetail } from './ProductDetail';
-import { About } from './About';
 import { Faq } from './Faq';
 import { Support } from './Support';
 import { Terms } from './Terms';
 import { TermsOfSale } from './TermsOfSale';
 import { Privacy } from './Privacy';
 import { SolutionPage, SolutionsIndex } from './SolutionPage';
-import { SystemPage } from './SystemPage';
+import { LoginPage } from '@/app/routes/auth/LoginPage';
+import { SignUpPage } from '@/app/routes/auth/SignUpPage';
 import { BagPage } from '@/app/routes/bag/BagPage';
 import { BagCheckout } from '@/app/routes/bag/BagCheckout';
 import { BagSuccess } from '@/app/routes/bag/BagSuccess';
@@ -35,19 +34,17 @@ export const marketingRoutes: RouteObject = {
   element: <MarketingShell />,
   children: [
     { index: true, element: <Home /> },
-    { path: 'how-it-works', element: <HowItWorks /> },
     { path: 'magazine', element: <Magazine /> },
+    { path: 'hair-scan', element: <HairScan /> },
 
     { path: 'solutions', element: <SolutionsIndex /> },
     { path: 'solutions/thinning', element: <SolutionPage slug="thinning" /> },
     { path: 'solutions/gray-hair', element: <SolutionPage slug="gray-hair" /> },
 
-    { path: 'science', element: <Science /> },
-    { path: 'system', element: <SystemPage /> },
-
-    { path: 'about', element: <About /> },
     { path: 'faq', element: <Faq /> },
     { path: 'support', element: <Support /> },
+    { path: 'login', element: <LoginPage /> },
+    { path: 'signup', element: <SignUpPage /> },
 
     { path: 'products', element: <Products /> },
     { path: 'products/:slug', element: <ProductDetail /> },

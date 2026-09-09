@@ -171,8 +171,8 @@ export const PRODUCTS: Product[] = [
     size: '60 mL (2 fl oz)',
     role: L('Intensive / highest-strength Density concept.', 'קונספט Density בעוצמה הגבוהה ביותר.'),
     heroCopy: L(
-      'The most concentrated Density concept. Considered only through a treatment review — never selected from a score.',
-      'קונספט Density המרוכז ביותר. נשקל רק דרך בדיקת טיפול — לעולם לא נבחר לפי ניקוד.',
+      'The most concentrated Density concept. Considered only through a treatment review; never selected from a score.',
+      'קונספט Density המרוכז ביותר. נשקל רק דרך בדיקת טיפול, לעולם לא נבחר לפי ניקוד.',
     ),
     shortDescription: L(
       'The highest-strength topical concept in the Density track. Clinician-gated.',
@@ -331,5 +331,5 @@ export function productsForConcern(concern: 'thinning' | 'gray'): Product[] {
 
 /** Not a launch SKU — kept for reference only (brief §8). */
 export const ARCHIVED_CONCEPTS = [
-  { slug: 'color-restore-shampoo', name: 'Color Restore Shampoo', note: L('Archived concept — superseded by Gray Serum for the anti-gray topical role.', 'קונספט בארכיון — הוחלף בסרום Gray לתפקיד התכשיר המקומי לשיער אפור.') },
+  { slug: 'color-restore-shampoo', name: 'Color Restore Shampoo', note: L('Archived concept, superseded by Gray Serum for the anti-gray topical role.', 'קונספט בארכיון, הוחלף בסרום Gray לתפקיד התכשיר המקומי לשיער אפור.') },
 ] as const;

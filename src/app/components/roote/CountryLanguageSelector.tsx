@@ -40,8 +40,8 @@ export function CountryLanguageSelector({
         onClick={() => setOpen(true)}
         className={cn(
           compact
-            ? 'inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:text-foreground'
-            : 'inline-flex items-center gap-1.5 font-body text-xs text-muted-foreground hover:text-foreground',
+            ? 'inline-flex h-10 w-10 items-center justify-center rounded-xs text-muted-foreground hover:text-foreground'
+            : 'inline-flex items-center gap-1.5 font-body text-sm text-muted-foreground hover:text-foreground',
           className,
         )}
       >
@@ -61,7 +61,7 @@ export function CountryLanguageSelector({
 
       <Modal open={open} onClose={() => setOpen(false)} title={labels.title}>
         <fieldset className="mb-5">
-          <legend className="u-caps mb-2 font-body text-2xs font-semibold text-muted-foreground">
+          <legend className="u-caps mb-2 font-body text-sm font-semibold text-muted-foreground">
             {labels.region}
           </legend>
           <div className="grid grid-cols-2 gap-2">
@@ -72,19 +72,19 @@ export function CountryLanguageSelector({
                 aria-pressed={c.country === country}
                 onClick={() => onChangeCountry(c.country)}
                 className={cn(
-                  'rounded-lg border px-3 py-2 text-start font-body text-sm',
+                  'rounded-xs border px-3 py-2 text-start font-body text-sm',
                   c.country === country ? 'border-deep-800 bg-cream-100' : 'border-border',
                 )}
               >
                 {c.label}
-                <span className="ms-1 text-xs text-muted-foreground">{c.currency}</span>
+                <span className="ms-1 text-sm text-muted-foreground">{c.currency}</span>
               </button>
             ))}
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="u-caps mb-2 font-body text-2xs font-semibold text-muted-foreground">
+          <legend className="u-caps mb-2 font-body text-sm font-semibold text-muted-foreground">
             {labels.language}
           </legend>
           <div className="flex flex-wrap gap-2">
@@ -95,7 +95,7 @@ export function CountryLanguageSelector({
                 aria-pressed={code === locale}
                 onClick={() => onChangeLocale(code)}
                 className={cn(
-                  'rounded-full border px-4 py-1.5 font-body text-sm',
+                  'rounded-xs border px-4 py-1.5 font-body text-sm',
                   code === locale ? 'border-deep-800 bg-deep-950 text-cream-100' : 'border-border text-muted-foreground',
                 )}
               >

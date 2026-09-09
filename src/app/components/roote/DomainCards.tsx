@@ -23,7 +23,8 @@ export function ConcernCard({
   to: string;
   /** Opens `to` in a new tab (e.g. a third-party destination) instead of routing in-app. */
   external?: boolean;
-  cta: string;
+  /** Omit when a single shared CTA below the card grid already covers this action. */
+  cta?: string;
   mediaAlt: string;
   mediaLabel: string;
   /** Real photography. Falls back to the placeholder when omitted. */
@@ -33,29 +34,21 @@ export function ConcernCard({
     <Link
       to={to}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className="group flex flex-col items-center gap-4 text-center"
+      className="group flex flex-col gap-4 text-center"
     >
       {image ? (
-        <img
-          src={image}
-          alt={mediaAlt}
-          className="aspect-[3/4] w-full border border-accent object-cover [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
-        />
+        <img src={image} alt={mediaAlt} className="aspect-[3/4] w-full rounded-sm object-cover" />
       ) : (
-        <MediaPlaceholder
-          alt={mediaAlt}
-          label={mediaLabel}
-          ratio="3 / 4"
-          rounded="none"
-          className="w-full border border-accent [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
-        />
+        <MediaPlaceholder alt={mediaAlt} label={mediaLabel} ratio="3 / 4" className="w-full" />
       )}
       <div className="flex flex-col gap-2">
         <h3 className="u-caps font-body text-sm text-foreground">{title}</h3>
-        <p className="font-body text-base text-muted-foreground">{description}</p>
-        <span className="mt-2 inline-flex h-9 items-center justify-center rounded-full border border-border px-4 font-body text-sm font-medium text-deep-800 transition-colors group-hover:border-deep-700 group-hover:bg-cream-100">
-          {cta}
-        </span>
+        <p className="font-body text-sm text-muted-foreground">{description}</p>
+        {cta ? (
+          <span className="mt-2 flex h-9 w-full items-center justify-center rounded-xs border border-border px-4 font-body text-sm font-medium text-deep-800 transition-colors group-hover:border-deep-700 group-hover:bg-cream-100">
+            {cta}
+          </span>
+        ) : null}
       </div>
     </Link>
   );
@@ -91,17 +84,14 @@ export function ProductCard({
   return (
     <Link to={to} data-pack={packaging} className="group flex flex-col gap-4">
       {image ? (
-        <div className="aspect-[3/4] w-full border border-accent bg-white p-4 [border-radius:50%_50%_0_0/10rem_10rem_0_0]">
-          <img src={image} alt={mediaAlt} className="h-full w-full object-contain" />
-        </div>
+        <img src={image} alt={mediaAlt} className="aspect-[3/4] w-full rounded-sm object-contain" />
       ) : (
         <MediaPlaceholder
           alt={mediaAlt}
           label={mediaLabel}
           ratio="3 / 4"
-          rounded="none"
           tone={packaging === 'men' ? 'teal' : 'cream'}
-          className="w-full border border-accent [border-radius:50%_50%_0_0/10rem_10rem_0_0]"
+          className="w-full"
         />
       )}
       <div className="flex items-start justify-between gap-4">
@@ -143,12 +133,12 @@ export function ProgramCard({
   return (
     <div
       className={cn(
-        'relative flex flex-col rounded-xl border bg-card p-6',
-        selected ? 'border-deep-800 ring-1 ring-deep-800' : emphasised ? 'border-deep-700' : 'border-border',
+        'relative flex flex-col rounded-sm bg-card p-6',
+        selected ? 'ring-1 ring-deep-800' : emphasised ? 'ring-1 ring-deep-700' : '',
       )}
     >
       {tierLabel ? (
-        <span className="absolute -top-3 start-6 rounded-full bg-deep-950 px-3 py-1 font-body text-2xs font-semibold uppercase tracking-wide text-cream-100">
+        <span className="absolute -top-3 start-6 rounded-full bg-deep-950 px-3 py-1 font-body text-sm font-semibold uppercase text-cream-100">
           {tierLabel}
         </span>
       ) : null}
@@ -156,7 +146,7 @@ export function ProgramCard({
       <div className="mt-2 font-body text-sm text-foreground">
         {priceLabel === null ? <PendingChip label="program price" /> : priceLabel}
       </div>
-      <div className="mt-1 font-body text-xs text-muted-foreground">
+      <div className="mt-1 font-body text-sm text-muted-foreground">
         {perDayLabel === null ? <PendingChip label="per day" /> : perDayLabel}
       </div>
       <ul className="mt-4 flex flex-col gap-1.5 font-body text-sm text-muted-foreground">
@@ -173,7 +163,7 @@ export function ProgramCard({
           onClick={onSelect}
           aria-pressed={selected}
           className={cn(
-            'mt-6 h-11 rounded-full font-body text-sm font-medium transition-colors',
+            'mt-6 h-11 rounded-xs font-body text-sm font-medium transition-colors',
             selected ? 'bg-deep-950 text-cream-100' : 'border border-border text-foreground hover:border-deep-700',
           )}
         >
@@ -200,6 +190,7 @@ export function IngredientCard({
   statusLabel,
   onReadMore,
   readMoreLabel = 'Read more',
+  image,
 }: {
   name: string;
   note: ReactNode;
@@ -208,25 +199,30 @@ export function IngredientCard({
   statusLabel?: string;
   onReadMore?: () => void;
   readMoreLabel?: string;
+  /** Real ingredient photography (see INGREDIENT_PHOTOS). Card renders text-only when omitted. */
+  image?: string;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
-      <div className="flex items-start justify-between gap-2">
-        <p className="font-display text-md text-foreground">{name}</p>
-        {statusLabel ? <Badge tone={STATUS_BADGE_TONE[status]}>{statusLabel}</Badge> : null}
+    <div className="flex flex-col gap-3">
+      {image ? <img src={image} alt="" aria-hidden className="aspect-square w-full rounded-sm object-cover" /> : null}
+      <div>
+        <div className="flex items-start justify-between gap-2">
+          <p className="font-display text-md text-foreground">{name}</p>
+          {statusLabel ? <Badge tone={STATUS_BADGE_TONE[status]}>{statusLabel}</Badge> : null}
+        </div>
+        <div className="mt-1 font-body text-sm text-muted-foreground">
+          {status === 'requires-review' ? <PendingChip label={`${name} claim`} /> : note}
+        </div>
+        {onReadMore ? (
+          <button
+            type="button"
+            onClick={onReadMore}
+            className="mt-3 font-body text-sm font-medium text-deep-800 underline underline-offset-4"
+          >
+            {readMoreLabel}
+          </button>
+        ) : null}
       </div>
-      <div className="mt-1 font-body text-sm text-muted-foreground">
-        {status === 'requires-review' ? <PendingChip label={`${name} — claim`} /> : note}
-      </div>
-      {onReadMore ? (
-        <button
-          type="button"
-          onClick={onReadMore}
-          className="mt-3 font-body text-xs font-medium text-deep-800 underline underline-offset-4"
-        >
-          {readMoreLabel}
-        </button>
-      ) : null}
     </div>
   );
 }

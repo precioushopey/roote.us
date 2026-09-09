@@ -73,8 +73,8 @@ export const SOLUTIONS: Solution[] = [
       eyebrow: L('Gray hair', 'שיער אפור'),
       title: L('Understand what is changing at the root.', 'להבין מה משתנה בשורש.'),
       body: L(
-        'Graying is a change in pigment at the follicle. The Gray system pairs a daily supplement with a topical serum — a routine, not a promise.',
-        'האפרה היא שינוי בפיגמנט בזקיק. מערכת Gray משלבת תוסף יומי עם סרום מקומי — שגרה, לא הבטחה.',
+        'Graying is a change in pigment at the follicle. The Gray system pairs a daily supplement with a topical serum: a routine, not a promise.',
+        'האפרה היא שינוי בפיגמנט בזקיק. מערכת Gray משלבת תוסף יומי עם סרום מקומי: שגרה, לא הבטחה.',
       ),
     },
     education: [

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useT } from '@/i18n/LocaleProvider';
 import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
 import { rooteContent } from '@/content/roote.config';
+import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 
 const FIELD_CLASS =
   'rounded-md border border-input bg-input-background px-3 py-2 text-sm outline-none focus:border-accent';
@@ -29,7 +30,7 @@ function ContactForm() {
       </label>
       <label className="flex flex-col gap-1 text-sm">
         {t('marketing.support.form.topicLabel')}
-        <select className={FIELD_CLASS}>
+        <select className={`cursor-pointer ${FIELD_CLASS}`}>
           <option>{t('marketing.support.form.topic1')}</option>
           <option>{t('marketing.support.form.topic2')}</option>
           <option>{t('marketing.support.form.topic3')}</option>
@@ -55,13 +56,18 @@ export function Support() {
   const { company } = rooteContent;
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="text-center">
-        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto max-w-2xl">
+      <Section tone="teal" width="content" animate={false} className="py-12 md:py-24 text-center">
+        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto !font-medium max-w-2xl">
           {t('marketing.support.hero.title')}
         </DisplayTitle>
-        <Prose size="lg" className="mx-auto mt-4 text-center">
+        <Prose size="lg" className="mx-auto mt-4 max-w-2xl text-center text-ink-foreground/75">
           {t('marketing.support.hero.body')}
         </Prose>
+        <div className="mt-6 flex justify-center">
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm sm:w-auto">
+            {t('marketing.nav.cta')}
+          </Button>
+        </div>
       </Section>
 
       <Section tone="cream" width="content">
@@ -71,7 +77,7 @@ export function Support() {
         <div className="mt-8 flex max-w-md flex-col items-start gap-4">
           <dl className="flex flex-col gap-3 text-sm">
             <div className="flex flex-col gap-0.5">
-              <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">
+              <dt className="text-sm uppercase text-muted-foreground">
                 {t('marketing.support.contact.emailLabel')}
               </dt>
               <dd dir="ltr">
@@ -81,7 +87,7 @@ export function Support() {
               </dd>
             </div>
             <div className="flex flex-col gap-0.5">
-              <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">
+              <dt className="text-sm uppercase text-muted-foreground">
                 {t('marketing.support.contact.phoneLabel')}
               </dt>
               <dd dir="ltr">
@@ -91,7 +97,7 @@ export function Support() {
               </dd>
             </div>
             <div className="flex flex-col gap-0.5">
-              <dt className="text-xs uppercase tracking-[0.1em] text-muted-foreground">
+              <dt className="text-sm uppercase text-muted-foreground">
                 {t('marketing.support.contact.hoursLabel')}
               </dt>
               <dd>{t('marketing.support.contact.hours')}</dd>
@@ -107,7 +113,7 @@ export function Support() {
             <DisplayTitle as="h2" step="md" className="max-w-sm">
               {t('marketing.support.form.title')}
             </DisplayTitle>
-            <Prose size="lg" className="max-w-sm">{t('marketing.support.hero.body')}</Prose>
+            <Prose size="lg" className="max-w-sm text-ink-foreground/75">{t('marketing.support.hero.body')}</Prose>
           </div>
           <div className="rounded-2xl border border-ink-foreground/15 bg-background p-6 text-foreground sm:p-8">
             <ContactForm />

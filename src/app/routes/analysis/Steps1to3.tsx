@@ -38,7 +38,7 @@ export function IntroScreen() {
         >
           {t('analysis.intro.cta')}
         </Button>
-        <p className="font-body text-xs text-muted-foreground">{t('analysis.intro.consentHint')}</p>
+        <p className="font-body text-sm text-muted-foreground">{t('analysis.intro.consentHint')}</p>
       </div>
     </section>
   );

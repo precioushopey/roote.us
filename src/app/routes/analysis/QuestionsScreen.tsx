@@ -139,12 +139,12 @@ export function QuestionsScreen() {
           <button
             type="button"
             onClick={() => setI(i - 1)}
-            className="font-body text-xs font-medium text-muted-foreground hover:text-foreground"
+            className="font-body text-sm font-medium text-muted-foreground hover:text-foreground"
           >
             <span aria-hidden className="inline-block rtl:rotate-180">&larr;</span> {t('common.back')}
           </button>
         )}
-        <span className="font-body text-xs text-muted-foreground">
+        <span className="font-body text-sm text-muted-foreground">
           {t('q.counter', { index: i + 1, total: questions.length })}
         </span>
       </div>
@@ -158,7 +158,7 @@ export function QuestionsScreen() {
           {q.options.map((o) => (
             <label
               key={o.value}
-              className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 font-body text-sm"
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 font-body text-sm"
             >
               <input
                 type="checkbox"

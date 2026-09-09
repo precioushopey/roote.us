@@ -11,12 +11,15 @@ HOW TO USE THIS SHEET
 ----------------------
 1. For each prompt below, if your tool supports an image reference /
    image-prompt input, attach one of the already-generated PNGs from
-   src/assets/images/ alongside the text prompt (e.g. "Level 6.png" for any
-   packaging shot, "about-team.png" for editorial/lifestyle shots) — this
-   locks the visual style, since these are continuing an existing set, not
-   starting a new one.
-2. Save each new file straight into src/assets/images/ using the exact
-   filename given under "Save as" — that's a flat folder, no subfolders.
+   src/assets/ alongside the text prompt (e.g. "products/Level 6.png"
+   for any packaging shot) — this locks the visual style, since these are
+   continuing an existing set, not starting a new one.
+2. As of 2026-09-10, src/assets/ is grouped into subfolders by kind
+   (heroes/, concerns/, products/, bundles/, ingredients/, scans/, steps/)
+   — save each new file into the matching subfolder using the exact path
+   given under "Save as" (a still-open prompt with no subfolder in its
+   "Save as" line is a genuinely new one-off asset with no group yet; ask
+   before inventing a new subfolder for it).
 3. Append the Section 0 "Negative prompt" line to every single generation.
 4. Once a file is saved, tell Claude — it will wire the <img> into the page
    and remove that entry from this sheet.
@@ -84,39 +87,107 @@ price tags, no percentage-off badges"
 
 
 ================================================================================
+0b. INGREDIENT-CARD PHOTOGRAPHY STYLE GUIDE (different treatment — read first)
+================================================================================
+This treatment is for the small ingredient-card thumbnails on /magazine
+(24 cards: DHT-pathway, regrowth, pigment, and conditioning groups). It is
+NOT the packaging or editorial/clinical treatment above — it's a warm
+apothecary/lab still-life look (botanicals + glass lab dishes on cream
+marble). All 24 are already generated — see the ingredient-*.png entries
+under ALREADY GENERATED below for real examples of the style.
+
+Every prompt below is already fully self-contained (subject + this style
+folded in) — paste one prompt as-is, then append the Section 0 negative
+prompt line above to it. Do not mix in Section 0's packaging/editorial
+wording for these; that treatment is for bottles and lifestyle shots, not
+ingredient still-lifes.
+
+Shared style, already written into every prompt below:
+"Real macro still-life product photography — not an illustration, not a
+3-D render, not a graphic composite. Set on a warm cream/beige marble or
+travertine surface, soft diffused natural window light with soft shadows,
+shallow depth of field, softly blurred warm-cream background. Minimal,
+elegant apothecary-lab styling using small ceramic or glass bowls/dishes
+and, where noted, plain glass lab vessels (beaker, petri dish, dropper
+bottle with a gold metal collar) — never a branded product bottle, never
+on-image text, never a logo. Square 1:1 crop."
+
+Content rule specific to this set: the 4 proprietary actives (Procapil®,
+Capixyl™, Greyverse™, Darkenyl™) don't have one single natural raw
+material to photograph honestly — their prompts below stage a generic,
+abstract lab-serum shot (or the one real botanical input each is actually
+built on, where that's public knowledge) rather than inventing a
+"branded ingredient" look. Don't add on-image chemical/molecular diagrams
+or invented efficacy iconography to any of these 24 — same hard rule as
+Section 0.
+
+Save every file into src/assets/ingredients/ using the "Save as"
+name given.
+
+
+================================================================================
 CHECKLIST — still needed
 ================================================================================
-(none right now — every placeholder has a generated image wired in)
+As of 2026-09-10: nothing outstanding. Every photo prompt this file ever
+tracked — the 24 ingredient cards, the /hair-scan guided-photo-angle
+illustrations and Progression card, and every /solutions/thinning +
+/solutions/gray-hair education/severity card — is generated and wired in.
+See ALREADY GENERATED below for the full list.
 
 
 ================================================================================
-ALREADY GENERATED — wired into the project, in src/assets/images/
+ALREADY GENERATED — wired into the project, in src/assets/
 ================================================================================
-about-story.png                                — About "Why we started" story image
-step-1-quiz.png                                — How it works step 1 (assessment quiz)
-step-2-scan.png                                — How it works step 2 (AI scalp-photo analysis)
-step-3-formula.png                             — How it works step 3 (custom formula)
-step-4-progress.png                            — How it works step 4 (ongoing adjustments)
-Level 6.png, Level 10.png, Level 15.png       — Density 6/10/15 packaging
-Gray Support.png                               — Gray Support packaging
-Regrowth Shampoo.png                           — Regrowth Shampoo packaging
-Gray Serum.png                                 — Gray Serum packaging
-hero-system.png                                — Home hero
-concern-thinning.png                           — Home "concern" card
-concern-gray.png                               — Home "concern" card
-concern-both.png                               — Home "concern" card
-system-men.png                                 — Home "Personalized system" (men); Products "Complete System — Men" bundle
-system-women.png                               — Home "Personalized system" (women); Products "Complete System — Women" bundle
-scan-baseline.png                              — Home progress before/after (before)
-scan-final.png                                 — Home progress before/after (after)
-gray-bundle-men.png                            — Home Gray System spotlight (men); Products "Gray Support Bundle — Men"
-gray-bundle-women.png                          — Home Gray System spotlight (women); Products "Gray Support Bundle — Women"
-regrowth-bundle-men.png                        — Products "Hair Growth Bundle — Men" (Level 15 + Regrowth Shampoo)
-regrowth-bundle-women.png                      — Products "Hair Growth Bundle — Women" (Level 15 + Regrowth Shampoo)
-catalog-hero.png                               — Products page hero
-about-team.png                                 — About page hero
-science-formulation.png                        — Science page hero
-science-oversight.png                          — Science "Medical oversight"
-how-it-works-hero.png                          — Process page hero
-thinning-hero.png                              — Thinning solution hero + index card
-gray-hair-hero.png                             — Gray-hair solution hero + index card
+heroes/Hero.png                                       — Home hero; Home final CTA
+steps/step-1-quiz.png                                — Home "how it works" step grid (Analyze)
+steps/step-2-scan.png                                — Home "how it works" step grid (Understand)
+steps/step-3-formula.png                             — Home "how it works" step grid (Personalize)
+steps/step-4-progress.png                            — Home "how it works" step grid (Treat)
+steps/step-5-track.png                               — Home "Personalized system" step grid, step 5 (Track)
+scans/scan-progress.png                              — /hair-scan "What to expect" timeline, phase 2 (3-month progress scan)
+scans/scan-example-front.png                         — /hair-scan "The scan" guided-photo-angle illustration (front)
+scans/scan-example-top.png                           — /hair-scan "The scan" guided-photo-angle illustration (top)
+scans/scan-example-crown.png                         — /hair-scan "The scan" guided-photo-angle illustration (crown)
+scans/scan-example-hairline.png                      — /hair-scan "The scan" guided-photo-angle illustration (hairline)
+scans/scan-app-compare.png                           — /hair-scan "What the scan measures" card (Progression)
+concerns/solution-thinning-crown.png                 — /solutions/thinning education card (Crown)
+concerns/solution-thinning-diffuse.png               — /solutions/thinning education card (Diffuse thinning)
+concerns/solution-gray-pigmentation.png              — /solutions/gray-hair education card (Pigmentation)
+concerns/solution-gray-routine.png                   — /solutions/gray-hair education card (A long-term routine)
+concerns/solution-gray-early.png                     — /solutions/gray-hair severity card (Early)
+concerns/solution-gray-moderate.png                  — /solutions/gray-hair severity card (Moderate)
+concerns/solution-gray-advanced.png                  — /solutions/gray-hair severity card (Advanced)
+products/Level 6.png, products/Level 10.png, products/Level 15.png       — Density 6/10/15 packaging
+products/Gray Support.png                               — Gray Support packaging
+products/Regrowth Shampoo.png                           — Regrowth Shampoo packaging
+products/Gray Serum.png                                 — Gray Serum packaging
+concerns/concern-thinning.png                           — Home "concern" card; Magazine "Why hair loss happens"
+concerns/concern-gray.png                               — Home "concern" card
+concerns/concern-both.png                               — Home "concern" card
+bundles/system-men.png                                 — Home "Personalized system" (men); Products "Complete System — Men" bundle
+bundles/system-women.png                               — Home "Personalized system" (women); Products "Complete System — Women" bundle
+scans/scan-baseline.png                              — Home progress before/after (before)
+scans/scan-final.png                                 — Home progress before/after (after)
+bundles/gray-bundle-men.png                            — Home Gray System spotlight (men); Products "Gray Support Bundle — Men"
+bundles/gray-bundle-women.png                          — Home Gray System spotlight (women); Products "Gray Support Bundle — Women"
+bundles/regrowth-bundle-men.png                        — Products "Hair Growth Bundle — Men" (Level 15 + Regrowth Shampoo)
+bundles/regrowth-bundle-women.png                      — Products "Hair Growth Bundle — Women" (Level 15 + Regrowth Shampoo)
+heroes/catalog-hero.png                               — Products page hero
+scans/science-oversight.png                          — /hair-scan "Your plan"
+heroes/thinning-hero.png                              — Thinning solution hero + index card
+heroes/gray-hair-hero.png                             — Gray-hair solution hero + index card
+
+Ingredient cards (/magazine) — all 24 generated, apothecary still-life
+style per Section 0b above:
+  DHT-pathway:   ingredients/ingredient-finasteride.png, ingredients/ingredient-azelaic-acid.png,
+                 ingredients/ingredient-saw-palmetto.png, ingredients/ingredient-nettle-root.png
+  Regrowth:      ingredients/ingredient-minoxidil.png, ingredients/ingredient-procapil.png,
+                 ingredients/ingredient-capixyl.png, ingredients/ingredient-caffeine.png,
+                 ingredients/ingredient-ginseng.png, ingredients/ingredient-rosemary.png
+  Pigment:       ingredients/ingredient-greyverse.png, ingredients/ingredient-darkenyl.png,
+                 ingredients/ingredient-fo-ti.png, ingredients/ingredient-biotin.png,
+                 ingredients/ingredient-catalase.png, ingredients/ingredient-l-tyrosine.png,
+                 ingredients/ingredient-paba.png, ingredients/ingredient-zinc.png
+  Conditioning:  ingredients/ingredient-green-tea.png, ingredients/ingredient-panthenol.png,
+                 ingredients/ingredient-nettle.png, ingredients/ingredient-horsetail.png,
+                 ingredients/ingredient-sage.png, ingredients/ingredient-jojoba.png

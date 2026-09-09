@@ -22,33 +22,17 @@ export const ROUTE_META: Record<string, PageMeta> = {
       'מתחילים באבחון שיער מודרך. מבינים את המצב, מקבלים תוכנית אישית, ועוקבים אחר המסע מהסריקה הראשונה ועד לתוצאה הסופית.',
     ),
   },
-  '/how-it-works': {
-    title: L('How ROOTÉ works', 'איך ROOTÉ עובד'),
-    description: L('Analyze, understand, personalize, treat, track — a treatment journey built around your hair.', 'לנתח, להבין, להתאים, לטפל, לעקוב — מסע טיפול שנבנה סביב השיער שלך.'),
-  },
   '/solutions': {
     title: L('Hair thinning & gray-hair solutions', 'פתרונות לשיער דליל ולשיער אפור'),
     description: L('Understand your hair, then choose a path. Each solution starts with a free analysis.', 'להבין את השיער, ואז לבחור מסלול. כל פתרון מתחיל באבחון חינם.'),
-  },
-  '/science': {
-    title: L('The science in your program', 'המדע שבתוכנית שלך'),
-    description: L('Know what is in your ROOTÉ program. Formula and claim information is subject to regulatory review.', 'לדעת מה יש בתוכנית ROOTÉ שלך. מידע על הפורמולה והטענות כפוף לבדיקה רגולטורית.'),
   },
   '/results': {
     title: L('Results', 'תוצאות'),
     description: L('Progress should be documented, not promised. Verified ROOTÉ results coming soon.', 'התקדמות צריך לתעד, לא להבטיח. תוצאות ROOTÉ מאומתות בקרוב.'),
   },
-  '/system': {
-    title: L('Our system', 'השיטה שלנו'),
-    description: L('Analyze. Treat. Track. Your ROOTÉ program does not end at checkout.', 'לנתח. לטפל. לעקוב. תוכנית ROOTÉ שלך לא נגמרת בקופה.'),
-  },
   '/products': {
     title: L('Products', 'מוצרים'),
     description: L('Targeted treatments and support products. Your program tells you which to use.', 'טיפולים ממוקדים ומוצרי תמיכה. התוכנית שלך מגדירה במה להשתמש.'),
-  },
-  '/about': {
-    title: L('About ROOTÉ', 'אודות ROOTÉ'),
-    description: L('A personalized hair system operated by 91 ENTERPRISE LLC.', 'מערכת שיער אישית המופעלת על ידי 91 ENTERPRISE LLC.'),
   },
   '/analysis': {
     title: L('Free hair analysis', 'אבחון שיער חינם'),
@@ -78,7 +62,7 @@ export const ROUTE_META: Record<string, PageMeta> = {
 for (const product of PRODUCTS) {
   const shortName = product.name.replace(/^ROOTÉ\s+/, '');
   ROUTE_META[`/products/${product.slug}`] = {
-    title: L(`${shortName} — ${product.subtitle.en}`, `${shortName} — ${product.subtitle.he}`),
+    title: L(`${shortName}: ${product.subtitle.en}`, `${shortName}: ${product.subtitle.he}`),
     description: product.shortDescription,
   };
 }
@@ -95,5 +79,5 @@ export function metaForPath(path: string): PageMeta {
 }
 
 export function fullTitle(title: string): string {
-  return `${SITE} — ${title}`;
+  return `${SITE}: ${title}`;
 }

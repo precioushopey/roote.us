@@ -19,8 +19,8 @@ export function Eyebrow({
   return (
     <p
       className={cn(
-        'u-caps font-body text-2xs font-semibold',
-        onDark ? 'text-cream-100/70' : 'text-muted-foreground',
+        'u-caps font-body text-sm font-semibold',
+        onDark ? 'text-cream-100' : 'text-muted-foreground',
         className,
       )}
     >
@@ -90,7 +90,7 @@ export function Prose({
     lg: 'text-md leading-[1.7]',
   }[size];
   return (
-    <p className={cn('font-body max-w-[62ch]', s, onDark ? 'text-cream-100/85' : 'text-muted-foreground', className)}>
+    <p className={cn('font-body font-regular max-w-[62ch]', s, onDark ? 'text-cream-100' : 'text-muted-foreground', className)}>
       {children}
     </p>
   );

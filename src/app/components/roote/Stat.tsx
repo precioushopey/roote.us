@@ -24,8 +24,8 @@ export function Stat({ label, value, pendingLabel, hint, onDark = false, align =
     <div className={cn(align === 'center' && 'text-center', className)}>
       <p
         className={cn(
-          'u-caps font-body text-2xs font-semibold',
-          onDark ? 'text-cream-100/60' : 'text-muted-foreground',
+          'u-caps font-body text-sm font-semibold',
+          onDark ? 'text-cream-100' : 'text-muted-foreground',
         )}
       >
         {label}
@@ -34,7 +34,7 @@ export function Stat({ label, value, pendingLabel, hint, onDark = false, align =
         {value === null ? <PendingChip label={pendingLabel ?? label} /> : value}
       </div>
       {hint ? (
-        <p className={cn('mt-1 text-xs', onDark ? 'text-cream-100/60' : 'text-muted-foreground')}>{hint}</p>
+        <p className={cn('mt-1 text-sm', onDark ? 'text-cream-100' : 'text-muted-foreground')}>{hint}</p>
       ) : null}
     </div>
   );

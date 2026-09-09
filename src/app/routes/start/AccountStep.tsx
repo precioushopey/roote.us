@@ -65,11 +65,11 @@ export function AccountStep() {
           {t('start.account.submit')}
         </Button>
         {/* TODO: confirm with client — magic-link sign-in as an alternative to password auth */}
-        <button type="button" disabled className="font-body text-xs text-muted-foreground underline opacity-50">
+        <button type="button" disabled className="font-body text-sm text-muted-foreground underline opacity-50">
           {t('start.account.magicLink')}
         </button>
       </form>
-      <p className="font-body text-xs text-muted-foreground">
+      <p className="font-body text-sm text-muted-foreground">
         {t('start.account.haveAccount')} <TextLink to={withLocale('/login')}>{t('start.account.signInCta')}</TextLink>
       </p>
     </div>

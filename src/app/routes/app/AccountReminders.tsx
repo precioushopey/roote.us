@@ -55,7 +55,7 @@ export function AccountReminders() {
             {upcoming.map((r) => (
               <li key={r.id} className="flex items-baseline justify-between gap-4 px-4 py-3">
                 <span className="font-body text-sm text-foreground">{t(r.labelKey as MessageKey)}</span>
-                <span className="font-body text-2xs text-muted-foreground">{r.dueDate}</span>
+                <span className="font-body text-sm text-muted-foreground">{r.dueDate}</span>
               </li>
             ))}
           </ul>
@@ -69,10 +69,10 @@ export function AccountReminders() {
             const on = isReminderEnabled(type, tracking.reminderSettings);
             return (
               <li key={type}>
-                <label className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-4 py-3">
+                <label className="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-border bg-card px-4 py-3">
                   <span className="font-body text-sm text-foreground">{t(REMINDER_LABEL_KEY[type] as MessageKey)}</span>
                   <span className="flex items-center gap-2">
-                    <span className="font-body text-2xs text-muted-foreground">
+                    <span className="font-body text-sm text-muted-foreground">
                       {on ? t('app.reminders.on') : t('app.reminders.off')}
                     </span>
                     <input
@@ -88,7 +88,7 @@ export function AccountReminders() {
           })}
         </ul>
         <Card tone="cream">
-          <p className="font-body text-2xs text-muted-foreground">{t('app.reminders.deliveryNote')}</p>
+          <p className="font-body text-sm text-muted-foreground">{t('app.reminders.deliveryNote')}</p>
         </Card>
       </section>
     </div>

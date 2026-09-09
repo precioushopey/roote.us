@@ -1,5 +1,4 @@
-import { Link } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useContentLocale } from '@/i18n/LocaleProvider';
 import {
   Section,
   DisplayTitle,
@@ -7,15 +6,12 @@ import {
   Eyebrow,
   Button,
   IngredientCard,
-  PendingChip,
 } from '@/app/components/roote';
-import { EXTERNAL_ASSESSMENT_URL, PATHS } from '@/app/paths';
+import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
-import { PRODUCTS } from '@/content/products';
 import type { ClaimStatus } from '@/content/claims';
 import {
   HAIR_LOSS_SCIENCE,
-  RESULTS_TIMELINE_CLAIM,
   dedupedIngredients,
   INGREDIENT_CATEGORY,
   INGREDIENT_EXPLANATIONS,
@@ -23,8 +19,23 @@ import {
   type IngredientCategory,
 } from '@/content/magazine';
 import type { MessageKey } from '@/i18n/messages';
+import { INGREDIENT_PHOTOS } from '@/app/components/roote/ingredientPhotos';
+import concernThinning from '@/assets/concerns/concern-thinning.png';
+import level10 from '@/assets/products/Level 10.png';
+import graySupport from '@/assets/products/Gray Support.png';
+import graySerum from '@/assets/products/Gray Serum.png';
+import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
 
-/** Same 4 categories `/science` shows, same i18n keys — the two pages agree. */
+/** One representative real SKU photo per format — reuses the same product
+ *  assets ProductDetail.tsx uses, not new photography. */
+const FORMAT_PHOTOS: Record<string, string> = {
+  'topical-solution': level10,
+  'capsule-supplement': graySupport,
+  serum: graySerum,
+  shampoo: regrowthShampoo,
+};
+
+/** Same 4 categories `/hair-scan`'s "Your plan" section shows, same i18n keys. */
 const CATEGORY_LABEL_KEY: Record<IngredientCategory, MessageKey> = {
   dht: 'marketing.sci.mechanism.dhtTitle',
   regrowth: 'marketing.sci.mechanism.regrowthTitle',
@@ -34,7 +45,8 @@ const CATEGORY_LABEL_KEY: Record<IngredientCategory, MessageKey> = {
 const CATEGORY_ORDER: IngredientCategory[] = ['dht', 'regrowth', 'pigment', 'conditioning'];
 
 /** Keys added in Task 4 Step 6 — dedicated Magazine format labels, not reused
- *  from /science's SKU-group labels (different meaning: format, not SKU line). */
+ *  from the old Science page's SKU-group labels (different meaning: format,
+ *  not SKU line). */
 const FORMAT_LABEL_KEY: Record<string, MessageKey> = {
   'topical-solution': 'marketing.magazine.formatLabel.topicalSolution',
   'capsule-supplement': 'marketing.magazine.formatLabel.capsuleSupplement',
@@ -45,50 +57,52 @@ const FORMAT_LABEL_KEY: Record<string, MessageKey> = {
 export function Magazine() {
   const t = useT();
   const cl = useContentLocale();
-  const withLocale = useLocalizedPath();
   const statusLabel: Record<ClaimStatus, string> = {
     approved: t('marketing.sci.status.approved'),
     working: t('marketing.sci.status.working'),
     'requires-review': t('marketing.sci.status.requiresReview'),
   };
-  const timelineClaim = RESULTS_TIMELINE_CLAIM[cl];
+  // Supplier-proprietary actives (Procapil®, Greyverse™, Darkenyl™, Capixyl™)
+  // have no approved copy yet and would only render as a [PENDING] card —
+  // left out of the library grid entirely rather than shown pending. Not a
+  // content change: nothing is written for them, they're just not listed.
   const byCategory = (cat: IngredientCategory) =>
-    dedupedIngredients().filter((ing) => INGREDIENT_CATEGORY[ing.name] === cat);
+    dedupedIngredients().filter(
+      (ing) => INGREDIENT_CATEGORY[ing.name] === cat && ing.claimStatus !== 'requires-review',
+    );
 
   return (
     <>
-      <Section tone="teal" width="content" animate={false}>
-        <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
-          {t('marketing.magazine.eyebrow')}
-        </Eyebrow>
-        <DisplayTitle as="h1" step="lg" className="mt-2 max-w-2xl">
+      <Section tone="teal" width="content" animate={false} className="py-12 md:py-24 text-center">
+        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto !font-medium max-w-2xl">
           {t('marketing.magazine.title')}
         </DisplayTitle>
-        <Prose size="lg" className="mt-4 max-w-2xl">
+        <Prose size="lg" className="mx-auto mt-4 max-w-2xl text-center text-ink-foreground/75">
           {t('marketing.magazine.body')}
         </Prose>
+        <div className="mt-6 flex justify-center">
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm sm:w-auto">
+            {t('marketing.nav.cta')}
+          </Button>
+        </div>
       </Section>
 
       <Section id="why" tone="cream" width="content">
-        <Eyebrow>{t('marketing.magazine.whyEyebrow')}</Eyebrow>
-        <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
-          {t('marketing.magazine.whyHeading')}
-        </DisplayTitle>
-        <Prose size="lg" className="mt-4 max-w-2xl">
-          {pickLocalized(HAIR_LOSS_SCIENCE, cl)}
-        </Prose>
-      </Section>
-
-      <Section tone="cream" width="content">
-        <DisplayTitle as="h2" step="lg" className="max-w-2xl">
-          {t('marketing.magazine.timelineHeading')}
-        </DisplayTitle>
-        <div className="mt-4 max-w-2xl">
-          {timelineClaim.status === 'requires-review' ? (
-            <PendingChip label={t('marketing.magazine.timelinePendingLabel')} />
-          ) : (
-            <Prose size="lg">{timelineClaim.text}</Prose>
-          )}
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <Eyebrow>{t('marketing.magazine.whyEyebrow')}</Eyebrow>
+            <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
+              {t('marketing.magazine.whyHeading')}
+            </DisplayTitle>
+            <Prose size="lg" className="mt-4 max-w-2xl">
+              {pickLocalized(HAIR_LOSS_SCIENCE, cl)}
+            </Prose>
+          </div>
+          <img
+            src={concernThinning}
+            alt={t('marketing.magazine.whyMediaAlt')}
+            className="aspect-[4/3] w-full rounded-sm object-cover"
+          />
         </div>
       </Section>
 
@@ -104,7 +118,7 @@ export function Magazine() {
             return (
               <div key={cat}>
                 <h3 className="font-display text-lg text-foreground">{t(CATEGORY_LABEL_KEY[cat])}</h3>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-4 grid gap-y-8 gap-x-6 sm:grid-cols-2 lg:grid-cols-4">
                   {ingredients.map((ing) => {
                     const explanation = INGREDIENT_EXPLANATIONS[ing.name];
                     const note = explanation ? pickLocalized(explanation, cl) : pickLocalized(ing.note, cl);
@@ -114,7 +128,8 @@ export function Magazine() {
                         name={ing.name}
                         note={note}
                         status={ing.claimStatus}
-                        statusLabel={statusLabel[ing.claimStatus]}
+                        statusLabel={ing.claimStatus === 'working' ? undefined : statusLabel[ing.claimStatus]}
+                        image={INGREDIENT_PHOTOS[ing.name]}
                       />
                     );
                   })}
@@ -132,41 +147,31 @@ export function Magazine() {
         </DisplayTitle>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {(Object.keys(FORMAT_EXPLANATIONS) as Array<keyof typeof FORMAT_EXPLANATIONS>).map((format) => (
-            <div key={format} className="flex flex-col gap-2 rounded-xl border border-border bg-card p-6">
-              <p className="font-display text-md text-foreground">{t(FORMAT_LABEL_KEY[format])}</p>
-              <Prose className="mt-1">{pickLocalized(FORMAT_EXPLANATIONS[format], cl)}</Prose>
+            <div key={format} className="flex flex-col items-center gap-4 text-center">
+              <img
+                src={FORMAT_PHOTOS[format]}
+                alt=""
+                aria-hidden
+                className="aspect-square w-full rounded-sm object-contain"
+              />
+              <div className="flex flex-col gap-2">
+                <p className="font-display text-md text-foreground">{t(FORMAT_LABEL_KEY[format])}</p>
+                <Prose className="mt-1">{pickLocalized(FORMAT_EXPLANATIONS[format], cl)}</Prose>
+              </div>
             </div>
           ))}
         </div>
       </Section>
 
-      <Section tone="cream" width="content">
-        <Eyebrow>{t('marketing.magazine.productsEyebrow')}</Eyebrow>
-        <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
-          {t('marketing.magazine.productsHeading')}
-        </DisplayTitle>
-        {/* Reuses each product's own already-approved shortDescription as the
-            teaser, rather than drafting new copy that could drift from /products. */}
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCTS.map((p) => (
-            <Link
-              key={p.slug}
-              to={withLocale(PATHS.product(p.slug))}
-              className="flex flex-col gap-2 rounded-xl border border-border bg-card p-6 transition-colors hover:border-deep-700"
-            >
-              <p className="font-display text-md text-foreground">{p.name}</p>
-              <Prose className="mt-1">{pickLocalized(p.shortDescription, cl)}</Prose>
-            </Link>
-          ))}
-        </div>
-      </Section>
-
       <Section tone="teal" width="readable" className="border-b border-accent text-center">
-        <DisplayTitle as="h2" step="lg" align="center">
-          {t('marketing.magazine.ctaHeading')}
-        </DisplayTitle>
-        <div className="mt-6 flex justify-center">
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps>
+        <div className="flex flex-col items-center gap-5">
+          <DisplayTitle as="h2" step="xl" align="center">
+            {t('marketing.magazine.ctaHeading')}
+          </DisplayTitle>
+          <Prose size="lg" className="mx-auto text-center text-ink-foreground/75">
+            {t('marketing.magazine.ctaBody')}
+          </Prose>
+          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm font-bold sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         </div>

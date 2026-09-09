@@ -133,16 +133,16 @@ export function AccountResults() {
             const f = finalScan?.metrics.find((x) => x.key === m.key);
             return [
               t(METRIC_LABEL[m.key] ?? METRIC_LABEL_FALLBACK),
-              `${t('app.results.analysis.initial')}: ${t(m.status as 'severity.mild')}  |  ${t('app.results.analysis.final')}: ${f ? t(f.status as 'severity.mild') : '—'}`,
+              `${t('app.results.analysis.initial')}: ${t(m.status as 'severity.mild')}  |  ${t('app.results.analysis.final')}: ${f ? t(f.status as 'severity.mild') : '-'}`,
             ];
           }),
         },
         { heading: t('app.results.adherence.title'), rows: [[t('app.today.adherence.label'), `${up.adherencePct}%`]] },
         {
           heading: t('app.results.products.title'),
-          lines: [...treatments.core, ...treatments.supporting].map((tr) => `${tr.name} — ${tr.frequency}`),
+          lines: [...treatments.core, ...treatments.supporting].map((tr) => `${tr.name}: ${tr.frequency}`),
         },
-        { heading: t('app.results.timeline.title'), lines: milestones.map((m) => `${m.dayLabel} — ${m.title}`) },
+        { heading: t('app.results.timeline.title'), lines: milestones.map((m) => `${m.dayLabel}: ${m.title}`) },
       ],
       disclaimer: `${t('app.progress.metricsNote')} ${t('app.results.adherence.body')}`,
       filename: 'roote-program-results.pdf',
@@ -191,8 +191,8 @@ export function AccountResults() {
           <div className="mt-4 flex flex-col gap-4">
             {baselinePhoto('front') && finalPhoto('front') && (
               <BeforeAfterSlider
-                before={<Photo src={baselinePhoto('front')!} alt={`${t('photo.angle.front')} — ${t('app.baseline.badge')}`} />}
-                after={<Photo src={finalPhoto('front')!} alt={`${t('photo.angle.front')} — ${t('app.results.analysis.final')}`} />}
+                before={<Photo src={baselinePhoto('front')!} alt={`${t('photo.angle.front')}, ${t('app.baseline.badge')}`} />}
+                after={<Photo src={finalPhoto('front')!} alt={`${t('photo.angle.front')}, ${t('app.results.analysis.final')}`} />}
                 beforeLabel={t('app.results.analysis.initial')}
                 afterLabel={t('app.results.analysis.final')}
                 ariaLabel={t('app.beforeAfter.reveal')}
@@ -212,16 +212,16 @@ export function AccountResults() {
                         className="aspect-square w-full overflow-hidden rounded-md border border-border bg-cream-100"
                       >
                         {cell.src ? (
-                          <Photo src={cell.src} alt={`${t(VIEW_KEY[v])} — ${cell.tag}`} />
+                          <Photo src={cell.src} alt={`${t(VIEW_KEY[v])}, ${cell.tag}`} />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center text-center font-body text-[10px] text-muted-foreground">
+                          <div className="flex h-full w-full items-center justify-center text-center font-body text-sm text-muted-foreground">
                             {t('app.photos.notYet')}
                           </div>
                         )}
                       </div>
                     ))}
                   </div>
-                  <figcaption className="font-body text-2xs text-muted-foreground">{t(VIEW_KEY[v])}</figcaption>
+                  <figcaption className="font-body text-sm text-muted-foreground">{t(VIEW_KEY[v])}</figcaption>
                 </figure>
               ))}
             </div>
@@ -238,7 +238,7 @@ export function AccountResults() {
             <>
               {!finalScan && <p className="mb-3">{t('app.results.analysis.pending')}</p>}
               <dl className="divide-y divide-border/60">
-                <div className="grid grid-cols-[1fr_auto_auto] items-baseline gap-4 pb-2 font-body text-2xs text-muted-foreground">
+                <div className="grid grid-cols-[1fr_auto_auto] items-baseline gap-4 pb-2 font-body text-sm text-muted-foreground">
                   <span />
                   <span>{t('app.results.analysis.initial')}</span>
                   <span>{t('app.results.analysis.final')}</span>
@@ -253,9 +253,9 @@ export function AccountResults() {
                       </dt>
                       <dd className="font-display text-sm text-foreground">{t(b.status as 'severity.mild')}</dd>
                       <dd className="font-display text-sm text-foreground">
-                        {f ? t(f.status as 'severity.mild') : <span className="text-muted-foreground">—</span>}
+                        {f ? t(f.status as 'severity.mild') : <span className="text-muted-foreground">-</span>}
                         {cmp.numericChange != null && (
-                          <span className="ms-1 font-body text-2xs text-accent">
+                          <span className="ms-1 font-body text-sm text-accent">
                             {cmp.numericChange > 0 ? '+' : ''}
                             {cmp.numericChange}
                           </span>
@@ -265,7 +265,7 @@ export function AccountResults() {
                   );
                 })}
               </dl>
-              <p className="mt-3 font-body text-xs">{t('app.progress.metricsNote')}</p>
+              <p className="mt-3 font-body text-sm">{t('app.progress.metricsNote')}</p>
               {finalScan?.isMock && (
                 <Badge tone="review" className="mt-2">
                   {t('app.scans.demo')}
@@ -285,7 +285,7 @@ export function AccountResults() {
             {[...treatments.core, ...treatments.supporting].map((tr) => (
               <li key={tr.key} className="flex items-baseline justify-between gap-4">
                 <span className="text-foreground">{tr.name}</span>
-                <span className="font-body text-xs text-muted-foreground">{tr.frequency}</span>
+                <span className="font-body text-sm text-muted-foreground">{tr.frequency}</span>
               </li>
             ))}
           </ul>

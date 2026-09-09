@@ -1401,7 +1401,7 @@ export function PlanStep() {
               />
               {row.label}
               {row.isRecommended && (
-                <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] text-accent-foreground">
+                <span className="rounded-full bg-accent px-2 py-0.5 text-xs text-accent-foreground">
                   {t('start.plan.recommendedBadge')}
                 </span>
               )}

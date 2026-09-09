@@ -85,7 +85,7 @@ export function AnalysisPrompt() {
         <button
           type="button"
           onClick={dismiss}
-          className="font-body text-xs text-muted-foreground underline underline-offset-4"
+          className="font-body text-sm text-muted-foreground underline underline-offset-4"
         >
           {t('marketing.popup.dismiss')}
         </button>
