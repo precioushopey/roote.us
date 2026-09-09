@@ -6,13 +6,21 @@ import { L, type LocalizedText } from './localized';
  * are non-prescription and eligible for one-click add-to-bag. Complete
  * System and Hair Growth both include a Density SKU, which stays assessment
  * + review gated — their cards show a review note instead of "Add to bag"
- * (see `bundleRequiresReview` in Products.tsx). Gray Support Bundle price
- * matches the equivalent competitor kit (heyhair.co's "Advanced Anti-Grey
- * Hair Treatment Kit" — the same two products). Complete System and Hair
- * Growth Bundle have no equivalent competitor combo (neither reference site
- * bundles a topical treatment with a shampoo), so their price is the sum of
- * their component SKUs' own (competitor-matched or client-set) prices —
- * client instruction, 2026-09-08 — not an invented number.
+ * (see `bundleRequiresReview` in Products.tsx).
+ *
+ * `compareAtPrice` is the sum of the bundle's own component SKU prices (the
+ * real cost of buying the same items separately) — never invented, always
+ * derivable from `content/products.ts`. 2026-09-08: user asked to match
+ * heyhair.co's bundle-discount pattern (their real "ESCAPE YOUR GRAY CORE"
+ * and "Hair Growth Starter/Ultimate" kits discount 9.6%–12.5% off the sum of
+ * components, sourced by fetching their live product data). Complete System
+ * and Hair Growth Bundle previously had no discount (price === sum); both
+ * now carry a ~10% markdown to match. Gray Support Bundle's price ($70) was
+ * set earlier by direct competitor price-matching (a separate prior
+ * decision, not re-touched here) — its `compareAtPrice` ($90, the real sum
+ * of its two components) is therefore a genuine ~22% discount, wider than
+ * the 10-12% band, because it already undercut the component sum before
+ * this change.
  */
 
 export type BundlePackaging = 'men' | 'women';
@@ -25,6 +33,10 @@ export type ShopBundle = {
   name: LocalizedText;
   summary: LocalizedText;
   price: number | null;
+  /** Sum of the component SKUs' own prices — the "if bought separately"
+   *  reference shown struck through next to `price`. `null` when there's no
+   *  discount to show (price === sum, or price is itself null/pending). */
+  compareAtPrice: number | null;
 };
 
 export const SHOP_BUNDLES: ShopBundle[] = [
@@ -37,8 +49,10 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       'The full thinning and gray routine, in men’s packaging.',
       'שגרת הצפיפות והשיער האפור המלאה, באריזה לגברים.',
     ),
-    // Sum of components: density-15 (53) + gray-support (38) + gray-serum (52) + regrowth-shampoo (40).
-    price: 183,
+    // Sum of components: density-15 (53) + gray-support (38) + gray-serum (52) + regrowth-shampoo (40) = 183.
+    // ~10% off to match heyhair.co's bundle-discount pattern (2026-09-08).
+    price: 165,
+    compareAtPrice: 183,
   },
   {
     id: 'complete-system-women',
@@ -49,8 +63,10 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       'The full thinning and gray routine, in women’s packaging.',
       'שגרת הצפיפות והשיער האפור המלאה, באריזה לנשים.',
     ),
-    // Sum of components: density-15 (53) + gray-support (38) + gray-serum (52) + regrowth-shampoo (40).
-    price: 183,
+    // Sum of components: density-15 (53) + gray-support (38) + gray-serum (52) + regrowth-shampoo (40) = 183.
+    // ~10% off to match heyhair.co's bundle-discount pattern (2026-09-08).
+    price: 165,
+    compareAtPrice: 183,
   },
   {
     id: 'gray-support-bundle-men',
@@ -62,7 +78,9 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       'Gray Support ו-Gray Serum, באריזה לגברים.',
     ),
     // Matches Advanced Anti-Grey Hair Treatment Kit (Gray Escape + Root Revival Serum, 1 kit), heyhair.co.
+    // compareAtPrice is the real sum of its own components: gray-support (38) + gray-serum (52) = 90.
     price: 70,
+    compareAtPrice: 90,
   },
   {
     id: 'gray-support-bundle-women',
@@ -74,7 +92,9 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       'Gray Support ו-Gray Serum, באריזה לנשים.',
     ),
     // Matches Advanced Anti-Grey Hair Treatment Kit (Gray Escape + Root Revival Serum, 1 kit), heyhair.co.
+    // compareAtPrice is the real sum of its own components: gray-support (38) + gray-serum (52) = 90.
     price: 70,
+    compareAtPrice: 90,
   },
   {
     id: 'hair-growth-bundle-men',
@@ -85,8 +105,10 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       'Density treatment and Regrowth Shampoo, in men’s packaging.',
       'טיפול Density ושמפו Regrowth, באריזה לגברים.',
     ),
-    // Sum of components: density-15 (53) + regrowth-shampoo (40).
-    price: 93,
+    // Sum of components: density-15 (53) + regrowth-shampoo (40) = 93.
+    // ~10% off to match heyhair.co's bundle-discount pattern (2026-09-08).
+    price: 84,
+    compareAtPrice: 93,
   },
   {
     id: 'hair-growth-bundle-women',
@@ -97,7 +119,9 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       'Density treatment and Regrowth Shampoo, in women’s packaging.',
       'טיפול Density ושמפו Regrowth, באריזה לנשים.',
     ),
-    // Sum of components: density-15 (53) + regrowth-shampoo (40).
-    price: 93,
+    // Sum of components: density-15 (53) + regrowth-shampoo (40) = 93.
+    // ~10% off to match heyhair.co's bundle-discount pattern (2026-09-08).
+    price: 84,
+    compareAtPrice: 93,
   },
 ];
