@@ -181,7 +181,7 @@ export function HairScan() {
           title={t('marketing.howItWorks.timeline.title')}
           body={t('marketing.howItWorks.timeline.shedding')}
         />
-        <ol className="relative grid gap-12 sm:grid-cols-3">
+        <ol className="relative grid gap-8 sm:grid-cols-3">
           {/* Spans circle 1's center to circle 3's center exactly: each circle
               sits flush at its column's start (radius 1.25rem = h-10/2), and
               grid-cols-3 + gap-12 (3rem) fixes the other two centers at
@@ -190,12 +190,14 @@ export function HairScan() {
           <span aria-hidden className="absolute start-5 end-[calc(33.333%-3.25rem)] top-5 hidden h-px bg-accent/40 sm:block" />
           {phases.map((phase) => (
             <li key={phase.action} className="relative flex flex-col gap-4">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center self-start rounded-full border border-accent bg-background font-display text-lg text-accent">
-                {phase.n}
-              </span>
-              <div className="flex flex-col gap-1">
-                <p className="font-display text-lg md:text-xl text-foreground">{phase.action}</p>
-                <p className="font-body text-sm font-semibold uppercase text-accent">{phase.duration}</p>
+              <div className="flex flex-row sm:flex-col items-center sm:items-start gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center self-start rounded-full border border-accent bg-background font-display text-lg text-accent">
+                  {phase.n}
+                </span>
+                <div className="flex flex-col gap-1">
+                  <p className="font-display text-lg md:text-xl text-foreground">{phase.action}</p>
+                  <p className="font-body text-sm font-semibold uppercase text-accent">{phase.duration}</p>
+                </div>
               </div>
               <img src={PHASE_PHOTOS[phase.n]} alt="" aria-hidden loading="lazy" className="aspect-square w-full rounded-sm object-cover" />
               <ul className="flex flex-col gap-2 font-body text-sm md:text-base text-muted-foreground">
