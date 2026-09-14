@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
+import { Menu, User } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useScrollCondense } from '@/app/lib/useScrollCondense';
 import { Wordmark } from '@/app/components/brand/Wordmark';
-import { Button, Drawer, IconButton, CountryLanguageSelector } from '@/app/components/roote';
+import { Button, Drawer, IconButton, LanguagePicker } from '@/app/components/roote';
 import { CartLink } from '@/app/components/shell/CartLink';
 import { cn } from '@/app/components/ui/utils';
 import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
-import { countryDefault, type LocaleCode } from '@/i18n/locales';
 import type { MessageKey } from '@/i18n/messages';
 import { useCart } from '@/store/cart';
 
-// 2026-09-08 nav sketch: Magazine | Products | AI Section. Process/Science/About
-// are dropped from the header nav (still fully built and reachable via Footer +
-// direct URL — see docs/../roote-header-nav-sketch memory for the decision).
+// 2026-09-08 nav sketch: Magazine | Products | AI Section. The former
+// Process/Science/About pages were dropped from the header nav then, and were
+// fully removed from the app (routes + components) in the 2026-09-10 redesign
+// consolidation — /about, /science, /how-it-works, /system no longer exist.
 const NAV: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.magazine', PATHS.magazine],
   ['marketing.nav.products', PATHS.products],
@@ -25,22 +26,8 @@ export function Header() {
   const withLocale = useLocalizedPath();
   const condensed = useScrollCondense();
   const cart = useCart();
-  const { locale, country, setLocale, setLocaleRegion } = useLocale();
+  const { locale, setLocale } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const regionLabels = {
-    open: t('marketing.region.trigger'),
-    title: t('marketing.region.title'),
-    region: t('marketing.region.regionLabel'),
-    language: t('marketing.region.languageLabel'),
-    done: t('marketing.region.done'),
-  };
-
-  // Picking a region also moves the language to that region's default.
-  const onChangeCountry = (c: string) => {
-    setLocaleRegion(countryDefault(c).locale, c);
-  };
-  const onChangeLocale = (l: LocaleCode) => setLocale(l);
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
@@ -51,102 +38,98 @@ export function Header() {
   return (
     <header
       className={cn(
-        // Solid white — keeps the gold wordmark legible without relying on
-        // a backdrop blur.
-        'bg-white sticky top-0 z-40 w-full transition-[padding,border-color] duration-200',
-        condensed ? 'border-b border-ink-foreground/15' : 'border-b border-transparent',
+        // Matches the hero band's own `bg-ink` exactly at the top (mdhair.co-
+        // style: no visible seam) → solid white once scrolled.
+        'sticky top-0 z-40 w-full transition-[padding,border-color,background-color] duration-200',
+        condensed ? 'bg-white border-b border-ink-foreground/15' : 'bg-ink border-b border-transparent',
       )}
     >
       <div
         // Header chrome stays in a fixed left-nav / right-menu arrangement in
         // every locale — only page content mirrors for RTL, not this bar.
         dir="ltr"
-        className={cn(
-          'relative mx-auto flex max-w-[80rem] items-center justify-between gap-4 px-6 md:px-10',
-          condensed ? 'py-3' : 'py-4',
-        )}
+        className="mx-auto flex max-w-[80rem] items-center justify-between gap-4 px-6 md:px-12 py-4"
       >
-        <Link
-          to={withLocale(PATHS.home)}
-          aria-label="ROOTÉ"
-          className="static mx-0 w-fit lg:absolute lg:inset-x-0 lg:mx-auto"
-        >
-          <Wordmark className="w-24 md:w-28 lg:w-32" />
-        </Link>
+        {/* Group 1: logo + primary nav, hugging the start edge. shrink-0 —
+            the nav labels are whitespace-nowrap, so this group never has any
+            real give; all the squeeze belongs to the CTA in Group 2. */}
+        <div className="flex shrink-0 items-center gap-8 lg:gap-12">
+          <Link to={withLocale(PATHS.home)} aria-label="ROOTÉ" className="w-fit shrink-0">
+            <Wordmark className="w-24 md:w-28 lg:w-32" />
+          </Link>
+          <nav
+            aria-label={t('marketing.nav.primaryLabel')}
+            className="hidden items-center gap-8 lg:flex xl:gap-8"
+          >
+            {NAV.map(([key, to]) => (
+              <NavLink key={to} to={withLocale(to)} className={navLinkClass}>
+                <span className="whitespace-nowrap">{t(key)}</span>
+              </NavLink>
+            ))}
+          </nav>
+        </div>
 
-        <nav
-          aria-label={t('marketing.nav.primaryLabel')}
-          className="hidden flex-1 items-center gap-6 lg:flex xl:gap-8"
-        >
-          {NAV.map(([key, to]) => (
-            <NavLink key={to} to={withLocale(to)} className={navLinkClass}>
-              <span className="whitespace-nowrap">{t(key)}</span>
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="ms-auto flex items-center gap-2 sm:gap-3">
-          <div className="flex items-center gap-0">
+        {/* Group 2: icons + CTA, hugging the end edge. `justify-between` on the
+            row above puts all the flexible space between the two groups. This
+            group itself must stay shrinkable (no shrink-0 here) or the browser
+            has no reason to compress anything inside it and the row just
+            overflows — the icon cluster and hamburger get `shrink-0` instead,
+            so the CTA (the only child with genuine give, via its own
+            `min-w-0` + `truncate`) is what actually absorbs the squeeze. */}
+        <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+          <div className="flex shrink-0 items-center gap-0">
             <div className="hidden items-center gap-0 md:flex">
-              <CountryLanguageSelector
-                country={country}
+              <LanguagePicker
                 locale={locale}
-                onChangeCountry={onChangeCountry}
-                onChangeLocale={onChangeLocale}
-                labels={regionLabels}
+                onChange={setLocale}
                 compact
                 className="text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
               />
               <Link
                 to={withLocale(PATHS.account)}
                 aria-label={t('marketing.nav.account')}
-                className="flex h-10 w-10 items-center justify-center rounded-xs text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
+                className="flex h-10 w-10 items-center justify-center rounded-full text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-                  <circle cx="12" cy="8" r="3.5" />
-                  <path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5" strokeLinecap="round" />
-                </svg>
+                <User width={20} height={20} strokeWidth={1.5} aria-hidden />
               </Link>
             </div>
             <CartLink label={t('cart.open')} count={cart.count} />
           </div>
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="hidden sm:inline-flex text-sm">
-            {t('marketing.nav.cta')}
+          <Button
+            to={EXTERNAL_ASSESSMENT_URL}
+            external
+            caps
+            variant={condensed ? 'primary' : 'secondary'}
+            className="hidden min-w-0 sm:inline-flex text-sm"
+          >
+            <span className="min-w-0 truncate">{t('marketing.nav.cta')}</span>
           </Button>
           <IconButton
             label={t('marketing.nav.openMenu')}
             onClick={() => setMenuOpen(true)}
-            className="lg:hidden text-ink-foreground hover:bg-ink-foreground/10"
+            className="lg:hidden text-ink-foreground hover:bg-ink-foreground/10 shrink-0"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-              <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-            </svg>
+            <Menu width={22} height={22} strokeWidth={1.5} aria-hidden />
           </IconButton>
         </div>
       </div>
 
       <Drawer open={menuOpen} onClose={() => setMenuOpen(false)} title={t('marketing.nav.menuLabel')} side="right">
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-col gap-0">
           {[...NAV, ['marketing.nav.account', PATHS.account] as [MessageKey, string]].map(([key, to]) => (
             <Link
               key={to}
               to={withLocale(to)}
               onClick={() => setMenuOpen(false)}
-              className="rounded-lg px-2 py-3 font-display text-lg text-foreground hover:bg-cream-100"
+              className="rounded-lg px-2 py-3 font-display text-base text-foreground hover:bg-cream-100"
             >
               {t(key)}
             </Link>
           ))}
         </nav>
         <div className="mt-6 border-t border-border pt-6">
-          <CountryLanguageSelector
-            country={country}
-            locale={locale}
-            onChangeCountry={onChangeCountry}
-            onChangeLocale={onChangeLocale}
-            labels={regionLabels}
-          />
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps block className="mt-4 text-sm" onClick={() => setMenuOpen(false)}>
+          <LanguagePicker locale={locale} onChange={setLocale} />
+          <Button to={EXTERNAL_ASSESSMENT_URL} external caps block variant="secondary" className="mt-4 text-xs" onClick={() => setMenuOpen(false)}>
             {t('marketing.nav.cta')}
           </Button>
         </div>

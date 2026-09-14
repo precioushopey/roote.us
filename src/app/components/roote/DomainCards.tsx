@@ -5,6 +5,42 @@ import { PendingChip } from '@/app/components/brand/PendingChip';
 import { Badge, type BadgeTone } from './Badge';
 import { MediaPlaceholder } from '@/app/components/media/MediaPlaceholder';
 
+/* --- MediaCaption ------------------------------------------------------
+   The site's one image + centered title + description card — the "Choose
+   your concern" cards, Density/Gray severity levels, and any other
+   image-led grid of short explainers should render through this rather
+   than hand-rolling the same block again. Purely presentational (no link,
+   no fetching) so it works equally for a clickable card (wrap it in
+   `<Link>`, see `ConcernCard` below) and a plain informational one. */
+export function MediaCaption({
+  media,
+  title,
+  description,
+  cta,
+  className,
+}: {
+  /** The image (or `MediaPlaceholder`) element — caller controls aspect
+   *  ratio/object-fit since that varies by content (square clinical crops
+   *  vs 3:4 product/hair crops). */
+  media: ReactNode;
+  title: string;
+  description: string;
+  /** Rendered inside the same text column, right after `description`. */
+  cta?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('flex flex-col gap-4 text-center', className)}>
+      {media}
+      <div className="flex flex-col gap-1">
+        <h3 className="font-display text-lg md:text-xl text-foreground">{title}</h3>
+        <p className="font-body text-sm md:text-base text-muted-foreground">{description}</p>
+        {cta}
+      </div>
+    </div>
+  );
+}
+
 /* --- ConcernCard -----------------------------------------------------
    "What would you like to understand?" — thinning / gray / both. Routes into
    the assessment. */
@@ -34,22 +70,26 @@ export function ConcernCard({
     <Link
       to={to}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className="group flex flex-col gap-4 text-center"
+      className="group"
     >
-      {image ? (
-        <img src={image} alt={mediaAlt} className="aspect-[3/4] w-full rounded-sm object-cover" />
-      ) : (
-        <MediaPlaceholder alt={mediaAlt} label={mediaLabel} ratio="3 / 4" className="w-full" />
-      )}
-      <div className="flex flex-col gap-2">
-        <h3 className="u-caps font-body text-sm text-foreground">{title}</h3>
-        <p className="font-body text-sm text-muted-foreground">{description}</p>
-        {cta ? (
-          <span className="mt-2 flex h-9 w-full items-center justify-center rounded-xs border border-border px-4 font-body text-sm font-medium text-deep-800 transition-colors group-hover:border-deep-700 group-hover:bg-cream-100">
-            {cta}
-          </span>
-        ) : null}
-      </div>
+      <MediaCaption
+        media={
+          image ? (
+            <img src={image} alt={mediaAlt} loading="lazy" className="aspect-square w-full rounded-sm object-cover" />
+          ) : (
+            <MediaPlaceholder alt={mediaAlt} label={mediaLabel} ratio="1/1" className="w-full" />
+          )
+        }
+        title={title}
+        description={description}
+        cta={
+          cta ? (
+            <span className="mt-2 flex h-9 w-full items-center justify-center rounded-full border border-border px-4 font-body text-sm font-medium text-deep-800 transition-colors group-hover:border-deep-700 group-hover:bg-cream-100">
+              {cta}
+            </span>
+          ) : null
+        }
+      />
     </Link>
   );
 }
@@ -84,7 +124,7 @@ export function ProductCard({
   return (
     <Link to={to} data-pack={packaging} className="group flex flex-col gap-4">
       {image ? (
-        <img src={image} alt={mediaAlt} className="aspect-[3/4] w-full rounded-sm object-contain" />
+        <img src={image} alt={mediaAlt} loading="lazy" className="aspect-[3/4] w-full rounded-sm object-contain" />
       ) : (
         <MediaPlaceholder
           alt={mediaAlt}
@@ -149,7 +189,7 @@ export function ProgramCard({
       <div className="mt-1 font-body text-sm text-muted-foreground">
         {perDayLabel === null ? <PendingChip label="per day" /> : perDayLabel}
       </div>
-      <ul className="mt-4 flex flex-col gap-1.5 font-body text-sm text-muted-foreground">
+      <ul className="mt-4 flex flex-col gap-2 font-body text-sm text-muted-foreground">
         {includes.map((line) => (
           <li key={line} className="flex items-start gap-2">
             <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
@@ -163,7 +203,7 @@ export function ProgramCard({
           onClick={onSelect}
           aria-pressed={selected}
           className={cn(
-            'mt-6 h-11 rounded-xs font-body text-sm font-medium transition-colors',
+            'mt-6 h-11 rounded-full font-body text-sm font-medium transition-colors',
             selected ? 'bg-deep-950 text-cream-100' : 'border border-border text-foreground hover:border-deep-700',
           )}
         >
@@ -203,14 +243,14 @@ export function IngredientCard({
   image?: string;
 }) {
   return (
-    <div className="flex flex-col gap-3">
-      {image ? <img src={image} alt="" aria-hidden className="aspect-square w-full rounded-sm object-cover" /> : null}
-      <div>
+    <div className="flex flex-col gap-4">
+      {image ? <img src={image} alt="" aria-hidden loading="lazy" className="aspect-square w-full rounded-sm object-cover" /> : null}
+      <div className="flex flex-col gap-1">
         <div className="flex items-start justify-between gap-2">
-          <p className="font-display text-md text-foreground">{name}</p>
+          <p className="font-display text-lg md:text-xl text-foreground">{name}</p>
           {statusLabel ? <Badge tone={STATUS_BADGE_TONE[status]}>{statusLabel}</Badge> : null}
         </div>
-        <div className="mt-1 font-body text-sm text-muted-foreground">
+        <div className="font-body text-sm md:text-base text-muted-foreground">
           {status === 'requires-review' ? <PendingChip label={`${name} claim`} /> : note}
         </div>
         {onReadMore ? (

@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
   Section,
   DisplayTitle,
-  Prose,
-  Eyebrow,
+  SectionIntro,
   Button,
   ProductCard,
   SegmentedControl,
   PendingChip,
   MediaPlaceholder,
+  Hero,
+  CtaSection,
+  renderWithEmphasis,
 } from '@/app/components/roote';
 import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
@@ -64,7 +66,7 @@ function matches(p: Product, f: Filter) {
 }
 
 const OUTLINE_CTA_CLASS =
-  'inline-flex w-full items-center justify-center rounded-xs border border-accent px-4 py-2.5 font-body text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
+  'inline-flex w-full items-center justify-center rounded-full border border-accent px-4 py-2.5 font-body text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
 
 const MAX_QTY = 20;
 
@@ -73,7 +75,7 @@ const MAX_QTY = 20;
 function QuantityStepper({ qty, onChange }: { qty: number; onChange: (qty: number) => void }) {
   const t = useT();
   return (
-    <div className="inline-flex w-fit items-center self-start rounded-xs border border-border">
+    <div className="inline-flex w-fit items-center self-start rounded-full border border-border">
       <button
         type="button"
         aria-label={t('cart.decrease')}
@@ -104,7 +106,7 @@ function AddToBagButton({ sku }: { sku: string }) {
   useEffect(() => () => clearTimeout(timer.current), []);
 
   return (
-    <div className="mt-3 flex flex-row items-center gap-2">
+    <div className="flex flex-row items-center gap-2">
       <QuantityStepper qty={qty} onChange={setQty} />
       <button
         type="button"
@@ -126,18 +128,11 @@ function AddToBagButton({ sku }: { sku: string }) {
 
 /* Density SKUs (and bundles that include one) are assessment + review gated —
    no direct add-to-bag. Point people at the free hair analysis instead of a
-   bare "Review" badge or review note. `spaced` adds the top margin needed
-   when there's no gap-providing parent (the catalog grid's wrapper), vs.
-   bundle cards, whose `gap-4` column already spaces it. */
-function FindYourMatchCta({ spaced = false }: { spaced?: boolean }) {
+   bare "Review" badge or review note. */
+function FindYourMatchCta() {
   const t = useT();
   return (
-    <Link
-      to={EXTERNAL_ASSESSMENT_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={spaced ? `mt-3 ${OUTLINE_CTA_CLASS}` : OUTLINE_CTA_CLASS}
-    >
+    <Link to={EXTERNAL_ASSESSMENT_URL} target="_blank" rel="noopener noreferrer" className={OUTLINE_CTA_CLASS}>
       {t('marketing.shop.findYourMatchCta')}
     </Link>
   );
@@ -150,7 +145,7 @@ function FindYourMatchCta({ spaced = false }: { spaced?: boolean }) {
    than `price` — both are derived numbers, never invented (see bundles.ts). */
 function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const cart = useCart();
   const requiresReview = bundleRequiresReview(bundle);
   const image = BUNDLE_PHOTOS[bundle.id];
@@ -163,7 +158,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   return (
     <div className="flex flex-col place-content-between gap-4">
       {image ? (
-        <img src={image} alt={pickLocalized(bundle.name, cl)} className="aspect-[3/4] w-full rounded-sm object-contain" />
+        <img src={image} alt={pickLocalized(bundle.name, cl)} loading="lazy" className="aspect-[3/4] w-full rounded-sm object-contain" />
       ) : (
         <MediaPlaceholder
           alt={pickLocalized(bundle.name, cl)}
@@ -178,7 +173,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
           <h3 className="font-display text-md text-foreground">{pickLocalized(bundle.name, cl)}</h3>
           <p className="font-body text-sm text-muted-foreground">{pickLocalized(bundle.summary, cl)}</p>
         </div>
-        <div className="flex shrink-0 flex-col items-end gap-0.5">
+        <div className="flex shrink-0 flex-col items-end gap-2">
           {hasDiscount && (
             <span className="font-body text-sm text-muted-foreground line-through">
               {formatMoney(bundle.compareAtPrice!, rooteContent.currency, cl).formatted}
@@ -209,9 +204,7 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
             type="button"
             aria-live="polite"
             onClick={() => {
-              for (let i = 0; i < qty; i += 1) {
-                for (const sku of bundle.skus) cart.add(sku);
-              }
+              for (let i = 0; i < qty; i += 1) cart.addBundle(bundle.id);
               setAdded(true);
               setQty(1);
               clearTimeout(timer.current);
@@ -235,13 +228,13 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
 function BundleSection() {
   const t = useT();
   return (
-    <Section tone="cream" width="content">
-      <Eyebrow>{t('marketing.shop.bundles.eyebrow')}</Eyebrow>
-      <DisplayTitle as="h2" step="lg" className="mt-2">
-        {t('marketing.shop.bundles.heading')}
-      </DisplayTitle>
-      <Prose className="mt-4 max-w-2xl">{t('marketing.shop.bundles.body')}</Prose>
-      <div className="mt-8 grid gap-x-6 gap-y-12 md:gap-y-18 sm:grid-cols-2 lg:grid-cols-3">
+    <Section tone="cream" width="content" gap={8} className="-mt-24">
+      <SectionIntro
+        eyebrow={t('marketing.shop.bundles.eyebrow')}
+        title={t('marketing.shop.bundles.heading')}
+        body={t('marketing.shop.bundles.body')}
+      />
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
         {SHOP_BUNDLES.map((bundle) => (
           <BundleCard key={bundle.id} bundle={bundle} />
         ))}
@@ -250,30 +243,10 @@ function BundleSection() {
   );
 }
 
-/* Closing CTA — mirrors the teal final-CTA band used on Home/About. */
+/* Closing CTA — the shared teal final-CTA band used on every marketing page. */
 function ShopFinalCta() {
   const t = useT();
-  return (
-    <Section tone="teal" width="readable" className="border-b border-accent text-center">
-      <div className="flex flex-col items-center gap-5">
-        <DisplayTitle as="h2" step="xl" align="center">
-          {t('marketing.shop.finalCta.heading')}
-        </DisplayTitle>
-        <Prose size="lg" className="mx-auto text-center text-ink-foreground/75">
-          {t('marketing.shop.finalCta.body')}
-        </Prose>
-        <Button
-          to={EXTERNAL_ASSESSMENT_URL}
-          external
-          size="lg"
-          caps
-          className="text-sm font-bold"
-        >
-          {t('marketing.nav.cta')}
-        </Button>
-      </div>
-    </Section>
-  );
+  return <CtaSection title={t('marketing.shop.finalCta.heading')} body={t('marketing.shop.finalCta.body')} />;
 }
 
 /**
@@ -283,58 +256,48 @@ function ShopFinalCta() {
  */
 export function Products() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
   const [filter, setFilter] = useState<Filter>('all');
   const items = PRODUCTS.filter((p) => matches(p, filter));
 
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="py-12 md:py-12">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div className="flex flex-col items-start gap-5">
-            <DisplayTitle as="h1" step="lg" className="!font-medium">
-              {t('marketing.shop.heading')}
-            </DisplayTitle>
-            <Prose size="lg" className="max-w-lg text-ink-foreground/75">
-              {t('marketing.shop.body')}
-            </Prose>
-            <Button
-              to={EXTERNAL_ASSESSMENT_URL}
-              external
-              size="lg"
-              caps
-              className="text-sm"
-            >
-              {t('marketing.nav.cta')}
-            </Button>
-          </div>
-          <img
-            src={catalogHero}
-            alt={t('marketing.shop.heroMediaAlt')}
-            className="aspect-[4/3] w-full object-contain drop-shadow-[0_30px_40px_rgba(6,46,49,0.18)]"
+      <Hero
+        title={renderWithEmphasis(t('marketing.shop.heading'))}
+        body={t('marketing.shop.body')}
+        cta={
+          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+            {t('marketing.nav.cta')}
+          </Button>
+        }
+        image={{
+          src: catalogHero,
+          alt: t('marketing.shop.heroMediaAlt'),
+          className: 'aspect-[4/3] w-full object-contain shadow-product',
+        }}
+      />
+
+      <Section tone="cream" width="content" gap={8}>
+        <div className="flex flex-col gap-12">
+          <DisplayTitle as="h2" step="lg">
+            {t('marketing.shop.catalogHeading')}
+          </DisplayTitle>
+          <SegmentedControl<Filter>
+            label={t('marketing.shop.filterLabel')}
+            value={filter}
+            onChange={setFilter}
+            options={[
+              { value: 'all', label: t('marketing.shop.filterAll') },
+              { value: 'thinning', label: t('marketing.shop.filterThinning') },
+              { value: 'gray', label: t('marketing.shop.filterGray') },
+            ]}
+            className="w-fit"
           />
         </div>
-      </Section>
-
-      <Section tone="cream" width="content">
-        <DisplayTitle as="h2" step="lg">
-          {t('marketing.shop.catalogHeading')}
-        </DisplayTitle>
-        <SegmentedControl<Filter>
-          className="mt-10"
-          label={t('marketing.shop.filterLabel')}
-          value={filter}
-          onChange={setFilter}
-          options={[
-            { value: 'all', label: t('marketing.shop.filterAll') },
-            { value: 'thinning', label: t('marketing.shop.filterThinning') },
-            { value: 'gray', label: t('marketing.shop.filterGray') },
-          ]}
-        />
-        <div className="mt-8 grid gap-x-6 gap-y-12 md:gap-y-18 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
           {items.map((p) => (
-            <div key={p.slug} className="flex flex-col">
+            <div key={p.slug} className="flex flex-col place-content-between gap-4">
               <ProductCard
                 name={p.name}
                 subtitle={pickLocalized(p.subtitle, cl)}
@@ -345,7 +308,7 @@ export function Products() {
                 mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
-              {p.requiresMedicalReview ? <FindYourMatchCta spaced /> : <AddToBagButton sku={p.slug} />}
+              {p.requiresMedicalReview ? <FindYourMatchCta /> : <AddToBagButton sku={p.slug} />}
             </div>
           ))}
         </div>

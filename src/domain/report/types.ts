@@ -1,4 +1,5 @@
 import type { PendingMarker } from '@/content/pending';
+import type { LocaleCode } from '@/i18n/locales';
 import type { Money } from './money';
 
 export type Resolved<T extends string> = T | PendingMarker;
@@ -31,7 +32,7 @@ export type ReportModel = {
   meta: {
     reportId: string;
     generatedAt: string;          // ISO string
-    locale: 'en' | 'he';
+    locale: LocaleCode;
     dir: 'ltr' | 'rtl';
     scaleLine: string;             // e.g. "Norwood–Hamilton scale · Moderate pattern · 2 area(s) flagged"
     demoDisclaimer: Resolved<string>;

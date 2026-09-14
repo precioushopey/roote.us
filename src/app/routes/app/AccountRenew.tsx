@@ -40,13 +40,13 @@ export function AccountRenew() {
     });
 
   return (
-    <div data-animate className="flex flex-col gap-8">
-      <header className="flex flex-col gap-3">
+    <div data-animate className="flex flex-col gap-4 md:gap-8">
+      <header className="flex flex-col gap-4">
         <Eyebrow>{t('app.renew.eyebrow')}</Eyebrow>
         <DisplayTitle as="h1" step="sm">
           {t('app.renew.title')}
         </DisplayTitle>
-        <Prose size="sm">{t('app.renew.body')}</Prose>
+        <Prose>{t('app.renew.body')}</Prose>
       </header>
 
       <Card>
@@ -66,7 +66,7 @@ export function AccountRenew() {
         <p className="mt-3 font-body text-sm text-muted-foreground">{t('app.renew.profileNote')}</p>
       </Card>
 
-      <fieldset className="flex flex-col gap-3">
+      <fieldset className="flex flex-col gap-4">
         <legend className="font-display text-md text-foreground">{t('app.renew.chooseTitle')}</legend>
         {(['continue', 'maintain', 'review'] as Path[]).map((p) => (
           <RadioCard
@@ -81,9 +81,9 @@ export function AccountRenew() {
         ))}
       </fieldset>
 
-      <LegalNotice reviewRequired>{t('app.renew.reviewNote')}</LegalNotice>
+      <LegalNotice>{t('app.renew.reviewNote')}</LegalNotice>
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-4">
         <Button
           to={withLocale(path === 'review' ? PATHS.analysis : PATHS.programPlan)}
           onClick={() => track('next_program_started', { from: 'renew', path })}

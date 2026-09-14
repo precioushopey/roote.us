@@ -4,7 +4,7 @@ import { planKeysFor } from '@/domain/recommendation/planKeys';
 import type { Answers, Gender, HairAnalysis, HairGoal } from '@/domain/analysis/types';
 import type { Program } from '@/domain/program/types';
 import type { MessageKey } from '@/i18n/messages';
-import { type LocaleCode, contentLocaleOf } from '@/i18n/locales';
+import type { LocaleCode } from '@/i18n/locales';
 
 const DAY_MS = 86_400_000;
 
@@ -50,7 +50,7 @@ export function planKeysForProgram(
  * `planKeysForProgram`) says *which* products that snapshot should contain, and
  * this resolves their display strings — so "My Plan" and "Today" re-localize
  * when the language is switched instead of being stuck in the checkout locale.
- * Names fall back to English where a Hebrew string is not yet in config.
+ * Names fall back to English where a translation is not yet in config.
  */
 export function resolvePlanTreatments(
   t: Translate,
@@ -60,13 +60,12 @@ export function resolvePlanTreatments(
   core: ResolvedTreatment[];
   supporting: ResolvedTreatment[];
 } {
-  const cl = contentLocaleOf(locale);
   const one = (key: string): ResolvedTreatment => {
     const tr = rooteContent.treatmentRegistry[key];
     if (!tr) return { key, name: key, usage: '', frequency: '', appliesToLabels: [] };
     return {
       key,
-      name: tr.name[cl] || tr.name.en,
+      name: tr.name[locale] || tr.name.en,
       usage: t(tr.usageKey as MessageKey),
       frequency: t(tr.frequencyKey as MessageKey),
       appliesToLabels: (tr.appliesToZones ?? []).map((z) => t(`zone.${z}` as MessageKey)),

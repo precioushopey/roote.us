@@ -1,5 +1,18 @@
 /* Site-wide visual treatments — kept separate from the theme.css tokens. */
 
+/* --- interactive-element cursor -----------------------------------------
+   Native <button>/<select>/<summary> have no pointer cursor by default in
+   Chrome/Safari (only <a> does) — this makes every actionable control read
+   as clickable, site-wide, without hand-adding `cursor-pointer` to each one.
+   Disabled controls keep the browser default (buttons also get an explicit
+   `disabled:cursor-not-allowed` utility, which wins on specificity). */
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']),
+select,
+summary {
+  cursor: pointer;
+}
+
 /* --- i18n-safe caps -------------------------------------------------------
    Latin locales render eyebrows / CTAs in caps via text-transform so the
    stored string stays sentence-case. Hebrew and Arabic have no letter case,
@@ -15,19 +28,43 @@
 }
 
 /* --- display type helper ----------------------------------------------
-   Bodoni Moda reads light at 400–500; 600 gives the headline the presence
-   the high-contrast serif needs without tipping into the bold optical size. */
-.text-display {
+   Regular (400) — Lusitana's own weight, no bolding.
+   Named `.display-heading`, not `.text-display` — `cn()` runs classes
+   through tailwind-merge, which pattern-matches any `text-{value}` class as
+   a text-color utility. A literal `.text-display` class combined with a
+   real color class like `text-foreground` in the same `cn()` call reads as
+   two conflicting color utilities, and tailwind-merge silently drops
+   whichever comes first — silently strips this class's font-family/weight
+   whenever it's paired with a text color, which `DisplayTitle` always
+   does. */
+.display-heading {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.015em;
+}
+
+/* --- emphasis word ---------------------------------------------------
+   Marks the personalization word in a headline ("you"/"your" and each
+   locale's own equivalent). Italic only — inherits the surrounding
+   heading's own font rather than switching typeface. */
+.font-script {
+  font-style: italic;
+  font-weight: 400;
 }
 
 /* --- imagery -------------------------------------------------------------
    Subtle unifying grade. No sepia (it fights the emerald). */
 .img-editorial {
   filter: saturate(0.96) contrast(1.03);
+}
+
+/* --- product-photo drop shadow --------------------------------------------
+   Repeated on every product/bottle photo (Home, Products, Login) — a warm
+   brown shadow instead of a neutral black one, matching the cream/taupe
+   palette rather than fighting it. */
+.shadow-product {
+  filter: drop-shadow(0 30px 40px rgba(59, 36, 18, 0.18));
 }
 
 /* --- route-change rise-up reveal (single orchestrated moment) ---------

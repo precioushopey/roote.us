@@ -34,7 +34,7 @@ const VIEW_KEY: Record<PhotoView, MessageKey> = {
 };
 
 function Photo({ src, alt }: { src: string; alt: string }) {
-  return <img src={src} alt={alt} className="block h-full w-full object-cover" />;
+  return <img src={src} alt={alt} loading="lazy" className="block h-full w-full object-cover" />;
 }
 
 /**
@@ -71,7 +71,7 @@ export function AccountResults() {
         <DisplayTitle as="h1" step="sm">
           {t('app.results.notReady.title')}
         </DisplayTitle>
-        <Prose size="sm">{t('app.results.notReady.body')}</Prose>
+        <Prose>{t('app.results.notReady.body')}</Prose>
         <Button to={withLocale(PATHS.account)} variant="secondary" className="w-fit">
           {t('app.results.notReady.cta')}
         </Button>
@@ -150,27 +150,27 @@ export function AccountResults() {
   }
 
   return (
-    <div data-animate className="flex flex-col gap-8">
-      <header className="flex flex-col gap-3">
+    <div data-animate className="flex flex-col gap-4 md:gap-8">
+      <header className="flex flex-col gap-4">
         <Eyebrow>{t('app.results.eyebrow')}</Eyebrow>
         <DisplayTitle as="h1" step="sm">
           {t('app.results.title')}
         </DisplayTitle>
-        <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={downloadPdf} variant="secondary" size="sm">
+        <div className="flex flex-wrap items-center gap-4">
+          <Button onClick={downloadPdf} variant="secondary">
             {t('app.results.actions.download')}
           </Button>
-          <Button onClick={() => toast.show(t('app.results.actions.emailStub'))} variant="ghost" size="sm">
+          <Button onClick={() => toast.show(t('app.results.actions.emailStub'))} variant="ghost">
             {t('app.results.actions.email')}
           </Button>
-          <Button to={withLocale(PATHS.accountSection('renew'))} size="sm">
+          <Button to={withLocale(PATHS.accountSection('renew'))}>
             {t('app.results.next.reviewNext')}
           </Button>
         </div>
       </header>
 
       <Card>
-        <dl className="grid gap-3 font-body text-sm sm:grid-cols-2">
+        <dl className="grid gap-4 font-body text-sm sm:grid-cols-2">
           <div className="flex justify-between gap-4">
             <dt className="text-muted-foreground">{t('app.results.summary.duration')}</dt>
             <dd className="text-foreground">{t('app.results.summary.days', { n: up.durationDays })}</dd>
@@ -199,10 +199,10 @@ export function AccountResults() {
                 className="max-w-md"
               />
             )}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {PHOTO_VIEWS.filter((v) => v !== 'front' || !finalPhoto('front')).map((v) => (
-                <figure key={v} className="flex flex-col gap-1">
-                  <div className="grid grid-cols-2 gap-1">
+                <figure key={v} className="flex flex-col gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {[
                       { tag: t('app.results.analysis.initial'), src: baselinePhoto(v) },
                       { tag: t('app.results.analysis.final'), src: finalPhoto(v) },
@@ -225,7 +225,7 @@ export function AccountResults() {
                 </figure>
               ))}
             </div>
-            <Button to={withLocale(PATHS.accountSection('progress/before-after'))} variant="secondary" size="sm" className="w-fit">
+            <Button to={withLocale(`${PATHS.accountSection('progress')}?tab=beforeAfter`)} variant="secondary" className="w-fit">
               {t('app.results.beforeAfter.cta')}
             </Button>
           </div>
@@ -297,14 +297,14 @@ export function AccountResults() {
 
         <ReportSection title={t('app.results.next.title')}>
           <p>{t('app.results.next.body')}</p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Button to={withLocale(PATHS.accountSection('renew'))} size="sm">
+          <div className="mt-4 flex flex-wrap gap-4">
+            <Button to={withLocale(PATHS.accountSection('renew'))}>
               {t('app.results.next.reviewNext')}
             </Button>
-            <Button to={withLocale(PATHS.analysis)} variant="secondary" size="sm">
+            <Button to={withLocale(PATHS.analysis)} variant="secondary">
               {t('app.results.next.newAnalysis')}
             </Button>
-            <Button to={withLocale(PATHS.accountSection('care'))} variant="ghost" size="sm">
+            <Button to={withLocale(PATHS.accountSection('care'))} variant="ghost">
               {t('app.results.next.careTeam')}
             </Button>
           </div>

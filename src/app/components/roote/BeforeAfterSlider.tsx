@@ -1,5 +1,7 @@
 import { useId, useState, type ReactNode } from 'react';
 import { cn } from '@/app/components/ui/utils';
+import { useLocale } from '@/i18n/LocaleProvider';
+import { dirOf } from '@/i18n/locales';
 
 type Props = {
   before: ReactNode;
@@ -30,6 +32,11 @@ export function BeforeAfterSlider({
 }: Props) {
   const [pos, setPos] = useState(Math.min(100, Math.max(0, initial)));
   const id = useId();
+  // `clip-path: inset()` only takes physical offsets (top/right/bottom/left)
+  // — it never flips for RTL on its own, unlike the handle below (which uses
+  // the logical `insetInlineStart`). Flip which physical side gets clipped
+  // so the reveal boundary still lines up with the handle in RTL locales.
+  const isRtl = dirOf(useLocale().locale) === 'rtl';
 
   return (
     <figure className={cn('relative select-none overflow-hidden rounded-xl border border-border', className)}>
@@ -44,7 +51,7 @@ export function BeforeAfterSlider({
       {/* before clipped to `pos` from the start edge */}
       <div
         className="absolute inset-0"
-        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+        style={{ clipPath: isRtl ? `inset(0 0 0 ${100 - pos}%)` : `inset(0 ${100 - pos}% 0 0)` }}
         aria-hidden
       >
         {before}

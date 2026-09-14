@@ -7,10 +7,11 @@ import type { SessionState } from '@/store/sessionStore';
 import { recommend } from '@/domain/recommendation/recommend';
 import { planKeysFor } from '@/domain/recommendation/planKeys';
 import { formatMoney, type Money } from './money';
+import { dirOf, type LocaleCode } from '@/i18n/locales';
 import type { ReportModel } from './types';
 
-type Locale = 'en' | 'he';
-type LocalizedText = { en: string; he: string };
+type Locale = LocaleCode;
+type LocalizedText = { en: string; he: string; ar?: string; ru?: string; fr?: string; es?: string };
 
 function t(locale: Locale, key: string, vars?: Record<string, string | number>): string {
   const table = messages[locale] as Record<string, string>;
@@ -46,7 +47,7 @@ export function buildReport(input: {
   assets?: Record<string, string>;
 }): ReportModel {
   const { diagnosis, analysis, content, locale, reportId, assets = {} } = input;
-  const dir: 'ltr' | 'rtl' = locale === 'he' ? 'rtl' : 'ltr';
+  const dir: 'ltr' | 'rtl' = dirOf(locale);
 
   // Hair-Goal-branched product set (client-confirmed 2026-09-07): each goal maps
   // to exactly one core product family; `gender` also feeds the Hair Growth

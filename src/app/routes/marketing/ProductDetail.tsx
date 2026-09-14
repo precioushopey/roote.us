@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
   Section,
   DisplayTitle,
@@ -7,12 +7,14 @@ import {
   Eyebrow,
   Button,
   Badge,
+  Card,
   Accordion,
   MediaPlaceholder,
   IngredientCard,
   ProductCard,
   LegalNotice,
   PendingChip,
+  CtaSection,
 } from '@/app/components/roote';
 import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
@@ -43,7 +45,7 @@ const PRODUCT_PHOTOS: Record<string, string> = {
 export function ProductDetail() {
   const { slug } = useParams();
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
   const product = slug ? getProduct(slug) : undefined;
   const statusLabel: Record<ClaimStatus, string> = {
@@ -55,18 +57,11 @@ export function ProductDetail() {
   if (!product) return <PagePlaceholder title="Product" body="This product could not be found." />;
 
   const related = product.relatedProducts.map(getProduct).filter((p): p is NonNullable<typeof p> => !!p);
+  const isGrayConcern = product.concern === 'gray' || product.concern === 'gray-support';
+  const eyebrowLabel = isGrayConcern ? t('marketing.shop.filterGray') : t('marketing.shop.filterThinning');
+  const [spotlightIngredient, ...restIngredients] = product.ingredients;
 
   const details: Array<{ id: string; title: string; body: React.ReactNode }> = [
-    {
-      id: 'usage',
-      title: t('marketing.pdp.howToUse'),
-      body: pickLocalized(product.usage, cl),
-    },
-    {
-      id: 'safety',
-      title: t('marketing.pdp.safety'),
-      body: pickLocalized(product.safety, cl),
-    },
     {
       id: 'formula',
       title: t('marketing.pdp.formula'),
@@ -83,35 +78,40 @@ export function ProductDetail() {
 
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="py-12 md:py-12">
-        <div className="grid items-start gap-10 lg:grid-cols-2">
+      <Section tone="teal" width="content" className="py-12 md:py-12">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           {PRODUCT_PHOTOS[product.slug] ? (
             <img
               src={PRODUCT_PHOTOS[product.slug]}
               alt={`${product.name} packaging`}
+              loading="lazy"
               className="aspect-square w-full rounded-sm object-contain"
             />
           ) : (
             <MediaPlaceholder
-              tone={product.concern === 'gray' || product.concern === 'gray-support' ? 'cream' : 'card'}
+              tone={isGrayConcern ? 'cream' : 'card'}
               ratio="1"
               alt={`${product.name} packaging`}
               label={`${product.name}: product photography, ${product.requiresMedicalReview ? 'dark-teal' : 'cream'} packaging`}
             />
           )}
           <div className="flex flex-col items-start gap-4">
-            {/* Kept — unlike other pages' generic nav-label eyebrow, this one
-                carries the product's own subtitle (real content). */}
-            <Eyebrow className="rounded-full border border-accent px-4 py-1.5">
-              {pickLocalized(product.subtitle, cl)}
-            </Eyebrow>
+            <Eyebrow className="text-ink-foreground">{eyebrowLabel}</Eyebrow>
             <DisplayTitle as="h1" step="md" className="!font-normal">
               {product.name}
             </DisplayTitle>
-            <Prose size="lg" className="max-w-lg text-ink-foreground/75">
+            <Prose className="text-ink-foreground">
               {pickLocalized(product.heroCopy, cl)}
             </Prose>
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge tone="neutral">{t('marketing.pdp.format', { size: product.size })}</Badge>
+              <Badge tone={product.requiresMedicalReview ? 'review' : 'success'}>
+                {product.requiresMedicalReview
+                  ? t('marketing.pdp.requiresReview')
+                  : t('marketing.pdp.noPrescriptionNeeded')}
+              </Badge>
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
               <span className="font-body text-sm text-foreground">{t('marketing.pdp.priceLabel')}</span>
               <span className="font-display text-2xl font-bold text-foreground">
                 {product.price === null ? (
@@ -121,54 +121,81 @@ export function ProductDetail() {
                 )}
               </span>
             </div>
-            {product.requiresMedicalReview ? (
-              <Badge tone="review">{t('marketing.pdp.reviewBadge')}</Badge>
-            ) : null}
-            <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="mt-2 w-full sm:w-auto">
+            <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
               {t('marketing.nav.cta')}
             </Button>
           </div>
         </div>
       </Section>
 
-      <Section tone="cream" width="content">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-          <div>
-            <h2 className="font-display text-lg text-foreground">{t('marketing.pdp.fitTitle')}</h2>
-            <Prose className="mt-2">{t('marketing.pdp.fitBody')}</Prose>
-            <p className="mt-4 font-body text-sm text-muted-foreground">
-              {t('marketing.pdp.format', { size: product.size })}
-            </p>
-          </div>
-          <div>
-            <h2 className="font-display text-lg text-foreground">{t('marketing.pdp.activesTitle')}</h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              {product.ingredients.slice(0, 6).map((ing) => (
+      <Section tone="cream" width="content" gap={4}>
+        <div className="flex max-w-[45rem] flex-col gap-4">
+          <h2 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.fitTitle')}</h2>
+          <Prose>{pickLocalized(product.shortDescription, cl)}</Prose>
+          <Prose>{t('marketing.pdp.fitBody')}</Prose>
+        </div>
+      </Section>
+
+      <Section tone="cream" width="content" gap={8} className="-mt-24">
+        <h2 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.activesTitle')}</h2>
+        {spotlightIngredient ? (
+          <Card tone="cream" bordered className="flex flex-col gap-2">
+            <div className="flex items-start justify-between gap-2">
+              <p className="font-display text-xl md:text-2xl text-foreground">{spotlightIngredient.name}</p>
+              {spotlightIngredient.claimStatus === 'approved' ? (
+                <Badge tone="success">{statusLabel.approved}</Badge>
+              ) : null}
+            </div>
+            <div className="max-w-[62ch] font-body text-sm md:text-base text-muted-foreground">
+              {spotlightIngredient.claimStatus === 'requires-review' ? (
+                <PendingChip label={`${spotlightIngredient.name} claim`} />
+              ) : (
+                pickLocalized(spotlightIngredient.note, cl)
+              )}
+            </div>
+          </Card>
+        ) : null}
+        {restIngredients.length > 0 ? (
+          <div className="flex flex-col gap-4">
+            <h3 className="font-display text-md text-foreground">{t('marketing.pdp.alsoInFormula')}</h3>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {restIngredients.slice(0, 5).map((ing) => (
                 <IngredientCard
                   key={ing.name}
                   name={ing.name}
                   note={pickLocalized(ing.note, cl)}
                   status={ing.claimStatus}
-                  statusLabel={statusLabel[ing.claimStatus]}
+                  statusLabel={ing.claimStatus === 'approved' ? statusLabel[ing.claimStatus] : undefined}
                 />
               ))}
             </div>
           </div>
+        ) : null}
+      </Section>
+
+      <Section tone="grid" width="content" gap={4} className="-mt-24">
+        <div className="flex max-w-[45rem] flex-col gap-4">
+          <h2 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.howToUse')}</h2>
+          <Prose>{pickLocalized(product.usage, cl)}</Prose>
+          <p className="font-body text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">{t('marketing.pdp.safety')}: </span>
+            {pickLocalized(product.safety, cl)}
+          </p>
         </div>
       </Section>
 
-      <Section tone="grid" width="readable">
-        <h2 className="font-display text-lg text-foreground">{t('marketing.pdp.detailsTitle')}</h2>
-        <Accordion className="mt-6" items={details} />
-        <LegalNotice reviewRequired className="mt-6">
-          {t('marketing.pdp.evidenceNote')}
-        </LegalNotice>
+      <Section tone="grid" width="content" gap={8} className="-mt-24">
+        <div className="flex max-w-[45rem] flex-col gap-8">
+          <h2 className="font-display text-lg text-foreground">{t('marketing.pdp.detailsTitle')}</h2>
+          <Accordion items={details} />
+          <LegalNotice>{t('marketing.pdp.evidenceNote')}</LegalNotice>
+        </div>
       </Section>
 
       {related.length > 0 ? (
-        <Section tone="cream" width="content">
-          <h2 className="font-display text-lg text-foreground">{t('marketing.pdp.relatedTitle')}</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Section tone="cream" width="content" gap={8} className="-mt-24">
+          <h2 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.relatedTitle')}</h2>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((p) => (
               <ProductCard
                 key={p.slug}
@@ -185,16 +212,7 @@ export function ProductDetail() {
         </Section>
       ) : null}
 
-      <Section tone="teal" width="readable" className="border-b border-accent text-center">
-        <DisplayTitle as="h2" step="lg" align="center">
-          {t('marketing.pdp.ctaHeading')}
-        </DisplayTitle>
-        <div className="mt-6 flex justify-center">
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full sm:w-auto">
-            {t('marketing.nav.cta')}
-          </Button>
-        </div>
-      </Section>
+      <CtaSection title={t('marketing.pdp.ctaHeading')} />
     </>
   );
 }

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { Wordmark } from '@/app/components/brand/Wordmark';
-import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
-import { Button, Stepper, Modal } from '@/app/components/roote';
+import { Button, Stepper, Modal, LanguagePicker } from '@/app/components/roote';
 import { packagingFor } from '@/domain/recommendation/recommend';
 import { pickLocalized } from '@/content/localized';
 import { ASSESSMENT_STEPS } from '@/content/assessment';
@@ -20,7 +19,7 @@ import { PATHS } from '@/app/paths';
  */
 export function AnalysisShell() {
   const t = useT();
-  const cl = useContentLocale();
+  const { locale, setLocale } = useLocale();
   const withLocale = useLocalizedPath();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ export function AnalysisShell() {
   // (which has no guard) avoids that race.
   const [pendingStartOverReset, setPendingStartOverReset] = useState(false);
 
-  // Robust to any number of leading segments (e.g. the `/:localeRegion` prefix in
+  // Robust to any number of leading segments (e.g. the `/:locale` prefix in
   // production vs. a bare mount in tests) — find 'analysis' and read the segment after it.
   const segments = pathname.split('/').filter(Boolean);
   const seg = (segments[segments.indexOf('analysis') + 1] || 'intro') as AnalysisStep;
@@ -46,7 +45,7 @@ export function AnalysisShell() {
 
   const steps = ASSESSMENT_STEPS.filter((s) => s.onRail).map((s) => ({
     id: s.id,
-    label: pickLocalized(s.label, cl),
+    label: pickLocalized(s.label, locale),
   }));
 
   const pack = session.diagnosis.gender ? packagingFor(session.diagnosis.gender) : undefined;
@@ -71,7 +70,7 @@ export function AnalysisShell() {
           <Link to={withLocale(PATHS.home)} aria-label="ROOTÉ">
             <Wordmark className="w-24" />
           </Link>
-          <LocaleToggle />
+          <LanguagePicker compact locale={locale} onChange={setLocale} />
         </div>
       </header>
 
@@ -80,13 +79,13 @@ export function AnalysisShell() {
           <Stepper steps={steps} current={railIndex} label={t('common.progressLabel')} />
           <div className="mt-3 flex items-center justify-between">
             {backPath ? (
-              <Button variant="ghost" size="sm" to={withLocale(backPath)}>
+              <Button variant="ghost" to={withLocale(backPath)}>
                 {t('common.back')}
               </Button>
             ) : (
               <span />
             )}
-            <Button variant="ghost" size="sm" onClick={() => setConfirmingStartOver(true)}>
+            <Button variant="ghost" onClick={() => setConfirmingStartOver(true)}>
               {t('common.startOver')}
             </Button>
           </div>
@@ -103,10 +102,10 @@ export function AnalysisShell() {
         title={t('analysis.nav.startOverTitle')}
         footer={
           <>
-            <Button variant="secondary" size="sm" onClick={() => setConfirmingStartOver(false)}>
+            <Button variant="secondary" onClick={() => setConfirmingStartOver(false)}>
               {t('common.cancel')}
             </Button>
-            <Button variant="danger" size="sm" onClick={confirmStartOver}>
+            <Button variant="danger" onClick={confirmStartOver}>
               {t('analysis.nav.startOverConfirm')}
             </Button>
           </>

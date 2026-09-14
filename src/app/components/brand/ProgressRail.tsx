@@ -4,11 +4,11 @@ import { cn } from '@/app/components/ui/utils';
 export function ProgressRail({ steps, current }: { steps: string[]; current: number }) {
   const t = useT();
   return (
-    <ol className="flex items-center gap-3" aria-label={t('common.progressLabel')}>
+    <ol className="flex items-center gap-4" aria-label={t('common.progressLabel')}>
       {steps.map((label, i) => {
         const state = i < current ? 'done' : i === current ? 'current' : 'upcoming';
         return (
-          <li key={label} className="flex flex-1 flex-col gap-1.5">
+          <li key={label} className="flex flex-1 flex-col gap-2">
             <span
               aria-hidden
               className={cn(

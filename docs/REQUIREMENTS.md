@@ -82,7 +82,7 @@ Requirements describe the **intended behaviour**; the Status column says how clo
 | FR-037 | The report shall be produced by the pure `buildReport({diagnosis, analysis, content, locale, reportId, assets})` returning a single `ReportModel`; renderers shall consume `ReportModel` only. | — | P1 | Implemented | `buildReport.ts` |
 | FR-038 | The report view shall render, in order: ribbon, cover (greeting + 3 summary cells), your-scan (photos + Norwood/Ludwig stage strip + flagged-zone cards + situation paragraphs), regimen (core + supporting blocks), actives (ingredient spotlights), what-to-expect (stat tiles + timeline), your-program (recommended duration + compare-all table), FAQ, CTA band, disclaimers footer. | Visitor | P1 | Implemented | `ReportView.tsx` |
 | FR-039 | Any value not supplied in `roote.config` (prices, per-day, effectiveness, timing, follow-up cost, unresolved localized strings) shall render as a `[PENDING: label]` chip, never as raw null/empty. | Visitor | P1 | Implemented | `resolveLocalized`, `priceFor`, `PendingChip`; `pending.test.ts` |
-| FR-040 | Money shall be formatted with `Intl.NumberFormat` in `he-IL`/`en-US` using `roote.config.currency`. | Visitor | P1 | Implemented | `formatMoney` |
+| FR-040 | Money shall be formatted with `Intl.NumberFormat` using the active locale's BCP-47 tag (`LOCALES[code].bcp47`, six locales) and `roote.config.currency` (a single hardcoded `'USD'`; multi-currency out of scope). | Visitor | P1 | Implemented | `formatMoney` |
 | FR-041 | The report CTA shall link to `/start?report=<reportId>`. | Visitor | P1 | Implemented | `buildReport` `cta.href` |
 | FR-042 | The report shall carry medical / not-a-diagnosis / demo / formula-pending disclaimers in the footer. | Visitor | P1 | Implemented | `ReportView` footer, `roote.config.disclaimers` |
 | FR-043 | Ingredient percentages shall be shown only if `roote.config.formula.displayPercentagesPublicly` is true (currently false → names + "pending regulatory review" note). | Visitor | P1 | Implemented | `buildReport` `formula` / `actives` |
@@ -146,6 +146,8 @@ Requirements describe the **intended behaviour**; the Status column says how clo
 
 ### 1.8 Cross-cutting
 
+> **Superseded for locale & currency by** [`docs/superpowers/specs/2026-09-10-six-language-i18n-design.md`]. The `FR-081` / `FR-082` locale rows below predate the language-only rework (six languages, English default, one `LanguagePicker` dropdown in every shell).
+
 | ID | Requirement | Actor | Priority | Status | Notes |
 |---|---|---|---|---|---|
 | FR-081 | The app shall support locales `he` (default) and `en`, persisting the choice to `localStorage['roote.locale']` and setting `<html lang>` + `<html dir>` (`rtl`/`ltr`). | Visitor | P1 | Implemented | `LocaleProvider` |
@@ -173,8 +175,8 @@ Requirements describe the **intended behaviour**; the Status column says how clo
 | NFR-001 | Performance | Marketing route JS should be reasonable; the single bundle currently ~640 kB (gzip ~188 kB) with a Vite chunk-size warning. Route-level code-splitting is a documented option, not done. | Partial | `pnpm build` output |
 | NFR-002 | Performance | Below-the-fold imagery should be `loading="lazy"`; scroll animations must be transform/opacity only (no layout thrash). | Partial | `motion` transforms; lazy loading not systematically applied |
 | NFR-003 | Performance | Photos must be downscaled client-side before storage (full ≤ ~1200 px JPEG, thumb 256 px). | Implemented | `downscaleImage` |
-| NFR-004 | Localization | Hebrew is the default; RTL layout must use logical properties (`ms/me/ps/pe/start/end`) and mirror numerals/arrows. | Implemented (broadly) | Tailwind logical utilities throughout |
-| NFR-005 | Localization | Numbers, currency, and dates must format via `Intl` for the active locale (`he-IL` / `en-US`). | Implemented | `formatMoney`, `toLocaleDateString` |
+| NFR-004 | Localization | English is the default; six languages are supported (`en`, `he`, `ar`, `ru`, `fr`, `es` — two RTL: `he`, `ar`). RTL layout must use logical properties (`ms/me/ps/pe/start/end`) and mirror numerals/arrows. | Implemented (broadly) | Tailwind logical utilities throughout |
+| NFR-005 | Localization | Numbers, currency, and dates must format via `Intl` for the active locale, using its BCP-47 tag (`LOCALES[code].bcp47`) across all six locales. | Implemented | `formatMoney`, `toLocaleDateString` |
 | NFR-006 | Localization | Every user-visible string must come from the typed i18n dictionaries (no hard-coded copy in components for domain content). | Mostly | A few decorative literals + `en`-only fallbacks (e.g. `HowItWorks` kit uses `item.name.en`) |
 | NFR-007 | Accessibility | One `h1` per page; landmark regions; skip-link on marketing. | Implemented (marketing) / Partial (app routes start at `h2`) | asserted for marketing routes |
 | NFR-008 | Accessibility | Interactive controls must have accessible names; form feedback via `role="status"` / `role="alert"`. | Implemented | throughout |

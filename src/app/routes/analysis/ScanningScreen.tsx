@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, Prose } from '@/app/components/roote';
 import { pickLocalized } from '@/content/localized';
@@ -17,7 +17,7 @@ import { redirectForAnalysisStep } from './guards';
  */
 export function ScanningScreen() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();

@@ -54,17 +54,18 @@ export const PATHS = {
  */
 export const EXTERNAL_ASSESSMENT_URL = 'https://roote.vercel.app/test/landbot/fullpage';
 
-/** Legal page slugs that get their own top-level route (brief §25). */
+/** Legal page slugs that get their own top-level route (brief §25). Compressed
+ *  from 10 to 5 (2026-09-14): `returns` + `cancellation` merged into
+ *  `shipping` (now "Shipping & Returns"); `accessibility` merged into `terms`;
+ *  `cookies` merged into `privacy`; `terms-of-sale` merged into `terms`. Old
+ *  slugs redirect via `LEGACY_EXACT_REDIRECTS` (bare path) and the
+ *  `LocalizedNavigate` routes in `marketingRoutes.tsx` (locale-prefixed path). */
 export const LEGAL_SLUGS = [
   'privacy',
   'terms',
   'shipping',
-  'returns',
-  'cancellation',
   'subscription-terms',
   'medical-disclaimer',
-  'accessibility',
-  'cookies',
 ] as const;
 
 /**
@@ -80,6 +81,15 @@ export const LEGACY_PREFIX_REDIRECTS: Array<[from: string, to: string]> = [
   ['/app', PATHS.account],
 ];
 
-/** Exact old paths that map to a single new path. `/terms-of-sale` stays a live
- *  page for now (12 drafted clauses); WP9 folds it into the legal registry. */
-export const LEGACY_EXACT_REDIRECTS: Array<[from: string, to: string]> = [];
+/** Exact old paths that map to a single new path — bare (non-locale-prefixed)
+ *  URLs only; a locale-prefixed old legal URL (`/en/returns`) is instead
+ *  handled by the `LocalizedNavigate` routes in `marketingRoutes.tsx`, since
+ *  by that point `resolveLocaleRedirect` has already matched the locale
+ *  segment and stopped looking at `restPath`. */
+export const LEGACY_EXACT_REDIRECTS: Array<[from: string, to: string]> = [
+  ['/returns', '/shipping'],
+  ['/cancellation', '/shipping'],
+  ['/cookies', '/privacy'],
+  ['/accessibility', '/terms'],
+  ['/terms-of-sale', '/terms'],
+];

@@ -1,7 +1,11 @@
+import { LOCALES, type LocaleCode } from '@/i18n/locales';
+
 export type Money = { amount: number; currency: string; formatted: string };
 
-export function formatMoney(amount: number, currency: string, locale: 'en' | 'he'): Money {
-  const intlLocale = locale === 'he' ? 'he-IL' : 'en-US';
-  const formatted = new Intl.NumberFormat(intlLocale, { style: 'currency', currency }).format(amount);
+export function formatMoney(amount: number, currency: string, locale: LocaleCode): Money {
+  const formatted = new Intl.NumberFormat(LOCALES[locale].bcp47, {
+    style: 'currency',
+    currency,
+  }).format(amount);
   return { amount, currency, formatted };
 }

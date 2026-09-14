@@ -19,7 +19,7 @@ const VIEW_KEY: Record<PhotoView, MessageKey> = {
 };
 
 function Frame({ src, alt }: { src: string; alt: string }) {
-  return <img src={src} alt={alt} className="block h-full w-full object-cover" />;
+  return <img src={src} alt={alt} loading="lazy" className="block h-full w-full object-cover" />;
 }
 
 /**
@@ -28,7 +28,7 @@ function Frame({ src, alt }: { src: string; alt: string }) {
  * input, so pointer, touch, and keyboard all work. Photos are shown as captured —
  * no filtering or enhancement.
  */
-export function AccountBeforeAfter() {
+export function AccountBeforeAfter({ onGoToPhotos }: { onGoToPhotos?: () => void }) {
   const t = useT();
   const withLocale = useLocalizedPath();
   const session = useSession();
@@ -74,17 +74,23 @@ export function AccountBeforeAfter() {
 
   if (comparable.length === 0) {
     return (
-      <div data-animate className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4 md:gap-8">
         <header className="flex flex-col gap-2">
-          <DisplayTitle as="h1" step="sm">
+          <DisplayTitle as="h2" step="sm">
             {t('app.beforeAfter.title')}
           </DisplayTitle>
-          <Prose size="sm">{t('app.beforeAfter.body')}</Prose>
+          <Prose>{t('app.beforeAfter.body')}</Prose>
         </header>
-        <Prose size="sm">{t('app.beforeAfter.empty')}</Prose>
-        <Button to={withLocale(PATHS.accountSection('photos'))} variant="secondary" className="w-fit">
-          {t('app.beforeAfter.addPhotos')}
-        </Button>
+        <Prose>{t('app.beforeAfter.empty')}</Prose>
+        {onGoToPhotos ? (
+          <Button variant="secondary" className="w-fit" onClick={onGoToPhotos}>
+            {t('app.beforeAfter.addPhotos')}
+          </Button>
+        ) : (
+          <Button to={withLocale(PATHS.accountSection('photos'))} variant="secondary" className="w-fit">
+            {t('app.beforeAfter.addPhotos')}
+          </Button>
+        )}
       </div>
     );
   }
@@ -95,15 +101,15 @@ export function AccountBeforeAfter() {
   const viewName = t(VIEW_KEY[viewSel]);
 
   return (
-    <div data-animate className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 md:gap-8">
       <header className="flex flex-col gap-2">
         <DisplayTitle as="h1" step="sm">
           {t('app.beforeAfter.title')}
         </DisplayTitle>
-        <Prose size="sm">{t('app.beforeAfter.body')}</Prose>
+        <Prose>{t('app.beforeAfter.body')}</Prose>
       </header>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-4">
         <SegmentedControl<PhotoView>
           label={t('app.beforeAfter.viewLabel')}
           value={viewSel}
@@ -133,7 +139,7 @@ export function AccountBeforeAfter() {
       )}
 
       {mode === 'timeline' ? (
-        <div className="flex gap-3 overflow-x-auto pb-2">
+        <div className="flex gap-4 overflow-x-auto pb-2">
           {[
             { key: 'baseline', label: t('app.baseline.badge'), photo: beforePhoto },
             ...comparable.map((c) => ({ key: c.id, label: dayLabel(c.day), photo: photoFor(c.id, viewSel) })),
@@ -153,9 +159,9 @@ export function AccountBeforeAfter() {
           ))}
         </div>
       ) : !beforePhoto ? (
-        <Prose size="sm">{t('app.beforeAfter.missingBaseline')}</Prose>
+        <Prose>{t('app.beforeAfter.missingBaseline')}</Prose>
       ) : !afterPhoto ? (
-        <Prose size="sm">{t('app.beforeAfter.missingCompare')}</Prose>
+        <Prose>{t('app.beforeAfter.missingCompare')}</Prose>
       ) : mode === 'slider' ? (
         <BeforeAfterSlider
           before={<Frame src={beforePhoto.thumb} alt={`${viewName}, ${t('app.baseline.badge')}`} />}
@@ -166,7 +172,7 @@ export function AccountBeforeAfter() {
           className="max-w-md"
         />
       ) : (
-        <div className="grid max-w-lg grid-cols-2 gap-3">
+        <div className="grid max-w-lg grid-cols-2 gap-4">
           {[
             { label: t('app.baseline.badge'), photo: beforePhoto },
             { label: dayLabel(compareCp.day), photo: afterPhoto },

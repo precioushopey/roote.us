@@ -12,7 +12,7 @@ import { useDocumentMeta } from '@/seo/useDocumentMeta';
 export function ReportPage() {
   const { reportId } = useParams();
   const session = useSession();
-  const { contentLocale } = useLocale();
+  const { locale } = useLocale();
   useDocumentMeta();
 
   const ready = !!reportId && reportId === session.reportId && !!session.analysis;
@@ -23,10 +23,10 @@ export function ReportPage() {
       diagnosis: session.diagnosis,
       analysis: session.analysis!,
       content: rooteContent,
-      locale: contentLocale,
+      locale,
       reportId: reportId!,
     });
-  }, [ready, session.diagnosis, session.analysis, contentLocale, reportId]);
+  }, [ready, session.diagnosis, session.analysis, locale, reportId]);
 
   const recommendation = useMemo(() => {
     if (!ready || !session.analysis || !session.diagnosis.gender) return null;

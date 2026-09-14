@@ -12,6 +12,8 @@
  * [TODO] "Email report" needs a backend mail service — the button is stubbed.
  */
 
+import { primitives } from '@/styles/tokens';
+
 export type PdfSection = {
   heading: string;
   /** two-column rows */
@@ -37,8 +39,9 @@ export async function buildRootePdf(input: {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   let y = MARGIN;
 
-  const ink = '#2a2320';
-  const muted = '#6b5f57';
+  const ink = primitives.ink;
+  const muted = primitives.muted;
+  const lineColor = primitives.cream300;
 
   const ensure = (needed: number) => {
     if (y + needed > PAGE_H - MARGIN) {
@@ -62,7 +65,7 @@ export async function buildRootePdf(input: {
   text(input.title, 20, ink, { bold: true, gap: 2 });
   if (input.subtitle) text(input.subtitle, 10, muted, { gap: 10 });
 
-  doc.setDrawColor('#d9cfc4');
+  doc.setDrawColor(lineColor);
   ensure(12);
   doc.line(MARGIN, y, PAGE_W - MARGIN, y);
   y += 18;
@@ -86,7 +89,7 @@ export async function buildRootePdf(input: {
 
   if (input.disclaimer) {
     ensure(20);
-    doc.setDrawColor('#d9cfc4');
+    doc.setDrawColor(lineColor);
     doc.line(MARGIN, y, PAGE_W - MARGIN, y);
     y += 14;
     text(input.disclaimer, 8, muted);

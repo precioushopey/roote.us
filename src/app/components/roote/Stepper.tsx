@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react';
 import { cn } from '@/app/components/ui/utils';
 
 export type Step = { id: string; label: string };
@@ -30,13 +31,7 @@ export function Stepper({ steps, current, label, className }: Props) {
                 state === 'upcoming' && 'border-border text-muted-foreground',
               )}
             >
-              {state === 'done' ? (
-                <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden fill="none">
-                  <path d="M3.5 8.5l3 3 6-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              ) : (
-                i + 1
-              )}
+              {state === 'done' ? <Check className="h-3 w-3" strokeWidth={2.5} aria-hidden /> : i + 1}
             </span>
             <span
               className={cn(

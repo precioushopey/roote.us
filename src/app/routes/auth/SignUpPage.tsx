@@ -20,7 +20,7 @@ type SignUpState = { orderId?: string } | null;
  * via the bag without an account. Order history (store/orders.ts) is a flat,
  * unauthenticated list in this browser's localStorage, so any account
  * created here already "sees" the order that was just placed — no explicit
- * linking step needed, just an account to view /account/orders through.
+ * linking step needed, just an account to view it on /account/profile through.
  */
 export function SignUpPage() {
   const t = useT();
@@ -42,15 +42,15 @@ export function SignUpPage() {
       return;
     }
     session.setEmail(email.trim());
-    navigate(withLocale(PATHS.accountSection('orders')));
+    navigate(withLocale(PATHS.accountSection('profile')));
   }
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col gap-4 px-6 py-16">
       <h1 className={funnelHeading}>{t('auth.signUp.title')}</h1>
       {orderId ? <p className="font-body text-sm text-muted-foreground">{t('auth.signUp.orderNote', { orderId })}</p> : null}
-      <form className="flex flex-col gap-3" onSubmit={submit}>
-        <label className="flex flex-col gap-1 text-sm">
+      <form className="flex flex-col gap-4" onSubmit={submit}>
+        <label className="flex flex-col gap-2 text-sm">
           {t('start.account.emailLabel')}
           <input
             type="email"
@@ -60,7 +60,7 @@ export function SignUpPage() {
             className={funnelField}
           />
         </label>
-        <label className="flex flex-col gap-1 text-sm">
+        <label className="flex flex-col gap-2 text-sm">
           {t('start.account.passwordLabel')}
           <input
             type="password"

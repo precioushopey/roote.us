@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { useT, useLocale, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { buildReport } from '@/domain/report/buildReport';
 import { recommend } from '@/domain/recommendation/recommend';
@@ -18,8 +18,7 @@ import type { ProgramDurationDays } from '@/domain/program/types';
 
 export function CheckoutStep() {
   const t = useT();
-  const { contentLocale } = useLocale();
-  const cl = useContentLocale();
+  const { locale } = useLocale();
   const withLocale = useLocalizedPath();
   const navigate = useNavigate();
   const session = useSession();
@@ -31,10 +30,10 @@ export function CheckoutStep() {
       diagnosis: session.diagnosis,
       analysis: session.analysis,
       content: rooteContent,
-      locale: contentLocale,
+      locale,
       reportId: session.reportId,
     });
-  }, [session.diagnosis, session.analysis, session.reportId, contentLocale]);
+  }, [session.diagnosis, session.analysis, session.reportId, locale]);
 
   const rec = useMemo(() => {
     if (!session.analysis || !session.diagnosis.gender) return null;
@@ -90,7 +89,7 @@ export function CheckoutStep() {
   }
 
   return (
-    <div className="mx-auto flex max-w-lg flex-col gap-6">
+    <div className="mx-auto flex max-w-lg flex-col gap-8">
       <section className="rounded-xl border border-border bg-card p-5">
         <div className="flex items-center justify-between">
           <h2 className="u-caps font-body text-sm font-semibold text-muted-foreground">
@@ -103,7 +102,7 @@ export function CheckoutStep() {
         <dl className="mt-3 flex flex-col gap-2 font-body text-sm">
           <div className="flex justify-between gap-4">
             <dt className="text-muted-foreground">{t('program.checkout.recommendedFor')}</dt>
-            <dd className="text-end text-foreground">{goal ? pickLocalized(goal.title, cl) : '-'}</dd>
+            <dd className="text-end text-foreground">{goal ? pickLocalized(goal.title, locale) : '-'}</dd>
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-muted-foreground">{t('start.plan.durationLegend')}</dt>
@@ -122,13 +121,13 @@ export function CheckoutStep() {
         </dl>
         <div className="mt-3 border-t border-border pt-3">
           <p className="font-body text-sm text-muted-foreground">{t('program.checkout.includes')}</p>
-          <ul className="mt-1 flex flex-col gap-0.5 font-body text-sm text-foreground">
+          <ul className="mt-1 flex flex-col gap-2 font-body text-sm text-foreground">
             {includes.map((line, i) => (
               <li key={i}>{line}</li>
             ))}
           </ul>
         </div>
-        <div className="mt-3 flex flex-col gap-1.5 border-t border-border pt-3 font-body text-sm">
+        <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3 font-body text-sm">
           <div className="flex justify-between">
             <span className="text-muted-foreground">{t('start.checkout.total')}</span>
             <PendingChip label="program total" />
@@ -142,7 +141,7 @@ export function CheckoutStep() {
       </section>
 
       <div className="rounded-xl border border-border bg-cream-100 p-4">
-        <label className="flex cursor-pointer items-start gap-3">
+        <label className="flex cursor-pointer items-start gap-4">
           <input
             type="checkbox"
             checked={subscribe}
@@ -164,7 +163,7 @@ export function CheckoutStep() {
         onSubmit={onSubmit}
       />
 
-      <LegalNotice reviewRequired>{t('program.checkout.legal')}</LegalNotice>
+      <LegalNotice>{t('program.checkout.legal')}</LegalNotice>
     </div>
   );
 }

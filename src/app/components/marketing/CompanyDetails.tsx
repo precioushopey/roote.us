@@ -5,7 +5,8 @@ import { cn } from '@/app/components/ui/utils';
 const c = rooteContent.company;
 
 /**
- * The legal-entity block shown on /terms and /terms-of-sale. Locale-invariant
+ * The legal-entity block shown on /terms (which absorbs the former
+ * /terms-of-sale). Locale-invariant
  * facts come from `rooteContent.company`; labels + the localized entity-type and
  * country strings are i18n keys (`marketing.legal.company.*`).
  *
@@ -35,20 +36,20 @@ export function CompanyDetails({ onInk = false }: { onInk?: boolean }) {
   const link = cn('underline', onInk ? 'text-ink-foreground' : 'text-accent');
 
   return (
-    <dl className="grid grid-cols-1 gap-x-10 gap-y-3 sm:grid-cols-[max-content_1fr]">
+    <dl className="grid grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-[max-content_1fr]">
       {rows.map(({ label, value, ltr }) => (
-        <div key={label} className="flex flex-col gap-0.5 sm:contents">
+        <div key={label} className="flex flex-col gap-2 sm:contents">
           <dt className={cn(dt, 'sm:py-0.5')}>{label}</dt>
           <dd className={dd} dir={ltr ? 'ltr' : undefined}>{value}</dd>
         </div>
       ))}
-      <div className="flex flex-col gap-0.5 sm:contents">
+      <div className="flex flex-col gap-2 sm:contents">
         <dt className={cn(dt, 'sm:py-0.5')}>{t('marketing.legal.company.emailLabel')}</dt>
         <dd className={dd} dir="ltr">
           <a href={`mailto:${c.support.email}`} className={link}>{c.support.email}</a>
         </dd>
       </div>
-      <div className="flex flex-col gap-0.5 sm:contents">
+      <div className="flex flex-col gap-2 sm:contents">
         <dt className={cn(dt, 'sm:py-0.5')}>{t('marketing.legal.company.phoneLabel')}</dt>
         <dd className={dd} dir="ltr">
           <a href={c.support.phoneHref} className={link}>{c.support.phone}</a>

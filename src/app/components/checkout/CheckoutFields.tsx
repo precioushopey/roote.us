@@ -59,58 +59,58 @@ export function CheckoutFields({
   const shown = shapeError ?? error;
 
   return (
-    <form className={cn('flex flex-col gap-3', className)} onSubmit={handleSubmit}>
+    <form className={cn('flex flex-col gap-4', className)} onSubmit={handleSubmit}>
       <h2 className="text-sm font-medium">{t('checkout.contactTitle')}</h2>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-sm">
         {t('checkout.name')}
         <input required value={name} onChange={(e) => setName(e.target.value)} className={funnelField} />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-sm">
         {t('checkout.email')}
         <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={funnelField} />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-sm">
         {t('checkout.phone')}
         <input required value={phone} onChange={(e) => setPhone(e.target.value)} className={funnelField} />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-sm">
         {t('checkout.city')}
         <input required value={city} onChange={(e) => setCity(e.target.value)} className={funnelField} />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-sm">
         {t('checkout.postal')}
         <input required value={postal} onChange={(e) => setPostal(e.target.value)} className={funnelField} />
       </label>
 
       <h2 className="mt-2 text-sm font-medium">{t('checkout.paymentTitle')}</h2>
       <p className="text-sm text-muted-foreground">{t('checkout.testNotice')}</p>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-sm">
         {t('checkout.cardName')}
         <input required value={cardName} onChange={(e) => setCardName(e.target.value)} className={funnelField} />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-sm">
         {t('checkout.cardNumber')}
         <input required inputMode="numeric" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className={funnelField} />
       </label>
-      <div className="flex gap-3">
-        <label className="flex flex-1 flex-col gap-1 text-sm">
+      <div className="flex gap-4">
+        <label className="flex flex-1 flex-col gap-2 text-sm">
           {t('checkout.expiry')}
           <input required placeholder="MM/YY" value={expiry} onChange={(e) => setExpiry(e.target.value)} className={funnelField} />
         </label>
-        <label className="flex flex-1 flex-col gap-1 text-sm">
+        <label className="flex flex-1 flex-col gap-2 text-sm">
           {t('checkout.cvc')}
           <input required inputMode="numeric" value={cvc} onChange={(e) => setCvc(e.target.value)} className={funnelField} />
         </label>
       </div>
       {/* TODO: confirm with client — which alternate payment methods to actually offer */}
-      <button type="button" disabled className="rounded-xs border border-border px-4 py-2 text-sm text-muted-foreground opacity-50">
+      <button type="button" disabled className="rounded-full border border-border px-4 py-2 text-sm text-muted-foreground opacity-50">
         {t('checkout.altPayment')}
       </button>
 
       {shown && <p role="alert" className="text-sm text-destructive">{shown}</p>}
       <p className="text-sm text-muted-foreground">
         {t('checkout.termsAgree')}{' '}
-        <Link to={withLocale('/terms-of-sale')} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>.
+        <Link to={`${withLocale('/terms')}#terms-of-sale`} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>.
       </p>
       <button type="submit" disabled={submitting} className={funnelPrimaryBtn}>
         {submitting ? t('checkout.submitting') : t('checkout.submit')}

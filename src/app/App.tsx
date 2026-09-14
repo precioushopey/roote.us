@@ -16,25 +16,19 @@ import { PlanStep } from './routes/start/PlanStep';
 import { CheckoutStep } from './routes/start/CheckoutStep';
 import { SuccessStep } from './routes/start/SuccessStep';
 import { AppShell } from './routes/app/AppShell';
-import { AccountOverview } from './routes/app/AccountOverview';
 import { AccountToday } from './routes/app/AccountToday';
 import { AccountBaseline } from './routes/app/AccountBaseline';
-import { AccountPhotos } from './routes/app/AccountPhotos';
-import { AccountScans } from './routes/app/AccountScans';
 import { AccountProgress } from './routes/app/AccountProgress';
-import { AccountBeforeAfter } from './routes/app/AccountBeforeAfter';
 import { AccountResults } from './routes/app/AccountResults';
 import { AccountRenew } from './routes/app/AccountRenew';
 import { AccountReminders } from './routes/app/AccountReminders';
 import { AppPlan } from './routes/app/AppPlan';
 import { AppCare } from './routes/app/AppCare';
 import { AppProfile } from './routes/app/AppProfile';
-import { AccountOrders } from './routes/app/AccountOrders';
-import { AccountSubscription } from './routes/app/AccountSubscription';
 
 const router = createBrowserRouter([
   {
-    path: '/:localeRegion',
+    path: '/:locale',
     element: <LocaleGate />,
     children: [
       marketingRoutes,
@@ -59,24 +53,27 @@ const router = createBrowserRouter([
         path: 'account',
         element: <AppShell />,
         children: [
-          { index: true, element: <AccountOverview /> },
-          { path: 'today', element: <AccountToday /> },
+          { index: true, element: <AccountToday /> },
           { path: 'program', element: <AppPlan /> },
           { path: 'baseline', element: <AccountBaseline /> },
           { path: 'progress', element: <AccountProgress /> },
-          { path: 'progress/before-after', element: <AccountBeforeAfter /> },
           { path: 'results', element: <AccountResults /> },
           { path: 'renew', element: <AccountRenew /> },
           { path: 'reminders', element: <AccountReminders /> },
-          { path: 'photos', element: <AccountPhotos /> },
-          { path: 'scans', element: <AccountScans /> },
-          { path: 'orders', element: <AccountOrders /> },
-          { path: 'subscription', element: <AccountSubscription /> },
           { path: 'care', element: <AppCare /> },
           { path: 'profile', element: <AppProfile /> },
+          // Nav consolidation (2026-09-11): Overview folded into Today (index);
+          // Photos/Scans/Before & After folded into Progress as tabs; Orders/
+          // Subscription folded into Profile. Old URLs keep working.
+          { path: 'today', element: <LocalizedNavigate to="/account" replace /> },
+          { path: 'photos', element: <LocalizedNavigate to="/account/progress?tab=photos" replace /> },
+          { path: 'scans', element: <LocalizedNavigate to="/account/progress?tab=scans" replace /> },
+          { path: 'progress/before-after', element: <LocalizedNavigate to="/account/progress?tab=beforeAfter" replace /> },
+          { path: 'orders', element: <LocalizedNavigate to="/account/profile" replace /> },
+          { path: 'subscription', element: <LocalizedNavigate to="/account/profile" replace /> },
           // WP2-era sub-segment names
           { path: 'plan', element: <LocalizedNavigate to="/account/program" replace /> },
-          { path: 'rescan', element: <LocalizedNavigate to="/account/scans" replace /> },
+          { path: 'rescan', element: <LocalizedNavigate to="/account/progress?tab=scans" replace /> },
         ],
       },
       { path: 'report/:reportId', element: <ReportPage /> },

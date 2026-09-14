@@ -25,7 +25,7 @@ export function AnalysisMetric({
       {level === null ? (
         <PendingChip label={label} />
       ) : (
-        <span className="flex items-center gap-1" aria-label={level}>
+        <span className="flex items-center gap-2" aria-label={level}>
           {[0, 1, 2].map((i) => (
             <span
               key={i}
@@ -100,6 +100,48 @@ export function ScanGuide({ angle, className }: { angle: 'front' | 'top' | 'crow
       {angle === 'top' && <path d="M30 78c6-34 54-34 60 0" stroke="currentColor" strokeWidth="1.5" />}
       {angle === 'crown' && <circle cx="60" cy="60" r="30" stroke="currentColor" strokeWidth="1.5" />}
       {angle === 'hairline' && <path d="M28 46c10-14 54-14 64 0" stroke="currentColor" strokeWidth="1.5" />}
+    </svg>
+  );
+}
+
+/* --- ScanMesh ------------------------------------------------------------
+   Dot/line analysis-mesh overlay + viewfinder corners (2026-09-11,
+   mdhair.co study) — a quiet visual cue that a photo is AI-analyzed, not a
+   plain product shot. Purely decorative: aria-hidden, no data-binding. Meant
+   to sit absolutely-positioned over an `object-cover`/`object-contain`
+   image inside a `relative` wrapper. */
+export function ScanMesh({ className }: { className?: string }) {
+  const points: [number, number][] = [
+    [24, 20], [52, 14], [78, 24],
+    [16, 48], [50, 42], [84, 50],
+    [28, 76], [56, 70], [76, 82],
+  ];
+  const lines: [number, number][] = [
+    [0, 1], [1, 2], [0, 3], [1, 3], [1, 4], [2, 4], [2, 5],
+    [3, 4], [4, 5], [3, 6], [4, 6], [4, 7], [5, 7], [5, 8],
+    [6, 7], [7, 8],
+  ];
+  return (
+    <svg viewBox="0 0 100 100" aria-hidden className={cn('text-accent', className)} fill="none">
+      <path d="M8 18V8h10" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      <path d="M92 18V8H82" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      <path d="M8 82v10h10" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      <path d="M92 82v10H82" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      {lines.map(([a, b], i) => (
+        <line
+          key={i}
+          x1={points[a][0]}
+          y1={points[a][1]}
+          x2={points[b][0]}
+          y2={points[b][1]}
+          stroke="currentColor"
+          strokeWidth="0.5"
+          opacity="0.45"
+        />
+      ))}
+      {points.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="1.5" fill="currentColor" opacity="0.85" />
+      ))}
     </svg>
   );
 }

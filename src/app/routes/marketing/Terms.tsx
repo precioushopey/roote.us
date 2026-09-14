@@ -1,59 +1,106 @@
-import { Link } from 'react-router';
-import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
-import { Section, DisplayTitle, Prose, Button, LegalNotice } from '@/app/components/roote';
+import { Section, Prose, SectionIntro, Button, Hero } from '@/app/components/roote';
 import { CompanyDetails } from '@/app/components/marketing/CompanyDetails';
 import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { ACCESSIBILITY_META, getLegalBody } from '@/content/legal';
+import { pickLocalized } from '@/content/localized';
 
 const SECTION_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6'] as const;
+const SALE_SECTION_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12'] as const;
 
+/** A numbered clause row — the shared visual unit every sub-group below uses
+ *  (General Terms, Terms of Sale, Accessibility), each restarting its own
+ *  1..n count since they read as distinct policies merged onto one page. */
+function Clause({ n, title, body }: { n: number; title: React.ReactNode; body: React.ReactNode }) {
+  return (
+    <div className="flex gap-4 border-b border-border pb-8 last:border-b-0">
+      <span className="shrink-0 font-display text-lg lg:text-xl text-accent">{n}.</span>
+      <div className="flex flex-col gap-2">
+        <p className="font-display text-lg md:text-xl text-foreground">{title}</p>
+        <Prose>{body}</Prose>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Terms of Service — absorbs the former standalone /terms-of-sale and
+ * /accessibility pages as two additional sub-groups (5-page legal IA,
+ * 2026-09-14). Each keeps its own heading/intro and restarts its own clause
+ * numbering rather than continuing one long flat count.
+ */
 export function Terms() {
   const t = useT();
-  const withLocale = useLocalizedPath();
+  const cl = useLocale().locale;
+  const accessibilitySections = getLegalBody('accessibility');
+
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="py-12 md:py-24 text-center">
-        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto !font-medium max-w-2xl">
-          {t('marketing.legal.terms.title')}
-        </DisplayTitle>
-        <p className="mt-3 font-body text-sm text-ink-foreground/75">
-          {t('marketing.legal.updated')}: {rooteContent.company.legalUpdated}
-        </p>
-        <div className="mt-6 flex justify-center">
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm sm:w-auto">
+      <Hero
+        title={t('marketing.legal.terms.title')}
+        meta={
+          <p className="font-body text-sm text-ink-foreground">
+            {t('marketing.legal.updated')}: {rooteContent.company.legalUpdated}
+          </p>
+        }
+        cta={
+          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
-        </div>
-      </Section>
+        }
+      />
 
       <Section tone="cream" width="content">
-        <div className="mx-auto flex max-w-3xl flex-col gap-10">
+        <div className="mx-auto flex max-w-3xl flex-col gap-12">
           {SECTION_KEYS.map((s, i) => (
-            <div key={s} className="flex gap-4 border-b border-border pb-8 last:border-b-0">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent font-display text-sm text-accent">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div>
-                <p className="font-display text-lg font-medium text-foreground">{t(`marketing.legal.terms.${s}` as MessageKey)}</p>
-                <Prose className="mt-3">{t(`marketing.legal.terms.${s}.body` as MessageKey)}</Prose>
-                {s === 's4' && (
-                  <Prose className="mt-2">
-                    <Link to={withLocale('/terms-of-sale')} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>
-                  </Prose>
-                )}
-              </div>
-            </div>
+            <Clause
+              key={s}
+              n={i + 1}
+              title={t(`marketing.legal.terms.${s}` as MessageKey)}
+              body={t(`marketing.legal.terms.${s}.body` as MessageKey)}
+            />
           ))}
         </div>
       </Section>
 
-      <Section tone="teal" width="content">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6">
-          <DisplayTitle as="h2" step="md">{t('marketing.legal.company.title')}</DisplayTitle>
-          <Prose className="text-ink-foreground/75">{t('marketing.legal.company.intro')}</Prose>
+      <Section id="terms-of-sale" tone="cream" width="content" className="-mt-24">
+        <div className="mx-auto flex max-w-3xl flex-col gap-8">
+          <SectionIntro titleStep="md" title={t('marketing.legalSale.title')} body={t('marketing.legalSale.intro')} />
+          <div className="flex flex-col gap-12">
+            {SALE_SECTION_KEYS.map((s, i) => (
+              <Clause
+                key={s}
+                n={i + 1}
+                title={t(`marketing.legalSale.${s}.title` as MessageKey)}
+                body={t(`marketing.legalSale.${s}.body` as MessageKey)}
+              />
+            ))}
+          </div>
+          <Prose>{t('marketing.legalSale.contact')}</Prose>
+        </div>
+      </Section>
+
+      <Section tone="cream" width="content" className="-mt-24">
+        <div className="mx-auto flex max-w-3xl flex-col gap-8">
+          <SectionIntro
+            titleStep="md"
+            title={pickLocalized(ACCESSIBILITY_META.title, cl)}
+            body={pickLocalized(ACCESSIBILITY_META.blurb, cl)}
+          />
+          <div className="flex flex-col gap-12">
+            {accessibilitySections.map((s, i) => (
+              <Clause key={s.id} n={i + 1} title={pickLocalized(s.heading, cl)} body={pickLocalized(s.body, cl)} />
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section tone="teal" width="content" className="-mt-24">
+        <div className="mx-auto flex max-w-3xl flex-col gap-8">
+          <SectionIntro onInk titleStep="md" title={t('marketing.legal.company.title')} body={t('marketing.legal.company.intro')} />
           <CompanyDetails onInk />
-          <LegalNotice reviewRequired>{t('marketing.legal.company.reviewNote')}</LegalNotice>
         </div>
       </Section>
     </>

@@ -1,7 +1,20 @@
-import type { ReactNode } from 'react';
+import { forwardRef, type ReactNode } from 'react';
 import { Link } from 'react-router';
+import { ArrowRight } from 'lucide-react';
 import { cn } from '@/app/components/ui/utils';
 import { displayClamp, type DisplayStep } from '@/app/components/marketing/displayScale';
+
+/** Splits on `*word*` markers, rendering the marked part(s) in italic (see
+ *  `.font-script`, marketing.css — same font as the surrounding heading,
+ *  italic only) and leaving everything else as plain text. Used for the
+ *  personalization word in a headline — each locale's translation places
+ *  its own `*...*` marker, since word order (and, for he/ar, whether the
+ *  pronoun fuses onto the noun) differs per language. */
+export function renderWithEmphasis(text: string): ReactNode[] {
+  return text
+    .split(/\*(.+?)\*/g)
+    .map((part, i) => (i % 2 === 1 ? <span key={i} className="font-script">{part}</span> : part));
+}
 
 /* --- Eyebrow -----------------------------------------------------------
    Small context label above a section. i18n-safe caps via `.u-caps`
@@ -19,7 +32,7 @@ export function Eyebrow({
   return (
     <p
       className={cn(
-        'u-caps font-body text-sm font-semibold',
+        'u-caps font-body text-sm font-medium',
         onDark ? 'text-cream-100' : 'text-muted-foreground',
         className,
       )}
@@ -30,30 +43,38 @@ export function Eyebrow({
 }
 
 /* --- DisplayTitle ----------------------------------------------------
-   Frank Ruhl Libre display heading. Optional decorative "ghost" continuation
-   word (aria-hidden). */
-export function DisplayTitle({
-  children,
-  as: Tag = 'h2',
-  step = 'lg',
-  ghost,
-  onDark = false,
-  align = 'start',
-  className,
-}: {
-  children: string;
-  as?: 'h1' | 'h2' | 'h3';
-  step?: DisplayStep;
-  ghost?: string;
-  onDark?: boolean;
-  align?: 'start' | 'center' | 'end';
-  className?: string;
-}) {
+   Lusitana display heading (`.display-heading` → `font-family:
+   var(--font-display)`, same var every other `.font-display` element uses —
+   no separate hardcoded family here; the class is named `display-heading`,
+   not `text-display`, because `cn()`'s tailwind-merge pass otherwise reads
+   `text-display` as a `text-{color}` utility conflicting with the
+   `text-foreground`/`text-cream-100` class right after it, silently
+   dropping it). Optional decorative "ghost" continuation word (aria-hidden).
+   `fontSize` multiplies the step's clamp() by the `--roote-title-fit` custom
+   property (default 1, untouched unless a caller attaches `useFitTitle`'s
+   ref) so a shrink-to-fit hook can claw back a line for longer translations
+   without fighting React's style diffing. */
+export const DisplayTitle = forwardRef<
+  HTMLHeadingElement,
+  {
+    children: ReactNode;
+    as?: 'h1' | 'h2' | 'h3';
+    step?: DisplayStep;
+    ghost?: string;
+    onDark?: boolean;
+    align?: 'start' | 'center' | 'end';
+    className?: string;
+  }
+>(function DisplayTitle(
+  { children, as: Tag = 'h2', step = 'lg', ghost, onDark = false, align = 'start', className },
+  ref,
+) {
   return (
     <Tag
-      style={{ fontSize: displayClamp[step], fontFamily: "'Frank Ruhl Libre', serif" }}
+      ref={ref}
+      style={{ fontSize: `calc(${displayClamp[step]} * var(--roote-title-fit, 1))` }}
       className={cn(
-        'text-display text-balance',
+        'display-heading text-balance',
         onDark ? 'text-cream-100' : 'text-foreground',
         align === 'center' && 'text-center',
         align === 'end' && 'text-end',
@@ -69,28 +90,27 @@ export function DisplayTitle({
       ) : null}
     </Tag>
   );
-}
+});
 
 /* --- Prose --------------------------------------------------------------
    Body copy. Measure held under ~72 characters. */
 export function Prose({
   children,
-  size = 'md',
   onDark = false,
   className,
 }: {
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg';
   onDark?: boolean;
   className?: string;
 }) {
-  const s = {
-    sm: 'text-sm leading-relaxed',
-    md: 'text-[0.9375rem] leading-[1.65]',
-    lg: 'text-md leading-[1.7]',
-  }[size];
   return (
-    <p className={cn('font-body font-regular max-w-[62ch]', s, onDark ? 'text-cream-100' : 'text-muted-foreground', className)}>
+    <p
+      className={cn(
+        'font-body font-regular text-sm sm:text-base md:text-lg',
+        onDark ? 'text-cream-100' : 'text-muted-foreground',
+        className,
+      )}
+    >
       {children}
     </p>
   );
@@ -113,22 +133,24 @@ export function TextLink({
   className?: string;
 }) {
   const external = /^https?:\/\//.test(to);
+  // In-page anchors go through a plain <a> too — react-router's <Link> intercepts
+  // the click and navigates via the History API instead of letting the browser
+  // scroll to the target id, so a hash-only `to` would silently do nothing.
+  const isHash = to.startsWith('#');
   const classes = cn(
-    'group inline-flex items-center gap-1.5 font-body text-sm underline decoration-1 underline-offset-4',
+    'group inline-flex items-center gap-2 font-body font-regular text-sm sm:text-base md:text-lg underline decoration-1 underline-offset-4',
     onDark
       ? 'text-cream-100 decoration-cream-100/40 hover:decoration-cream-100'
       : 'text-foreground decoration-border hover:decoration-deep-700',
     className,
   );
   const arrow = withArrow ? (
-    <svg viewBox="0 0 24 24" aria-hidden className="h-3.5 w-3.5 rtl:-scale-x-100" fill="none">
-      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <ArrowRight aria-hidden strokeWidth={1.6} className="h-3.5 w-3.5 rtl:-scale-x-100" />
   ) : null;
 
-  if (external) {
+  if (external || isHash) {
     return (
-      <a href={to} rel="noopener noreferrer" target="_blank" className={classes}>
+      <a href={to} {...(external ? { rel: 'noopener noreferrer', target: '_blank' } : {})} className={classes}>
         {children}
         {arrow}
       </a>

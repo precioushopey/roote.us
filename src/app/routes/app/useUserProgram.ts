@@ -3,9 +3,9 @@ import { useT, useLocale } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useTracking } from '@/store/tracking';
 import { rooteContent } from '@/content/roote.config';
-import { resolvePlanTreatments, planKeysForProgram, isoToday } from './programProgress';
+import { resolvePlanTreatments, planKeysForProgram, isoToday, type ResolvedTreatment } from './programProgress';
 import { buildUserProgram } from '@/domain/tracking/buildUserProgram';
-import { tasksForDay, flattenRoutine, type ResolvedTreatment } from '@/domain/tracking/schedule';
+import { tasksForDay, flattenRoutine } from '@/domain/tracking/schedule';
 import type { DayRoutine } from '@/domain/tracking/schedule';
 import type { UserProgram } from '@/domain/tracking/types';
 

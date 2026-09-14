@@ -1,14 +1,20 @@
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useTracking } from '@/store/tracking';
-import { DisplayTitle, Prose, Card, Button, Badge, SegmentedControl, Timeline } from '@/app/components/roote';
+import { Prose, Card, Badge, Button, SegmentedControl, Timeline } from '@/app/components/roote';
 import type { TimelineMilestone } from '@/app/components/roote';
 import { qualitativeMetrics, compareMetric } from '@/domain/tracking/metrics';
 import type { HairScan } from '@/domain/tracking/types';
 import { PATHS } from '@/app/paths';
 import { METRIC_LABEL, METRIC_LABEL_FALLBACK } from './metricLabels';
 import { useUserProgram } from './useUserProgram';
+import { AccountPageHeader } from './AccountPageHeader';
+import { AccountPhotos } from './AccountPhotos';
+import { AccountScans } from './AccountScans';
+import { AccountBeforeAfter } from './AccountBeforeAfter';
+import type { MessageKey } from '@/i18n/messages';
 
 const SCAN_TYPE_KEY = {
   baseline: 'app.scans.type.baseline',
@@ -16,15 +22,23 @@ const SCAN_TYPE_KEY = {
   final: 'app.scans.type.final',
 } as const;
 
+type Tab = 'metrics' | 'photos' | 'scans' | 'beforeAfter';
+const TAB_VALUES: readonly Tab[] = ['metrics', 'photos', 'scans', 'beforeAfter'];
+const TAB_LABEL_KEY: Record<Tab, MessageKey> = {
+  metrics: 'app.nav.progress',
+  photos: 'app.nav.photos',
+  scans: 'app.nav.scans',
+  beforeAfter: 'app.nav.beforeAfter',
+};
+
 /**
  * Progress over time (spec §7). Every metric shows its baseline read next to the
  * latest scan's read — qualitative only, since nothing has produced a real
  * number yet (locked decision #1). A numeric delta renders *only* when a real
  * provider genuinely returned values on both sides.
  */
-export function AccountProgress() {
+function ProgressMetricsPanel({ onGoBeforeAfter }: { onGoBeforeAfter: () => void }) {
   const t = useT();
-  const withLocale = useLocalizedPath();
   const session = useSession();
   const tracking = useTracking();
   const view = useUserProgram();
@@ -76,16 +90,9 @@ export function AccountProgress() {
   ];
 
   return (
-    <div data-animate className="flex flex-col gap-8">
-      <header className="flex flex-col gap-2">
-        <DisplayTitle as="h1" step="sm">
-          {t('app.progress.title')}
-        </DisplayTitle>
-        <Prose size="sm">{t('app.progress.subtitle')}</Prose>
-      </header>
-
+    <div className="flex flex-col gap-4 md:gap-8">
       <section className="flex flex-col gap-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <h2 className="font-display text-md text-foreground">{t('app.progress.metricsTitle')}</h2>
           {scans.length > 1 && (
             <SegmentedControl
@@ -98,9 +105,11 @@ export function AccountProgress() {
         </div>
 
         {baselineMetrics.length === 0 ? (
-          <Prose size="sm">{t('app.progress.noBaseline')}</Prose>
+          <Card tone="cream">
+            <Prose>{t('app.progress.noBaseline')}</Prose>
+          </Card>
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {baselineMetrics.map((b) => {
               const l = latest?.metrics.find((m) => m.key === b.key);
               const cmp = compareMetric(b, l);
@@ -109,11 +118,11 @@ export function AccountProgress() {
                   <p className="font-body text-sm text-muted-foreground">
                     {t(METRIC_LABEL[b.key] ?? METRIC_LABEL_FALLBACK)}
                   </p>
-                  <div className="mt-2 flex items-baseline justify-between gap-3">
+                  <div className="mt-2 flex items-baseline justify-between gap-4">
                     <span className="font-body text-sm text-muted-foreground">{t('app.progress.baselineLabel')}</span>
                     <span className="font-display text-md text-foreground">{t(b.status as 'severity.mild')}</span>
                   </div>
-                  <div className="mt-1 flex items-baseline justify-between gap-3">
+                  <div className="mt-1 flex items-baseline justify-between gap-4">
                     <span className="font-body text-sm text-muted-foreground">{t('app.progress.latestLabel')}</span>
                     <span className="font-display text-md text-foreground">
                       {l ? t(l.status as 'severity.mild') : <span className="text-muted-foreground">-</span>}
@@ -131,21 +140,29 @@ export function AccountProgress() {
           </div>
         )}
 
-        {scans.length === 0 && <Prose size="sm">{t('app.progress.noScanYet')}</Prose>}
-        <Prose size="sm" className="text-muted-foreground">
-          {t('app.progress.metricsNote')}
-        </Prose>
+        {scans.length === 0 ? (
+          <Card tone="cream" className="flex flex-col gap-2">
+            <Prose>{t('app.progress.noScanYet')}</Prose>
+            <Prose className="text-muted-foreground">{t('app.progress.metricsNote')}</Prose>
+          </Card>
+        ) : (
+          <Prose className="text-muted-foreground">{t('app.progress.metricsNote')}</Prose>
+        )}
       </section>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-col gap-4">
         <h2 className="font-display text-md text-foreground">{t('app.progress.scanTimelineTitle')}</h2>
-        <Timeline milestones={milestones} />
+        <Timeline milestones={milestones} orientation="horizontal" />
       </section>
 
       <div>
-        <Button to={withLocale(PATHS.accountSection('progress/before-after'))} variant="secondary">
+        <button
+          type="button"
+          onClick={onGoBeforeAfter}
+          className="inline-flex min-h-8 items-center justify-center rounded-full border border-border bg-transparent px-4 py-1.5 font-body text-sm font-medium text-foreground transition-colors hover:border-deep-700"
+        >
           {t('app.progress.openBeforeAfter')}
-        </Button>
+        </button>
       </div>
 
       {latest?.isMock && (
@@ -153,6 +170,56 @@ export function AccountProgress() {
           {t('app.scans.demo')}
         </Badge>
       )}
+    </div>
+  );
+}
+
+/** Progress absorbs the former standalone Photos, Scans, and Before & After
+ *  pages as tabs of one screen (nav-consolidation, 2026-09-11) — `?tab=`
+ *  keeps each section deep-linkable from CTAs elsewhere in the app. */
+export function AccountProgress() {
+  const t = useT();
+  const withLocale = useLocalizedPath();
+  const [searchParams, setSearchParams] = useSearchParams();
+  // Derived straight from the URL (not local state) so it stays in sync
+  // whichever way the tab changed — an in-page click or an external NavLink
+  // (e.g. the sidebar's "Run a new hair analysis" -> ?tab=scans).
+  const requested = searchParams.get('tab') as Tab | null;
+  const tab: Tab = requested && TAB_VALUES.includes(requested) ? requested : 'metrics';
+
+  function goTab(next: Tab) {
+    setSearchParams(
+      (p) => {
+        p.set('tab', next);
+        return p;
+      },
+      { replace: true },
+    );
+  }
+
+  return (
+    <div data-animate className="flex flex-col gap-4 md:gap-8">
+      <AccountPageHeader eyebrow={t('app.nav.progress')} title={t('app.progress.title')} />
+
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <Prose>{t('app.progress.subtitle')}</Prose>
+        <Button to={withLocale(`${PATHS.accountSection('progress')}?tab=scans`)} variant="secondary">
+          {t('app.care.rescanLink')}
+        </Button>
+      </div>
+
+      <SegmentedControl
+        label={t('common.progressLabel')}
+        value={tab}
+        onChange={goTab}
+        options={TAB_VALUES.map((value) => ({ value, label: t(TAB_LABEL_KEY[value]) }))}
+        className="w-fit"
+      />
+
+      {tab === 'metrics' && <ProgressMetricsPanel onGoBeforeAfter={() => goTab('beforeAfter')} />}
+      {tab === 'photos' && <AccountPhotos />}
+      {tab === 'scans' && <AccountScans />}
+      {tab === 'beforeAfter' && <AccountBeforeAfter onGoToPhotos={() => goTab('photos')} />}
     </div>
   );
 }

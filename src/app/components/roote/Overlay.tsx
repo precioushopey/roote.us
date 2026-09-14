@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { X } from 'lucide-react';
 import { cn } from '@/app/components/ui/utils';
 
 function useDismissable(onClose: () => void, active: boolean) {
@@ -86,15 +87,13 @@ export function Modal({ open, onClose, title, hideTitle, children, footer, class
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="ms-auto inline-flex h-9 w-9 items-center justify-center rounded-xs text-muted-foreground hover:bg-cream-100"
+            className="ms-auto inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-cream-100"
           >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
-              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
+            <X className="h-5 w-5" strokeWidth={1.6} aria-hidden />
           </button>
         </div>
         <div className="mt-4 overflow-y-auto">{children}</div>
-        {footer ? <div className="mt-6 flex flex-wrap justify-end gap-3">{footer}</div> : null}
+        {footer ? <div className="mt-6 flex flex-wrap justify-end gap-4">{footer}</div> : null}
       </div>
     </div>,
     document.body,
@@ -147,11 +146,9 @@ export function Drawer({ open, onClose, title, side = 'end', children, className
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xs text-muted-foreground hover:bg-cream-100"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-cream-100"
           >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
-              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
+            <X className="h-5 w-5" strokeWidth={1.6} aria-hidden />
           </button>
         </div>
         <div className="mt-6 flex-1 overflow-y-auto">{children}</div>

@@ -1,5 +1,5 @@
 import { PRODUCTS, getProduct as lookupProduct, type Product } from './products';
-import { L, type LocalizedText } from './localized';
+import { L6, type LocalizedText } from './localized';
 
 /**
  * À-la-carte catalogue — the "refills & add-ons" surface (`/bag`). Derived from
@@ -36,17 +36,24 @@ export const CATALOG_ITEMS: CatalogProduct[] = PRODUCTS.map(toCatalog);
 export const CATALOG: CatalogCategory[] = [
   {
     id: 'density',
-    title: L('Density', 'Density'),
+    title: L6({ en: 'Density', he: 'Density', ar: 'الكثافة', ru: 'Плотность', fr: 'Densité', es: 'Densidad' }),
     items: PRODUCTS.filter((p) => p.slug.startsWith('density-')).map(toCatalog),
   },
   {
     id: 'gray',
-    title: L('Gray', 'Gray'),
+    title: L6({ en: 'Gray', he: 'Gray', ar: 'الشعر الرمادي', ru: 'Седина', fr: 'Cheveux gris', es: 'Canas' }),
     items: PRODUCTS.filter((p) => p.concern === 'gray' || p.concern === 'gray-support').map(toCatalog),
   },
   {
     id: 'support',
-    title: L('Scalp care', 'טיפוח קרקפת'),
+    title: L6({
+      en: 'Scalp care',
+      he: 'טיפוח קרקפת',
+      ar: 'العناية بفروة الرأس',
+      ru: 'Уход за кожей головы',
+      fr: 'Soin du cuir chevelu',
+      es: 'Cuidado del cuero cabelludo',
+    }),
     items: PRODUCTS.filter((p) => p.concern === 'thinning-support').map(toCatalog),
   },
 ];

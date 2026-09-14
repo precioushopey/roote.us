@@ -37,16 +37,16 @@ export function AccountStep() {
   }
 
   return (
-    <div className="mx-auto flex max-w-sm flex-col gap-6">
+    <div className="mx-auto flex max-w-sm flex-col gap-8">
       <DisplayTitle as="h1" step="sm">
         {t('start.account.title')}
       </DisplayTitle>
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <label className="flex flex-col gap-1 font-body text-sm">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <label className="flex flex-col gap-2 font-body text-sm">
           {t('start.account.emailLabel')}
           <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={FIELD} />
         </label>
-        <label className="flex flex-col gap-1 font-body text-sm">
+        <label className="flex flex-col gap-2 font-body text-sm">
           {t('start.account.passwordLabel')}
           <input
             type="password"

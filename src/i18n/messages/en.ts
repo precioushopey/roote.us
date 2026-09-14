@@ -8,8 +8,9 @@ export const en = {
   'common.progressLabel': 'Progress',
   'brand.tagline': 'Personalized Hair Growth System',
   'meta.title': 'Personalized Hair Growth System',
-  'locale.toggle.toHe': 'עברית',
-  'locale.toggle.toEn': 'English',
+  'nav.language.open': 'Change language',
+  'nav.language.title': 'Language',
+  'nav.language.current': 'Current language: {name}',
 
   'scale.norwood.label': 'Norwood–Hamilton scale',
   'scale.ludwig.label': 'Ludwig scale',
@@ -252,7 +253,6 @@ export const en = {
   'start.checkout.error.payment': 'Payment failed. Please try again.',
 
   // --- Program funnel (WP7) ---
-  'program.plan.reviewRequired': 'Includes a treatment review',
   'program.plan.priceNote': 'Prices, savings, and the exact charge are confirmed at checkout.',
   'program.checkout.programTitle': 'Your program',
   'program.checkout.recommendedFor': 'Recommended for',
@@ -324,6 +324,7 @@ export const en = {
   'marketing.magazine.whyEyebrow': 'The basics',
   'marketing.magazine.whyHeading': 'Why hair loss happens',
   'marketing.magazine.whyMediaAlt': 'Close crop of a thinning hairline, no face',
+  'marketing.magazine.whyCta': 'See what treats it',
   'marketing.magazine.timelineHeading': 'How results typically develop',
   'marketing.magazine.timelinePendingLabel': 'results timeline',
   'marketing.magazine.ingredientsEyebrow': 'Ingredient by ingredient',
@@ -339,24 +340,17 @@ export const en = {
   'marketing.magazine.formatLabel.serum': 'Serums',
   'marketing.magazine.formatLabel.shampoo': 'Shampoos',
 
-  'marketing.region.trigger': 'Change region and language',
-  'marketing.region.title': 'Region & language',
-  'marketing.region.regionLabel': 'Region',
-  'marketing.region.languageLabel': 'Language',
-  'marketing.region.done': 'Done',
-
   'marketing.footer.explore': 'Explore',
   'marketing.footer.solutions': 'Solutions',
   'marketing.footer.company': 'Company',
   'marketing.footer.legal': 'Legal',
-  'marketing.footer.policies': 'Policies',
+  'marketing.footer.customerSupport': 'Customer Support',
+  'marketing.footer.cta': 'Start Free Analysis',
   'marketing.footer.account': 'Your account',
   'marketing.footer.getStarted': 'Get started',
   'marketing.footer.terms': 'Terms',
   'marketing.footer.privacy': 'Privacy',
   'marketing.footer.rights': 'All rights reserved.',
-  'marketing.footer.social': 'Follow us',
-
   'marketing.popup.eyebrow': 'Not sure where to start?',
   'marketing.popup.title': 'Find your program',
   'marketing.popup.body': 'Free guided hair analysis. A few minutes, no commitment.',
@@ -386,9 +380,9 @@ export const en = {
   'marketing.home.strip.item3': 'Progress tracking',
   'marketing.home.strip.item4': 'Ongoing treatment journey',
 
-  'marketing.home.concern.eyebrow': 'Choose your concern',
+  'marketing.home.concern.eyebrow': 'Hair concerns',
   'marketing.home.concern.heading': 'What would you like to understand?',
-  'marketing.home.concern.cta': 'Start analysis',
+  'marketing.home.concern.cta': 'Read the Magazine',
   'marketing.home.concern.thinningMediaAlt': 'Close crop of a thinning hairline, no face',
   'marketing.home.concern.grayMediaAlt': 'Macro of naturally gray strands',
   'marketing.home.concern.bothMediaAlt': 'Close crop of the crown showing thinning and gray together',
@@ -418,12 +412,15 @@ export const en = {
   'marketing.home.system.women': "Women's system",
   'marketing.home.system.menMediaAlt': "Men's system in dark-teal packaging",
   'marketing.home.system.womenMediaAlt': "Women's system in cream packaging",
+  'marketing.home.system.cta': 'Shop products',
+  'marketing.home.how.cta': 'See the FAQ',
 
   'marketing.home.density.eyebrow': 'Density system',
   'marketing.home.density.heading': 'Different stages require different decisions.',
   'marketing.home.density.note':
     'Treatment strength and eligibility are determined by approved recommendation criteria, never by a score alone.',
   'marketing.home.density.mediaAlt': 'Three scalp density stages: higher, moderate, advanced',
+  'marketing.home.density.cta': 'Learn about thinning',
 
   'marketing.home.gray.eyebrow': 'Gray system',
   'marketing.home.gray.heading': 'Gray hair deserves its own system.',
@@ -432,6 +429,7 @@ export const en = {
   'marketing.home.gray.mediaAlt': 'Gray Support supplement and Gray Serum shown together',
   'marketing.home.gray.forMen': 'For men',
   'marketing.home.gray.forWomen': 'For women',
+  'marketing.home.gray.cta': 'Learn about gray hair',
 
   'marketing.home.science.eyebrow': 'Science',
   'marketing.home.science.heading': 'Know what is in your program.',
@@ -486,6 +484,7 @@ export const en = {
   'marketing.sol.explore': 'Explore this path',
   'marketing.sol.exploreSystem': 'Explore the system',
   'marketing.sol.understandHeading': 'Where it shows up',
+  'marketing.sol.understandBody': 'Three areas people notice first — see which one matches what you’re seeing.',
   'marketing.sol.systemEyebrow': 'The recommended program',
   'marketing.sol.ctaHeading': 'Start with your analysis.',
 
@@ -532,15 +531,12 @@ export const en = {
   'marketing.sys.day': 'Day {n}',
   'marketing.sys.trackBody': 'Your program includes photo check-ins and scans on a set schedule. The dates appear in your account once your program starts.',
   'marketing.sys.ctaHeading': 'Begin the journey.',
-  'marketing.sys.pillar.analyze': 'Analyze',
-  'marketing.sys.pillar.analyzeBody': 'A short assessment and a guided hair scan organize what is visible into a hair profile.',
-  'marketing.sys.pillar.treat': 'Treat',
-  'marketing.sys.pillar.treatBody': 'A recommended program and a clear daily routine, adjusted at review where a prescription component applies.',
-  'marketing.sys.pillar.track': 'Track',
-  'marketing.sys.pillar.trackBody': 'Consistent guided photos and scans let you compare from baseline to final result.',
+  'marketing.sys.pillar.analyzeBody': 'A short assessment and a guided hair scan.',
+  'marketing.sys.pillar.treatBody': 'A recommended program with a clear daily routine.',
+  'marketing.sys.pillar.trackBody': 'Compare progress from baseline to final scan.',
 
   // --- Shop (WP4) ---
-  'marketing.shop.heading': 'A hair system, shaped entirely around you.',
+  'marketing.shop.heading': 'A hair system, shaped entirely around *you*.',
   'marketing.shop.body': 'Take the free hair analysis and get a treatment kit built around your scalp, your goals, and your results.',
   'marketing.shop.heroMediaAlt': 'The full product lineup',
   'marketing.shop.catalogHeading': 'Every product, in one place.',
@@ -560,7 +556,6 @@ export const en = {
   // --- Product detail (WP4) ---
   'marketing.pdp.priceLabel': 'Price',
   'marketing.pdp.pricePending': 'Pending',
-  'marketing.pdp.reviewBadge': 'Requires treatment review',
   'marketing.pdp.fitTitle': 'How it fits your program',
   'marketing.pdp.fitBody': 'Your program lists exactly which products to use and when. This page explains the product on its own.',
   'marketing.pdp.format': '{size} per unit',
@@ -571,6 +566,9 @@ export const en = {
   'marketing.pdp.formula': 'Formula reference',
   'marketing.pdp.formulaNote': 'Full formula detail is available to your report after eligibility review. Subject to regulatory review.',
   'marketing.pdp.evidenceNote': 'We publish trial data for this formulation as it becomes available, and never present an ingredient study or a competitor study as our own.',
+  'marketing.pdp.requiresReview': 'Requires treatment review',
+  'marketing.pdp.noPrescriptionNeeded': 'No prescription needed',
+  'marketing.pdp.alsoInFormula': 'Also in this formula',
   'marketing.pdp.relatedTitle': 'Complementary products',
   'marketing.pdp.ctaHeading': 'Start with your analysis.',
 
@@ -582,7 +580,6 @@ export const en = {
   'marketing.howItWorks.step1MediaAlt': 'A phone showing the assessment quiz',
   'marketing.howItWorks.step2.title': 'AI scalp-photo analysis',
   'marketing.howItWorks.step2.body': 'Four guided photos are mapped against a recognized hair-loss scale.',
-  'marketing.howItWorks.step2MediaAlt': 'Four guided angles of a scalp photo scan',
   'marketing.howItWorks.step3.title': 'Your custom formula',
   'marketing.howItWorks.step3.body': 'Your inputs determine which active ingredients and duration your plan uses.',
   'marketing.howItWorks.step3MediaAlt': 'A formula reference card with active ingredients',
@@ -877,7 +874,7 @@ export const en = {
   'marketing.legal.terms.s6.body':
     'These terms are governed by the laws of the State of California, USA, without regard to its conflict-of-laws rules. Disputes that cannot be resolved informally will be brought before the state or federal courts located in Los Angeles County, California.',
 
-  // Company / legal-entity details — shared by /terms and /terms-of-sale (facts in roote.config company)
+  // Company / legal-entity details — shown on /terms, which absorbs /terms-of-sale (facts in roote.config company)
   'marketing.legal.company.title': 'Company details',
   'marketing.legal.company.intro': 'This service is operated by the company below.',
   'marketing.legal.company.legalNameLabel': 'Registered company name',
@@ -892,10 +889,8 @@ export const en = {
   'marketing.legal.company.addressLabel': 'Registered address',
   'marketing.legal.company.emailLabel': 'Email',
   'marketing.legal.company.phoneLabel': 'Phone',
-  'marketing.legal.company.reviewNote':
-    'This information is provided for transparency. These terms are a standard template and are pending formal legal review.',
 
-  // Terms of Sale (/terms-of-sale)
+  // Terms of Sale — now a sub-group within /terms, not its own route
   'marketing.legalSale.title': 'Terms of Sale',
   'marketing.legalSale.intro':
     "These Terms of Sale govern your purchase of products and program subscriptions from 91 ENTERPRISE LLC (“we”, “us”). They apply together with our Terms of Service and Privacy Policy. Please read them before placing an order.",
@@ -1056,7 +1051,6 @@ export const en = {
   'app.today.nextOrder.note': "We'll remind you before your supply runs low.",
   'app.today.reminders.title': 'Reminders',
   'app.today.reminders.body': 'Reminders for each step are delivered here in the app at your treatment times.',
-  'app.today.reminders.comingSoon': 'Scheduled notification reminders are coming soon.',
   'app.today.link.progress': 'Add this week’s photos',
   'app.today.link.care': 'Message your care team',
 
@@ -1107,6 +1101,11 @@ export const en = {
   'app.today.markPending': 'Mark not done',
   'app.today.skip': 'Skip today',
   'app.today.unskip': 'Un-skip',
+  'app.today.greeting': 'Welcome back',
+  'app.today.goalLabel': 'Your goal',
+  'app.today.nextTask.label': 'Up next',
+  'app.today.empty.body': "Your daily routine will show up here once your plan includes at least one treatment.",
+  'app.today.empty.cta': 'View your plan',
 
   // --- Baseline / Photos / Scans (Track 2 WP-C) ---
   'app.metric.key.visibleThinning': 'Visible thinning',
@@ -1144,7 +1143,7 @@ export const en = {
   'app.scans.runAnalysis': 'Analyze my progress',
   'app.scans.analyzing': 'Analyzing your progress…',
   'app.scans.history': 'Scan history',
-  'app.scans.none': 'No progress scans yet.',
+  'app.scans.none': 'Scans you capture will appear here — start one above when it’s due.',
   'app.scans.demo': 'Demo data',
   'app.scans.type.baseline': 'Baseline scan',
   'app.scans.type.progress': 'Progress scan',
@@ -1161,7 +1160,7 @@ export const en = {
   'app.progress.latestLabel': 'Latest',
   'app.progress.compareWith': 'Compare with',
   'app.progress.noScanYet': 'Your first checkpoint scan will fill this in.',
-  'app.progress.noBaseline': 'Complete your assessment to set a baseline.',
+  'app.progress.noBaseline': 'We don’t have a baseline reading to compare yet. This normally comes from your initial hair analysis.',
   'app.progress.metricsNote':
     'These are qualitative reads. Numeric measurements appear once an analysis service is connected.',
   'app.progress.scanTimelineTitle': 'Scan timeline',
@@ -1244,10 +1243,8 @@ export const en = {
   'app.reminders.subtitle': 'What ROOTÉ will nudge you about, and when.',
   'app.reminders.manage': 'Manage notifications',
   'app.reminders.upcoming': 'Coming up',
-  'app.reminders.none': 'Nothing scheduled right now.',
+  'app.reminders.none': 'Upcoming checkpoints, scans, and reorder reminders will appear here as your program continues.',
   'app.reminders.settingsTitle': 'What to remind me about',
-  'app.reminders.deliveryNote':
-    'At launch, reminders arrive in the app and by email. Web push and SMS come in later phases.',
   'app.reminders.on': 'On',
   'app.reminders.off': 'Off',
   'app.reminders.type.dailyTreatment': 'Daily treatment',
@@ -1293,7 +1290,7 @@ export const en = {
   'app.profile.dates': 'Dates',
   'app.profile.viewReport': 'View my report',
   'app.profile.orders.title': 'Recent orders',
-  'app.profile.orders.empty': 'No orders yet.',
+  'app.profile.orders.empty': 'Your order history will appear here after your first purchase.',
   'app.profile.orders.program': 'Program',
   'app.profile.orders.bag': 'Shop',
   'app.profile.password.title': 'Change password',
@@ -1304,6 +1301,9 @@ export const en = {
   'app.profile.password.error.wrong': 'Your current password is incorrect.',
   'app.profile.password.error.weak': 'Use at least 8 characters.',
   'app.profile.logout': 'Log out',
+  'app.profile.leaveWarning.title': 'Log out to continue?',
+  'app.profile.leaveWarning.body': 'Browsing products takes you outside your account and will log you out. You can log back in anytime.',
+  'app.profile.leaveWarning.confirm': 'Log out & continue',
 
   'hairScan.notConfigured': 'Connecting you to HairHealth.ai; please check back soon.',
   'hairScan.title': 'Chat with HairHealth.ai',

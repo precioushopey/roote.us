@@ -9,7 +9,8 @@ import { funnelHeading } from '@/app/components/funnel/funnelStyles';
 /**
  * A second, separate HairHealth.ai Landbot embed (see LandbotFullpageEmbed's own
  * doc comment) for logged-in patients to do a rescan — additive to, not a
- * replacement for, the existing local guided-photo-capture flow on `/account/scans`.
+ * replacement for, the existing local guided-photo-capture flow on the Scans tab
+ * of `/account/progress`.
  * Guarded the same way `AppShell` guards `/account/*`, but mounted as a sibling
  * route outside it: Landbot's Fullpage widget takes over the whole page, which
  * would visually break AppShell's persistent sidebar/tab chrome.
@@ -30,8 +31,8 @@ export function AccountRescan() {
   if (!auth.email) return <Navigate to={withLocale('/login')} replace />;
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-6 py-12">
-      <div className="flex flex-col gap-3">
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 px-6 py-12 md:gap-8">
+      <div className="flex flex-col gap-4">
         <h1 className={funnelHeading}>{t('accountRescan.title')}</h1>
         <p className="font-body text-sm text-muted-foreground">{t('accountRescan.intro')}</p>
       </div>

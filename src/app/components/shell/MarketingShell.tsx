@@ -8,7 +8,7 @@ import { AnalysisPrompt } from './AnalysisPrompt';
 
 export function MarketingShell() {
   const t = useT();
-  const { localeRegion } = useLocale();
+  const { locale } = useLocale();
   const { pathname } = useLocation();
   useRevealOnRoute();
   useDocumentMeta();
@@ -25,7 +25,7 @@ export function MarketingShell() {
         <Outlet />
       </main>
       <Footer />
-      {pathname === `/${localeRegion}` && <AnalysisPrompt />}
+      {pathname === `/${locale}` && <AnalysisPrompt />}
     </div>
   );
 }

@@ -7,26 +7,19 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const VARIANT: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-primary-foreground hover:bg-deep-900',
-  secondary: 'border border-border bg-transparent text-foreground hover:border-deep-700',
+  secondary: 'border border-primary bg-transparent text-primary hover:border-cream-200',
   ghost: 'bg-transparent text-foreground hover:bg-cream-100',
   quiet: 'bg-cream-100 text-foreground hover:bg-cream-200',
   danger: 'bg-destructive text-destructive-foreground hover:opacity-90',
 };
 
-const SIZE: Record<ButtonSize, string> = {
-  sm: 'min-h-6 px-3 py-1 text-sm',
-  md: 'min-h-8 px-4 py-1.5 text-sm',
-  lg: 'min-h-10 px-5 py-2.5 text-base',
-};
-
 const BASE =
-  'inline-flex items-center justify-center gap-2 rounded-xs font-body font-medium ' +
+  'inline-flex items-center justify-center gap-2 rounded-full font-body font-medium px-4 md:px-6 py-2 md:py-3 text-sm text-center ' +
   'transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ' +
   'focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-40';
 
 type CommonProps = {
   variant?: ButtonVariant;
-  size?: ButtonSize;
   /** render label in CSS uppercase on Latin locales (brand CTA style) */
   caps?: boolean;
   block?: boolean;
@@ -53,12 +46,11 @@ export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 /** The one filled action per screen should be `primary`; everything else steps down. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props, ref) {
-  const { variant = 'primary', size = 'md', caps = false, block = false, onInk = false, className, children } = props;
+  const { variant = 'primary', caps = false, block = false, onInk = false, className, children } = props;
   const classes = cn(
     BASE,
     VARIANT[variant],
     variant === 'primary' && onInk && 'bg-deep-600 hover:bg-deep-700 hover:ring-2 hover:ring-accent',
-    SIZE[size],
     block && 'w-full',
     // `.u-caps` sets a wide 0.14em letter-spacing meant for small eyebrow
     // labels; on button-sized text that reads as too spaced out, so pull it
@@ -89,7 +81,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   // button branch — strip the styling props so they don't hit the DOM
   const {
     variant: _v,
-    size: _s,
     caps: _c,
     block: _b,
     onInk: _oi,
@@ -118,7 +109,7 @@ export function IconButton({ label, children, size = 'md', className, type = 'bu
       type={type}
       aria-label={label}
       className={cn(
-        'inline-flex items-center justify-center rounded-xs text-foreground transition-colors',
+        'inline-flex items-center justify-center rounded-full text-foreground transition-colors',
         'hover:bg-cream-100 outline-none focus-visible:ring-2 focus-visible:ring-ring',
         box,
         className,

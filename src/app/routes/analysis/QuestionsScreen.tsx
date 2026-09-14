@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, RadioCard, Button } from '@/app/components/roote';
 import { pickLocalized } from '@/content/localized';
@@ -50,7 +50,7 @@ async function loadPhotoBlobs(photos: PhotoRef[]) {
  *  by Hair Goal. */
 export function QuestionsScreen() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
@@ -133,8 +133,8 @@ export function QuestionsScreen() {
   const canAdvanceHealth = isHealthHistory && session.diagnosis.healthHistory.length > 0;
 
   return (
-    <section data-animate className="flex flex-col gap-6">
-      <div className="flex items-center gap-3">
+    <section data-animate className="flex flex-col gap-8">
+      <div className="flex items-center gap-4">
         {i > 0 && (
           <button
             type="button"
@@ -154,11 +154,11 @@ export function QuestionsScreen() {
       </DisplayTitle>
 
       {isHealthHistory ? (
-        <div className="grid gap-3">
+        <div className="grid gap-4">
           {q.options.map((o) => (
             <label
               key={o.value}
-              className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 font-body text-sm"
+              className="flex cursor-pointer items-center gap-4 rounded-xl border border-border bg-card px-4 py-3.5 font-body text-sm"
             >
               <input
                 type="checkbox"
@@ -171,7 +171,7 @@ export function QuestionsScreen() {
           ))}
         </div>
       ) : (
-        <div className="grid gap-3">
+        <div className="grid gap-4">
           {q.options.map((o) => (
             <RadioCard
               key={o.value}

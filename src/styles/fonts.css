@@ -1,6 +1,8 @@
-/* Display: Bodoni Moda (Didot-lineage modern serif — medical-luxury register).
+/* Display: Lusitana (Latin serif, 400/700 — no italic face, so the
+   `.font-script` emphasis word renders as a browser-synthesized oblique).
    Body / UI: Montserrat.
-   Hebrew: Frank Ruhl Libre (display) + Heebo (body) + Noto Sans Hebrew (fallback).
+   Hebrew: Frank Ruhl Libre (display, `--font-display`'s fallback slot also
+   covers Hebrew glyphs) + Heebo (body) + Noto Sans Hebrew (fallback).
    Arabic: Noto Sans Arabic (for the scaffolded `ar` locale).
    Loaded via <link> tags in index.html, not @import here — @import serializes the
    fetch (fetch+parse this file before the font stylesheet is even discovered),

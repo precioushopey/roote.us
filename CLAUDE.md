@@ -16,7 +16,9 @@ marketing site → free questionnaire-based "AI" hair diagnosis → personalized
              → account + plan + checkout → post-purchase program app        (+ a separate à-la-carte product shop)
 ```
 
-Hebrew / RTL is the **default** UI; English is a toggle. There is **no backend of any kind** — every
+The UI ships in six languages — **English (default)**, Hebrew, Arabic, Russian, French, Spanish —
+picked from a `LanguagePicker` dropdown; Hebrew and Arabic render RTL. Every route lives under a
+`/:locale` URL prefix (`/en`, `/he`, …). There is **no backend of any kind** — every
 server concern (auth, payment, email, photo storage, notifications, support, CV analysis) is a typed
 stub with a `TODO` marker. `index.html` is `noindex, nofollow`. Operating entity: **91 ENTERPRISE LLC**.
 
@@ -29,8 +31,10 @@ shadcn/ui set under `src/app/components/ui/`).
 ```bash
 pnpm install
 pnpm dev          # Vite dev server
-pnpm build        # vite build -> dist/  (one ~640 kB chunk; the >500 kB warning is expected)
+pnpm build        # vite build -> dist/  (main chunk is now well over 500 kB — the warning is expected, not a regression)
 pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
+pnpm i18n:check   # node scripts/check-i18n-parity.mjs — message-key parity across all 6 locales
+pnpm content:check # node scripts/check-content-parity.mjs — content-layer LocalizedText parity
 ```
 
 - pnpm workspace. `pnpm-workspace.yaml` pins `supportedArchitectures` to linux glibc, so a plain
@@ -43,9 +47,10 @@ pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
 - **No test suite exists.** All `*.test.ts(x)` files were deliberately removed 2026-09-10 (user
   request). Vitest and Testing Library are still `devDependencies` and `pnpm test`/`pnpm test:watch`
   still exist as scripts, but `pnpm test` now exits 1 with "No test files found" — don't treat that
-  as a regression to fix. There is no automated regression coverage of any kind (i18n EN/HE parity,
-  the pending-content gate, domain logic, routing) — verify changes by reading the code and checking
-  the app in a browser. Don't add tests back unless asked.
+  as a regression to fix. There is no automated regression coverage for domain logic or routing —
+  verify those by reading the code and checking the app in a browser. i18n message-key parity and
+  content-layer translation completeness ARE gated: `pnpm i18n:check` / `pnpm content:check` (see
+  Commands). Don't add tests back unless asked.
 
 ## Hard rules (do not violate)
 
@@ -53,9 +58,11 @@ pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
    results, advisory names, press logos, medical/legal copy — if the client hasn't supplied it, it
    stays `null` in `src/content/roote.config.ts` and renders as a `<PendingChip>` → `[PENDING: label]`.
    This is a regulatory constraint, not a style preference. (No longer test-enforced — see Commands.)
-2. **EN/HE parity.** Every key added to `src/i18n/messages/en.ts` needs the same key in `he.ts`, and
-   no value may be `""`. Write real Hebrew (first-pass is fine); flag legal HE as "pending formal
-   legal review" (the pattern `roote.config.disclaimers` uses).
+2. **Six-locale key parity.** Every key added to `src/i18n/messages/en.ts` needs the same key in
+   `he.ts`, `ar.ts`, `ru.ts`, `fr.ts`, and `es.ts`, and no value may be `""` — enforced by
+   `pnpm i18n:check`. Write real translations (first-pass is fine); flag legal copy as "pending
+   formal legal review" (the pattern `roote.config.disclaimers` and `legal.ts` use). The same parity
+   requirement applies to `src/content/*.ts` `LocalizedText` entries, enforced by `pnpm content:check`.
 3. **Domain layer stays pure.** `src/domain/**`, `src/content/pending.ts`, `src/domain/report/money.ts`,
    `src/app/routes/app/programProgress.ts` — no imports of React, the DOM, storage, or the i18n
    *provider*. They take typed inputs and return typed outputs (analysis returns **keys**, not display
@@ -71,8 +78,11 @@ pnpm typecheck    # tsc --noEmit (strict) — must stay at 0 diagnostics
 ### Render flow
 
 `index.html` → `src/main.tsx` (`createRoot(#root)` + `import "./styles/index.css"`) →
-`src/app/App.tsx` → `LocaleProvider` › `AuthProvider` › `SessionProvider` › `CartProvider` ›
-`RouterProvider`.
+`src/app/App.tsx` → `AuthProvider` › `SessionProvider` › `CartProvider` › `TrackingProvider` ›
+`ToastProvider` › `RouterProvider`. `LocaleProvider` is **not** in that chain — the router's
+`/:locale` route element `LocaleGate` validates the locale segment (redirecting a bare/invalid
+path via `resolveLocaleRedirect`, with its `*`-route sibling `BareOrLegacyPathRedirect`) and mounts
+`LocaleProvider` around the routed page tree.
 
 The router is a **module-scoped `createBrowserRouter`** created once at import. Drive it
 programmatically by `window.history.pushState(...)` **plus**
@@ -80,17 +90,24 @@ programmatically by `window.history.pushState(...)` **plus**
 
 ### Routing & shells
 
+Every path below is served under a `/:locale` prefix (`/en`, `/he`, `/ar`, `/ru`, `/fr`, `/es`); the
+table lists the bare paths. `src/app/LocaleGate.tsx` validates the segment via `isValidLocaleSegment`
+and (with its `*`-route sibling `BareOrLegacyPathRedirect`) redirects a bare or unknown-locale URL —
+`resolveLocaleRedirect` picks the target: stored `roote.locale` pref → `navigator.language` → `en`.
+
 | Shell | Routes | Chrome |
 |---|---|---|
-| `MarketingShell` | `/`, `/how-it-works`, `/solutions` (+ `/thinning`, `/gray-hair`), `/science`, `/system`, `/about`, `/faq`, `/support`, `/products` (+ `/:slug`), `/terms`, `/terms-of-sale`, `/privacy`, legal registry (`/shipping`, `/returns`, `/cancellation`, `/subscription-terms`, `/medical-disclaimer`, `/accessibility`, `/cookies`), `/bag`, `/bag/checkout`, `/bag/success` | Header (condense-on-scroll, "More ▾" dropdown) + Footer + skip-link |
-| `AnalysisShell` | `/analysis` (index) + `gender`/`goal`/`photos`/`scanning`/`questions`/`results` (WP2-era aliases `intro`/`concern`/`analyzing`/`ready` still redirect) | wordmark (→ `/`) + progress rail + `LocaleToggle` |
-| `FunnelShell` | `/login`; `/hair-scan`; `/program` + `plan`/`checkout`/`success` (`StartLayout` nested) | wordmark (→ `/`) + `LocaleToggle` only |
+| `MarketingShell` | `/`, `/magazine`, `/hair-scan`, `/solutions` (+ `/thinning`, `/gray-hair`), `/faq`, `/support`, `/login`, `/signup`, `/products` (+ `/:slug`), `/terms`, `/terms-of-sale`, `/privacy`, legal registry (`/shipping`, `/returns`, `/cancellation`, `/subscription-terms`, `/medical-disclaimer`, `/accessibility`, `/cookies`), `/bag`, `/bag/checkout`, `/bag/success` | Header (condense-on-scroll: bg/border swap only, no longer shrinks padding) + Footer + skip-link |
+| `AnalysisShell` | `/analysis` (index) + `gender`/`goal`/`photos`/`scanning`/`questions`/`results` (WP2-era aliases `intro`/`concern`/`analyzing`/`ready` still redirect) | wordmark (→ `/`) + progress rail + `LanguagePicker` |
+| `FunnelShell` | `/account/hairhealth-rescan`; `/program` + `plan`/`checkout`/`success` (`StartLayout` nested) | wordmark (→ `/`) + `LanguagePicker` only |
 | *(own inline)* | `/report/:reportId` | wordmark header + disclaimer footer |
-| `AppShell` | `/account` (index = Overview), plus `today`/`program`/`baseline`/`progress` (+ `/before-after`)/`results`/`renew`/`reminders`/`photos`/`scans`/`orders`/`subscription`/`care`/`profile` (WP2-era aliases `plan`→`program`, `rescan`→`scans` still redirect) | desktop sidebar / mobile scrollable tabs; guarded by `session.program` + `auth.email` |
+| `AppShell` | `/account` (index = Today, absorbs the former Overview dashboard), plus `program`/`progress` (Photos/Scans/Before & After are now `?tab=` sections of this one page)/`care`/`profile` (absorbs the former Orders/Subscription pages) — 5 sidebar items total (nav consolidation, 2026-09-11). Also `baseline`/`results`/`renew`/`reminders` (contextual sub-pages, not in the sidebar). Old URLs (`today`, `photos`, `scans`, `progress/before-after`, `orders`, `subscription`, WP2-era `plan`→`program`, `rescan`→`progress?tab=scans`) still redirect. | desktop sidebar / mobile scrollable tabs; guarded by `session.program` + `auth.email` (`/account/profile` is reachable without a program too, for bag-only guests) |
 | — | `*` → `<Navigate to="/" replace/>` | — |
 
 `/diagnosis`, `/start`, and `/app` still work as old URLs — `LEGACY_PREFIX_REDIRECTS` in
 `src/app/paths.ts` maps each prefix to its new name (`/analysis`, `/program`, `/account`).
+`resolveLocaleRedirect` (in `src/i18n/localeUrl.ts`) composes these with the locale prefix, so a bare
+`/diagnosis/gender` lands on `/<locale>/analysis/gender` in one hop.
 
 Guards are plain functions returning a redirect path or `null`:
 `src/app/routes/analysis/guards.ts` (`redirectForAnalysisStep`), `src/app/routes/start/guards.ts`
@@ -106,7 +123,8 @@ domain/analysis/           deriveAnalysis (pure, deterministic), analyzeHair (or
                            remoteAnalysisAdapter (env-gated PLACEHOLDER contract, vendor TBD), types
        report/             buildReport (pure view-model builder), types, money (Intl currency)
        program/            types (Program, Treatment)
-i18n/                      LocaleProvider, interpolate ({var} only), messages/{en,he,index}
+i18n/                      LocaleProvider, locales.ts (6-locale registry), localeUrl.ts (locale-prefix
+                           redirects), interpolate ({var} only), messages/{en,he,ar,ru,fr,es,index}
 store/                     sessionStore (useReducer, localStorage['roote.session']),
                            auth (mock; non-crypto digest), cart (localStorage['roote.cart']),
                            checkout (unified Order union + stub submitPayment), orders (order history,
@@ -119,9 +137,35 @@ styles/                    index.css → fonts.css, tailwind.css, theme.css, mar
 
 ### Content pipeline
 
-`roote.config.ts` (facts, `as const`, `null` = unsupplied) + `i18n/messages/{en,he}` (copy) →
-`deriveAnalysis` → `buildReport` / `resolvePlanTreatments` → resolved localized pending-flagged
-view-models → dumb renderers. `collectPending(model)` enumerates every unresolved slot.
+`roote.config.ts` (facts, `as const`, `null` = unsupplied) + `src/content/*.ts` +
+`i18n/messages/<locale>` (message-key copy) — all six locales throughout → `deriveAnalysis` →
+`buildReport` / `resolvePlanTreatments` → resolved localized pending-flagged view-models → dumb
+renderers. `collectPending(model)` enumerates every unresolved slot.
+
+### i18n
+
+Six `LocaleCode`s — `en` (`DEFAULT_LOCALE`), `he`, `ar`, `ru`, `fr`, `es`; `ENABLED_LOCALES` = all
+six. Every route sits under a `/:locale` URL prefix: `LocaleGate` (the router element for `/:locale`)
+mounts `LocaleProvider`, and `resolveLocaleRedirect` / `isValidLocaleSegment` in
+`src/i18n/localeUrl.ts` send a bare or bad-locale URL to stored `roote.locale` → `navigator.language`
+→ `en`. Copy is one file per locale, `src/i18n/messages/<code>.ts`, held at exact key parity
+(1125 keys) by `pnpm i18n:check` (`scripts/check-i18n-parity.mjs` — parity / no-stray / no-empty /
+placeholder-integrity, plain Node, not a test); `he.ts` is the per-key reference for the `ar/ru/fr/es`
+first-pass translations. **Content-layer `LocalizedText`** (`src/content/*.ts` + `roote.config.ts`)
+is likewise fully six-locale — its `LocalizedText` type carries optional `ar?/ru?/fr?/es?`.
+`pickLocalized(text, locale)` (everywhere else) falls back to `en` for a missing field;
+`resolveLocalized` (report) instead returns a `[PENDING]` marker — the report never silently shows
+English. `pnpm content:check` (`scripts/check-content-parity.mjs`) enforces per-file completeness
+across all 14 content modules (plus `src/seo/meta.ts`'s `ROUTE_META`, scanned separately). `he`
+string in each entry is the per-entry translation reference. The `ing.note` / legal-section `S()`
+factory helpers were widened to take a pre-built `LocalizedText` (was positional `en, he`) so the
+parity scanner can see them. `buildReport` and `resolvePlanTreatments` both take the full
+`LocaleCode` end-to-end — the old `contentLocaleOf` / `ContentLocale` en/he-narrowing helpers and the
+`contentLocale` context field they fed have been removed (the web report keeps its own
+`ReportModel.meta.locale: LocaleCode`). One `LanguagePicker` dropdown (Header,
+Footer, FunnelShell, AnalysisShell, AppShell) is the sole language control — the earlier binary
+he↔en toggle and the country + language modal picker are gone, and with them region / country /
+per-country currency (one display currency stays in `roote.config`).
 
 ### State & persistence
 
@@ -132,7 +176,7 @@ Four context providers, each initialised from and written back to storage:
 | `sessionStore` | `localStorage['roote.session']` | whole `SessionState` (diagnosis, analysis, reportId, account.email, draftDurationDays, program) |
 | `auth` | `localStorage['roote.accounts' | 'roote.authSession']` | mock; `digestOf()` is **non-cryptographic** — replace wholesale for real auth |
 | `cart` | `localStorage['roote.cart']` | qty clamped 1–20 |
-| `LocaleProvider` | `localStorage['roote.locale']` | default `'he'`; sets `<html lang dir>` + `document.title` |
+| `LocaleProvider` | `localStorage['roote.locale']` | default `'en'`; write-only "last-known locale", read by `resolveLocaleRedirect` on a bare/invalid path; sets `<html lang dir>` |
 | `persistence` | IndexedDB `roote`/`blobs` | photo blobs keyed by uuid; thumbnails (data URLs) live in the JSON state |
 
 `import.meta.env.DEV` gates the dev seed on `/program` and the
@@ -170,8 +214,8 @@ via `motion`; every effect needs a `prefers-reduced-motion` static fallback (`us
 - Program-day math (`programDay`, `isoToday`, `buildProgram`) is **UTC-only** → off-by-one for
   non-UTC users late in their local day. Known; don't "fix" casually.
 - `lsSet` catches write failures and warns; there is **no** quota-driven photo eviction.
-- **Orphaned i18n keys:** `landing.*` (~60) and `marketing.blog.*` have no runtime consumer (the
-  `Landing` route and `/blog`/`/results` were superseded / not built). They still count toward parity.
+- **Orphaned i18n key:** `marketing.nav.blog` has no runtime consumer (the `/blog` route was never
+  built) but still counts toward the six-locale parity check (`scripts/check-i18n-parity.mjs`).
 - The **PDF report was built then removed** (`src/pdf/*`, `@react-pdf/renderer` gone). `ReportView`
   is web-only. `src/app/routes/report/ReportEmailPreview.tsx` exists but is **not routed**.
 - **One checkout, two order kinds.** `store/checkout.ts` has a single `Order` discriminated union

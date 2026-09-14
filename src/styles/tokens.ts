@@ -52,7 +52,7 @@ export const palette = {
 } as const;
 
 export const fonts = {
-  display: "'Bodoni Moda', 'Frank Ruhl Libre', 'Didot', 'Bodoni 72', Georgia, serif",
+  display: "'Lusitana', 'Frank Ruhl Libre', 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif",
   body: "'Montserrat', 'Heebo', 'Noto Sans Hebrew', 'Noto Sans Arabic', system-ui, sans-serif",
 } as const;
 
@@ -63,4 +63,4 @@ export const displaySizes = { sm: 28, md: 36, lg: 48, xl: 64, '2xl': 80 } as con
 export const radii = { sm: 8, md: 12, lg: 16, xl: 24, '2xl': 32, pill: 9999 } as const;
 
 /** Marketing layout maxima (px) — brief §6. */
-export const layout = { marketing: 1280, content: 1160, readable: 720 } as const;
+export const layout = { content: 1280, readable: 720 } as const;

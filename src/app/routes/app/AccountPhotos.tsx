@@ -1,4 +1,4 @@
-import { useT, useContentLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useTracking } from '@/store/tracking';
 import { DisplayTitle, Prose, Badge } from '@/app/components/roote';
@@ -26,7 +26,7 @@ const CHECKPOINT_KEY: Record<string, MessageKey> = {
  */
 export function AccountPhotos() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const session = useSession();
   const tracking = useTracking();
   const view = useUserProgram();
@@ -54,12 +54,12 @@ export function AccountPhotos() {
   const shownCheckpoints = up.checkpoints.filter((c) => c.type !== 'final-scan');
 
   return (
-    <div data-animate className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4 md:gap-8">
       <header>
-        <DisplayTitle as="h1" step="sm">
+        <DisplayTitle as="h2" step="sm">
           {t('app.photos.title')}
         </DisplayTitle>
-        <Prose className="mt-2" size="sm">
+        <Prose className="mt-2">
           {t('app.photos.body')}
         </Prose>
       </header>
@@ -72,12 +72,12 @@ export function AccountPhotos() {
         const cpIndex = up.checkpoints.findIndex((c) => c.id === cp.id);
         const prev = up.checkpoints[cpIndex - 1];
         return (
-          <section key={cp.id} className="flex flex-col gap-3">
+          <section key={cp.id} className="flex flex-col gap-4">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="font-display text-md text-foreground">
                 {t(CHECKPOINT_KEY[cp.type])} · {t('marketing.sys.day', { n: cp.day })}
               </h2>
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-4">
                 {state === 'overdue' && (
                   <button
                     type="button"
@@ -102,7 +102,7 @@ export function AccountPhotos() {
               </span>
             </div>
             {state === 'skipped' ? null : (
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {PHOTO_VIEWS.map((v) => {
                 const existing = cp.type === 'baseline' ? baselinePhotoFor(v) : photoFor(cp.id, v);
                 const ghost = prev ? (prev.type === 'baseline' ? baselinePhotoFor(v) : photoFor(prev.id, v))?.thumb : undefined;
@@ -111,7 +111,7 @@ export function AccountPhotos() {
                     <figure key={v} className="overflow-hidden rounded-lg border border-border bg-cream-100">
                       <div className="aspect-square w-full">
                         {existing ? (
-                          <img src={existing.thumb} alt={viewLabel(v)} className="h-full w-full object-cover" />
+                          <img src={existing.thumb} alt={viewLabel(v)} loading="lazy" className="h-full w-full object-cover" />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-sm text-muted-foreground">
                             {t('app.photos.notYet')}
@@ -154,7 +154,7 @@ export function AccountPhotos() {
                 <button
                   type="button"
                   onClick={() => tracking.completeCheckpoint(cp.id, today)}
-                  className="w-fit rounded-xs bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
+                  className="w-fit rounded-full bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
                 >
                   {t('app.photos.markCheckpointDone')}
                 </button>

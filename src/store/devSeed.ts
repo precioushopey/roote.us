@@ -4,7 +4,7 @@ import { buildProgram } from '@/store/program';
 import { rooteContent } from '@/content/roote.config';
 import type { HairAnalysis } from '@/domain/analysis/types';
 import type { Program } from '@/domain/program/types';
-import { type LocaleCode, contentLocaleOf } from '@/i18n/locales';
+import { type LocaleCode } from '@/i18n/locales';
 import type { SessionState } from '@/store/sessionStore';
 
 /** Dev-only: a fixed, coherent persona so /start (and later /app) are reachable without walking
@@ -23,14 +23,18 @@ export function seedDiagnosisAndReport(): {
   } as const;
   const diagnosis: SessionState['diagnosis'] = {
     gender: 'male',
-    hairGoal: 'stop-loss',
+    // slow-graying → gray-support (morning) + gray-serum (evening), so the
+    // Today page's day-part tabs have more than one populated slot to show
+    // (stop-loss is shampoo-only, per rules.ts — a single-tab dead end for
+    // exercising the tab UI).
+    hairGoal: 'slow-graying',
     photos: [],
     answers,
     grayAnswers: {},
     healthHistory: ['none'],
     photoConsent: true,
   };
-  const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'stop-loss', answers });
+  const analysis = deriveAnalysis({ gender: 'male', hairGoal: 'slow-graying', answers });
   return { diagnosis, analysis, reportId: `rep-dev-${Date.now()}` };
 }
 
@@ -39,12 +43,13 @@ const DAY_MS = 86_400_000;
 /** Dev-only: the persona above, plus a mid-program `Program` (~day 12) so the `/app` screens
  *  are reviewable without a real checkout. `locale` only affects the frozen plan's copy. */
 export function seedProgram(locale: LocaleCode): {
+  diagnosis: SessionState['diagnosis'];
   analysis: HairAnalysis;
   reportId: string;
   program: Program;
 } {
   const { diagnosis, analysis, reportId } = seedDiagnosisAndReport();
-  const model = buildReport({ diagnosis, analysis, content: rooteContent, locale: contentLocaleOf(locale), reportId });
+  const model = buildReport({ diagnosis, analysis, content: rooteContent, locale, reportId });
   const program = buildProgram({
     orderId: `ord-dev-${Date.now()}`,
     reportId,
@@ -53,5 +58,5 @@ export function seedProgram(locale: LocaleCode): {
     plan: model.plan,
     today: new Date(Date.now() - 11 * DAY_MS), // start ~11 days ago -> "Day 12"
   });
-  return { analysis, reportId, program };
+  return { diagnosis, analysis, reportId, program };
 }

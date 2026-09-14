@@ -20,7 +20,7 @@ export function ReportSection({
 }) {
   return (
     <section className={cn('border-t border-border py-8 first:border-t-0', className)}>
-      <div className="mb-4 flex items-baseline gap-3">
+      <div className="mb-4 flex items-baseline gap-4">
         {index != null ? (
           <span aria-hidden className="font-body text-sm text-accent">
             {String(index).padStart(2, '0')}

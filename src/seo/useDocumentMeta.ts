@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useLocale } from '@/i18n/LocaleProvider';
-import { SHIPPED_LOCALES, COUNTRY_DEFAULTS } from '@/i18n/locales';
-import { formatLocaleRegion } from '@/i18n/localeRegion';
+import { ENABLED_LOCALES } from '@/i18n/locales';
 import { metaForPath, fullTitle } from './meta';
 import { pickLocalized } from '@/content/localized';
 import logo from '@/assets/logo.png';
@@ -35,11 +34,8 @@ function upsertCanonical(href: string) {
 function upsertHreflangAlternates(bareLogicalPath: string) {
   document.head.querySelectorAll('link[data-roote-hreflang]').forEach((el) => el.remove());
   const suffix = bareLogicalPath === '/' ? '' : bareLogicalPath;
-  for (const locale of SHIPPED_LOCALES) {
-    for (const country of Object.keys(COUNTRY_DEFAULTS)) {
-      const region = formatLocaleRegion(locale, country);
-      appendAlternate(region, `${SITE_ORIGIN}/${region}${suffix}`);
-    }
+  for (const locale of ENABLED_LOCALES) {
+    appendAlternate(locale, `${SITE_ORIGIN}/${locale}${suffix}`);
   }
   appendAlternate('x-default', `${SITE_ORIGIN}${suffix}`);
 }
@@ -56,19 +52,19 @@ function appendAlternate(hreflang: string, href: string) {
 /**
  * Sets document title + description + canonical + OpenGraph + hreflang on
  * route change from the `ROUTE_META` table. `metaForPath` operates on the
- * bare logical path (locale-region prefix stripped) — it never sees the
- * region segment. `index.html` keeps `noindex,nofollow` for the concept
+ * bare logical path (locale prefix stripped) — it never sees the
+ * locale segment. `index.html` keeps `noindex,nofollow` for the concept
  * build, so this is inert for crawlers but ready for launch.
  */
 export function useDocumentMeta() {
   const { pathname } = useLocation();
-  const { contentLocale, localeRegion } = useLocale();
+  const { locale } = useLocale();
 
   useEffect(() => {
-    const bareLogicalPath = pathname.slice(`/${localeRegion}`.length) || '/';
+    const bareLogicalPath = pathname.slice(`/${locale}`.length) || '/';
     const meta = metaForPath(bareLogicalPath);
-    const title = fullTitle(pickLocalized(meta.title, contentLocale));
-    const description = pickLocalized(meta.description, contentLocale);
+    const title = fullTitle(pickLocalized(meta.title, locale));
+    const description = pickLocalized(meta.description, locale);
     const canonical = `${SITE_ORIGIN}${pathname}`;
 
     document.title = title;
@@ -85,5 +81,5 @@ export function useDocumentMeta() {
     upsertMeta('meta[name="twitter:image"]', 'name', 'twitter:image', SHARE_IMAGE);
     upsertCanonical(canonical);
     upsertHreflangAlternates(bareLogicalPath);
-  }, [pathname, contentLocale, localeRegion]);
+  }, [pathname, locale]);
 }

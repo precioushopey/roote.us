@@ -8,7 +8,6 @@ import { ProductDetail } from './ProductDetail';
 import { Faq } from './Faq';
 import { Support } from './Support';
 import { Terms } from './Terms';
-import { TermsOfSale } from './TermsOfSale';
 import { Privacy } from './Privacy';
 import { SolutionPage, SolutionsIndex } from './SolutionPage';
 import { LoginPage } from '@/app/routes/auth/LoginPage';
@@ -17,17 +16,21 @@ import { BagPage } from '@/app/routes/bag/BagPage';
 import { BagCheckout } from '@/app/routes/bag/BagCheckout';
 import { BagSuccess } from '@/app/routes/bag/BagSuccess';
 import { LegalPageView } from '@/app/routes/legal/LegalPageView';
+import { LocalizedNavigate } from '@/app/LocaleGate';
 
 /** Legal slugs handled by the generic registry view (Terms / Privacy keep their
- *  own richer drafts until WP9 consolidates). */
-const REGISTRY_LEGAL = [
-  'shipping',
-  'returns',
-  'cancellation',
-  'subscription-terms',
-  'medical-disclaimer',
-  'accessibility',
-  'cookies',
+ *  own richer drafts). */
+const REGISTRY_LEGAL = ['shipping', 'subscription-terms', 'medical-disclaimer'];
+
+/** Retired legal slugs (5-page consolidation, 2026-09-14) — each merged into
+ *  one of the 5 survivors above; these keep the old URL alive as a redirect
+ *  for bookmarks/links rather than a bare 404. */
+const RETIRED_LEGAL_REDIRECTS: Array<[from: string, to: string]> = [
+  ['returns', '/shipping'],
+  ['cancellation', '/shipping'],
+  ['accessibility', '/terms'],
+  ['cookies', '/privacy'],
+  ['terms-of-sale', '/terms'],
 ];
 
 export const marketingRoutes: RouteObject = {
@@ -49,11 +52,14 @@ export const marketingRoutes: RouteObject = {
     { path: 'products', element: <Products /> },
     { path: 'products/:slug', element: <ProductDetail /> },
 
-    // Legal (brief §25)
+    // Legal (brief §25) — compressed to 5 pages, 2026-09-14
     { path: 'terms', element: <Terms /> },
-    { path: 'terms-of-sale', element: <TermsOfSale /> },
     { path: 'privacy', element: <Privacy /> },
     ...REGISTRY_LEGAL.map((slug) => ({ path: slug, element: <LegalPageView slug={slug} /> })),
+    ...RETIRED_LEGAL_REDIRECTS.map(([from, to]) => ({
+      path: from,
+      element: <LocalizedNavigate to={to} replace />,
+    })),
 
     // Shop cart (secondary surface)
     { path: 'bag', element: <BagPage /> },

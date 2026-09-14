@@ -4,6 +4,7 @@ import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import type { MessageKey } from '@/i18n/messages';
 import { CARE_MESSAGES, isoToday, programDay } from './programProgress';
+import { AccountPageHeader } from './AccountPageHeader';
 
 export function AppCare() {
   const t = useT();
@@ -15,14 +16,12 @@ export function AppCare() {
   const unlocked = CARE_MESSAGES.filter((m) => m.day <= day);
 
   return (
-    <div data-animate className="flex flex-col gap-8">
-      <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-medium lg:text-4xl">{t('app.care.title')}</h1>
-        <p className="text-sm text-muted-foreground">{t('app.care.subtitle')}</p>
-      </header>
+    <div data-animate className="flex flex-col gap-4 md:gap-8">
+      <AccountPageHeader eyebrow={t('app.nav.support')} title={t('app.care.title')} />
+      <p className="text-sm text-muted-foreground">{t('app.care.subtitle')}</p>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-6">
-        <section className="flex flex-col gap-3">
+      <div className="grid gap-4 md:gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-8">
+        <section className="flex flex-col gap-4">
           {unlocked.map((m) => (
             <article key={m.key} className="rounded-xl border border-border bg-card p-4 shadow-sm">
               <p className="text-sm font-medium uppercase text-accent">
@@ -34,10 +33,10 @@ export function AppCare() {
         </section>
 
         <div className="flex flex-col gap-4 lg:sticky lg:top-10 lg:self-start">
-          <section className="flex flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm">
+          <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
             <h2 className="font-display text-lg font-medium">{t('app.care.compose.title')}</h2>
             <form
-              className="flex flex-col gap-3"
+              className="flex flex-col gap-4"
               onSubmit={(e) => {
                 e.preventDefault();
                 setSent(true);
@@ -51,7 +50,7 @@ export function AppCare() {
               />
               <button
                 type="submit"
-                className="inline-flex w-full items-center justify-center rounded-xs bg-primary px-6 py-3 text-sm text-primary-foreground"
+                className="inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground"
               >
                 {t('app.care.compose.send')}
               </button>

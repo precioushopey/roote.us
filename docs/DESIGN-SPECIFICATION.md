@@ -217,7 +217,7 @@ App (src/app/App.tsx)
 │   ├─ /bag/checkout         contact + card-shape form → stub order
 │   └─ /bag/success          order id + next steps
 │
-├─ FunnelShell               wordmark (→ /) + LocaleToggle only
+├─ FunnelShell               wordmark (→ /) + LanguagePicker only
 │   ├─ /login                mock sign-in
 │   ├─ /diagnosis            DiagnosisLayout (5-segment ProgressRail)
 │   │   ├─ (index) / intro
@@ -246,9 +246,11 @@ App (src/app/App.tsx)
 
 ### 9.2 Primary navigation
 
-- **Marketing header:** Wordmark · How It Works · Science · Products · About · **More ▾** (FAQ · Support) · bag icon + count badge (→ `/bag`) · LocaleToggle · **Start Free Diagnosis** (CTA → `/diagnosis`). Mobile: hamburger → full-screen `MobileMenu` with all links + CTA + toggle (the bag icon stays in the top bar).
-- **Marketing footer:** *Explore* (How It Works · Science · Products) · *Company* (About · Support · FAQ) · *Legal* (Terms · Terms of Sale · Privacy) · *Start today* (pitch + CTA). Base row: wordmark · LocaleToggle · `© {year} ROOTÉ · All rights reserved.` · `ROOTÉ is a brand of 91 ENTERPRISE LLC · PO BOX 48112, Los Angeles, CA 90036, United States`.
-- **Funnel:** no nav — wordmark (→ `/`) + LocaleToggle; progress rails are non-interactive indicators.
+> **Superseded for locale & currency by** [`docs/superpowers/specs/2026-09-10-six-language-i18n-design.md`]. The language control is now a single `LanguagePicker` dropdown (six languages, English default) shared by every shell; the rows below predate the language-only rework.
+
+- **Marketing header:** Wordmark · How It Works · Science · Products · About · **More ▾** (FAQ · Support) · bag icon + count badge (→ `/bag`) · LanguagePicker · **Start Free Diagnosis** (CTA → `/diagnosis`). Mobile: hamburger → full-screen `MobileMenu` with all links + CTA + toggle (the bag icon stays in the top bar).
+- **Marketing footer:** *Explore* (How It Works · Science · Products) · *Company* (About · Support · FAQ) · *Legal* (Terms · Terms of Sale · Privacy) · *Start today* (pitch + CTA). Base row: wordmark · LanguagePicker · `© {year} ROOTÉ · All rights reserved.` · `ROOTÉ is a brand of 91 ENTERPRISE LLC · PO BOX 48112, Los Angeles, CA 90036, United States`.
+- **Funnel:** no nav — wordmark (→ `/`) + LanguagePicker; progress rails are non-interactive indicators.
 - **App:** sidebar (desktop ≥ lg) / horizontally-scrollable tab strip (mobile): Today · My Plan · Progress · Care Team · Profile; the desktop sidebar also has "Run a new hair analysis" (→ `/app/rescan`), "Shop products" (→ `/products`), and "Log out".
 - **Report:** wordmark only; in-page CTA → `/start?report=<id>`.
 
@@ -449,7 +451,7 @@ Behaviour is stated as **implemented** unless marked `GAP` (no handling found) o
 ### 13.4 Reusable UI inventory (do not re-invent)
 
 `src/app/components/`:
-- **brand/**: `Wordmark` (img logo), `LocaleToggle`, `PendingChip`, `ProgressRail`
+- **brand/**: `Wordmark` (img logo), `LanguagePicker`, `PendingChip`, `ProgressRail`
 - **marketing/**: `Section`, `SectionHeading`, `DisplayHeading`, `Prose`, `Eyebrow`, `ArrowLink`, `CtaButton`, `CtaBand`, `ArcMotif`, `CompanyDetails`, `displayScale` (`DISPLAY_CLAMP`)
 - **diagnosis/**: `PhotoUpload`, `QuestionCard`, `AnalyzingStrip`, `downscaleImage`, `questions`
 - **shell/**: `MarketingShell`, `FunnelShell`, `Header`, `MobileMenu`, `Footer`

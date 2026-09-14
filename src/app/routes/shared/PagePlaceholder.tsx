@@ -21,7 +21,7 @@ export function PagePlaceholder({
   const t = useT();
   return (
     <Section tone="cream" width="readable">
-      <div className="flex flex-col items-center gap-5 py-10 text-center">
+      <div className="flex flex-col items-center gap-4 py-10 text-center">
         {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
         <DisplayTitle as="h1" step="lg" align="center">
           {title}
@@ -32,7 +32,7 @@ export function PagePlaceholder({
             Full build: {wp}
           </p>
         ) : null}
-        <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="mt-2">
+        <Button to={EXTERNAL_ASSESSMENT_URL} external caps>
           {t('marketing.nav.cta')}
         </Button>
       </div>

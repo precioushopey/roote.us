@@ -42,10 +42,11 @@
   --roote-line: rgba(23, 32, 34, 0.14);
 
   /* --- fonts --------------------------------------------------------------
-     Display: Frank Ruhl Libre (all locales, incl. Hebrew). Body/UI: Montserrat.
-     Hebrew/Arabic body: Noto. */
+     Display: Lusitana (Latin only, 400/700 — falls back to Frank Ruhl Libre
+     for Hebrew glyphs it doesn't cover). Body/UI: Montserrat. Hebrew/Arabic
+     body: Noto. */
   --font-size: 16px;
-  --font-display: 'Frank Ruhl Libre', 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif;
+  --font-display: 'Lusitana', 'Frank Ruhl Libre', 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif;
   --font-body: 'Montserrat', 'Heebo', 'Noto Sans Hebrew', 'Noto Sans Arabic', system-ui, sans-serif;
   --font-sans: var(--font-body); /* legacy alias — was Libre Franklin */
   --font-weight-normal: 400;
@@ -118,8 +119,7 @@
   --radius-2xl-px: 2rem;
 
   /* --- layout maxima (brief §6) ------------------------------------- */
-  --width-marketing: 80rem; /* 1280 */
-  --width-content: 72.5rem; /* 1160 */
+  --width-content: 80rem; /* 1280 */
   --width-readable: 45rem; /* 720 */
 
   /* --- app sidebar (kept; repointed) ------------------------------- */

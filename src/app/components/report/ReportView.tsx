@@ -2,6 +2,7 @@ import type { ReportModel } from '@/domain/report/types';
 import type { GrayProfile } from '@/domain/analysis/grayProfile';
 import type { RecommendationOutcome } from '@/domain/recommendation/types';
 import { isPending } from '@/content/pending';
+import { LOCALES } from '@/i18n/locales';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { Wordmark } from '@/app/components/brand/Wordmark';
@@ -18,7 +19,7 @@ function Val({ value }: { value: string | { __pending: true; label: string } }) 
 function Sec({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
     <section className="border-t border-border py-8 first:border-t-0">
-      <div className="mb-4 flex items-baseline gap-3">
+      <div className="mb-4 flex items-baseline gap-4">
         <span aria-hidden className="font-body text-sm text-accent">
           {String(n).padStart(2, '0')}
         </span>
@@ -44,9 +45,7 @@ export function ReportView({
   const withLocale = useLocalizedPath();
   useRevealOnRoute();
 
-  const generated = new Date(model.meta.generatedAt).toLocaleDateString(
-    model.meta.locale === 'he' ? 'he-IL' : 'en-US',
-  );
+  const generated = new Date(model.meta.generatedAt).toLocaleDateString(LOCALES[model.meta.locale].bcp47);
 
   let n = 0;
   const next = () => (n += 1);
@@ -88,13 +87,13 @@ export function ReportView({
 
       <article className="mx-auto max-w-3xl px-6 py-10">
         <p className="u-caps font-body text-sm font-semibold text-muted-foreground">{model.titles.cover}</p>
-        <h1 className="text-display mt-2 text-foreground" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
+        <h1 className="display-heading mt-2 text-foreground" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
           {model.intro.greeting}
         </h1>
         <p className="mt-3 max-w-xl font-body text-md text-muted-foreground">{model.intro.body}</p>
         <p className="mt-2 font-body text-sm text-muted-foreground">{model.meta.scaleLine}</p>
         <div className="mt-4">
-          <Button onClick={downloadPdf} variant="secondary" size="sm">
+          <Button onClick={downloadPdf} variant="secondary">
             {t('report.pdf.download')}
           </Button>
         </div>
@@ -102,10 +101,10 @@ export function ReportView({
         {/* 1 — Your photos */}
         {model.photos.length > 0 && (
           <Sec n={next()} title={model.titles.photos}>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {model.photos.map((p) => (
-                <figure key={p.angleKey} className="flex flex-col gap-1">
-                  <img src={p.dataUrl} alt={p.caption} className="aspect-square w-full rounded-sm object-cover" />
+                <figure key={p.angleKey} className="flex flex-col gap-2">
+                  <img src={p.dataUrl} alt={p.caption} loading="lazy" className="aspect-square w-full rounded-sm object-cover" />
                   <figcaption className="text-center text-sm text-muted-foreground">{p.caption}</figcaption>
                 </figure>
               ))}
@@ -116,7 +115,7 @@ export function ReportView({
         {/* 2 — Analysis summary */}
         <Sec n={next()} title={model.titles.analysis}>
           <p>{model.hairLossType.patternNote}</p>
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-4 flex flex-wrap gap-2">
             {model.analysis.scaleStrip.map((st) => (
               <span
                 key={st.stageKey}
@@ -135,7 +134,7 @@ export function ReportView({
         <Sec n={next()} title={model.titles.hairLossType}>
           <p className="font-body text-foreground">{model.hairLossType.title}</p>
           {model.hairLossType.areaLabels.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1.5">
+            <div className="mt-2 flex flex-wrap gap-2">
               {model.hairLossType.areaLabels.map((a) => (
                 <Badge key={a} tone="neutral">{a}</Badge>
               ))}
@@ -164,7 +163,7 @@ export function ReportView({
             {model.analysis.metrics.map((m) => (
               <div key={m.label} className="flex items-center justify-between gap-4 py-1">
                 <span>{m.label}</span>
-                <span className="flex items-center gap-1" aria-label={m.valueLabel}>
+                <span className="flex items-center gap-2" aria-label={m.valueLabel}>
                   {[0, 1, 2].map((i) => (
                     <span key={i} className={'h-1.5 w-6 rounded-full ' + (i < LEVEL_FILL[m.level] ? 'bg-accent' : 'bg-border')} />
                   ))}
@@ -213,7 +212,7 @@ export function ReportView({
               <p className="text-foreground">
                 <Badge tone="gold">{model.plan.matchedToScanBadge}</Badge>
               </p>
-              <div className="mt-4 flex flex-col gap-3">
+              <div className="mt-4 flex flex-col gap-4">
                 {model.plan.core.map((it, i) => (
                   <div key={i} className="rounded-lg border border-border bg-card p-4">
                     <p className="font-body font-medium text-foreground">
@@ -266,7 +265,7 @@ export function ReportView({
         {/* 11 — Pricing */}
         {model.plan.isStandard && (
           <Sec n={next()} title={model.titles.pricing}>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               {model.pricing.compareAll.map((r) => (
                 <div key={r.days} className="flex items-center justify-between">
                   <span>
@@ -289,7 +288,7 @@ export function ReportView({
               <p>{t('report.safety.notRequired')}</p>
             )
           )}
-          <LegalNotice reviewRequired className="mt-4">
+          <LegalNotice className="mt-4">
             <span className="block"><Val value={model.disclaimers.medical} /></span>
             <span className="mt-1 block"><Val value={model.disclaimers.notADiagnosis} /></span>
           </LegalNotice>
@@ -297,15 +296,15 @@ export function ReportView({
 
         {/* 13 — CTA */}
         <div className="mt-10 rounded-2xl bg-ink p-8 text-center text-ink-foreground">
-          <p className="text-display" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
+          <p className="display-heading" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
             {model.intro.greeting}
           </p>
-          <Button to={withLocale(model.cta.href)} size="lg" caps className="mt-6">
+          <Button to={withLocale(model.cta.href)} caps className="mt-6">
             {model.cta.label}
           </Button>
         </div>
 
-        <footer className="mt-8 flex flex-col gap-1 border-t border-border pt-6 text-sm text-muted-foreground">
+        <footer className="mt-8 flex flex-col gap-2 border-t border-border pt-6 text-sm text-muted-foreground">
           <p><Val value={model.disclaimers.demo} /></p>
           <p><Val value={model.disclaimers.formulaPending} /></p>
           <p className="mt-1">#{model.meta.reportId} · {generated}</p>

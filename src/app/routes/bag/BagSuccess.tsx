@@ -17,29 +17,31 @@ export function BagSuccess() {
   if (!orderId) return <Navigate to={withLocale('/products')} replace />;
 
   return (
-    <Section tone="cream" className="pt-28 md:pt-32">
+    <Section tone="cream" className="pt-28 md:pt-32" gap={8}>
       <DisplayTitle as="h1" step="xl">
         {t('bag.success.title')}
       </DisplayTitle>
-      <Prose size="lg" className="mt-4 max-w-xl">{t('bag.success.body')}</Prose>
+      <Prose>{t('bag.success.body')}</Prose>
 
-      <div className="mt-8 rounded-xl border border-border bg-background p-6">
+      <div className="flex flex-col gap-1 rounded-xl border border-border bg-background p-6">
         <p className="text-sm uppercase text-muted-foreground">{t('bag.success.orderId')}</p>
-        <p className="mt-1 font-display text-lg font-medium tabular-nums">{orderId}</p>
+        <p className="font-display text-lg font-medium tabular-nums">{orderId}</p>
       </div>
 
-      <h2 className="mt-10 font-display text-xl font-medium">{t('bag.success.next')}</h2>
-      <ul className="mt-3 flex flex-col gap-2 text-sm text-muted-foreground">
-        <li>{t('bag.success.next1')}</li>
-        <li>{t('bag.success.next2')}</li>
-        <li>{t('bag.success.next3')}</li>
-      </ul>
+      <div className="flex flex-col gap-4">
+        <h2 className="font-display text-xl font-medium">{t('bag.success.next')}</h2>
+        <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+          <li>{t('bag.success.next1')}</li>
+          <li>{t('bag.success.next2')}</li>
+          <li>{t('bag.success.next3')}</li>
+        </ul>
+      </div>
 
-      <div className="mt-8 flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-4">
         <Button
           onClick={() => {
             if (auth.email) {
-              navigate(withLocale(PATHS.accountSection('orders')));
+              navigate(withLocale(PATHS.accountSection('profile')));
             } else {
               navigate(withLocale('/signup'), { state: { orderId } });
             }

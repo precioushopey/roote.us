@@ -7,8 +7,8 @@ const TONE: Record<BadgeTone, string> = {
   neutral: 'bg-cream-200 text-foreground',
   teal: 'bg-deep-950 text-cream-100',
   gold: 'bg-transparent text-foreground ring-1 ring-accent',
-  success: 'bg-[color-mix(in_srgb,var(--success)_16%,transparent)] text-[color-mix(in_srgb,var(--success)_82%,#000)]',
-  warning: 'bg-[color-mix(in_srgb,var(--warning)_18%,transparent)] text-[color-mix(in_srgb,var(--warning)_82%,#000)]',
+  success: 'bg-[color-mix(in_srgb,var(--success)_16%,transparent)] text-[color-mix(in_srgb,var(--success)_82%,var(--foreground))]',
+  warning: 'bg-[color-mix(in_srgb,var(--warning)_18%,transparent)] text-[color-mix(in_srgb,var(--warning)_82%,var(--foreground))]',
   info: 'bg-[color-mix(in_srgb,var(--info)_16%,transparent)] text-deep-900',
   review: 'bg-transparent text-foreground ring-1 ring-dashed ring-accent',
 };
@@ -31,7 +31,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-body text-sm font-semibold',
+        'inline-flex items-center gap-2 rounded-full px-2.5 py-1 font-body text-sm font-semibold',
         TONE[tone],
         onDark && 'text-cream-100',
         className,

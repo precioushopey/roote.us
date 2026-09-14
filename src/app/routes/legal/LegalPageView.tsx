@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
-import { Section, DisplayTitle, Prose, LegalNotice } from '@/app/components/roote';
-import { useContentLocale } from '@/i18n/LocaleProvider';
+import { Section, DisplayTitle, Prose } from '@/app/components/roote';
+import { useLocale } from '@/i18n/LocaleProvider';
 import { getLegalPage, getLegalBody } from '@/content/legal';
 import { pickLocalized } from '@/content/localized';
 import { rooteContent } from '@/content/roote.config';
@@ -8,13 +8,13 @@ import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
 
 /**
  * Renders one policy page from the `LEGAL_PAGES` registry + `LEGAL_BODIES`
- * drafts. Everything is a draft: the review marker shows in dev, and bracketed
- * `[TODO: confirm …]` notes in the copy mark every specific counsel must set.
+ * drafts. Everything is a draft: bracketed `[TODO: confirm …]` notes in the
+ * copy mark every specific counsel must set.
  */
 export function LegalPageView({ slug: slugProp }: { slug?: string } = {}) {
   const params = useParams();
   const slug = slugProp ?? params.slug;
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const page = slug ? getLegalPage(slug) : undefined;
 
   if (!page) {
@@ -25,24 +25,18 @@ export function LegalPageView({ slug: slugProp }: { slug?: string } = {}) {
   const { company } = rooteContent;
 
   return (
-    <Section tone="cream" width="readable">
+    <Section tone="cream" width="readable" gap={8}>
       <DisplayTitle as="h1" step="md">
         {pickLocalized(page.title, cl)}
       </DisplayTitle>
-      <Prose className="mt-3">{pickLocalized(page.blurb, cl)}</Prose>
+      <Prose>{pickLocalized(page.blurb, cl)}</Prose>
 
-      <LegalNotice reviewRequired={page.reviewRequired} className="mt-6">
-        This is a draft for the preview build. It has not been reviewed by legal counsel; the
-        Hebrew version is additionally pending formal legal review. Bracketed “[TODO: confirm …]”
-        notes mark items the operator must set.
-      </LegalNotice>
-
-      <ol className="mt-8 flex flex-col gap-6">
+      <ol className="flex flex-col gap-8">
         {sections.map((s, i) => (
           <li key={s.id}>
             <h2 className="font-display text-md text-foreground">
-              <span aria-hidden className="me-2 text-sm text-accent">
-                {String(i + 1).padStart(2, '0')}
+              <span aria-hidden className="me-2 text-accent">
+                {i + 1}.
               </span>
               {pickLocalized(s.heading, cl)}
             </h2>
@@ -53,7 +47,7 @@ export function LegalPageView({ slug: slugProp }: { slug?: string } = {}) {
         ))}
       </ol>
 
-      <p className="mt-10 border-t border-border pt-6 font-body text-sm text-muted-foreground">
+      <p className="border-t border-border pt-6 font-body text-sm text-muted-foreground">
         A brand of{' '}
         <span dir="ltr">
           {company.legalName} · {company.address.join(', ')} · {company.support.email}

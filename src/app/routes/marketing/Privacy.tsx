@@ -1,44 +1,51 @@
 import { Link } from 'react-router';
-import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
-import { Section, DisplayTitle, Prose, Button, LegalNotice } from '@/app/components/roote';
+import { Section, Prose, SectionIntro, Button, Hero } from '@/app/components/roote';
 import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { COOKIES_META, getLegalBody } from '@/content/legal';
+import { pickLocalized } from '@/content/localized';
 
 const SECTION_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6'] as const;
 
+/**
+ * Privacy Policy — absorbs the former standalone /cookies page as a final
+ * sub-group (5-page legal IA, 2026-09-14), restarting its own clause count.
+ */
 export function Privacy() {
   const t = useT();
+  const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
+  const cookieSections = getLegalBody('cookies');
+
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="py-12 md:py-24 text-center">
-        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto !font-medium max-w-2xl">
-          {t('marketing.legal.privacy.title')}
-        </DisplayTitle>
-        <Prose size="lg" className="mx-auto mt-4 max-w-2xl text-center text-ink-foreground/75">{t('marketing.legal.privacy.intro')}</Prose>
-        <p className="mt-3 font-body text-sm text-ink-foreground/75">
-          {t('marketing.legal.updated')}: {rooteContent.company.legalUpdated}
-        </p>
-        <div className="mt-6 flex justify-center">
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm sm:w-auto">
+      <Hero
+        title={t('marketing.legal.privacy.title')}
+        body={t('marketing.legal.privacy.intro')}
+        meta={
+          <p className="font-body text-sm text-ink-foreground">
+            {t('marketing.legal.updated')}: {rooteContent.company.legalUpdated}
+          </p>
+        }
+        cta={
+          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
-        </div>
-      </Section>
+        }
+      />
 
       <Section tone="cream" width="content">
-        <div className="mx-auto flex max-w-3xl flex-col gap-10">
+        <div className="mx-auto flex max-w-3xl flex-col gap-12">
           {SECTION_KEYS.map((s, i) => (
             <div key={s} className="flex gap-4 border-b border-border pb-8 last:border-b-0">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent font-display text-sm text-accent">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div>
-                <p className="font-display text-lg font-medium text-foreground">{t(`marketing.legal.privacy.${s}` as MessageKey)}</p>
-                <Prose className="mt-3">{t(`marketing.legal.privacy.${s}.body` as MessageKey)}</Prose>
+              <span className="shrink-0 font-display text-lg lg:text-xl text-accent">{i + 1}.</span>
+              <div className="flex flex-col gap-2">
+                <p className="font-display text-lg md:text-xl text-foreground">{t(`marketing.legal.privacy.${s}` as MessageKey)}</p>
+                <Prose>{t(`marketing.legal.privacy.${s}.body` as MessageKey)}</Prose>
                 {s === 's6' && (
-                  <Prose className="mt-2">
+                  <Prose>
                     <Link to={withLocale('/terms')} className="text-accent underline">{t('marketing.legal.company.title')}</Link>
                   </Prose>
                 )}
@@ -48,9 +55,24 @@ export function Privacy() {
         </div>
       </Section>
 
-      <Section tone="teal" width="content">
-        <div className="mx-auto max-w-3xl">
-          <LegalNotice reviewRequired>{t('marketing.legal.company.reviewNote')}</LegalNotice>
+      <Section tone="cream" width="content" className="-mt-24">
+        <div className="mx-auto flex max-w-3xl flex-col gap-8">
+          <SectionIntro
+            titleStep="md"
+            title={pickLocalized(COOKIES_META.title, cl)}
+            body={pickLocalized(COOKIES_META.blurb, cl)}
+          />
+          <div className="flex flex-col gap-12">
+            {cookieSections.map((s, i) => (
+              <div key={s.id} className="flex gap-4 border-b border-border pb-8 last:border-b-0">
+                <span className="shrink-0 font-display text-lg lg:text-xl text-accent">{i + 1}.</span>
+                <div className="flex flex-col gap-2">
+                  <p className="font-display text-lg md:text-xl text-foreground">{pickLocalized(s.heading, cl)}</p>
+                  <Prose>{pickLocalized(s.body, cl)}</Prose>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </Section>
     </>

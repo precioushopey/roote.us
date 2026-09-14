@@ -1,4 +1,6 @@
+import type { ComponentType } from 'react';
 import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router';
+import { Home, ClipboardList, LineChart, LifeBuoy, User, type LucideProps } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
@@ -8,32 +10,30 @@ import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { useTrackingMigration } from './useTrackingMigration';
 import { Wordmark } from '@/app/components/brand/Wordmark';
-import { LocaleToggle } from '@/app/components/brand/LocaleToggle';
 import { CartLink } from '@/app/components/shell/CartLink';
-import { Button } from '@/app/components/roote';
+import { Button, LanguagePicker } from '@/app/components/roote';
 import { packagingFor } from '@/domain/recommendation/recommend';
 import { cn } from '@/app/components/ui/utils';
 import { PATHS } from '@/app/paths';
 import type { MessageKey } from '@/i18n/messages';
 
-const TABS: Array<[to: string, key: MessageKey]> = [
-  [PATHS.account, 'app.nav.overview'],
-  [PATHS.accountSection('today'), 'app.nav.today'],
-  [PATHS.accountSection('program'), 'app.nav.plan'],
-  [PATHS.accountSection('progress'), 'app.nav.progress'],
-  [PATHS.accountSection('photos'), 'app.nav.photos'],
-  [PATHS.accountSection('scans'), 'app.nav.scans'],
-  [PATHS.accountSection('progress/before-after'), 'app.nav.beforeAfter'],
-  [PATHS.accountSection('orders'), 'app.nav.orders'],
-  [PATHS.accountSection('subscription'), 'app.nav.subscription'],
-  [PATHS.accountSection('care'), 'app.nav.support'],
+// Nav consolidation (2026-09-11): 10 sidebar pages folded into 5 — Progress now
+// absorbs Photos/Scans/Before & After as tabs of one screen (AccountProgress.tsx),
+// and Profile absorbs Orders/Subscription (AppProfile.tsx); Overview folded into
+// Today as one combined dashboard+checklist (AccountToday.tsx, now the index route).
+const TABS: Array<[to: string, key: MessageKey, icon: ComponentType<LucideProps>]> = [
+  [PATHS.account, 'app.nav.today', Home],
+  [PATHS.accountSection('program'), 'app.nav.plan', ClipboardList],
+  [PATHS.accountSection('progress'), 'app.nav.progress', LineChart],
+  [PATHS.accountSection('care'), 'app.nav.support', LifeBuoy],
+  [PATHS.accountSection('profile'), 'app.nav.profile', User],
 ];
 // PO #22: reminders live under Profile, not the primary nav. Upcoming ones also
-// surface on Overview + Today.
+// surface on Today.
 
 export function AppShell() {
   const t = useT();
-  const { locale } = useLocale();
+  const { locale, setLocale } = useLocale();
   const withLocale = useLocalizedPath();
   const session = useSession();
   const auth = useAuth();
@@ -44,15 +44,15 @@ export function AppShell() {
   useTrackingMigration();
   useDocumentMeta();
 
-  // Order history doesn't depend on having an active program — a guest who
-  // only bought from the à-la-carte bag (no program) still needs to reach
-  // this one page after signing up to see the order they just placed
-  // (store/orders.ts is a flat, unauthenticated list; any account "sees"
-  // every order already in this browser). Every other /account/* page
-  // still requires a program.
-  const isOrdersRoute = location.pathname.endsWith('/orders');
+  // Order history (now shown on Profile) doesn't depend on having an active
+  // program — a guest who only bought from the à-la-carte bag (no program)
+  // still needs to reach this one page after signing up to see the order
+  // they just placed (store/orders.ts is a flat, unauthenticated list; any
+  // account "sees" every order already in this browser). Every other
+  // /account/* page still requires a program.
+  const isProfileRoute = location.pathname.endsWith('/profile');
 
-  if (!session.program && !isOrdersRoute) {
+  if (!session.program && !isProfileRoute) {
     if (import.meta.env.DEV) {
       return (
         <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
@@ -60,6 +60,14 @@ export function AppShell() {
           <Button
             onClick={() => {
               const seed = seedProgram(locale);
+              // planKeysForProgram reads live session.diagnosis (not the frozen
+              // program snapshot) — without hydrating it too, the plan resolves
+              // to zero treatments and Today shows an empty 0/0 routine.
+              if (seed.diagnosis.gender) session.setGender(seed.diagnosis.gender);
+              if (seed.diagnosis.hairGoal) session.setHairGoal(seed.diagnosis.hairGoal);
+              Object.entries(seed.diagnosis.answers).forEach(([key, value]) => {
+                session.setAnswer(key as keyof typeof seed.diagnosis.answers, value as never);
+              });
               session.setAnalysis(seed.analysis);
               session.setReportId(seed.reportId);
               session.setProgram(seed.program);
@@ -84,12 +92,16 @@ export function AppShell() {
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      'shrink-0 rounded-xs px-4 py-2 font-body text-sm transition-colors',
-      'lg:w-full lg:px-3 lg:py-2.5',
+      'rounded-full px-3 py-2.5 font-body text-sm transition-colors',
       isActive
         ? 'bg-primary text-primary-foreground'
-        : 'text-ink-foreground hover:text-ink-foreground lg:hover:bg-ink-foreground/10',
+        : 'text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground',
     );
+
+  // Mobile primary nav lives in a thumb-reach bottom bar, not a scroll strip
+  // under the header (mobile-first pass, 2026-09-11) — floated as a rounded
+  // pill, inset from the screen edges. Icon-only; the active tab expands into
+  // an icon+label pill, the rest collapse to plain icon circles.
 
   function logout() {
     auth.signOut();
@@ -105,63 +117,62 @@ export function AppShell() {
           the gold wordmark below for it to read; see brand/Wordmark.tsx. */}
       <aside className="sticky top-0 hidden h-screen flex-col border-e border-ink-foreground/15 bg-cream-100 px-4 py-6 text-ink-foreground lg:flex">
         <Wordmark className="w-24" />
-        <nav aria-label={t('app.nav.label')} className="mt-8 flex flex-col gap-1">
+        <nav aria-label={t('app.nav.label')} className="mt-8 flex flex-col gap-2">
           {TABS.map(([to, key]) => (
             <NavLink key={to} to={withLocale(to)} end={to === PATHS.account} className={navLinkClass}>
               {t(key)}
             </NavLink>
           ))}
         </nav>
-        <div className="mt-auto flex flex-col gap-2 border-t border-ink-foreground/15 pt-4">
-          <NavLink
-            to={withLocale(PATHS.accountSection('scans'))}
-            className="rounded-xs px-3 py-2 font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
-          >
-            {t('app.care.rescanLink')}
-          </NavLink>
-          <div className="flex items-center justify-between ps-3 pe-1">
-            <NavLink
-              to={withLocale(PATHS.products)}
-              className="rounded-lg py-2 font-body text-sm text-ink-foreground hover:text-ink-foreground"
-            >
-              {t('app.nav.shop')}
-            </NavLink>
-            <CartLink label={t('cart.open')} count={cart.count} />
-          </div>
+        <div className="mt-auto flex items-center justify-between gap-1 border-t border-ink-foreground/15 pt-4">
+          {/* "Run a new hair analysis" now lives on Progress, "Shop products" on
+              Profile (nav consolidation, 2026-09-11) — only the bag stays here
+              as persistent chrome, same as Log out / LanguagePicker. One row:
+              Log out (text) at the start, bag + language icons at the end. */}
           <button
             type="button"
             onClick={logout}
-            className="rounded-xs px-3 py-2 text-start font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
+            className="rounded-full px-3 py-2 text-start font-body text-sm text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
           >
             {t('app.profile.logout')}
           </button>
-          <LocaleToggle className="text-ink-foreground hover:text-ink-foreground" />
+          <div className="flex items-center gap-1 pe-1">
+            <CartLink label={t('cart.open')} count={cart.count} />
+            <LanguagePicker compact locale={locale} onChange={setLocale} className="text-ink-foreground hover:text-ink-foreground" />
+          </div>
         </div>
       </aside>
 
-      <header className="bg-white sticky top-0 z-40 border-b border-ink-foreground/15 lg:hidden">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
-          <Wordmark className="w-24" />
-          <div className="flex items-center gap-1">
-            <CartLink label={t('cart.open')} count={cart.count} />
-            <button type="button" onClick={logout} className="font-body text-sm text-ink-foreground underline">
-              {t('app.profile.logout')}
-            </button>
-            <LocaleToggle className="text-ink-foreground hover:text-ink-foreground" />
-          </div>
-        </div>
-        <nav aria-label={t('app.nav.label')} className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-4 pb-2">
-          {TABS.map(([to, key]) => (
-            <NavLink key={to} to={withLocale(to)} end={to === PATHS.account} className={navLinkClass}>
-              {t(key)}
-            </NavLink>
-          ))}
-        </nav>
-      </header>
-
-      <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-8 lg:mx-0 lg:max-w-5xl lg:px-10 lg:py-10">
+      <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-8 pb-24 lg:max-w-5xl lg:px-10 lg:py-10 xl:max-w-6xl">
         <Outlet />
       </main>
+
+      <nav
+        aria-label={t('app.nav.label')}
+        className="fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 flex items-center justify-between gap-1 rounded-full border border-ink-foreground/15 bg-white p-2 shadow-lg lg:hidden"
+      >
+        {TABS.map(([to, key, Icon]) => (
+          <NavLink
+            key={to}
+            to={withLocale(to)}
+            end={to === PATHS.account}
+            aria-label={t(key)}
+            className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {({ isActive }) => (
+              <span
+                className={cn(
+                  'flex h-10 items-center justify-center gap-2 rounded-full font-body text-sm font-medium transition-colors',
+                  isActive ? 'bg-primary px-4 text-primary-foreground' : 'w-10 text-ink-foreground',
+                )}
+              >
+                <Icon aria-hidden className="h-5 w-5 shrink-0" strokeWidth={1.75} />
+                {isActive ? <span aria-hidden className="whitespace-nowrap">{t(key)}</span> : null}
+              </span>
+            )}
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }

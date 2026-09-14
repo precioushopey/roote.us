@@ -61,11 +61,11 @@ export function GuidedPhotoCapture({
     <div className="flex flex-col gap-2">
       <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-border bg-cream-100">
         {currentThumb ? (
-          <img src={currentThumb} alt={label} className="h-full w-full object-cover" />
+          <img src={currentThumb} alt={label} loading="lazy" className="h-full w-full object-cover" />
         ) : (
           <>
             {ghostThumb && (
-              <img src={ghostThumb} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-25" />
+              <img src={ghostThumb} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" />
             )}
             <ScanGuide angle={view} className="absolute inset-0 h-full w-full p-3" />
           </>
@@ -82,7 +82,7 @@ export function GuidedPhotoCapture({
           {error}
         </p>
       )}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <label
           htmlFor={inputId}
           className="cursor-pointer font-body text-sm font-medium text-deep-800 underline underline-offset-4"

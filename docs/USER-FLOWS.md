@@ -295,14 +295,16 @@ flowchart TD
 
 ## UF-14 — Locale toggle
 
-**Source:** `LocaleProvider`, `LocaleToggle`. Rules: BR-LO-01…06.
+> **Superseded for locale & currency by** [`docs/superpowers/specs/2026-09-10-six-language-i18n-design.md`]. Selection is now a single `LanguagePicker` dropdown over six languages (English default); the flow below predates the language-only rework.
+
+**Source:** `LocaleProvider`, `LanguagePicker`. Rules: BR-LO-01…06.
 
 ```mermaid
 flowchart TD
-    A["Any page (locale = he default)"] -->|"Tap locale toggle"| B["setLocale('en' | 'he')"]
+    A["Any page (locale = en default)"] -->|"Pick a language in the LanguagePicker"| B["setLocale(one of six locales)"]
     B --> C["localStorage['roote.locale'] updated"]
     C --> D["<html lang> + <html dir> updated; document.title from meta.title"]
-    D --> E["All t(key) copy re-renders; RTL ⇄ LTR; Intl formatting switches he-IL ⇄ en-US"]
+    D --> E["All t(key) copy re-renders; RTL ⇄ LTR; Intl formatting switches to LOCALES[locale].bcp47"]
     E --> F((Same route, new language))
 ```
 

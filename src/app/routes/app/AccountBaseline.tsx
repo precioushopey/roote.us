@@ -1,4 +1,4 @@
-import { useT, useContentLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, Prose, Card, Badge, ScanCard } from '@/app/components/roote';
 import { qualitativeMetrics } from '@/domain/tracking/metrics';
@@ -11,7 +11,7 @@ import { useUserProgram } from './useUserProgram';
  *  analysis, clearly labelled as the starting point. */
 export function AccountBaseline() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const session = useSession();
   const view = useUserProgram();
   if (!view) return null;
@@ -28,8 +28,8 @@ export function AccountBaseline() {
   const photoLabel = (angle: string) => pickLocalized(PHOTO_ANGLES.find((a) => a.angle === angle)!.title, cl);
 
   return (
-    <div data-animate className="flex flex-col gap-8">
-      <header className="flex flex-wrap items-center justify-between gap-3">
+    <div data-animate className="flex flex-col gap-4 md:gap-8">
+      <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="u-caps font-body text-sm font-semibold text-accent">{t('marketing.sys.day', { n: 0 })}</p>
           <DisplayTitle as="h1" step="sm">
@@ -54,14 +54,14 @@ export function AccountBaseline() {
 
       <section>
         <h2 className="font-display text-md text-foreground">{t('app.baseline.photos')}</h2>
-        <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {PHOTO_ANGLES.map(({ angle }) => {
             const p = session.diagnosis.photos.find((x) => x.angleKey === angle);
             return (
               <figure key={angle} className="overflow-hidden rounded-lg border border-border bg-cream-100">
                 <div className="aspect-square w-full">
                   {p ? (
-                    <img src={p.thumb} alt={photoLabel(angle)} className="h-full w-full object-cover" />
+                    <img src={p.thumb} alt={photoLabel(angle)} loading="lazy" className="h-full w-full object-cover" />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center px-2 text-center font-body text-sm text-muted-foreground">
                       {t('app.photos.notYet')}
@@ -83,7 +83,7 @@ export function AccountBaseline() {
         }))}
         footnote={session.diagnosis.hairGoal ? undefined : t('analysis.results.consentLine')}
       />
-      <Prose size="sm">{t('app.baseline.metricsNote')}</Prose>
+      <Prose>{t('app.baseline.metricsNote')}</Prose>
     </div>
   );
 }

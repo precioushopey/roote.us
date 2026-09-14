@@ -26,7 +26,7 @@ export function PhotosScreen() {
   const canContinue = have === ANGLES.length && consented;
 
   return (
-    <section data-animate className="flex flex-col gap-6">
+    <section data-animate className="flex flex-col gap-8">
       <div>
         <DisplayTitle as="h1" step="md">
           {t('analysis.photos.title')}

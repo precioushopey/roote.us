@@ -1,13 +1,15 @@
-import { useT, useContentLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
   Section,
-  DisplayTitle,
-  Prose,
-  Eyebrow,
+  SectionIntro,
   Button,
   IngredientCard,
+  MediaCaption,
+  TextLink,
+  Hero,
+  CtaSection,
 } from '@/app/components/roote';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import type { ClaimStatus } from '@/content/claims';
 import {
@@ -56,7 +58,8 @@ const FORMAT_LABEL_KEY: Record<string, MessageKey> = {
 
 export function Magazine() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
+  const withLocale = useLocalizedPath();
   const statusLabel: Record<ClaimStatus, string> = {
     approved: t('marketing.sci.status.approved'),
     working: t('marketing.sci.status.working'),
@@ -73,52 +76,50 @@ export function Magazine() {
 
   return (
     <>
-      <Section tone="teal" width="content" animate={false} className="py-12 md:py-24 text-center">
-        <DisplayTitle as="h1" step="lg" align="center" className="mx-auto !font-medium max-w-2xl">
-          {t('marketing.magazine.title')}
-        </DisplayTitle>
-        <Prose size="lg" className="mx-auto mt-4 max-w-2xl text-center text-ink-foreground/75">
-          {t('marketing.magazine.body')}
-        </Prose>
-        <div className="mt-6 flex justify-center">
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm sm:w-auto">
+      <Hero
+        title={t('marketing.magazine.title')}
+        body={t('marketing.magazine.body')}
+        cta={
+          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
-        </div>
-      </Section>
+        }
+      />
 
       <Section id="why" tone="cream" width="content">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div>
-            <Eyebrow>{t('marketing.magazine.whyEyebrow')}</Eyebrow>
-            <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
-              {t('marketing.magazine.whyHeading')}
-            </DisplayTitle>
-            <Prose size="lg" className="mt-4 max-w-2xl">
-              {pickLocalized(HAIR_LOSS_SCIENCE, cl)}
-            </Prose>
+        <div className="grid lg:grid-cols-2 items-center gap-12">
+          <div className="flex flex-col items-start gap-8">
+            <SectionIntro
+              eyebrow={t('marketing.magazine.whyEyebrow')}
+              title={t('marketing.magazine.whyHeading')}
+              body={pickLocalized(HAIR_LOSS_SCIENCE, cl)}
+            />
+            <TextLink to="#ingredients" withArrow>
+              {t('marketing.magazine.whyCta')}
+            </TextLink>
           </div>
           <img
             src={concernThinning}
             alt={t('marketing.magazine.whyMediaAlt')}
+            loading="lazy"
             className="aspect-[4/3] w-full rounded-sm object-cover"
           />
         </div>
       </Section>
 
-      <Section id="ingredients" tone="cream" width="content">
-        <Eyebrow>{t('marketing.magazine.ingredientsEyebrow')}</Eyebrow>
-        <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
-          {t('marketing.magazine.ingredientsHeading')}
-        </DisplayTitle>
-        <div className="mt-10 flex flex-col gap-12">
+      <Section id="ingredients" tone="cream" width="content" gap={12} className="-mt-24">
+        <SectionIntro
+          eyebrow={t('marketing.magazine.ingredientsEyebrow')}
+          title={t('marketing.magazine.ingredientsHeading')}
+        />
+        <div className="flex flex-col gap-12">
           {CATEGORY_ORDER.map((cat) => {
             const ingredients = byCategory(cat);
             if (ingredients.length === 0) return null;
             return (
-              <div key={cat}>
-                <h3 className="font-display text-lg text-foreground">{t(CATEGORY_LABEL_KEY[cat])}</h3>
-                <div className="mt-4 grid gap-y-8 gap-x-6 sm:grid-cols-2 lg:grid-cols-4">
+              <div key={cat} className="flex flex-col gap-8">
+                <h3 className="font-display text-xl md:text-2xl text-foreground">{t(CATEGORY_LABEL_KEY[cat])}</h3>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
                   {ingredients.map((ing) => {
                     const explanation = INGREDIENT_EXPLANATIONS[ing.name];
                     const note = explanation ? pickLocalized(explanation, cl) : pickLocalized(ing.note, cl);
@@ -140,42 +141,40 @@ export function Magazine() {
         </div>
       </Section>
 
-      <Section tone="cream" width="content">
-        <Eyebrow>{t('marketing.magazine.formatsEyebrow')}</Eyebrow>
-        <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
-          {t('marketing.magazine.formatsHeading')}
-        </DisplayTitle>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <Section tone="cream" width="content" gap={12} className="-mt-24">
+        <SectionIntro
+          eyebrow={t('marketing.magazine.formatsEyebrow')}
+          title={t('marketing.magazine.formatsHeading')}
+        />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
           {(Object.keys(FORMAT_EXPLANATIONS) as Array<keyof typeof FORMAT_EXPLANATIONS>).map((format) => (
-            <div key={format} className="flex flex-col items-center gap-4 text-center">
-              <img
-                src={FORMAT_PHOTOS[format]}
-                alt=""
-                aria-hidden
-                className="aspect-square w-full rounded-sm object-contain"
-              />
-              <div className="flex flex-col gap-2">
-                <p className="font-display text-md text-foreground">{t(FORMAT_LABEL_KEY[format])}</p>
-                <Prose className="mt-1">{pickLocalized(FORMAT_EXPLANATIONS[format], cl)}</Prose>
-              </div>
-            </div>
+            <MediaCaption
+              key={format}
+              media={
+                <img
+                  src={FORMAT_PHOTOS[format]}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  className="aspect-square w-full rounded-sm object-contain"
+                />
+              }
+              title={t(FORMAT_LABEL_KEY[format])}
+              description={pickLocalized(FORMAT_EXPLANATIONS[format], cl)}
+            />
           ))}
         </div>
-      </Section>
-
-      <Section tone="teal" width="readable" className="border-b border-accent text-center">
-        <div className="flex flex-col items-center gap-5">
-          <DisplayTitle as="h2" step="xl" align="center">
-            {t('marketing.magazine.ctaHeading')}
-          </DisplayTitle>
-          <Prose size="lg" className="mx-auto text-center text-ink-foreground/75">
-            {t('marketing.magazine.ctaBody')}
-          </Prose>
-          <Button to={EXTERNAL_ASSESSMENT_URL} external size="lg" caps className="w-full text-sm font-bold sm:w-auto">
-            {t('marketing.nav.cta')}
+        <div className="flex justify-center">
+          <Button to={withLocale(PATHS.products)} caps className="w-full sm:w-auto">
+            {t('app.nav.shop')}
           </Button>
         </div>
       </Section>
+
+      <CtaSection
+        title={t('marketing.magazine.ctaHeading')}
+        body={t('marketing.magazine.ctaBody')}
+      />
     </>
   );
 }

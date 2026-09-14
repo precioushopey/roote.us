@@ -1,4 +1,5 @@
 import { useId, useState, type ReactNode } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/app/components/ui/utils';
 
 export type AccordionItem = {
@@ -53,14 +54,11 @@ export function Accordion({ items, multiple = false, defaultOpen = [], className
                 className="flex w-full items-center justify-between gap-4 py-5 text-start font-body text-md font-medium text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <span>{item.title}</span>
-                <svg
-                  viewBox="0 0 24 24"
+                <ChevronDown
                   aria-hidden
+                  strokeWidth={1.6}
                   className={cn('h-4 w-4 shrink-0 text-accent transition-transform duration-200', isOpen && 'rotate-180')}
-                  fill="none"
-                >
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                />
               </button>
             </h3>
             <div id={panelId} role="region" aria-labelledby={btnId} hidden={!isOpen} className="pb-6">

@@ -73,7 +73,7 @@ export function MediaPlaceholder({
       )}
     >
       {isDev && (
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 p-4 text-center">
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center">
           <span className="text-sm font-semibold uppercase opacity-70">
             {KIND_LABEL[kind]}
           </span>

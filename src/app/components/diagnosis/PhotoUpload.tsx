@@ -60,11 +60,11 @@ export function PhotoUpload({
       </label>
       {value ? (
         <div className="relative overflow-hidden rounded-lg border border-border">
-          <img src={value.thumb} alt={t(`photo.angle.${angleKey}` as never)} className="h-32 w-full object-cover" />
+          <img src={value.thumb} alt={t(`photo.angle.${angleKey}` as never)} loading="lazy" className="h-32 w-full object-cover" />
           <button
             type="button"
             onClick={handleRemove}
-            className="absolute end-2 top-2 rounded-xs bg-card/90 px-2 py-1 text-sm backdrop-blur-sm"
+            className="absolute end-2 top-2 rounded-full bg-card/90 px-2 py-1 text-sm backdrop-blur-sm"
           >
             {t('common.remove')}
           </button>

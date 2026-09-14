@@ -16,7 +16,7 @@ const TIER_BY_DAYS = Object.fromEntries(PROGRAM_DURATIONS.map((d) => [d.days, d.
 
 export function PlanStep() {
   const t = useT();
-  const { contentLocale } = useLocale();
+  const { locale } = useLocale();
   const withLocale = useLocalizedPath();
   const navigate = useNavigate();
   const session = useSession();
@@ -27,10 +27,10 @@ export function PlanStep() {
       diagnosis: session.diagnosis,
       analysis: session.analysis,
       content: rooteContent,
-      locale: contentLocale,
+      locale,
       reportId: session.reportId,
     });
-  }, [session.diagnosis, session.analysis, session.reportId, contentLocale]);
+  }, [session.diagnosis, session.analysis, session.reportId, locale]);
 
   const rec = useMemo(() => {
     if (!session.analysis || !session.diagnosis.gender) return null;
@@ -77,7 +77,6 @@ export function PlanStep() {
         </DisplayTitle>
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <Badge tone="gold">{model.plan.matchedToScanBadge}</Badge>
-          {rec?.requiresMedicalReview && <Badge tone="review">{t('program.plan.reviewRequired')}</Badge>}
         </div>
         <Prose className="mt-3">{model.recommendedDuration.rationaleNote}</Prose>
       </div>
@@ -96,7 +95,7 @@ export function PlanStep() {
               tierLabel={
                 row.isRecommended
                   ? t('start.plan.recommendedBadge')
-                  : pickLocalized(DURATION_TIER_LABEL[tier], contentLocale)
+                  : pickLocalized(DURATION_TIER_LABEL[tier], locale)
               }
               emphasised={row.isRecommended}
               selected={selected === row.days}

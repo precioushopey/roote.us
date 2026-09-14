@@ -1,10 +1,10 @@
-export type LocalizedText = { en: string; he: string };
+export type LocalizedText = { en: string; he: string; ar?: string; ru?: string; fr?: string; es?: string };
 
 export const rooteContent = {
   brand: {
     name: 'ROOTÉ',
     domain: 'ROOTÉ.US',
-    tagline: { en: 'Personalized Hair Growth System', he: 'מערכת אישית לצמיחת שיער' } as LocalizedText,
+    tagline: { en: 'Personalized Hair Growth System', he: 'מערכת אישית לצמיחת שיער', ar: 'نظام شخصي لنمو الشعر', ru: 'Персональная система роста волос', fr: 'Système personnalisé de croissance capillaire', es: 'Sistema personalizado de crecimiento capilar' } as LocalizedText,
     /** Social profile URLs — null until the client supplies the real handles; the
      *  footer only renders an icon for a platform whose value is non-null. */
     social: {
@@ -18,8 +18,8 @@ export const rooteContent = {
   /**
    * The legal entity that operates the ROOTÉ brand. Locale-invariant facts live here;
    * the surrounding labels + legal prose are i18n keys (`marketing.legal.company.*`,
-   * `marketing.legalSale.*`). Rendered by <CompanyDetails> on /terms and /terms-of-sale,
-   * and as the entity line in the site footer.
+   * `marketing.legalSale.*`). Rendered by <CompanyDetails> on /terms (which
+   * absorbs the former /terms-of-sale), and as the entity line in the site footer.
    */
   company: {
     legalName: '91 ENTERPRISE LLC',
@@ -36,9 +36,8 @@ export const rooteContent = {
     },
   },
 
-  // PO #3 (2026-09-04): launch currencies are USD + ILS (en-US→USD, he-IL→ILS);
-  // GBP with UK commerce, EUR later, no RUB at launch. This is the fallback when
-  // no country/locale is resolved — see i18n/locales `launchCurrencyFor`.
+  // Single display currency for the concept build. Real pricing and any
+  // multi-currency support are [PENDING] client/commerce decisions.
   currency: 'USD',
 
   formula: {
@@ -75,8 +74,9 @@ export const rooteContent = {
   //
   // Do not auto-stack a Density topical + Gray Serum: [PENDING CLINICAL COMPATIBILITY REVIEW].
   treatmentRegistry: {
+    // AR/RU/FR/ES product-name translations below are first-pass, pending the same medical/naming review as the `// TODO: confirm medical HE` notes.
     'density-serum': {
-      name: { en: 'ROOTÉ Root Density Serum', he: 'סרום צפיפות שורש ROOTÉ' } as LocalizedText, // TODO: confirm medical HE
+      name: { en: 'ROOTÉ Root Density Serum', he: 'סרום צפיפות שורש ROOTÉ', ar: 'سيروم كثافة الجذور ROOTÉ', ru: 'ROOTÉ Сыворотка для плотности корней', fr: 'ROOTÉ Sérum densité racinaire', es: 'ROOTÉ Sérum densidad de la raíz' } as LocalizedText, // TODO: confirm medical HE
       form: 'serum' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
@@ -84,46 +84,46 @@ export const rooteContent = {
     },
     'density-6': {
       // Generic name only — client instruction: don't depend on a final branded name yet.
-      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ' } as LocalizedText, // TODO: confirm medical HE
+      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ', ar: 'علاج نمو الشعر ROOTÉ', ru: 'ROOTÉ Средство для роста волос', fr: 'ROOTÉ Traitement pour la croissance capillaire', es: 'ROOTÉ Tratamiento para el crecimiento capilar' } as LocalizedText, // TODO: confirm medical HE
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-10': {
-      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ' } as LocalizedText,
+      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ', ar: 'علاج نمو الشعر ROOTÉ', ru: 'ROOTÉ Средство для роста волос', fr: 'ROOTÉ Traitement pour la croissance capillaire', es: 'ROOTÉ Tratamiento para el crecimiento capilar' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-15': {
-      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ' } as LocalizedText,
+      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ', ar: 'علاج نمو الشعر ROOTÉ', ru: 'ROOTÉ Средство для роста волос', fr: 'ROOTÉ Traitement pour la croissance capillaire', es: 'ROOTÉ Tratamiento para el crecimiento capilar' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'regrowth-shampoo': {
-      name: { en: 'ROOTÉ Hair Loss Control Shampoo', he: 'שמפו ROOTÉ לבלימת נשירה' } as LocalizedText,
+      name: { en: 'ROOTÉ Hair Loss Control Shampoo', he: 'שמפו ROOTÉ לבלימת נשירה', ar: 'شامبو ضد تساقط الشعر ROOTÉ', ru: 'ROOTÉ Шампунь против выпадения волос', fr: 'ROOTÉ Shampooing anti-chute', es: 'ROOTÉ Champú anticaída' } as LocalizedText,
       form: 'shampoo' as const,
       usageKey: 'usage.cleanse',
       frequencyKey: 'frequency.wash-day',
     },
     'gray-support': {
-      name: { en: 'ROOTÉ Anti-Gray Capsules', he: 'קפסולות ROOTÉ נגד הזדקנות שיער' } as LocalizedText, // TODO: confirm medical HE
+      name: { en: 'ROOTÉ Anti-Gray Capsules', he: 'קפסולות ROOTÉ נגד הזדקנות שיער', ar: 'كبسولات ضد شيب الشعر ROOTÉ', ru: 'ROOTÉ Капсулы против седины', fr: 'ROOTÉ Capsules anti-cheveux gris', es: 'ROOTÉ Cápsulas anticanas' } as LocalizedText, // TODO: confirm medical HE
       form: 'capsule' as const,
       usageKey: 'usage.gray-support',
       frequencyKey: 'frequency.daily-morning',
     },
     'gray-serum': {
-      name: { en: 'ROOTÉ Gray Serum', he: 'סרום ROOTÉ גריי' } as LocalizedText, // TODO: confirm medical HE
+      name: { en: 'ROOTÉ Gray Serum', he: 'סרום ROOTÉ גריי', ar: 'سيروم الشعر الرمادي ROOTÉ', ru: 'ROOTÉ Сыворотка от седины', fr: 'ROOTÉ Sérum cheveux gris', es: 'ROOTÉ Sérum para canas' } as LocalizedText, // TODO: confirm medical HE
       form: 'serum' as const,
       usageKey: 'usage.gray-serum',
       frequencyKey: 'frequency.daily-evening',
     },
     'derma-stim': {
-      name: { en: 'Scalp-care guidance (optional)', he: 'הנחיות לטיפוח הקרקפת (רשות)' } as LocalizedText,
+      name: { en: 'Scalp-care guidance (optional)', he: 'הנחיות לטיפוח הקרקפת (רשות)', ar: 'إرشادات العناية بفروة الرأس (اختياري)', ru: 'Рекомендации по уходу за кожей головы (по желанию)', fr: 'Conseils de soin du cuir chevelu (facultatif)', es: 'Orientación sobre el cuidado del cuero cabelludo (opcional)' } as LocalizedText,
       form: 'routine' as const,
       usageKey: 'usage.derma-stim',
       frequencyKey: 'frequency.weekly',
@@ -166,10 +166,10 @@ export const rooteContent = {
   reorderReminderLeadDays: [14, 7] as readonly number[],
 
   disclaimers: {
-    // HE strings are a plain translation of the EN liability disclaimers; still pending formal legal review.
-    medical:        { en: 'This report is a preliminary, photo-based visual assessment. It is not a medical diagnosis.', he: 'הדוח הזה הוא הערכה חזותית ראשונית המבוססת על תמונות, ואינו מהווה אבחון רפואי.' } as LocalizedText, // TODO: legal review
-    notADiagnosis:  { en: 'An AI visual estimate, not a medical diagnosis.', he: 'הערכה חזותית מבוססת בינה מלאכותית, לא אבחון רפואי.' } as LocalizedText,
-    demo:           { en: 'Demo: analysis figures are illustrative; production integrates a clinical analysis provider.', he: 'הדגמה: הנתונים להמחשה בלבד; בגרסה המלאה תשולב מערכת ניתוח קלינית.' } as LocalizedText,
-    formulaPending: { en: 'Formulation under evaluation, pending regulatory review.', he: 'הפורמולה בבחינה, בכפוף לאישור רגולטורי.' } as LocalizedText,
+    // HE + AR/RU/FR/ES strings are a plain first-pass translation of the EN liability disclaimers; still pending formal legal review.
+    medical:        { en: 'This report is a preliminary, photo-based visual assessment. It is not a medical diagnosis.', he: 'הדוח הזה הוא הערכה חזותית ראשונית המבוססת על תמונות, ואינו מהווה אבחון רפואי.', ar: 'هذا التقرير تقييم بصري أولي يعتمد على الصور. وهو ليس تشخيصاً طبياً. (تخضع لمراجعة قانونية رسمية.)', ru: 'Этот отчёт представляет собой предварительную визуальную оценку на основе фотографий. Он не является медицинским диагнозом. (Требуется официальная юридическая проверка.)', fr: 'Ce rapport est une évaluation visuelle préliminaire fondée sur des photos. Il ne constitue pas un diagnostic médical. (Sous réserve d’une révision juridique formelle.)', es: 'Este informe es una evaluación visual preliminar basada en fotos. No es un diagnóstico médico. (Sujeto a revisión jurídica formal.)' } as LocalizedText, // TODO: legal review
+    notADiagnosis:  { en: 'An AI visual estimate, not a medical diagnosis.', he: 'הערכה חזותית מבוססת בינה מלאכותית, לא אבחון רפואי.', ar: 'تقدير بصري بالذكاء الاصطناعي، وليس تشخيصاً طبياً. (تخضع لمراجعة قانونية رسمية.)', ru: 'Визуальная оценка на основе ИИ, а не медицинский диагноз. (Требуется официальная юридическая проверка.)', fr: 'Une estimation visuelle par IA, non un diagnostic médical. (Sous réserve d’une révision juridique formelle.)', es: 'Una estimación visual mediante IA, no un diagnóstico médico. (Sujeto a revisión jurídica formal.)' } as LocalizedText,
+    demo:           { en: 'Demo: analysis figures are illustrative; production integrates a clinical analysis provider.', he: 'הדגמה: הנתונים להמחשה בלבד; בגרסה המלאה תשולב מערכת ניתוח קלינית.', ar: 'نسخة تجريبية: أرقام التحليل توضيحية؛ تدمج النسخة الكاملة مزوّد تحليل سريري. (تخضع لمراجعة قانونية رسمية.)', ru: 'Демоверсия: показатели анализа приведены для иллюстрации; в полной версии интегрируется поставщик клинического анализа. (Требуется официальная юридическая проверка.)', fr: 'Démonstration : les chiffres de l’analyse sont donnés à titre indicatif ; la version de production intègre un prestataire d’analyse clinique. (Sous réserve d’une révision juridique formelle.)', es: 'Demostración: las cifras del análisis son ilustrativas; la versión de producción integra un proveedor de análisis clínico. (Sujeto a revisión jurídica formal.)' } as LocalizedText,
+    formulaPending: { en: 'Formulation under evaluation, pending regulatory review.', he: 'הפורמולה בבחינה, בכפוף לאישור רגולטורי.', ar: 'التركيبة قيد التقييم، بانتظار المراجعة التنظيمية. (تخضع لمراجعة قانونية رسمية.)', ru: 'Формула на этапе оценки, ожидает регуляторной проверки. (Требуется официальная юридическая проверка.)', fr: 'Formulation en cours d’évaluation, en attente d’un examen réglementaire. (Sous réserve d’une révision juridique formelle.)', es: 'Formulación en evaluación, pendiente de revisión regulatoria. (Sujeto a revisión jurídica formal.)' } as LocalizedText,
   },
 } as const;

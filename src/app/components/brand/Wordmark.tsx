@@ -36,6 +36,7 @@ export function Wordmark({ className, onInk = false }: WordmarkProps) {
     <img
       src={logo}
       alt="ROOTÉ"
+      loading="lazy"
       className={cn('h-auto w-32 select-none', className)}
     />
   );

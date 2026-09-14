@@ -1,6 +1,6 @@
 import { useT } from '@/i18n/LocaleProvider';
 import { useTracking } from '@/store/tracking';
-import { DisplayTitle, Prose, Card } from '@/app/components/roote';
+import { Prose, Card } from '@/app/components/roote';
 import {
   REMINDER_TYPES,
   REMINDER_LABEL_KEY,
@@ -10,6 +10,7 @@ import {
 import { rooteContent } from '@/content/roote.config';
 import type { MessageKey } from '@/i18n/messages';
 import { useUserProgram } from './useUserProgram';
+import { AccountPageHeader } from './AccountPageHeader';
 
 const shiftIso = (iso: string, delta: number) => {
   const d = new Date(`${iso}T00:00:00Z`);
@@ -38,18 +39,16 @@ export function AccountReminders() {
   }).filter((r) => r.enabled);
 
   return (
-    <div data-animate className="flex flex-col gap-8">
-      <header className="flex flex-col gap-2">
-        <DisplayTitle as="h1" step="sm">
-          {t('app.reminders.title')}
-        </DisplayTitle>
-        <Prose size="sm">{t('app.reminders.subtitle')}</Prose>
-      </header>
+    <div data-animate className="flex flex-col gap-4 md:gap-8">
+      <AccountPageHeader title={t('app.reminders.title')} />
+      <Prose>{t('app.reminders.subtitle')}</Prose>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-col gap-4">
         <h2 className="font-display text-md text-foreground">{t('app.reminders.upcoming')}</h2>
         {upcoming.length === 0 ? (
-          <Prose size="sm">{t('app.reminders.none')}</Prose>
+          <Card tone="cream">
+            <Prose>{t('app.reminders.none')}</Prose>
+          </Card>
         ) : (
           <ul className="flex flex-col divide-y divide-border/60 rounded-lg border border-border bg-card">
             {upcoming.map((r) => (
@@ -62,7 +61,7 @@ export function AccountReminders() {
         )}
       </section>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-col gap-4">
         <h2 className="font-display text-md text-foreground">{t('app.reminders.settingsTitle')}</h2>
         <ul className="flex flex-col gap-2">
           {REMINDER_TYPES.map((type) => {
@@ -87,9 +86,6 @@ export function AccountReminders() {
             );
           })}
         </ul>
-        <Card tone="cream">
-          <p className="font-body text-sm text-muted-foreground">{t('app.reminders.deliveryNote')}</p>
-        </Card>
       </section>
     </div>
   );

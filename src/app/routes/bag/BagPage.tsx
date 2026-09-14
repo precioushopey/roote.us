@@ -1,8 +1,7 @@
 import { Link } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useCart } from '@/store/cart';
-import { findProduct } from '@/content/catalog';
-import { pickLocalized } from '@/content/localized';
+import { resolveCartLines } from '@/store/cartLines';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
 import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
@@ -10,47 +9,45 @@ import { PendingChip } from '@/app/components/brand/PendingChip';
 
 export function BagPage() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
   const cart = useCart();
 
-  const lines = cart.lines
-    .map((l) => ({ line: l, product: findProduct(l.sku) }))
-    .filter((x): x is { line: typeof x.line; product: NonNullable<typeof x.product> } => !!x.product);
-  // Subtotal is real arithmetic on each SKU's own already-supplied price — not
-  // invented — but only when every line has one; a single unpriced SKU means
-  // the true subtotal isn't knowable yet, so it (and the total, which also
-  // depends on the still-unset shipping rate below) stay [PENDING].
-  const subtotal = lines.every(({ product }) => product.price !== null)
-    ? lines.reduce((sum, { line, product }) => sum + product.price! * line.qty, 0)
+  const lines = resolveCartLines(cart.lines, cl);
+  // Subtotal is real arithmetic on each line's own already-supplied price —
+  // not invented — but only when every line has one; a single unpriced line
+  // means the true subtotal isn't knowable yet, so it (and the total, which
+  // also depends on the still-unset shipping rate below) stay [PENDING].
+  const subtotal = lines.every((l) => l.price !== null)
+    ? lines.reduce((sum, l) => sum + l.price! * l.qty, 0)
     : null;
 
   return (
-    <Section tone="cream" className="pt-28 md:pt-32">
+    <Section tone="cream" className="pt-28 md:pt-32" gap={12}>
       <DisplayTitle as="h1" step="xl">
         {t('bag.title')}
       </DisplayTitle>
 
       {lines.length === 0 ? (
-        <div className="mt-10 flex flex-col items-start gap-4">
-          <Prose size="lg">{t('cart.empty')}</Prose>
+        <div className="flex flex-col items-start gap-4">
+          <Prose>{t('cart.empty')}</Prose>
           <Button to={withLocale('/products')}>{t('cart.browse')}</Button>
         </div>
       ) : (
-        <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1.6fr_1fr]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.6fr_1fr]">
           <ul className="flex flex-col divide-y divide-border">
-            {lines.map(({ line, product }) => (
-              <li key={line.sku} className="flex gap-4 py-6">
+            {lines.map((line) => (
+              <li key={line.id} className="flex gap-4 py-6">
                 <div className="h-24 w-24 shrink-0 rounded-lg bg-cream-100" />
                 <div className="flex flex-1 flex-col gap-2">
-                  <p className="font-display text-lg font-medium">{product.name}</p>
-                  <p className="text-sm text-muted-foreground">{pickLocalized(product.subtitle, cl)}</p>
+                  <p className="font-display text-lg font-medium">{line.name}</p>
+                  <p className="text-sm text-muted-foreground">{line.subtitle}</p>
                   <div className="mt-1 flex flex-wrap items-center gap-4">
-                    <div className="inline-flex items-center rounded-xs border border-border">
+                    <div className="inline-flex items-center rounded-full border border-border">
                       <button
                         type="button"
                         aria-label={t('cart.decrease')}
-                        onClick={() => cart.setQty(line.sku, line.qty - 1)}
+                        onClick={() => cart.setQty(line.id, line.qty - 1)}
                         className="px-3 py-1.5 text-sm"
                       >
                         –
@@ -59,7 +56,7 @@ export function BagPage() {
                       <button
                         type="button"
                         aria-label={t('cart.increase')}
-                        onClick={() => cart.setQty(line.sku, line.qty + 1)}
+                        onClick={() => cart.setQty(line.id, line.qty + 1)}
                         className="px-3 py-1.5 text-sm"
                       >
                         +
@@ -67,16 +64,16 @@ export function BagPage() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => cart.remove(line.sku)}
+                      onClick={() => cart.remove(line.id)}
                       className="text-sm text-muted-foreground underline"
                     >
                       {t('cart.remove')}
                     </button>
-                    {product.price === null ? (
-                      <PendingChip label={`${product.name} price`} />
+                    {line.price === null ? (
+                      <PendingChip label={`${line.name} price`} />
                     ) : (
                       <span className="font-body text-sm font-medium text-foreground">
-                        {formatMoney(product.price * line.qty, rooteContent.currency, cl).formatted}
+                        {formatMoney(line.price * line.qty, rooteContent.currency, cl).formatted}
                       </span>
                     )}
                   </div>

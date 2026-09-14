@@ -1,19 +1,15 @@
 import { useId, useState, type ReactNode } from 'react';
 import { cn } from '@/app/components/ui/utils';
 
-/* --- LegalNotice ----------------------------------------------------------
-   Inline callout for medical / legal disclaimers. While a draft is unapproved
-   AND the build is dev, it is prefixed with a visible review marker. */
+/* --- LegalNotice ------------------------------------------------------
+   Inline callout for medical / legal disclaimers. */
 export function LegalNotice({
   children,
-  reviewRequired = false,
   className,
 }: {
   children: ReactNode;
-  reviewRequired?: boolean;
   className?: string;
 }) {
-  const showMarker = reviewRequired && Boolean(import.meta.env?.DEV);
   return (
     <aside
       className={cn(
@@ -21,11 +17,6 @@ export function LegalNotice({
         className,
       )}
     >
-      {showMarker ? (
-        <span className="mb-1 block font-semibold uppercase text-warning">
-          Legal review required: draft, not approved
-        </span>
-      ) : null}
       {children}
     </aside>
   );
@@ -56,7 +47,7 @@ export function ConsentPanel({
   const detailId = useId();
   return (
     <div className={cn('rounded-xl border border-border bg-card p-4', className)}>
-      <label className="flex cursor-pointer items-start gap-3">
+      <label className="flex cursor-pointer items-start gap-4">
         <input
           type="checkbox"
           checked={checked}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, Prose, Button, RadioCard } from '@/app/components/roote';
 import { pickLocalized } from '@/content/localized';
@@ -20,20 +20,19 @@ export function IntroScreen() {
       <DisplayTitle as="h1" step="md" align="center">
         {t('analysis.intro.title')}
       </DisplayTitle>
-      <ul className="mx-auto grid max-w-sm gap-3 text-start">
+      <ul className="mx-auto grid max-w-sm gap-4 text-start">
         {['analysis.intro.point1', 'analysis.intro.point2', 'analysis.intro.point3'].map((k) => (
           <li key={k} className="rounded-xl border border-border bg-card px-4 py-3.5 font-body text-sm">
             {t(k as 'analysis.intro.point1')}
           </li>
         ))}
       </ul>
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-4">
         <Button
           onClick={() => {
             track('analysis_started');
             navigate(withLocale(PATHS.analysisStep('gender')));
           }}
-          size="lg"
           caps
         >
           {t('analysis.intro.cta')}
@@ -47,7 +46,7 @@ export function IntroScreen() {
 /* --- 2 · Gender (packaging personalization only) ---------------------- */
 export function GenderScreen() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
@@ -81,7 +80,7 @@ export function GenderScreen() {
       {needPackaging ? (
         <>
           <h2 className="font-display text-md text-foreground">{t('analysis.gender.packagingTitle')}</h2>
-          <div className="grid gap-3">
+          <div className="grid gap-4">
             {PACKAGING_OPTIONS.map((o) => (
               <RadioCard
                 key={o.value}
@@ -95,7 +94,7 @@ export function GenderScreen() {
           </div>
         </>
       ) : (
-        <div className="grid gap-3">
+        <div className="grid gap-4">
           {GENDER_OPTIONS.map((o) => (
             <RadioCard
               key={o.value}
@@ -115,7 +114,7 @@ export function GenderScreen() {
 /* --- 3 · Hair Goal (client-confirmed 2026-09-07) ----------------------- */
 export function GoalScreen() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
@@ -134,7 +133,7 @@ export function GoalScreen() {
       <DisplayTitle as="h1" step="md">
         {t('analysis.goal.title')}
       </DisplayTitle>
-      <div className="grid gap-3">
+      <div className="grid gap-4">
         {HAIR_GOAL_OPTIONS.map((o) => (
           <RadioCard
             key={o.value}

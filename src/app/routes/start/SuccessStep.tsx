@@ -10,7 +10,7 @@ export function SuccessStep() {
   if (!program) return null;
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-5 text-center">
+    <div className="mx-auto flex max-w-md flex-col items-center gap-4 text-center">
       <DisplayTitle as="h1" step="sm" align="center">
         {t('start.success.title')}
       </DisplayTitle>
@@ -22,7 +22,7 @@ export function SuccessStep() {
         <li>{t('start.success.point2')}</li>
         <li>{t('start.success.point3')}</li>
       </ul>
-      <Button to={withLocale('/account')} size="lg" caps>
+      <Button to={withLocale('/account')} caps>
         {t('start.success.cta')}
       </Button>
     </div>

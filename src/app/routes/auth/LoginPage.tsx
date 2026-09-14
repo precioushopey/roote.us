@@ -33,16 +33,17 @@ export function LoginPage() {
   }
 
   return (
-    <div className="mx-auto grid w-full max-w-5xl items-center gap-10 px-6 py-16 lg:grid-cols-2">
+    <div className="mx-auto grid w-full max-w-5xl items-center gap-12 px-6 py-16 lg:grid-cols-2">
       <img
         src={heroImage}
         alt={t('marketing.home.hero.mediaAlt')}
-        className="hidden aspect-square w-full object-contain drop-shadow-[0_30px_40px_rgba(6,46,49,0.18)] lg:block"
+        loading="lazy"
+        className="hidden aspect-square w-full object-contain shadow-product lg:block"
       />
       <div className="mx-auto flex w-full max-w-sm flex-col gap-4">
         <h1 className={funnelHeading}>{t('auth.login.title')}</h1>
-        <form className="flex flex-col gap-3" onSubmit={submit}>
-          <label className="flex flex-col gap-1 text-sm">
+        <form className="flex flex-col gap-4" onSubmit={submit}>
+          <label className="flex flex-col gap-2 text-sm">
             {t('start.account.emailLabel')}
             <input
               type="email"
@@ -52,7 +53,7 @@ export function LoginPage() {
               className={funnelField}
             />
           </label>
-          <label className="flex flex-col gap-1 text-sm">
+          <label className="flex flex-col gap-2 text-sm">
             {t('start.account.passwordLabel')}
             <input
               type="password"

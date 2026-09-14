@@ -9,10 +9,13 @@
 
 export { Button, IconButton, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
 export { Card, GlassCard } from './Surface';
-export { Eyebrow, DisplayTitle, Prose, TextLink } from './Text';
+export { Eyebrow, DisplayTitle, Prose, TextLink, renderWithEmphasis } from './Text';
 export { Badge, Pill, type BadgeTone } from './Badge';
 export { Stat } from './Stat';
 export { Section } from './Section';
+export { Hero, type HeroProps, type HeroImage } from './Hero';
+export { CtaSection, type CtaSectionProps, type CtaSectionImage } from './CtaSection';
+export { SectionIntro, type SectionIntroProps } from './SectionIntro';
 
 export { Accordion, type AccordionItem } from './Accordion';
 export { RadioCard, SegmentedControl } from './Choice';
@@ -22,13 +25,13 @@ export { ToastProvider, useToast } from './Toast';
 export { Tooltip } from './Tooltip';
 export { LegalNotice, ConsentPanel } from './Notice';
 
-export { ConcernCard, ProductCard, ProgramCard, IngredientCard } from './DomainCards';
-export { AnalysisMetric, ScanCard, ScanGuide, type MetricLevel } from './Scan';
+export { ConcernCard, MediaCaption, ProductCard, ProgramCard, IngredientCard } from './DomainCards';
+export { AnalysisMetric, ScanCard, ScanGuide, ScanMesh, type MetricLevel } from './Scan';
 export { Timeline, TreatmentChecklist, ProgressPhotoCard, type TimelineMilestone, type ChecklistTask } from './Progress';
 export { BeforeAfterSlider } from './BeforeAfterSlider';
 export { ProgramProgressBar } from './ProgramProgressBar';
 export { ReportSection } from './ReportSection';
-export { CountryLanguageSelector } from './CountryLanguageSelector';
+export { LanguagePicker } from './LanguagePicker';
 
 // re-exports of foundation pieces so pages import from one place
 export { MediaPlaceholder, type MediaKind } from '@/app/components/media/MediaPlaceholder';

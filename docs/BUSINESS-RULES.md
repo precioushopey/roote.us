@@ -303,6 +303,8 @@ The **program** funnel (`/start/*` → `ProgramOrder`, `ord-` ids, mints a `Prog
 
 ## 6. Localization & formatting (`BR-LO-*`)
 
+> **Superseded for locale & currency by** [`docs/superpowers/specs/2026-09-10-six-language-i18n-design.md`]. The rows below predate the language-only rework (six languages, English default, one `LanguagePicker`).
+
 **Source:** `src/i18n/LocaleProvider.tsx`, `src/i18n/messages/*`, `src/domain/report/money.ts`.
 
 ### BR-LO-01 — Default & persistence
@@ -312,7 +314,7 @@ Default locale `he` (`DEFAULT_LOCALE`). Stored in `localStorage['roote.locale']`
 `he → dir='rtl'`, `en → dir='ltr'`. `LocaleProvider` sets `document.documentElement.lang` and `dir` on every locale change, and updates `document.title` from the `meta.title` key. `index.html` ships `lang="he" dir="rtl"`.
 
 ### BR-LO-03 — Selection mechanism
-Locale changes only via the `LocaleToggle` control (toggle + persist). No per-route or query-param override.
+Locale changes only via the `LanguagePicker` dropdown (select + persist), used in every shell. No per-route or query-param override.
 
 ### BR-LO-04 — Key parity & non-empty (CI-enforced)
 `en.ts` and `he.ts` must have identical key sets and no `""` values (`messages.test.ts`). 705 keys each as of 2026-09-03.
@@ -321,10 +323,10 @@ Locale changes only via the `LocaleToggle` control (toggle + persist). No per-ro
 `t(key)`: active-locale table → `en` table → the key string itself. So a missing HE value silently shows the EN string (parity test makes true absence impossible; empty strings are caught by BR-PD-03 in report context and by BR-LO-04 globally).
 
 ### BR-LO-06 — Number/currency/date formatting
-`formatMoney(amount, currency, locale)` → `Intl.NumberFormat('he-IL'|'en-US', {style:'currency', currency})`. Report dates → `toLocaleDateString('he-IL'|'en-US')`. `currency` = `rooteContent.currency` = `'ILS'` (placeholder; OQ-BIZ-3).
+`formatMoney(amount, currency, locale)` → `Intl.NumberFormat(LOCALES[locale].bcp47, {style:'currency', currency})`. Report dates → `toLocaleDateString(LOCALES[locale].bcp47)`. `currency` = `rooteContent.currency` = `'USD'` — a single hardcoded display currency for the concept build; multi-currency is out of scope (OQ-BIZ-3).
 
 ### BR-LO-07 — Orphaned keys
-`landing.*` (~60 keys) and `marketing.blog.*` keys exist in both dictionaries with **no runtime consumer** (the `Landing` route and `/blog` were not built / were superseded). They still count toward parity. `TBD` remove or keep (OQ-TECH-5).
+The `landing.*` (~60 keys) and `marketing.blog.*` key families have been removed. Only `marketing.nav.blog` now has **no runtime consumer** (the `/blog` route was never built). It still counts toward parity across all six locales. `TBD` remove or keep (OQ-TECH-5).
 
 ---
 

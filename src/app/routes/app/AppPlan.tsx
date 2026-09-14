@@ -1,6 +1,7 @@
 import { useT, useLocale } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { resolvePlanTreatments, planKeysForProgram } from './programProgress';
+import { AccountPageHeader } from './AccountPageHeader';
 import type { MessageKey } from '@/i18n/messages';
 
 export function AppPlan() {
@@ -13,19 +14,20 @@ export function AppPlan() {
   const plan = resolvePlanTreatments(t, locale, planKeys);
 
   return (
-    <div data-animate className="flex flex-col gap-8">
-      <header className="flex flex-col gap-2">
+    <div data-animate className="flex flex-col gap-4 md:gap-8">
+      <AccountPageHeader eyebrow={t('app.nav.plan')} title={t('report.section.plan.title')} />
+
+      <div className="flex flex-col gap-2">
         <p className="text-sm font-medium uppercase text-accent">
           {t('report.section.plan.matchedBadge')}
         </p>
-        <h1 className="font-display text-3xl font-medium lg:text-4xl">{t('report.section.plan.title')}</h1>
         <p className="text-sm text-muted-foreground">
           {t(`scale.${a.scale}.label` as MessageKey)} · {t(`severity.${a.severityBand}` as MessageKey)}
         </p>
-      </header>
+      </div>
 
-      <div className="grid gap-8 lg:grid-cols-2 lg:gap-6">
-        <section className="flex flex-col gap-3">
+      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 lg:gap-8">
+        <section className="flex flex-col gap-4">
           <h2 className="font-display text-xl font-medium">{t('report.plan.core.title')}</h2>
           {plan.core.map((tr) => (
             <div key={tr.key} className="rounded-xl border border-accent bg-accent/5 p-4 shadow-sm">
@@ -39,7 +41,7 @@ export function AppPlan() {
           ))}
         </section>
 
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-4">
           <h2 className="font-display text-xl font-medium">{t('report.plan.supporting.title')}</h2>
           {plan.supporting.map((tr) => (
             <div key={tr.key} className="rounded-xl border border-border bg-card p-4 shadow-sm">

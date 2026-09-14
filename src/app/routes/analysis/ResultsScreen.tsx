@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, Button, ScanCard, LegalNotice } from '@/app/components/roote';
 import { rooteContent } from '@/content/roote.config';
@@ -14,7 +14,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *  levels / a stage, never a fabricated percentage. */
 export function ResultsScreen() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
@@ -61,7 +61,7 @@ export function ResultsScreen() {
   }
 
   return (
-    <section data-animate className="flex flex-col gap-6">
+    <section data-animate className="flex flex-col gap-8">
       <DisplayTitle as="h1" step="md">
         {t('analysis.results.title')}
       </DisplayTitle>
@@ -70,7 +70,7 @@ export function ResultsScreen() {
 
       <LegalNotice>{rooteContent.disclaimers.demo[cl]}</LegalNotice>
 
-      <form onSubmit={submit} className="flex flex-col gap-3">
+      <form onSubmit={submit} className="flex flex-col gap-4">
         <label htmlFor="results-email" className="font-body text-sm font-medium">
           {t('analysis.results.emailLabel')}
         </label>

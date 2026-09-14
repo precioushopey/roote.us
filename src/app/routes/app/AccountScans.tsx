@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useT, useContentLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useTracking } from '@/store/tracking';
 import { DisplayTitle, Prose, Card, Badge, Button } from '@/app/components/roote';
@@ -23,7 +23,7 @@ type Phase = 'idle' | 'capturing' | 'analyzing';
 
 export function AccountScans() {
   const t = useT();
-  const cl = useContentLocale();
+  const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
   const session = useSession();
   const tracking = useTracking();
@@ -115,25 +115,24 @@ export function AccountScans() {
   const scans = tracking.scans;
 
   return (
-    <div data-animate className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4 md:gap-8">
       <header>
-        <DisplayTitle as="h1" step="sm">
+        <DisplayTitle as="h2" step="sm">
           {t('app.scans.title')}
         </DisplayTitle>
-        <Prose className="mt-2" size="sm">
+        <Prose className="mt-2">
           {t('app.scans.body')}
         </Prose>
       </header>
 
       <Card tone="cream">
         <p className="font-display text-md text-foreground">{t('app.scans.hairhealthCta.title')}</p>
-        <Prose size="sm" className="mt-1">
+        <Prose className="mt-1">
           {t('app.scans.hairhealthCta.body')}
         </Prose>
         <Button
           to={withLocale(PATHS.accountHairHealthRescan)}
           variant="secondary"
-          size="sm"
           className="mt-3 w-fit"
         >
           {t('app.scans.hairhealthCta.cta')}
@@ -141,7 +140,7 @@ export function AccountScans() {
       </Card>
 
       {scans.some((s) => s.type === 'final') && (
-        <Button to={withLocale(PATHS.accountSection('results'))} variant="secondary" size="sm" className="w-fit">
+        <Button to={withLocale(PATHS.accountSection('results'))} variant="secondary" className="w-fit">
           {t('app.overview.viewResults')}
         </Button>
       )}
@@ -151,7 +150,7 @@ export function AccountScans() {
           <p className="font-display text-md text-foreground">
             {isFinal ? t('app.scans.finalPrompt') : t('app.scans.progressPrompt')}
           </p>
-          <Prose size="sm" className="mt-1">
+          <Prose className="mt-1">
             {isFinal ? t('app.scans.finalBody') : t('app.scans.progressBody')}
           </Prose>
           {phase === 'idle' ? (
@@ -161,13 +160,13 @@ export function AccountScans() {
                 setPhase('capturing');
                 track('progress_scan_started', { day: dueCheckpoint.day });
               }}
-              className="mt-3 w-fit rounded-xs bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
+              className="mt-3 w-fit rounded-full bg-primary px-5 py-2 font-body text-sm text-primary-foreground"
             >
               {t('app.scans.startCapture')}
             </button>
           ) : (
             <>
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {PHOTO_VIEWS.map((v) => (
                   <GuidedPhotoCapture
                     key={v}
@@ -184,7 +183,7 @@ export function AccountScans() {
                 type="button"
                 disabled={!allShot}
                 onClick={runScan}
-                className="mt-4 w-fit rounded-xs bg-primary px-5 py-2 font-body text-sm text-primary-foreground disabled:opacity-40"
+                className="mt-4 w-fit rounded-full bg-primary px-5 py-2 font-body text-sm text-primary-foreground disabled:opacity-40"
               >
                 {t('app.scans.runAnalysis')}
               </button>
@@ -204,12 +203,12 @@ export function AccountScans() {
       {(pastDueScans.length > 0 || skippedScans.length > 0) && (
         <ul className="flex flex-col divide-y divide-border/60 rounded-lg border border-border bg-card">
           {pastDueScans.map((c) => (
-            <li key={c.id} className="flex items-center justify-between gap-3 px-4 py-3">
+            <li key={c.id} className="flex items-center justify-between gap-4 px-4 py-3">
               <span className="font-body text-sm text-foreground">
                 {t(c.type === 'final-scan' ? 'app.checkpoint.finalScan' : 'app.checkpoint.scan')} ·{' '}
                 {t('marketing.sys.day', { n: c.day })}
               </span>
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-4">
                 <button
                   type="button"
                   onClick={() => tracking.skipCheckpoint(c.id, true)}
@@ -222,12 +221,12 @@ export function AccountScans() {
             </li>
           ))}
           {skippedScans.map((c) => (
-            <li key={c.id} className="flex items-center justify-between gap-3 px-4 py-3">
+            <li key={c.id} className="flex items-center justify-between gap-4 px-4 py-3">
               <span className="font-body text-sm text-muted-foreground">
                 {t(c.type === 'final-scan' ? 'app.checkpoint.finalScan' : 'app.checkpoint.scan')} ·{' '}
                 {t('marketing.sys.day', { n: c.day })}
               </span>
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-4">
                 <button
                   type="button"
                   onClick={() => tracking.skipCheckpoint(c.id, false)}
@@ -245,26 +244,30 @@ export function AccountScans() {
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-md text-foreground">{t('app.scans.history')}</h2>
         {scans.length === 0 ? (
-          <Prose size="sm">{t('app.scans.none')}</Prose>
+          <Card tone="cream">
+            <Prose>{t('app.scans.none')}</Prose>
+          </Card>
         ) : (
-          scans.map((s) => (
-            <Card key={s.id}>
-              <div className="flex items-center justify-between gap-3">
-                <p className="font-body text-sm text-foreground">
-                  {t(`app.scans.type.${s.type}` as 'app.scans.type.progress')} · {s.capturedAt.slice(0, 10)}
-                </p>
-                {s.isMock && <Badge tone="review">{t('app.scans.demo')}</Badge>}
-              </div>
-              <dl className="mt-2 flex flex-col gap-1 font-body text-sm">
-                {s.metrics.map((m) => (
-                  <div key={m.key} className="flex justify-between gap-4">
-                    <dt className="text-muted-foreground">{t(METRIC_LABEL[m.key] ?? METRIC_LABEL_FALLBACK)}</dt>
-                    <dd className="text-foreground">{t(m.status as 'severity.mild')}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Card>
-          ))
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {scans.map((s) => (
+              <Card key={s.id}>
+                <div className="flex items-center justify-between gap-4">
+                  <p className="font-body text-sm text-foreground">
+                    {t(`app.scans.type.${s.type}` as 'app.scans.type.progress')} · {s.capturedAt.slice(0, 10)}
+                  </p>
+                  {s.isMock && <Badge tone="review">{t('app.scans.demo')}</Badge>}
+                </div>
+                <dl className="mt-2 flex flex-col gap-2 font-body text-sm">
+                  {s.metrics.map((m) => (
+                    <div key={m.key} className="flex justify-between gap-4">
+                      <dt className="text-muted-foreground">{t(METRIC_LABEL[m.key] ?? METRIC_LABEL_FALLBACK)}</dt>
+                      <dd className="text-foreground">{t(m.status as 'severity.mild')}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Card>
+            ))}
+          </div>
         )}
       </section>
     </div>

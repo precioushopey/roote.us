@@ -13,11 +13,21 @@ export type TimelineMilestone = {
   media?: ReactNode;
 };
 
+function timelineDotClass(m: TimelineMilestone, onDark: boolean) {
+  return cn(
+    'h-3.5 w-3.5 shrink-0 rounded-full border-2',
+    m.state === 'done' && (onDark ? 'border-gold-500 bg-gold-500' : 'border-deep-800 bg-deep-800'),
+    m.state === 'current' && (onDark ? 'border-gold-500 bg-transparent' : 'border-deep-800 bg-cream-50'),
+    m.state === 'upcoming' && (onDark ? 'border-cream-100/30 bg-transparent' : 'border-border bg-cream-50'),
+  );
+}
+
 export function Timeline({
   milestones,
   className,
   onDark = false,
   dayLabelClassName,
+  orientation = 'vertical',
 }: {
   milestones: TimelineMilestone[];
   className?: string;
@@ -26,38 +36,54 @@ export function Timeline({
    *  tuned for the cream background and reads too faint on other surfaces
    *  (e.g. the sand "anchor" band). */
   dayLabelClassName?: string;
+  /** 'horizontal' lays milestones out in a row (from `sm` up — narrower than
+   *  that it falls back to the vertical stack, since a 4-up row of day+title
+   *  text has no room to breathe on a phone). Default stays 'vertical'. */
+  orientation?: 'vertical' | 'horizontal';
 }) {
-  return (
-    <ol className={cn('relative flex flex-col gap-6 ps-6', className)}>
-      <span aria-hidden className={cn('absolute inset-y-2 start-[7px] w-px', onDark ? 'bg-cream-100/20' : 'bg-border')} />
+  const lineTone = onDark ? 'bg-cream-100/20' : 'bg-border';
+  const dayTone = onDark ? 'text-cream-100' : 'text-muted-foreground';
+  const titleTone = onDark ? 'text-cream-100' : 'text-foreground';
+  const captionTone = onDark ? 'text-cream-100' : 'text-muted-foreground';
+
+  const vertical = (
+    <ol className={cn('relative flex flex-col gap-8 ps-6', orientation === 'horizontal' && 'sm:hidden', className)}>
+      <span aria-hidden className={cn('absolute inset-y-2 start-[7px] w-px', lineTone)} />
       {milestones.map((m) => (
         <li key={m.id} className="relative">
-          <span
-            aria-hidden
-            className={cn(
-              'absolute -start-6 top-1 h-3.5 w-3.5 rounded-full border-2',
-              m.state === 'done' && (onDark ? 'border-gold-500 bg-gold-500' : 'border-deep-800 bg-deep-800'),
-              m.state === 'current' && (onDark ? 'border-gold-500 bg-transparent' : 'border-deep-800 bg-cream-50'),
-              m.state === 'upcoming' && (onDark ? 'border-cream-100/30 bg-transparent' : 'border-border bg-cream-50'),
-            )}
-          />
-          <p
-            className={cn(
-              'u-caps font-body text-sm font-semibold',
-              onDark ? 'text-cream-100' : 'text-muted-foreground',
-              dayLabelClassName,
-            )}
-          >
-            {m.dayLabel}
-          </p>
-          <p className={cn('mt-0.5 font-body font-medium', onDark ? 'text-cream-100' : 'text-foreground')}>{m.title}</p>
-          {m.caption ? (
-            <p className={cn('font-body text-sm', onDark ? 'text-cream-100' : 'text-muted-foreground')}>{m.caption}</p>
-          ) : null}
+          <span aria-hidden className={cn('absolute -start-6 top-1', timelineDotClass(m, onDark))} />
+          <p className={cn('u-caps font-body text-sm font-semibold', dayTone, dayLabelClassName)}>{m.dayLabel}</p>
+          <p className={cn('mt-0.5 font-body font-medium', titleTone)}>{m.title}</p>
+          {m.caption ? <p className={cn('font-body text-sm', captionTone)}>{m.caption}</p> : null}
           {m.media ? <div className="mt-2">{m.media}</div> : null}
         </li>
       ))}
     </ol>
+  );
+
+  if (orientation !== 'horizontal') return vertical;
+
+  return (
+    <>
+      {vertical}
+      <ol className={cn('hidden sm:flex sm:items-start', className)}>
+        {milestones.map((m, i) => (
+          <li key={m.id} className="flex flex-1 flex-col items-center gap-2 text-center">
+            <div className="flex w-full items-center">
+              <span aria-hidden className={cn('h-px flex-1', i === 0 ? 'opacity-0' : lineTone)} />
+              <span aria-hidden className={timelineDotClass(m, onDark)} />
+              <span aria-hidden className={cn('h-px flex-1', i === milestones.length - 1 ? 'opacity-0' : lineTone)} />
+            </div>
+            <div>
+              <p className={cn('u-caps font-body text-sm font-semibold', dayTone, dayLabelClassName)}>{m.dayLabel}</p>
+              <p className={cn('mt-0.5 font-body font-medium', titleTone)}>{m.title}</p>
+              {m.caption ? <p className={cn('font-body text-sm', captionTone)}>{m.caption}</p> : null}
+            </div>
+            {m.media ? <div className="mt-2">{m.media}</div> : null}
+          </li>
+        ))}
+      </ol>
+    </>
   );
 }
 
@@ -78,7 +104,7 @@ export function TreatmentChecklist({
     <ul className={cn('flex flex-col gap-2', className)}>
       {tasks.map((task) => (
         <li key={task.key}>
-          <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-border bg-card p-4">
+          <label className="flex cursor-pointer items-start gap-4 rounded-lg border border-border bg-card p-4">
             <input
               type="checkbox"
               checked={task.done}
@@ -122,7 +148,7 @@ export function ProgressPhotoCard({
     <figure className="overflow-hidden rounded-lg border border-border bg-cream-100">
       <div className="aspect-square w-full">
         {thumbUrl ? (
-          <img src={thumbUrl} alt={`${angleLabel}, ${dateLabel}`} className="h-full w-full object-cover" />
+          <img src={thumbUrl} alt={`${angleLabel}, ${dateLabel}`} loading="lazy" className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full w-full items-center justify-center px-3 text-center font-body text-sm text-muted-foreground">
             {emptyLabel}
