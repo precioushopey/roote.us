@@ -1,7 +1,8 @@
-import { Outlet, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import { useLocale, useT } from '@/i18n/LocaleProvider';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
+import { RouteFade } from '@/app/components/roote';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { AnalysisPrompt } from './AnalysisPrompt';
@@ -22,7 +23,7 @@ export function MarketingShell() {
       </a>
       <Header />
       <main id="main" tabIndex={-1} className="flex-1 outline-none">
-        <Outlet />
+        <RouteFade />
       </main>
       <Footer />
       {pathname === `/${locale}` && <AnalysisPrompt />}

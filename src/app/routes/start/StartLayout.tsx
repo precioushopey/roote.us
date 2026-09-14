@@ -1,9 +1,9 @@
 // src/app/routes/start/StartLayout.tsx
-import { Navigate, Outlet, useLocation, useSearchParams } from 'react-router';
+import { Navigate, useLocation, useSearchParams } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { Stepper, Button } from '@/app/components/roote';
+import { Stepper, Button, RouteFade } from '@/app/components/roote';
 import { redirectForStartStep, START_STEPS, type StartStep } from './guards';
 import { seedDiagnosisAndReport } from '@/store/devSeed';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
@@ -61,7 +61,7 @@ export function StartLayout() {
         <Stepper steps={steps} current={Math.max(0, Math.min(2, current))} label={t('common.progressLabel')} />
       </div>
       <main className="flex-1 pb-16 pt-4">
-        <Outlet />
+        <RouteFade />
       </main>
     </div>
   );

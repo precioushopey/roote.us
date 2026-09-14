@@ -1,6 +1,6 @@
-import { Link, Outlet } from 'react-router';
+import { Link } from 'react-router';
 import { Wordmark } from '@/app/components/brand/Wordmark';
-import { LanguagePicker } from '@/app/components/roote';
+import { LanguagePicker, RouteFade } from '@/app/components/roote';
 import { useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 
@@ -18,7 +18,7 @@ export function FunnelShell() {
           <LanguagePicker compact locale={locale} onChange={setLocale} />
         </div>
       </header>
-      <Outlet />
+      <RouteFade />
     </div>
   );
 }

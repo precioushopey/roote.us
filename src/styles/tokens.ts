@@ -64,3 +64,17 @@ export const radii = { sm: 8, md: 12, lg: 16, xl: 24, '2xl': 32, pill: 9999 } as
 
 /** Marketing layout maxima (px) — brief §6. */
 export const layout = { content: 1280, readable: 720 } as const;
+
+/** Motion curves/durations — mirrors the `--ease-*`/`--duration-*` vars in theme.css.
+ * The `*Bezier` arrays are the same curve in the `[x1,y1,x2,y2]` shape the `motion`
+ * library's `ease` transition option expects (it doesn't parse CSS `cubic-bezier()` strings). */
+const easeEntranceBezier = [0.16, 1, 0.3, 1] as const;
+const easeStandardBezier = [0.4, 0, 0.2, 1] as const;
+export const motion = {
+  easeEntrance: `cubic-bezier(${easeEntranceBezier.join(', ')})`,
+  easeStandard: `cubic-bezier(${easeStandardBezier.join(', ')})`,
+  easeEntranceBezier,
+  easeStandardBezier,
+  durationPress: 100,
+  durationRoute: 180,
+} as const;

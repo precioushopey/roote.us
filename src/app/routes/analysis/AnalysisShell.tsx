@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { Wordmark } from '@/app/components/brand/Wordmark';
-import { Button, Stepper, Modal, LanguagePicker } from '@/app/components/roote';
+import { Button, Stepper, Modal, LanguagePicker, RouteFade } from '@/app/components/roote';
 import { packagingFor } from '@/domain/recommendation/recommend';
 import { pickLocalized } from '@/content/localized';
 import { ASSESSMENT_STEPS } from '@/content/assessment';
@@ -93,7 +93,7 @@ export function AnalysisShell() {
       )}
 
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 pb-16 pt-4">
-        <Outlet />
+        <RouteFade />
       </main>
 
       <Modal

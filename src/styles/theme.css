@@ -131,6 +131,14 @@
   --sidebar-accent-foreground: var(--roote-ink);
   --sidebar-border: var(--roote-cream-300);
   --sidebar-ring: var(--roote-emerald-600);
+
+  /* --- motion (brief: "feel like iOS" pass, 2026-09-14) -------------
+     `--ease-entrance` is the existing scroll-reveal curve (marketing.css);
+     `--ease-standard` is a snappier curve for presses and route changes. */
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-press: 100ms;
+  --duration-route: 180ms;
 }
 
 .dark {

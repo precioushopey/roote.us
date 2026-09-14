@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { Loader2 } from 'lucide-react';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { cn } from '@/app/components/ui/utils';
 import { funnelField, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
@@ -113,6 +114,7 @@ export function CheckoutFields({
         <Link to={`${withLocale('/terms')}#terms-of-sale`} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>.
       </p>
       <button type="submit" disabled={submitting} className={funnelPrimaryBtn}>
+        {submitting && <Loader2 aria-hidden className="h-4 w-4 animate-spin" strokeWidth={2} />}
         {submitting ? t('checkout.submitting') : t('checkout.submit')}
       </button>
     </form>

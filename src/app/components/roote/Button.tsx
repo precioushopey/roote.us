@@ -15,8 +15,9 @@ const VARIANT: Record<ButtonVariant, string> = {
 
 const BASE =
   'inline-flex items-center justify-center gap-2 rounded-full font-body font-medium px-4 md:px-6 py-2 md:py-3 text-sm text-center ' +
-  'transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ' +
-  'focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-40';
+  'transition-[color,background-color,border-color,opacity,transform] duration-150 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ' +
+  'focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-40 ' +
+  'active:scale-[0.97] active:opacity-90 active:duration-100';
 
 type CommonProps = {
   variant?: ButtonVariant;
@@ -103,14 +104,17 @@ type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export function IconButton({ label, children, size = 'md', className, type = 'button', ...rest }: IconButtonProps) {
-  const box = size === 'sm' ? 'h-9 w-9' : size === 'lg' ? 'h-12 w-12' : 'h-10 w-10';
+  // Sized to iOS HIG's 44x44pt minimum tap target at `md` (the default) and up;
+  // `sm` (40px) stays under it deliberately for dense spots (e.g. table rows).
+  const box = size === 'sm' ? 'h-10 w-10' : size === 'lg' ? 'h-[3.25rem] w-[3.25rem]' : 'h-11 w-11';
   return (
     <button
       type={type}
       aria-label={label}
       className={cn(
-        'inline-flex items-center justify-center rounded-full text-foreground transition-colors',
+        'inline-flex items-center justify-center rounded-full text-foreground transition-[background-color,opacity,transform] duration-150',
         'hover:bg-cream-100 outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        'active:scale-[0.97] active:opacity-90 active:duration-100 disabled:cursor-not-allowed disabled:opacity-40',
         box,
         className,
       )}

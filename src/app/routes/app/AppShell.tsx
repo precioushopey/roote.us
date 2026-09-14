@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router';
+import { NavLink, Navigate, useLocation, useNavigate } from 'react-router';
 import { Home, ClipboardList, LineChart, LifeBuoy, User, type LucideProps } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
@@ -11,7 +11,7 @@ import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { useTrackingMigration } from './useTrackingMigration';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { CartLink } from '@/app/components/shell/CartLink';
-import { Button, LanguagePicker } from '@/app/components/roote';
+import { Button, LanguagePicker, RouteFade } from '@/app/components/roote';
 import { packagingFor } from '@/domain/recommendation/recommend';
 import { cn } from '@/app/components/ui/utils';
 import { PATHS } from '@/app/paths';
@@ -144,7 +144,7 @@ export function AppShell() {
       </aside>
 
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-8 pb-24 lg:max-w-5xl lg:px-10 lg:py-10 xl:max-w-6xl">
-        <Outlet />
+        <RouteFade />
       </main>
 
       <nav

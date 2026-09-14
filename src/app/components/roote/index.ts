@@ -8,6 +8,7 @@
  */
 
 export { Button, IconButton, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
+export { RouteFade } from './RouteFade';
 export { Card, GlassCard } from './Surface';
 export { Eyebrow, DisplayTitle, Prose, TextLink, renderWithEmphasis } from './Text';
 export { Badge, Pill, type BadgeTone } from './Badge';
