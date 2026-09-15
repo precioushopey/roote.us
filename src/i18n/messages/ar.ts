@@ -1123,13 +1123,26 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'marketing.pdp.formula': 'مرجع التركيبة',
   'marketing.pdp.formulaNote':
     'تفاصيل التركيبة الكاملة متاحة في تقريرك بعد مراجعة الأهلية. خاضعة للمراجعة التنظيمية.',
-  'marketing.pdp.evidenceNote':
-    'تنشر ROOTÉ بيانات تجارب لهذه التركيبة فور توفّرها، ولا تعرض أبداً دراسة لمكوّن أو لمنافس على أنها دراستها الخاصة.',
   'marketing.pdp.requiresReview': 'يتطلب فحص العلاج',
   'marketing.pdp.noPrescriptionNeeded': 'لا يتطلب وصفة طبية',
   'marketing.pdp.alsoInFormula': 'أيضًا في هذه التركيبة',
   'marketing.pdp.relatedTitle': 'منتجات مكمّلة',
   'marketing.pdp.ctaHeading': 'ابدأ من تحليلك.',
+  'marketing.pdp.storage': 'التخزين',
+  'marketing.pdp.fullIngredients': 'قائمة المكوّنات الكاملة',
+  'marketing.pdp.supplementFacts.title': 'حقائق المكمّل الغذائي',
+  'marketing.pdp.supplementFacts.servingSize': 'حجم الحصة',
+  'marketing.pdp.supplementFacts.servingsPerContainer': 'عدد الحصص في العبوة',
+  'marketing.pdp.supplementFacts.amountPerServing': 'الكمية لكل حصة',
+  'marketing.pdp.supplementFacts.dailyValue': '% من القيمة اليومية',
+  'marketing.pdp.supplementFacts.otherIngredients': 'مكوّنات أخرى',
+  'marketing.pdp.supplementFacts.dvFootnote': '* لم يتم تحديد القيمة اليومية.',
+  'marketing.pdp.supplementFacts.allergenWarning': 'تحذير من مسببات الحساسية',
+  'marketing.pdp.badge.vegan': 'نباتي بالكامل (فيغان)',
+  'marketing.pdp.badge.crueltyFree': 'خالٍ من القسوة على الحيوانات',
+  'marketing.pdp.badge.fragranceFree': 'خالٍ من العطور',
+  'marketing.pdp.badge.parabenFree': 'خالٍ من البارابين',
+  'marketing.pdp.badge.sulfateFree': 'خالٍ من الكبريتات',
 
   // --- marketing.sol ---
   'marketing.sol.indexHeading': 'افهم شعرك، ثم اختر',

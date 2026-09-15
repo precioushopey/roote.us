@@ -4,18 +4,6 @@ import { ArrowRight } from 'lucide-react';
 import { cn } from '@/app/components/ui/utils';
 import { displayClamp, type DisplayStep } from '@/app/components/marketing/displayScale';
 
-/** Splits on `*word*` markers, rendering the marked part(s) in italic (see
- *  `.font-script`, marketing.css — same font as the surrounding heading,
- *  italic only) and leaving everything else as plain text. Used for the
- *  personalization word in a headline — each locale's translation places
- *  its own `*...*` marker, since word order (and, for he/ar, whether the
- *  pronoun fuses onto the noun) differs per language. */
-export function renderWithEmphasis(text: string): ReactNode[] {
-  return text
-    .split(/\*(.+?)\*/g)
-    .map((part, i) => (i % 2 === 1 ? <span key={i} className="font-script">{part}</span> : part));
-}
-
 /* --- Eyebrow -----------------------------------------------------------
    Small context label above a section. i18n-safe caps via `.u-caps`
    (no-op under he/ar). Use only where it encodes real section context —

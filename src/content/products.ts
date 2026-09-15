@@ -23,13 +23,36 @@ export type ProductConcern = 'thinning' | 'gray' | 'thinning-support' | 'gray-su
 
 export type ProductFormat = 'topical-solution' | 'capsule-supplement' | 'shampoo' | 'serum';
 
+/** Free-from claims printed on the physical label — mapped to `marketing.pdp.badge.*` for display. */
+export type ProductBadge = 'vegan' | 'cruelty-free' | 'fragrance-free' | 'paraben-free' | 'sulfate-free';
+
 export type Ingredient = {
   /** Proper noun — locale-invariant (Minoxidil, Greyverse™). */
   name: string;
+  /** Printed concentration, e.g. "6%" — shown next to the name when present. */
+  strength?: string;
   /** Short, non-efficacy purpose statement. */
   note: LocalizedText;
   claimStatus: ClaimStatus;
   sourceType: ClaimSourceType;
+};
+
+/** One row of a Supplement Facts panel (capsule-supplement format only). */
+export type SupplementFactRow = {
+  /** Locale-invariant nutrient/ingredient name, exactly as printed. */
+  name: string;
+  amount: string;
+  /** `null` -> printed as the "Daily Value not established" footnote marker. */
+  dailyValue: string | null;
+};
+
+export type SupplementFacts = {
+  servingSize: string;
+  servingsPerContainer: number;
+  rows: SupplementFactRow[];
+  /** Locale-invariant, e.g. "Gelatin (bovine), vegetable magnesium stearate, and silicon dioxide." */
+  otherIngredients: string;
+  allergenWarning: LocalizedText;
 };
 
 export type Product = {
@@ -53,8 +76,22 @@ export type Product = {
   formulaReference: LocalizedText | null;
   displayFormulaDetail: boolean;
   ingredients: Ingredient[];
+  /**
+   * Complete, ordered, verbatim ingredient declaration exactly as printed on
+   * the shipped label (actives + inactives together for a single-list
+   * product; empty when `supplementFacts` covers the declaration instead).
+   * Locale-invariant — INCI/pharma nomenclature isn't translated on real
+   * labels either. Rendered as the label-accuracy "Ingredients" block,
+   * separate from the curated `ingredients` marketing spotlight above.
+   */
+  fullIngredientList: string[];
+  /** Only for `format: 'capsule-supplement'`. */
+  supplementFacts?: SupplementFacts;
   usage: LocalizedText;
   safety: LocalizedText;
+  /** Not on every label (e.g. no box label on hand for Gray Support yet) — omit rather than invent. */
+  storage?: LocalizedText;
+  badges: ProductBadge[];
   /** True → a clinician / pharmacy review step gates purchase + directions. */
   requiresMedicalReview: boolean;
   /** All SKUs ship in both packaging themes. */
@@ -73,7 +110,39 @@ const ING = (
   note: LocalizedText,
   claimStatus: ClaimStatus = 'working',
   sourceType: ClaimSourceType = 'ingredient-literature',
-): Ingredient => ({ name, note, claimStatus, sourceType });
+  strength?: string,
+): Ingredient => ({ name, note, claimStatus, sourceType, strength });
+
+// Shared across the three Density topical solutions — the printed "How to
+// Use" / "Cautions" / "Storage" copy is byte-identical on all three boxes.
+const TOPICAL_USAGE: LocalizedText = L6({
+  en: 'Apply 1 full dropper (1 mL) to a dry scalp twice daily, morning and evening. Part hair, apply to the scalp, spread with fingertips, and wash hands after use. Let dry fully before styling or lying down.',
+  he: 'למרוח מנה מלאה של הטפטפת (1 מ״ל) על קרקפת יבשה, פעמיים ביום, בבוקר ובערב. לחלק את השיער, למרוח על הקרקפת, לפזר באצבעות, ולשטוף ידיים לאחר השימוש. לתת להתייבש לגמרי לפני עיצוב השיער או שכיבה.',
+  ar: 'يُطبَّق ملء القطّارة الكامل (1 مل) على فروة رأس جافة، مرتين يوميًا، صباحًا ومساءً. يُفرَق الشعر، ويُوضَع المحلول على فروة الرأس، ويُوزَّع بأطراف الأصابع، وتُغسَل اليدان بعد الاستخدام. يُترَك ليجف تمامًا قبل التصفيف أو الاستلقاء.',
+  ru: 'Наносить полную пипетку (1 мл) на сухую кожу головы дважды в день, утром и вечером. Разделить волосы пробором, нанести на кожу головы, распределить пальцами и вымыть руки после использования. Дать полностью высохнуть перед укладкой или сном.',
+  fr: "Appliquer une pleine pipette (1 mL) sur un cuir chevelu sec, deux fois par jour, matin et soir. Séparer les cheveux, appliquer sur le cuir chevelu, répartir avec les doigts, puis se laver les mains après usage. Laisser sécher complètement avant de se coiffer ou de s'allonger.",
+  es: 'Aplicar un gotero completo (1 mL) sobre el cuero cabelludo seco, dos veces al día, por la mañana y por la noche. Separar el cabello, aplicar sobre el cuero cabelludo, repartir con los dedos y lavarse las manos después de usarlo. Dejar secar por completo antes de peinarse o acostarse.',
+});
+
+const TOPICAL_CAUTIONS: LocalizedText = L6({
+  en: 'For external use only. Avoid eyes and do not apply to broken, irritated, inflamed, or infected skin. Discontinue use if severe irritation or unusual symptoms occur and consult a healthcare professional. Do not swallow. Keep out of reach of children. Do not use during pregnancy or breastfeeding unless directed by a healthcare professional. Consult a healthcare professional before use if you have a medical condition or take other medications.',
+  he: 'לשימוש חיצוני בלבד. יש להימנע ממגע עם העיניים ולא למרוח על עור פגום, מגורה, דלקתי או נגוע. יש להפסיק שימוש אם מופיע גירוי חמור או תסמינים חריגים ולפנות לאיש מקצוע רפואי. אין לבלוע. יש להרחיק מהישג ידם של ילדים. אין להשתמש בהיריון או בהנקה אלא בהנחיית איש מקצוע רפואי. יש להתייעץ עם איש מקצוע רפואי לפני השימוש אם קיימת בעיה רפואית או נעשה שימוש בתרופות אחרות.',
+  ar: 'للاستخدام الخارجي فقط. يُتجنَّب ملامسة العينين، ولا يُوضَع على جلد مصاب أو متهيّج أو ملتهب أو مصاب بعدوى. يُوقَف الاستخدام عند ظهور تهيّج شديد أو أعراض غير معتادة، مع استشارة أخصائي رعاية صحية. يُحظر البلع. يُحفَظ بعيدًا عن متناول الأطفال. لا يُستخدم أثناء الحمل أو الرضاعة الطبيعية إلا بتوجيه من أخصائي رعاية صحية. يُرجى استشارة أخصائي رعاية صحية قبل الاستخدام في حال وجود حالة طبية أو عند تناول أدوية أخرى.',
+  ru: 'Только для наружного применения. Избегать попадания в глаза, не наносить на повреждённую, раздражённую, воспалённую или инфицированную кожу. Прекратить использование при появлении сильного раздражения или необычных симптомов и обратиться к врачу. Не проглатывать. Хранить в недоступном для детей месте. Не использовать во время беременности или грудного вскармливания без указания врача. Проконсультируйтесь с врачом перед использованием при наличии заболевания или приёме других лекарств.',
+  fr: "Réservé à l'usage externe. Éviter le contact avec les yeux et ne pas appliquer sur une peau lésée, irritée, enflammée ou infectée. Arrêter l'utilisation en cas d'irritation sévère ou de symptômes inhabituels et consulter un professionnel de santé. Ne pas avaler. Tenir hors de portée des enfants. Ne pas utiliser pendant la grossesse ou l'allaitement sauf avis contraire d'un professionnel de santé. Consulter un professionnel de santé avant utilisation en cas de problème médical ou de prise d'autres médicaments.",
+  es: 'Solo para uso externo. Evitar el contacto con los ojos y no aplicar sobre piel dañada, irritada, inflamada o infectada. Suspender el uso si aparece irritación intensa o síntomas inusuales y consultar a un profesional de la salud. No ingerir. Mantener fuera del alcance de los niños. No usar durante el embarazo o la lactancia salvo indicación de un profesional de la salud. Consultar a un profesional de la salud antes de usar si tiene una afección médica o toma otros medicamentos.',
+});
+
+const TOPICAL_STORAGE: LocalizedText = L6({
+  en: 'Store at room temperature, away from direct sunlight and heat. Keep container tightly closed.',
+  he: 'יש לאחסן בטמפרטורת החדר, הרחק מאור שמש ישיר וחום. יש לשמור על הכלי סגור היטב.',
+  ar: 'يُخزَّن في درجة حرارة الغرفة، بعيدًا عن أشعة الشمس المباشرة والحرارة. يُحفَظ الوعاء مُحكَم الإغلاق.',
+  ru: 'Хранить при комнатной температуре, вдали от прямых солнечных лучей и источников тепла. Держать ёмкость плотно закрытой.',
+  fr: "Conserver à température ambiante, à l'abri de la lumière directe du soleil et de la chaleur. Garder le récipient bien fermé.",
+  es: 'Conservar a temperatura ambiente, lejos de la luz solar directa y del calor. Mantener el envase bien cerrado.',
+});
+
+const DENSITY_BADGES: ProductBadge[] = ['vegan', 'cruelty-free', 'fragrance-free'];
 
 export const PRODUCTS: Product[] = [
   {
@@ -123,7 +192,7 @@ export const PRODUCTS: Product[] = [
       fr: 'Référence de travail : 6% Minoxidil + 0.3% Finasteride.',
       es: 'Referencia de trabajo: 6% Minoxidil + 0.3% Finasteride.',
     }),
-    displayFormulaDetail: false,
+    displayFormulaDetail: true,
     ingredients: [
       ING(
         'Minoxidil',
@@ -135,6 +204,9 @@ export const PRODUCTS: Product[] = [
           fr: 'Un actif topique étudié de longue date dans la chute de cheveux héréditaire.',
           es: 'Un activo tópico ampliamente estudiado en la caída del cabello de patrón hereditario.',
         }),
+        'working',
+        'ingredient-literature',
+        '6%',
       ),
       ING(
         'Finasteride',
@@ -146,24 +218,16 @@ export const PRODUCTS: Product[] = [
           fr: 'Un ingrédient agissant sur la voie de la DHT, utilisé ici par voie topique.',
           es: 'Un ingrediente que actúa en la vía de la DHT, utilizado aquí por vía tópica.',
         }),
+        'working',
+        'ingredient-literature',
+        '0.3%',
       ),
     ],
-    usage: L6({
-      en: 'Apply to the scalp across the areas of concern, once or twice daily as directed at review.',
-      he: 'למרוח על הקרקפת באזורים הרלוונטיים, פעם או פעמיים ביום, לפי ההנחיה בבדיקה.',
-      ar: 'يوضع على فروة الرأس في المناطق المعنية، مرة أو مرتين يوميًا، حسب التوجيه في الفحص.',
-      ru: 'Наносить на кожу головы в проблемных зонах один или два раза в день, согласно указаниям, полученным при осмотре.',
-      fr: 'À appliquer sur le cuir chevelu au niveau des zones concernées, une à deux fois par jour, selon les indications données lors du bilan.',
-      es: 'Aplicar en el cuero cabelludo en las zonas de interés, una o dos veces al día, según las indicaciones dadas en la evaluación.',
-    }),
-    safety: L6({
-      en: 'Prescription-strength topical. Eligibility and directions are confirmed at treatment review. Not for use in pregnancy or while breastfeeding.',
-      he: 'תרחיף בעוצמת מרשם. ההתאמה וההנחיות נקבעות בבדיקת הטיפול. אין להשתמש בהיריון או בהנקה.',
-      ar: 'محلول موضعي بتركيز يستلزم وصفة طبية. تُحدَّد الأهلية والتوجيهات في فحص العلاج. لا يُستخدم أثناء الحمل أو الرضاعة الطبيعية.',
-      ru: 'Топическое средство рецептурной силы действия. Соответствие и указания по применению определяются при осмотре перед началом лечения. Не применять при беременности и в период грудного вскармливания.',
-      fr: "Soin topique de force prescriptible. L'éligibilité et les indications sont confirmées lors du bilan de traitement. Ne pas utiliser pendant la grossesse ou l'allaitement.",
-      es: 'Tratamiento tópico de concentración con receta. La elegibilidad y las indicaciones se confirman en la evaluación del tratamiento. No usar durante el embarazo ni la lactancia.',
-    }),
+    fullIngredientList: ['Minoxidil 6%', 'Finasteride 0.3%', 'Ethanol (Alcohol)', 'Propylene Glycol', 'Water'],
+    usage: TOPICAL_USAGE,
+    safety: TOPICAL_CAUTIONS,
+    storage: TOPICAL_STORAGE,
+    badges: DENSITY_BADGES,
     requiresMedicalReview: true,
     packagingThemed: true,
     relatedProducts: ['density-10', 'density-15', 'regrowth-shampoo'],
@@ -211,14 +275,14 @@ export const PRODUCTS: Product[] = [
       es: 'Tratamiento tópico para el cuero cabelludo con un complejo de apoyo más amplio. El nivel intermedio de la línea de densidad.',
     }),
     formulaReference: L6({
-      en: 'Working reference: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid.',
-      he: 'התייחסות עבודה: 10% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית.',
-      ar: 'مرجع العمل: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid.',
-      ru: 'Рабочая формула: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid.',
-      fr: 'Référence de travail : 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid.',
-      es: 'Referencia de trabajo: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid.',
+      en: 'Working reference: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™.',
+      he: 'התייחסות עבודה: 10% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית + 0.8% ABN Complex™.',
+      ar: 'مرجع العمل: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™.',
+      ru: 'Рабочая формула: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™.',
+      fr: 'Référence de travail : 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™.',
+      es: 'Referencia de trabajo: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™.',
     }),
-    displayFormulaDetail: false,
+    displayFormulaDetail: true,
     ingredients: [
       ING(
         'Minoxidil',
@@ -230,6 +294,9 @@ export const PRODUCTS: Product[] = [
           fr: 'Un actif topique étudié de longue date dans la chute de cheveux héréditaire.',
           es: 'Un activo tópico ampliamente estudiado en la caída del cabello de patrón hereditario.',
         }),
+        'working',
+        'ingredient-literature',
+        '10%',
       ),
       ING(
         'Finasteride',
@@ -241,6 +308,9 @@ export const PRODUCTS: Product[] = [
           fr: 'Un ingrédient agissant sur la voie de la DHT, utilisé ici par voie topique.',
           es: 'Un ingrediente que actúa en la vía de la DHT, utilizado aquí por vía tópica.',
         }),
+        'working',
+        'ingredient-literature',
+        '0.1%',
       ),
       ING(
         'Azelaic Acid',
@@ -252,24 +322,39 @@ export const PRODUCTS: Product[] = [
           fr: 'Intégré comme ingrédient de soutien de la voie de la DHT.',
           es: 'Incluido como ingrediente de apoyo en la vía de la DHT.',
         }),
+        'working',
+        'ingredient-literature',
+        '5%',
+      ),
+      ING(
+        'ABN Complex™',
+        L6({
+          en: 'A supplier active blend included alongside Minoxidil and Finasteride in this formula.',
+          he: 'תערובת רכיבים פעילים של ספק, הנכללת לצד מינוקסידיל ופינסטריד בפורמולה זו.',
+          ar: 'مزيج مكوّنات فعّالة من مورّد خارجي، يُدرَج إلى جانب Minoxidil وFinasteride في هذه التركيبة.',
+          ru: 'Смесь активных ингредиентов поставщика, включённая в эту формулу наряду с Minoxidil и Finasteride.',
+          fr: "Un mélange d'actifs fourni par un tiers, intégré aux côtés du Minoxidil et du Finasteride dans cette formule.",
+          es: 'Una mezcla de activos de un proveedor externo, incluida junto con Minoxidil y Finasteride en esta fórmula.',
+        }),
+        'requires-review',
+        'supplier-reference',
+        '0.8%',
       ),
     ],
-    usage: L6({
-      en: 'Apply to the scalp across the areas of concern once or twice daily, as directed at review.',
-      he: 'למרוח על הקרקפת באזורים הרלוונטיים פעם או פעמיים ביום, לפי ההנחיה בבדיקה.',
-      ar: 'يوضع على فروة الرأس في المناطق المعنية مرة أو مرتين يوميًا، حسب التوجيه في الفحص.',
-      ru: 'Наносить на кожу головы в проблемных зонах один или два раза в день согласно указаниям, полученным при осмотре.',
-      fr: 'À appliquer sur le cuir chevelu au niveau des zones concernées une à deux fois par jour, selon les indications données lors du bilan.',
-      es: 'Aplicar en el cuero cabelludo en las zonas de interés una o dos veces al día, según las indicaciones dadas en la evaluación.',
-    }),
-    safety: L6({
-      en: 'Prescription-strength topical. Eligibility and directions are confirmed at treatment review. Not for use in pregnancy or while breastfeeding.',
-      he: 'תרחיף בעוצמת מרשם. ההתאמה וההנחיות נקבעות בבדיקת הטיפול. אין להשתמש בהיריון או בהנקה.',
-      ar: 'محلول موضعي بتركيز يستلزم وصفة طبية. تُحدَّد الأهلية والتوجيهات في فحص العلاج. لا يُستخدم أثناء الحمل أو الرضاعة الطبيعية.',
-      ru: 'Топическое средство рецептурной силы действия. Соответствие и указания по применению определяются при осмотре перед началом лечения. Не применять при беременности и в период грудного вскармливания.',
-      fr: "Soin topique de force prescriptible. L'éligibilité et les indications sont confirmées lors du bilan de traitement. Ne pas utiliser pendant la grossesse ou l'allaitement.",
-      es: 'Tratamiento tópico de concentración con receta. La elegibilidad y las indicaciones se confirman en la evaluación del tratamiento. No usar durante el embarazo ni la lactancia.',
-    }),
+    fullIngredientList: [
+      'Minoxidil 10%',
+      'Finasteride 0.1%',
+      'Azelaic Acid 5%',
+      'ABN Complex™ 0.8%',
+      'Aloe Vera Gel',
+      'Ethanol (Alcohol)',
+      'Propylene Glycol',
+      'Water',
+    ],
+    usage: TOPICAL_USAGE,
+    safety: TOPICAL_CAUTIONS,
+    storage: TOPICAL_STORAGE,
+    badges: DENSITY_BADGES,
     requiresMedicalReview: true,
     packagingThemed: true,
     relatedProducts: ['density-6', 'density-15', 'regrowth-shampoo'],
@@ -317,14 +402,14 @@ export const PRODUCTS: Product[] = [
       es: 'El concepto de tratamiento tópico de mayor concentración de la línea de densidad. Sujeto a aprobación médica.',
     }),
     formulaReference: L6({
-      en: 'Working reference: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + Procapil®.',
-      he: 'התייחסות עבודה: 15% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית + Procapil®.',
-      ar: 'مرجع العمل: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + Procapil®.',
-      ru: 'Рабочая формула: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + Procapil®.',
-      fr: 'Référence de travail : 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + Procapil®.',
-      es: 'Referencia de trabajo: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + Procapil®.',
+      en: 'Working reference: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™ + 0.025% Retinol + 0.001% Caffeine.',
+      he: 'התייחסות עבודה: 15% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית + 0.8% ABN Complex™ + 0.025% רטינול + 0.001% קפאין.',
+      ar: 'مرجع العمل: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™ + 0.025% Retinol + 0.001% Caffeine.',
+      ru: 'Рабочая формула: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™ + 0.025% Retinol + 0.001% Caffeine.',
+      fr: 'Référence de travail : 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™ + 0.025% Retinol + 0.001% Caffeine.',
+      es: 'Referencia de trabajo: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™ + 0.025% Retinol + 0.001% Caffeine.',
     }),
-    displayFormulaDetail: false,
+    displayFormulaDetail: true,
     ingredients: [
       ING(
         'Minoxidil',
@@ -336,6 +421,9 @@ export const PRODUCTS: Product[] = [
           fr: 'Un actif topique étudié de longue date dans la chute de cheveux héréditaire.',
           es: 'Un activo tópico ampliamente estudiado en la caída del cabello de patrón hereditario.',
         }),
+        'working',
+        'ingredient-literature',
+        '15%',
       ),
       ING(
         'Finasteride',
@@ -347,6 +435,9 @@ export const PRODUCTS: Product[] = [
           fr: 'Un ingrédient agissant sur la voie de la DHT, utilisé ici par voie topique.',
           es: 'Un ingrediente que actúa en la vía de la DHT, utilizado aquí por vía tópica.',
         }),
+        'working',
+        'ingredient-literature',
+        '0.1%',
       ),
       ING(
         'Azelaic Acid',
@@ -358,37 +449,69 @@ export const PRODUCTS: Product[] = [
           fr: 'Intégré comme ingrédient de soutien de la voie de la DHT.',
           es: 'Incluido como ingrediente de apoyo en la vía de la DHT.',
         }),
+        'working',
+        'ingredient-literature',
+        '5%',
       ),
       ING(
-        'Procapil®',
+        'ABN Complex™',
         L6({
-          en: 'A supplier active marketed for scalp microcirculation and follicle anchoring.',
-          he: 'רכיב פעיל של ספק, המשווק לתמיכה במיקרו-מחזור בקרקפת ובעיגון הזקיק.',
-          ar: 'مكوّن فعّال من مورّد خارجي، يُسوَّق لدعم الدورة الدموية الدقيقة في فروة الرأس وتثبيت بصيلات الشعر.',
-          ru: 'Активный ингредиент поставщика, заявляемый производителем для поддержки микроциркуляции кожи головы и фиксации волосяного фолликула.',
-          fr: "Un actif fourni par un tiers, présenté par son fournisseur comme soutenant la microcirculation du cuir chevelu et l'ancrage du follicule.",
-          es: 'Un activo de un proveedor externo, comercializado para apoyar la microcirculación del cuero cabelludo y el anclaje del folículo.',
+          en: 'A supplier active blend included alongside Minoxidil and Finasteride in this formula.',
+          he: 'תערובת רכיבים פעילים של ספק, הנכללת לצד מינוקסידיל ופינסטריד בפורמולה זו.',
+          ar: 'مزيج مكوّنات فعّالة من مورّد خارجي، يُدرَج إلى جانب Minoxidil وFinasteride في هذه التركيبة.',
+          ru: 'Смесь активных ингредиентов поставщика, включённая в эту формулу наряду с Minoxidil и Finasteride.',
+          fr: "Un mélange d'actifs fourni par un tiers, intégré aux côtés du Minoxidil et du Finasteride dans cette formule.",
+          es: 'Una mezcla de activos de un proveedor externo, incluida junto con Minoxidil y Finasteride en esta fórmula.',
         }),
         'requires-review',
         'supplier-reference',
+        '0.8%',
+      ),
+      ING(
+        'Retinol',
+        L6({
+          en: 'A vitamin A derivative commonly used in scalp and skin formulas.',
+          he: 'נגזרת של ויטמין A, בשימוש נפוץ בפורמולות לקרקפת ולעור.',
+          ar: 'مشتق من فيتامين A، يُستخدم بشكل شائع في تركيبات فروة الرأس والبشرة.',
+          ru: 'Производное витамина A, часто применяемое в формулах для кожи головы и кожи.',
+          fr: 'Un dérivé de vitamine A couramment utilisé dans les formules pour le cuir chevelu et la peau.',
+          es: 'Un derivado de la vitamina A de uso habitual en fórmulas para el cuero cabelludo y la piel.',
+        }),
+        'working',
+        'ingredient-literature',
+        '0.025%',
+      ),
+      ING(
+        'Caffeine',
+        L6({
+          en: 'A common scalp-topical ingredient.',
+          he: 'רכיב נפוץ בתכשירים מקומיים לקרקפת.',
+          ar: 'مكوّن شائع في المستحضرات الموضعية لفروة الرأس.',
+          ru: 'Распространённый компонент топических средств для кожи головы.',
+          fr: 'Un ingrédient courant des soins topiques pour cuir chevelu.',
+          es: 'Un ingrediente habitual en los tratamientos tópicos para el cuero cabelludo.',
+        }),
+        'working',
+        'ingredient-literature',
+        '0.001%',
       ),
     ],
-    usage: L6({
-      en: 'Directions are set individually at treatment review; this concept is not self-selected.',
-      he: 'ההנחיות נקבעות אישית בבדיקת הטיפול; קונספט זה אינו נבחר עצמאית.',
-      ar: 'تُحدَّد التوجيهات بشكل فردي في فحص العلاج؛ ولا يُختار هذا المفهوم ذاتيًا.',
-      ru: 'Указания устанавливаются индивидуально при осмотре перед лечением; эта концепция не выбирается самостоятельно.',
-      fr: "Les indications sont établies individuellement lors du bilan de traitement ; ce concept n'est pas sélectionné de façon autonome.",
-      es: 'Las indicaciones se establecen de forma individual en la evaluación del tratamiento; este concepto no se selecciona de forma autónoma.',
-    }),
-    safety: L6({
-      en: 'Intensive prescription-strength concept. Available only where a clinician review supports it. Not for use in pregnancy or while breastfeeding.',
-      he: 'קונספט אינטנסיבי בעוצמת מרשם. זמין רק כאשר בדיקת רופא תומכת בכך. אין להשתמש בהיריון או בהנקה.',
-      ar: 'مفهوم مكثف بتركيز يستلزم وصفة طبية. متاح فقط عندما يدعم ذلك فحص طبي. لا يُستخدم أثناء الحمل أو الرضاعة الطبيعية.',
-      ru: 'Интенсивная концепция рецептурной силы действия. Доступна только при подтверждении врачебным осмотром. Не применять при беременности и в период грудного вскармливания.',
-      fr: "Concept intensif de force prescriptible. Disponible uniquement lorsqu'un bilan médical le confirme. Ne pas utiliser pendant la grossesse ou l'allaitement.",
-      es: 'Concepto intensivo de concentración con receta. Disponible solo cuando una evaluación médica lo respalda. No usar durante el embarazo ni la lactancia.',
-    }),
+    fullIngredientList: [
+      'Minoxidil 15%',
+      'Finasteride 0.1%',
+      'Azelaic Acid 5%',
+      'ABN Complex™ 0.8%',
+      'Retinol 0.025%',
+      'Caffeine 0.001%',
+      'Aloe Vera Gel',
+      'Ethanol (Alcohol)',
+      'Propylene Glycol',
+      'Water',
+    ],
+    usage: TOPICAL_USAGE,
+    safety: TOPICAL_CAUTIONS,
+    storage: TOPICAL_STORAGE,
+    badges: DENSITY_BADGES,
     requiresMedicalReview: true,
     packagingThemed: true,
     relatedProducts: ['density-6', 'density-10', 'regrowth-shampoo'],
@@ -450,6 +573,7 @@ export const PRODUCTS: Product[] = [
         }),
         'requires-review',
         'supplier-reference',
+        '2%',
       ),
       ING(
         'Darkenyl™',
@@ -463,6 +587,7 @@ export const PRODUCTS: Product[] = [
         }),
         'requires-review',
         'supplier-reference',
+        '1%',
       ),
       ING(
         'Capixyl™',
@@ -476,6 +601,7 @@ export const PRODUCTS: Product[] = [
         }),
         'requires-review',
         'supplier-reference',
+        '2%',
       ),
       ING(
         'Green Tea',
@@ -532,23 +658,95 @@ export const PRODUCTS: Product[] = [
           es: 'Una planta utilizada en fórmulas para el cuidado del cuero cabelludo.',
         }),
       ),
+      ING(
+        'Biotin',
+        L6({
+          en: 'A B-vitamin commonly included in hair supplements.',
+          he: 'ויטמין B הנפוץ בתוספי שיער.',
+          ar: 'فيتامين B شائع الإدراج في مكمّلات الشعر.',
+          ru: 'Витамин группы B, часто входящий в состав добавок для волос.',
+          fr: 'Une vitamine B couramment intégrée aux compléments pour cheveux.',
+          es: 'Una vitamina B habitualmente incluida en los suplementos para el cabello.',
+        }),
+      ),
+      ING(
+        'Red Clover Extract',
+        L6({
+          en: 'A botanical extract used in scalp-care formulas.',
+          he: 'תמצית צמחית בשימוש בפורמולות לטיפוח קרקפת.',
+          ar: 'مستخلص نباتي يُستخدم في تركيبات العناية بفروة الرأس.',
+          ru: 'Растительный экстракт, используемый в формулах для ухода за кожей головы.',
+          fr: 'Un extrait botanique utilisé dans les formules de soin du cuir chevelu.',
+          es: 'Un extracto botánico utilizado en fórmulas para el cuidado del cuero cabelludo.',
+        }),
+      ),
+      ING(
+        'Zinc',
+        L6({
+          en: 'A mineral that contributes to normal hair.',
+          he: 'מינרל התורם לשיער תקין.',
+          ar: 'معدن يساهم في الحفاظ على شعر طبيعي وسليم.',
+          ru: 'Минерал, способствующий поддержанию нормального состояния волос.',
+          fr: 'Un minéral qui contribue à des cheveux normaux.',
+          es: 'Un mineral que contribuye a un cabello normal.',
+        }),
+      ),
+      ING(
+        'Canadian Willow Herb',
+        L6({
+          en: 'A botanical extract used in scalp-serum formulas.',
+          he: 'תמצית צמחית בשימוש בפורמולות סרום לקרקפת.',
+          ar: 'مستخلص نباتي يُستخدم في تركيبات أمصال فروة الرأس.',
+          ru: 'Растительный экстракт, используемый в формулах сывороток для кожи головы.',
+          fr: 'Un extrait botanique utilisé dans les formules de sérum pour cuir chevelu.',
+          es: 'Un extracto botánico utilizado en fórmulas de sérum para el cuero cabelludo.',
+        }),
+      ),
+      ING(
+        'Hydrolyzed Wheat Protein',
+        L6({
+          en: 'A conditioning protein used in leave-in formulas.',
+          he: 'חלבון הזנה בשימוש בפורמולות ללא שטיפה.',
+          ar: 'بروتين ترطيب يُستخدم في التركيبات التي تُترك دون شطف.',
+          ru: 'Кондиционирующий белок, используемый в несмываемых формулах.',
+          fr: 'Une protéine conditionnante utilisée dans les formules sans rinçage.',
+          es: 'Una proteína acondicionadora utilizada en fórmulas sin aclarado.',
+        }),
+      ),
+    ],
+    fullIngredientList: [
+      'Greyverse™ 2%',
+      'Darkenyl™ 1%',
+      'Capixyl™ 2%',
+      'Green Tea Leaf Extract',
+      'Panthenol',
+      'Biotin',
+      'Red Clover Extract',
+      'Ginseng',
+      'Fo-Ti Root',
+      'Zinc',
+      'Caffeine',
+      'Canadian Willow Herb',
+      'Hydrolyzed Wheat Protein',
     ],
     usage: L6({
-      en: 'Apply a few drops to the scalp daily and massage in. Do not rinse out.',
-      he: 'למרוח מספר טיפות על הקרקפת מדי יום ולעסות. לא לשטוף.',
-      ar: 'يوضع عدد من القطرات على فروة الرأس يوميًا مع التدليك. لا يُشطف.',
-      ru: 'Ежедневно наносить несколько капель на кожу головы и массировать. Не смывать.',
-      fr: 'Appliquer quelques gouttes sur le cuir chevelu chaque jour et masser. Ne pas rincer.',
-      es: 'Aplicar unas gotas en el cuero cabelludo a diario y masajear. No aclarar.',
+      en: 'Apply once daily directly to the scalp. Part the hair and apply a small amount to areas showing gray or graying hair. Massage gently with your fingertips until absorbed. Use on dry or towel-dried hair. For best results, apply before bed and leave in overnight. Do not rinse.',
+      he: 'למרוח פעם ביום ישירות על הקרקפת. לחלק את השיער ולמרוח כמות קטנה על אזורים בהם מופיע שיער אפור או מאפיר. לעסות בעדינות באצבעות עד לספיגה. להשתמש על שיער יבש או מיובש למחצה במגבת. לתוצאות מיטביות, למרוח לפני השינה ולהשאיר למשך הלילה. לא לשטוף.',
+      ar: 'يُطبَّق مرة واحدة يوميًا مباشرة على فروة الرأس. يُفرَق الشعر وتُوضَع كمية صغيرة على المناطق التي يظهر فيها الشعر الرمادي أو المشيب. يُدلَّك بلطف بأطراف الأصابع حتى الامتصاص. يُستخدم على شعر جاف أو مجفف جزئيًا بالمنشفة. للحصول على أفضل النتائج، يُطبَّق قبل النوم ويُترَك طوال الليل. لا يُشطف.',
+      ru: 'Наносить один раз в день непосредственно на кожу головы. Разделить волосы пробором и нанести небольшое количество на участки с седыми или седеющими волосами. Аккуратно помассировать пальцами до впитывания. Использовать на сухих или подсушенных полотенцем волосах. Для лучшего результата наносить перед сном и оставлять на ночь. Не смывать.',
+      fr: "Appliquer une fois par jour directement sur le cuir chevelu. Séparer les cheveux et appliquer une petite quantité sur les zones présentant des cheveux gris ou grisonnants. Masser délicatement du bout des doigts jusqu'à absorption. Utiliser sur cheveux secs ou séchés à la serviette. Pour de meilleurs résultats, appliquer avant le coucher et laisser poser toute la nuit. Ne pas rincer.",
+      es: 'Aplicar una vez al día directamente sobre el cuero cabelludo. Separar el cabello y aplicar una pequeña cantidad en las zonas con cabello canoso o encaneciendo. Masajear suavemente con los dedos hasta su absorción. Usar sobre cabello seco o secado con toalla. Para mejores resultados, aplicar antes de dormir y dejar actuar toda la noche. No aclarar.',
     }),
     safety: L6({
-      en: 'For external use on the scalp only. Discontinue if irritation occurs.',
-      he: 'לשימוש חיצוני על הקרקפת בלבד. יש להפסיק שימוש אם מופיע גירוי.',
-      ar: 'للاستخدام الخارجي على فروة الرأس فقط. يُوقَف الاستخدام عند ظهور أي تهيّج.',
-      ru: 'Только для наружного применения на коже головы. Прекратить использование при появлении раздражения.',
-      fr: 'Réservé à l’usage externe sur le cuir chevelu. Arrêter en cas d’irritation.',
-      es: 'Solo para uso externo en el cuero cabelludo. Suspender el uso si aparece irritación.',
+      en: 'For external use only. Avoid contact with eyes. Do not apply to broken, irritated, or inflamed skin. Discontinue use if irritation or discomfort occurs. Keep out of reach of children. Do not swallow. If you are pregnant, breastfeeding, have a medical condition, or are taking medication, consult a healthcare professional before use.',
+      he: 'לשימוש חיצוני בלבד. יש להימנע ממגע עם העיניים. אין למרוח על עור פגום, מגורה או דלקתי. יש להפסיק שימוש אם מופיע גירוי או אי-נוחות. יש להרחיק מהישג ידם של ילדים. אין לבלוע. בהיריון, בהנקה, במצב רפואי קיים או בנטילת תרופות, יש להתייעץ עם איש מקצוע רפואי לפני השימוש.',
+      ar: 'للاستخدام الخارجي فقط. يُتجنَّب ملامسة العينين. لا يُوضَع على جلد مصاب أو متهيّج أو ملتهب. يُوقَف الاستخدام عند ظهور تهيّج أو عدم راحة. يُحفَظ بعيدًا عن متناول الأطفال. يُحظر البلع. في حال الحمل أو الرضاعة الطبيعية أو وجود حالة طبية أو تناول أدوية، يُرجى استشارة أخصائي رعاية صحية قبل الاستخدام.',
+      ru: 'Только для наружного применения. Избегать попадания в глаза. Не наносить на повреждённую, раздражённую или воспалённую кожу. Прекратить использование при появлении раздражения или дискомфорта. Хранить в недоступном для детей месте. Не проглатывать. При беременности, грудном вскармливании, наличии заболевания или приёме лекарств проконсультируйтесь с врачом перед использованием.',
+      fr: "Réservé à l'usage externe. Éviter le contact avec les yeux. Ne pas appliquer sur une peau lésée, irritée ou enflammée. Arrêter l'utilisation en cas d'irritation ou d'inconfort. Tenir hors de portée des enfants. Ne pas avaler. En cas de grossesse, d'allaitement, de problème médical ou de prise de médicaments, consulter un professionnel de santé avant utilisation.",
+      es: 'Solo para uso externo. Evitar el contacto con los ojos. No aplicar sobre piel dañada, irritada o inflamada. Suspender el uso si aparece irritación o molestia. Mantener fuera del alcance de los niños. No ingerir. Si está embarazada, en periodo de lactancia, tiene una afección médica o toma medicación, consulte a un profesional de la salud antes de usarlo.',
     }),
+    storage: TOPICAL_STORAGE,
+    badges: ['vegan', 'cruelty-free', 'fragrance-free'],
     requiresMedicalReview: false,
     packagingThemed: true,
     relatedProducts: ['gray-support'],
@@ -687,13 +885,45 @@ export const PRODUCTS: Product[] = [
         }),
       ),
     ],
+    fullIngredientList: [],
+    supplementFacts: {
+      servingSize: '2 Capsules',
+      servingsPerContainer: 30,
+      rows: [
+        { name: 'Vitamin B-6 (as pyridoxine HCl)', amount: '10 mg', dailyValue: '588%' },
+        { name: 'Folate (670 mcg DFE, 400 mcg folic acid)', amount: '670 mcg DFE', dailyValue: '167%' },
+        { name: 'Biotin', amount: '300 mcg', dailyValue: '1,000%' },
+        { name: 'Pantothenic Acid (as d-calcium pantothenate)', amount: '300 mg', dailyValue: '6,000%' },
+        { name: 'Zinc (as zinc oxide)', amount: '10 mg', dailyValue: '91%' },
+        { name: 'Copper (as cupric oxide)', amount: '1 mg', dailyValue: '111%' },
+        { name: 'Catalase Complex', amount: '50 mg', dailyValue: null },
+        { name: 'Horsetail Stem (8% extract)', amount: '100 mg', dailyValue: null },
+        { name: 'Saw Palmetto Berries (45% extract)', amount: '300 mg', dailyValue: null },
+        { name: 'PABA (para-Aminobenzoic Acid)', amount: '200 mg', dailyValue: null },
+        { name: 'L-Tyrosine', amount: '200 mg', dailyValue: null },
+        { name: 'Plant Sterols (45% beta-sitosterol)', amount: '100 mg', dailyValue: null },
+        { name: 'Nettle Root 4:1 Extract', amount: '100 mg', dailyValue: null },
+        { name: 'Chlorella Extract (2% chlorophyll)', amount: '20 mg', dailyValue: null },
+        { name: 'Fo-Ti Root Powder', amount: '20 mg', dailyValue: null },
+        { name: 'Barley Grass Juice Powder', amount: '20 mg', dailyValue: null },
+      ],
+      otherIngredients: 'Gelatin (bovine), vegetable magnesium stearate, and silicon dioxide.',
+      allergenWarning: L6({
+        en: 'Contains soy and wheat (barley grass).',
+        he: 'מכיל סויה וחיטה (עשב שעורה).',
+        ar: 'يحتوي على الصويا والقمح (عشب الشعير).',
+        ru: 'Содержит сою и пшеницу (ячменная трава).',
+        fr: "Contient du soja et du blé (herbe d'orge).",
+        es: 'Contiene soja y trigo (hierba de cebada).',
+      }),
+    },
     usage: L6({
-      en: 'Take one capsule daily with food, or as directed on the label.',
-      he: 'ליטול קפסולה אחת ביום עם אוכל, או לפי ההנחיות על התווית.',
-      ar: 'تؤخذ كبسولة واحدة يوميًا مع الطعام، أو حسب التوجيهات الموضحة على الملصق.',
-      ru: 'Принимать одну капсулу в день во время еды или согласно указаниям на этикетке.',
-      fr: 'Prendre une gélule par jour avec un repas, ou selon les indications figurant sur l’étiquette.',
-      es: 'Tomar una cápsula al día con la comida, o según las indicaciones de la etiqueta.',
+      en: 'Take 2 capsules daily with water and a meal if preferred, or as directed by a healthcare professional.',
+      he: 'ליטול 2 קפסולות ביום עם מים וארוחה, אם רוצים, או לפי הנחיית איש מקצוע רפואי.',
+      ar: 'تؤخذ كبسولتان يوميًا مع الماء ووجبة إن أمكن، أو حسب توجيه أخصائي رعاية صحية.',
+      ru: 'Принимать 2 капсулы в день, запивая водой, желательно во время еды, или по указанию врача.',
+      fr: "Prendre 2 gélules par jour avec de l'eau et, si possible, au cours d'un repas, ou selon les indications d'un professionnel de santé.",
+      es: 'Tomar 2 cápsulas al día con agua y, si se prefiere, con una comida, o según las indicaciones de un profesional de la salud.',
     }),
     safety: L6({
       en: 'A food supplement, not a medicine. Do not exceed the stated dose. Speak to a doctor if you are pregnant, breastfeeding, or on medication.',
@@ -703,6 +933,7 @@ export const PRODUCTS: Product[] = [
       fr: "Un complément alimentaire, pas un médicament. Ne pas dépasser la dose indiquée. Consultez un médecin en cas de grossesse, d'allaitement ou de traitement médicamenteux.",
       es: 'Un suplemento alimenticio, no un medicamento. No superar la dosis indicada. Consulte a un médico si está embarazada, en periodo de lactancia o tomando medicación.',
     }),
+    badges: [],
     requiresMedicalReview: false,
     packagingThemed: true,
     relatedProducts: ['gray-serum'],
@@ -841,22 +1072,59 @@ export const PRODUCTS: Product[] = [
         }),
       ),
     ],
+    fullIngredientList: [
+      'Water (Aqua)',
+      'Lavandula Officinalis (Organic Lavender) Water',
+      'Rosmarinus Officinalis (Organic Rosemary) Water',
+      'Equisetum Arvense (Organic Horsetail Plant) Extract',
+      'Urtica Dioica (Organic Nettle) Leaf Extract',
+      'Salvia Officinalis (Organic Sage) Extract',
+      'Panax Ginseng (Organic Korean Ginseng) Extract',
+      'Calendula Officinalis (Organic Calendula) Extract',
+      'Olea Europaea (Organic Olive) Oil',
+      'Camellia Oleifera (Organic Camellia) Leaf Extract',
+      'Simmondsia Chinensis (Jojoba Oil)',
+      'Laminaria Digitata (Seaweed) Extract',
+      'Decyl Polyglucose',
+      'Coco Glucoside',
+      'Cocamidopropyl Betaine',
+      'Xanthan Gum',
+      'Vegetable Glycerin',
+      'Biotin',
+      'Cannabis Sativa (Organic Hemp) Seed Oil',
+      'Panthenol (ProVitamin B5)',
+      'Hydrolyzed Rice Protein',
+      'Inositol',
+      'Cystine',
+      'Cysteine',
+      'Methionine',
+      'Sodium Benzoate',
+      'Benzoic Acid',
+      'Vitamin D',
+      'Citric Acid',
+      'Benzyl Alcohol',
+      'Salicylic Acid',
+      'Glycerin',
+      'Sorbic Acid',
+    ],
     usage: L6({
-      en: 'Massage into a wet scalp, leave for a minute, then rinse. Use daily.',
-      he: 'לעסות על קרקפת רטובה, להשאיר כדקה ולשטוף. לשימוש יומי.',
-      ar: 'يُدلَّك على فروة رأس مبللة، ويُترك لمدة دقيقة تقريبًا، ثم يُشطف. للاستخدام اليومي.',
-      ru: 'Массировать на влажную кожу головы, оставить примерно на минуту, затем смыть. Использовать ежедневно.',
-      fr: 'Masser sur cuir chevelu mouillé, laisser poser environ une minute, puis rincer. Usage quotidien.',
-      es: 'Masajear sobre el cuero cabelludo húmedo, dejar actuar un minuto y aclarar. Uso diario.',
+      en: 'Apply a generous amount to wet hair. Massage gently into the scalp and through the lengths to create a rich lather. Rinse thoroughly with warm water. Repeat if desired. Follow with conditioner.',
+      he: 'למרוח כמות נדיבה על שיער רטוב. לעסות בעדינות בקרקפת ולאורך השיער עד להיווצרות קצף עשיר. לשטוף היטב במים פושרים. לחזור אם רוצים. להמשיך עם מרכך.',
+      ar: 'تُوضَع كمية وافرة على الشعر المبلل. يُدلَّك برفق على فروة الرأس وعلى طول الشعر حتى تكوين رغوة غنية. يُشطف جيدًا بماء دافئ. يمكن التكرار عند الرغبة. يُستكمَل باستخدام بلسم.',
+      ru: 'Нанести щедрое количество на влажные волосы. Аккуратно помассировать кожу головы и распределить по длине волос до образования густой пены. Тщательно смыть тёплой водой. При желании повторить. Затем нанести кондиционер.',
+      fr: 'Appliquer une quantité généreuse sur cheveux mouillés. Masser délicatement le cuir chevelu et répartir sur les longueurs pour créer une mousse riche. Rincer abondamment à l’eau tiède. Répéter si besoin. Terminer avec un après-shampooing.',
+      es: 'Aplicar una cantidad generosa sobre el cabello mojado. Masajear suavemente el cuero cabelludo y a lo largo del cabello hasta formar una espuma rica. Aclarar bien con agua tibia. Repetir si se desea. Continuar con acondicionador.',
     }),
     safety: L6({
-      en: 'For external use on the scalp and hair only. Avoid contact with the eyes.',
-      he: 'לשימוש חיצוני על הקרקפת והשיער בלבד. יש להימנע ממגע עם העיניים.',
-      ar: 'للاستخدام الخارجي على فروة الرأس والشعر فقط. يُنصح بتجنّب ملامسة العينين.',
-      ru: 'Только для наружного применения на коже головы и волосах. Избегать попадания в глаза.',
-      fr: 'Réservé à l’usage externe sur le cuir chevelu et les cheveux. Éviter le contact avec les yeux.',
-      es: 'Solo para uso externo en el cuero cabelludo y el cabello. Evitar el contacto con los ojos.',
+      en: 'For external use only. Avoid contact with eyes. If contact occurs, rinse thoroughly with water. Discontinue use if irritation occurs. Keep out of reach of children.',
+      he: 'לשימוש חיצוני בלבד. יש להימנע ממגע עם העיניים. במקרה של מגע, יש לשטוף היטב במים. יש להפסיק שימוש אם מופיע גירוי. יש להרחיק מהישג ידם של ילדים.',
+      ar: 'للاستخدام الخارجي فقط. يُتجنَّب ملامسة العينين. في حال ملامسة العينين، يُشطف جيدًا بالماء. يُوقَف الاستخدام عند ظهور أي تهيّج. يُحفَظ بعيدًا عن متناول الأطفال.',
+      ru: 'Только для наружного применения. Избегать попадания в глаза. При попадании в глаза тщательно промыть водой. Прекратить использование при появлении раздражения. Хранить в недоступном для детей месте.',
+      fr: "Réservé à l'usage externe. Éviter le contact avec les yeux. En cas de contact, rincer abondamment à l'eau. Arrêter l'utilisation en cas d'irritation. Tenir hors de portée des enfants.",
+      es: 'Solo para uso externo. Evitar el contacto con los ojos. Si ocurre contacto, aclarar bien con agua. Suspender el uso si aparece irritación. Mantener fuera del alcance de los niños.',
     }),
+    storage: TOPICAL_STORAGE,
+    badges: ['paraben-free', 'sulfate-free', 'cruelty-free'],
     requiresMedicalReview: false,
     packagingThemed: true,
     relatedProducts: ['density-6', 'density-10', 'density-15'],

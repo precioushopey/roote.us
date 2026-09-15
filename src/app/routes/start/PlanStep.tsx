@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { buildReport } from '@/domain/report/buildReport';
-import { recommend } from '@/domain/recommendation/recommend';
 import { rooteContent } from '@/content/roote.config';
 import { isPending } from '@/content/pending';
 import { pickLocalized } from '@/content/localized';
@@ -31,20 +30,6 @@ export function PlanStep() {
       reportId: session.reportId,
     });
   }, [session.diagnosis, session.analysis, session.reportId, locale]);
-
-  const rec = useMemo(() => {
-    if (!session.analysis || !session.diagnosis.gender) return null;
-    return recommend({
-      hairGoal: session.diagnosis.hairGoal ?? 'other',
-      gender: session.diagnosis.gender,
-      scale: session.analysis.scale,
-      stage: session.analysis.stage,
-      severityBand: session.analysis.severityBand,
-      planEmphasis: session.analysis.planEmphasis,
-      progression: session.diagnosis.answers.q13_progression ?? 'gradual',
-      recommendedDurationDays: session.analysis.recommendedDurationDays,
-    });
-  }, [session.analysis, session.diagnosis.hairGoal, session.diagnosis.gender, session.diagnosis.answers.q13_progression]);
 
   const [selected, setSelected] = useState<ProgramDurationDays | null>(
     session.draftDurationDays ?? (model ? (model.recommendedDuration.days as ProgramDurationDays) : null),

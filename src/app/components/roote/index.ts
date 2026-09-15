@@ -10,7 +10,8 @@
 export { Button, IconButton, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
 export { RouteFade } from './RouteFade';
 export { Card, GlassCard } from './Surface';
-export { Eyebrow, DisplayTitle, Prose, TextLink, renderWithEmphasis } from './Text';
+export { Eyebrow, DisplayTitle, Prose, TextLink } from './Text';
+export { renderWithEmphasis } from './renderWithEmphasis';
 export { Badge, Pill, type BadgeTone } from './Badge';
 export { Stat } from './Stat';
 export { Section } from './Section';

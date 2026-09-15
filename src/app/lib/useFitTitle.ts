@@ -26,7 +26,7 @@ export function useFitTitle<T extends HTMLElement>(maxLines: number) {
     const fit = () => {
       let scale = 1;
       el.style.setProperty(FIT_TITLE_VAR, String(scale));
-      el.offsetHeight; // flush the reset before measuring
+      void el.offsetHeight; // flush the reset before measuring
 
       for (let i = 0; i < 20 && scale > MIN_SCALE; i++) {
         const style = getComputedStyle(el);
@@ -38,7 +38,7 @@ export function useFitTitle<T extends HTMLElement>(maxLines: number) {
         if (lines <= maxLines) break;
         scale = Math.max(MIN_SCALE, scale - SCALE_STEP);
         el.style.setProperty(FIT_TITLE_VAR, String(scale));
-        el.offsetHeight;
+        void el.offsetHeight;
       }
     };
 
