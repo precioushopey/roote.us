@@ -944,8 +944,8 @@ export const es: Partial<Record<MessageKey, string>> = {
 
   'analysis.pattern.title': '¿Qué imagen se parece más a su patrón capilar actual?',
 
-  'analysis.photos.title': 'Fotos guiadas',
-  'analysis.photos.body': 'Cuatro fotos desde su teléfono: frente, parte superior, coronilla y línea del cabello. Cada paso muestra un contorno y un ejemplo.',
+  'analysis.photos.title': 'Sus fotos de referencia',
+  'analysis.photos.body': 'Cuatro fotos desde su teléfono: frente, parte superior, coronilla y línea del cabello. Estas se convierten en su registro de referencia para hacer seguimiento del progreso con el tiempo — sus respuestas al cuestionario, no estas fotos, son las que determinan la recomendación de hoy.',
   'analysis.photos.needConsent': 'Acepte el consentimiento de fotos anterior para continuar.',
   'analysis.photos.needAll': '{have} de {total} fotos añadidas. Añada los cuatro ángulos para continuar.',
 

@@ -985,8 +985,8 @@ export const en = {
 
   'analysis.pattern.title': 'Which image looks most similar to your current hair pattern?',
 
-  'analysis.photos.title': 'Guided photos',
-  'analysis.photos.body': 'Four photos from your phone: front, top, crown, and hairline. Each step shows an outline and an example.',
+  'analysis.photos.title': 'Your baseline photos',
+  'analysis.photos.body': 'Four photos from your phone: front, top, crown, and hairline. These become your baseline record for tracking progress over time — your questionnaire answers, not these photos, drive today’s recommendation.',
   'analysis.photos.needConsent': 'Agree to the photo consent above to continue.',
   'analysis.photos.needAll': '{have} of {total} photos added. Add all four angles to continue.',
 

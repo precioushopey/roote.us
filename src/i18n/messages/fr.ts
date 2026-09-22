@@ -179,9 +179,9 @@ export const fr: Partial<Record<MessageKey, string>> = {
 
   'analysis.pattern.title': 'Quelle image ressemble le plus à votre motif capillaire actuel ?',
 
-  'analysis.photos.title': 'Photos guidées',
+  'analysis.photos.title': 'Vos photos de référence',
   'analysis.photos.body':
-    "Quatre photos prises avec votre téléphone : face, dessus, vertex et ligne d'implantation. Chaque étape affiche un contour et un exemple.",
+    'Quatre photos prises avec votre téléphone : face, dessus, vertex et ligne d\'implantation. Elles deviennent votre enregistrement de référence pour suivre l\'évolution dans le temps — ce sont vos réponses au questionnaire, et non ces photos, qui déterminent la recommandation d\'aujourd\'hui.',
   'analysis.photos.needConsent': 'Acceptez le consentement relatif aux photos ci-dessus pour continuer.',
   'analysis.photos.needAll': '{have} photo(s) sur {total} ajoutée(s). Ajoutez les quatre angles pour continuer.',
 
