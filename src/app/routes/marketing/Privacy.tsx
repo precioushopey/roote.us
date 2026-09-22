@@ -3,7 +3,7 @@ import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
 import { Section, Prose, SectionIntro, Button, Hero } from '@/app/components/roote';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import { COOKIES_META, getLegalBody } from '@/content/legal';
 import { pickLocalized } from '@/content/localized';
 
@@ -30,7 +30,7 @@ export function Privacy() {
           </p>
         }
         cta={
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+          <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         }

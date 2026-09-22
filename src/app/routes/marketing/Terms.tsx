@@ -1,9 +1,9 @@
-import { useT, useLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import type { MessageKey } from '@/i18n/messages';
 import { rooteContent } from '@/content/roote.config';
 import { Section, Prose, SectionIntro, Button, Hero } from '@/app/components/roote';
 import { CompanyDetails } from '@/app/components/marketing/CompanyDetails';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import { ACCESSIBILITY_META, getLegalBody } from '@/content/legal';
 import { pickLocalized } from '@/content/localized';
 
@@ -34,6 +34,7 @@ function Clause({ n, title, body }: { n: number; title: React.ReactNode; body: R
 export function Terms() {
   const t = useT();
   const cl = useLocale().locale;
+  const withLocale = useLocalizedPath();
   const accessibilitySections = getLegalBody('accessibility');
 
   return (
@@ -46,7 +47,7 @@ export function Terms() {
           </p>
         }
         cta={
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+          <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         }

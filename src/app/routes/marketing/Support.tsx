@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useT } from '@/i18n/LocaleProvider';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Section, Prose, SectionIntro, Button, Hero } from '@/app/components/roote';
 import { rooteContent } from '@/content/roote.config';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 
 const FIELD_CLASS =
   'rounded-md border border-input bg-input-background px-3 py-2 text-sm outline-none focus:border-accent';
@@ -53,6 +53,7 @@ function ContactForm() {
 
 export function Support() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const { company } = rooteContent;
   return (
     <>
@@ -60,7 +61,7 @@ export function Support() {
         title={t('marketing.support.hero.title')}
         body={t('marketing.support.hero.body')}
         cta={
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+          <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         }

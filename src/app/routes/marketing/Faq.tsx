@@ -1,19 +1,20 @@
-import { useT, useLocale } from '@/i18n/LocaleProvider';
+import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Section, Button, Accordion, Hero, CtaSection } from '@/app/components/roote';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { HOME_FAQS } from '@/content/faqs';
 
 export function Faq() {
   const t = useT();
   const cl = useLocale().locale;
+  const withLocale = useLocalizedPath();
   return (
     <>
       <Hero
         title={t('marketing.faq.hero.title')}
         body={t('marketing.faq.hero.body')}
         cta={
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+          <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         }
