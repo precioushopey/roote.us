@@ -15,7 +15,7 @@ import {
   renderWithEmphasis,
   ScanMesh,
 } from '@/app/components/roote';
-import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getProduct } from '@/content/products';
 import { getSolution } from '@/content/solutions';
@@ -58,12 +58,13 @@ const SYSTEM_STEP_PHOTOS: Record<string, string> = {
 function HomeHero() {
   const t = useT();
   const cl = useLocale().locale;
+  const withLocale = useLocalizedPath();
   return (
     <Hero
       title={renderWithEmphasis(pickLocalized(brandLines.headline, cl))}
       body={t('marketing.home.hero.support')}
       cta={
-        <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+        <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
           {t('marketing.nav.cta')}
         </Button>
       }
@@ -155,8 +156,7 @@ function Concern() {
               key={c.value}
               title={pickLocalized(c.title, cl)}
               description={pickLocalized(c.description, cl)}
-              to={EXTERNAL_ASSESSMENT_URL}
-              external
+              to={withLocale(PATHS.analysis)}
               mediaAlt={media[c.value]}
               mediaLabel={`${pickLocalized(c.title, cl)}: clinical crop, no face`}
               image={images[c.value]}
