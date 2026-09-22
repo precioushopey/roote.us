@@ -1,6 +1,6 @@
 import { Section, DisplayTitle, Prose, Eyebrow, Button } from '@/app/components/roote';
-import { useT } from '@/i18n/LocaleProvider';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { PATHS } from '@/app/paths';
 
 /**
  * Branded stand-in for a route whose full build lands in a later work package.
@@ -19,6 +19,7 @@ export function PagePlaceholder({
   wp?: string;
 }) {
   const t = useT();
+  const withLocale = useLocalizedPath();
   return (
     <Section tone="cream" width="readable">
       <div className="flex flex-col items-center gap-4 py-10 text-center">
@@ -32,7 +33,7 @@ export function PagePlaceholder({
             Full build: {wp}
           </p>
         ) : null}
-        <Button to={EXTERNAL_ASSESSMENT_URL} external caps>
+        <Button to={withLocale(PATHS.analysis)} caps>
           {t('marketing.nav.cta')}
         </Button>
       </div>
