@@ -7,7 +7,7 @@ import { Wordmark } from '@/app/components/brand/Wordmark';
 import { Button, Drawer, IconButton, LanguagePicker } from '@/app/components/roote';
 import { CartLink } from '@/app/components/shell/CartLink';
 import { cn } from '@/app/components/ui/utils';
-import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import type { MessageKey } from '@/i18n/messages';
 import { useCart } from '@/store/cart';
 
@@ -96,8 +96,7 @@ export function Header() {
             <CartLink label={t('cart.open')} count={cart.count} />
           </div>
           <Button
-            to={EXTERNAL_ASSESSMENT_URL}
-            external
+            to={withLocale(PATHS.analysis)}
             caps
             variant={condensed ? 'primary' : 'secondary'}
             className="hidden min-w-0 sm:inline-flex text-sm"
@@ -129,7 +128,7 @@ export function Header() {
         </nav>
         <div className="mt-6 border-t border-border pt-6">
           <LanguagePicker locale={locale} onChange={setLocale} />
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps block variant="secondary" className="mt-4 text-xs" onClick={() => setMenuOpen(false)}>
+          <Button to={withLocale(PATHS.analysis)} caps block variant="secondary" className="mt-4 text-xs" onClick={() => setMenuOpen(false)}>
             {t('marketing.nav.cta')}
           </Button>
         </div>

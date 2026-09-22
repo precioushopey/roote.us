@@ -9,7 +9,7 @@ import { CONCERN_OPTIONS } from '@/content/assessment';
 import { pickLocalized } from '@/content/localized';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { Button, LanguagePicker } from '@/app/components/roote';
-import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 
 type Col = { title: MessageKey; links: Array<[to: string, label: MessageKey]> };
 
@@ -177,7 +177,7 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-            <Button to={EXTERNAL_ASSESSMENT_URL} external caps variant="secondary" className="mt-6">
+            <Button to={withLocale(PATHS.analysis)} caps variant="secondary" className="mt-6">
               {t('marketing.footer.cta')}
             </Button>
             {socialLinks.length > 0 && (
