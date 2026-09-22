@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useAuth } from '@/store/auth';
 import { useSession } from '@/store/sessionStore';
 import { funnelField, funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import heroImage from '@/assets/heroes/Hero.png';
 
 const ERROR_KEYS: Record<string, string> = {
@@ -68,9 +69,9 @@ export function LoginPage() {
         </form>
         <p className="text-sm text-muted-foreground">
           {t('auth.login.noAccount')}{' '}
-          <a href={EXTERNAL_ASSESSMENT_URL} target="_blank" rel="noopener noreferrer" className="text-accent underline">
+          <Link to={withLocale(PATHS.analysis)} className="text-accent underline">
             {t('auth.login.startCta')}
-          </a>
+          </Link>
         </p>
       </div>
     </div>
