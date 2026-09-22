@@ -16,9 +16,11 @@ declare global {
  * which is not connected to ROOTÉ's own `/analysis` flow or session state. The marketing
  * `/hair-scan` page previously embedded a second instance of this widget for anonymous
  * lead-gen (`VITE_LANDBOT_CONFIG_URL`); as of 2026-09-09 that page is a static explainer
- * instead (`HairScan.tsx`) and no longer reads that env var — every "Start free hair
- * analysis" CTA already routes to `EXTERNAL_ASSESSMENT_URL`, HairHealth.ai's own hosted
- * quiz, so an embed on this page would have been a redundant second entry point.
+ * instead (`HairScan.tsx`), which keeps its own CTA pointing at HairHealth.ai's hosted
+ * quiz (`EXTERNAL_ASSESSMENT_URL`) — every OTHER "Start free hair analysis" CTA across
+ * the site was reconnected to ROOTÉ's own `/analysis` flow on 2026-09-22 (see
+ * docs/superpowers/specs/2026-09-22-quiz-redesign-design.md); this embed component
+ * itself is unaffected either way, since it isn't mounted anywhere today.
  *
  * Renders `placeholder` until a non-empty `configUrl` is passed in — the caller owns
  * reading its own env var so each surface can be configured (or left unconfigured)
