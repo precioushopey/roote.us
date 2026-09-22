@@ -180,7 +180,7 @@ export function AppProfile() {
                     <span className="flex flex-col">
                       <span className="tabular-nums" dir="ltr">{o.id}</span>
                       <span className="text-sm text-muted-foreground">
-                        {t('app.profile.orders.program')} · {o.label}
+                        {t(o.kind === 'program' ? 'app.profile.orders.program' : 'app.profile.orders.bag')} · {o.label}
                       </span>
                     </span>
                     <span className="shrink-0 text-sm text-muted-foreground">
