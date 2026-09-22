@@ -34,12 +34,40 @@ export type ProgressionPattern = 'gradual' | 'sudden' | 'patchy' | 'unsure';
  */
 export type HealthCondition = 'thyroid' | 'anemia' | 'autoimmune' | 'cancer' | 'glp1' | 'none';
 
+export type AgeRange = '18_29' | '30_44' | '45_64' | '65_plus';
+export type HairTexture = 'straight' | 'wavy' | 'curly' | 'coily';
+export type StressLevel = 'mostly_peaceful' | 'moderately_stressed' | 'very_stressed';
+export type VegetableIntake = 'usually_none' | 'one_two' | 'three_plus';
+export type GrayHairLevel = 'none' | 'few' | 'about_half' | 'mostly_all';
+
 export type Answers = {
   q1_area: 'hairline' | 'crown' | 'entire-scalp';
   q2_onset: OnsetBucket;
   q3_prior: 'never' | 'no-success' | 'partial';
   q4_family: 'yes' | 'no' | 'not-sure';
   q13_progression: ProgressionPattern;
+  /** v3.1 §3 Step 2 — profile context only. */
+  age_range?: AgeRange;
+  /** v3.1 §3 Step 3 — profile context only. */
+  previous_hair_products?: boolean;
+  /** v3.1 §3 Step 3A — only asked when `previous_hair_products` is true. */
+  satisfied_previous_products?: boolean;
+  /** v3.1 §3 Step 5 — image-selected pattern code. Only asked when Hair Goal =
+   *  Hair Growth; when present, `deriveAnalysis` uses it directly for `stage`
+   *  instead of `q1_area` (design spec §10.1). `PatternCode` lives in
+   *  `domain/recommendation/types.ts` — imported via `import type` only, to
+   *  avoid a runtime dependency from `domain/analysis` on `domain/recommendation`. */
+  hair_pattern_id?: import('@/domain/recommendation/types').PatternCode;
+  /** v3.1 §3 Step 6 — profile context only. */
+  hair_texture?: HairTexture;
+  /** v3.1 §3 Step 8 — profile context only. */
+  stress_level?: StressLevel;
+  /** v3.1 §3 Step 9 — profile context only. */
+  vegetable_intake?: VegetableIntake;
+  /** v3.1 §3 Step 10 — profile context only; not the same as `HairGoal =
+   *  'slow-graying'`, which is what actually drives the Anti-Gray Capsules
+   *  recommendation. */
+  gray_hair_level?: GrayHairLevel;
 };
 
 export type HairAnalysis = {
