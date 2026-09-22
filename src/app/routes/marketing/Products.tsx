@@ -13,7 +13,9 @@ import {
   Hero,
   CtaSection,
   renderWithEmphasis,
+  useToast,
 } from '@/app/components/roote';
+import { useCart } from '@/store/cart';
 import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { PRODUCTS, type Product } from '@/content/products';
@@ -54,8 +56,10 @@ function matches(p: Product, f: Filter) {
 const OUTLINE_CTA_CLASS =
   'inline-flex w-full items-center justify-center rounded-full border border-accent px-4 py-2.5 font-body text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
 
-/* Every product and bundle is assessment-gated — no self-serve add-to-bag.
-   Point people at the free hair analysis instead of a buy button. */
+/* 2026-09-22: individual products now get a direct "Add to Cart" button
+   (below, in `Products()`) instead of this — per-product purchase no longer
+   requires the assessment. This CTA now only survives for the (currently
+   hidden) BundleSection/BundleCard, which hasn't been revisited yet. */
 function FindYourMatchCta() {
   const t = useT();
   const withLocale = useLocalizedPath();
@@ -149,14 +153,16 @@ function ShopFinalCta() {
 }
 
 /**
- * The catalogue browse page — every product requires the free assessment
- * first, so there is no self-serve add-to-bag here; each card points to the
- * assessment instead. Prices render as [PENDING].
+ * The catalogue browse page — every product has a direct "Add to Cart"
+ * button (2026-09-22, product-owner request: no need to complete the
+ * assessment before buying). Prices render as [PENDING].
  */
 export function Products() {
   const t = useT();
   const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
+  const cart = useCart();
+  const toast = useToast();
   const [filter, setFilter] = useState<Filter>('all');
   const items = PRODUCTS.filter((p) => matches(p, filter));
 
@@ -207,7 +213,16 @@ export function Products() {
                 mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
-              <FindYourMatchCta />
+              <Button
+                caps
+                className="w-full"
+                onClick={() => {
+                  cart.add(p.slug);
+                  toast.show(t('cart.added'), 'success');
+                }}
+              >
+                {t('cart.add')}
+              </Button>
             </div>
           ))}
         </div>
