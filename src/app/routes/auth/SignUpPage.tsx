@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useAuth } from '@/store/auth';
 import { useSession } from '@/store/sessionStore';
+import { PasswordField } from '@/app/components/roote';
 import { funnelField, funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 import { PATHS } from '@/app/paths';
 
@@ -16,11 +17,10 @@ type SignUpState = { orderId?: string } | null;
 
 /**
  * A standalone signup form — not part of the /program assessment funnel.
- * Reached from BagSuccess's "Track my order" CTA for a guest who checked out
- * via the bag without an account. Order history (store/orders.ts) is a flat,
- * unauthenticated list in this browser's localStorage, so any account
- * created here already "sees" the order that was just placed — no explicit
- * linking step needed, just an account to view it on /account/profile through.
+ * Order history (store/orders.ts) is a flat, unauthenticated list in this
+ * browser's localStorage, so any account created here already "sees" any
+ * order already placed — no explicit linking step needed, just an account
+ * to view it on /account/profile through.
  */
 export function SignUpPage() {
   const t = useT();
@@ -62,12 +62,11 @@ export function SignUpPage() {
         </label>
         <label className="flex flex-col gap-2 text-sm">
           {t('start.account.passwordLabel')}
-          <input
-            type="password"
+          <PasswordField
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={funnelField}
+            inputClassName={funnelField}
           />
         </label>
         {error && <p role="alert" className="text-sm text-destructive">{error}</p>}

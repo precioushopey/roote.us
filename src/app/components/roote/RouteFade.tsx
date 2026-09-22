@@ -9,9 +9,13 @@ import { motion as motionTokens } from '@/styles/tokens';
  * `<Outlet />` at a shell's route boundary. `useOutlet()` (not `<Outlet />`
  * directly) is required: AnimatePresence needs the outgoing element handed to
  * it explicitly so it can keep rendering it during the exit transition.
+ *
+ * `context`, when given, is forwarded exactly like `<Outlet context={...}>`
+ * — the routed screen reads it via `useOutletContext()`. Optional: every
+ * other shell using `RouteFade` omits it and is unaffected.
  */
-export function RouteFade() {
-  const element = useOutlet();
+export function RouteFade({ context }: { context?: unknown } = {}) {
+  const element = useOutlet(context);
   const { pathname } = useLocation();
   const reducedMotion = useReducedMotion();
 

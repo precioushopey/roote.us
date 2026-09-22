@@ -283,7 +283,7 @@ export function LanguagePicker({ locale, onChange, compact = false, className }:
                 dir={meta.dir}
                 onClick={() => pick(code)}
                 className={cn(
-                  'flex w-full items-center justify-between gap-3 px-3 py-2 text-start font-body text-sm',
+                  'flex w-full items-center justify-between gap-4 px-3 py-2 text-start font-body text-sm',
                   isCurrent ? 'text-foreground' : 'text-muted-foreground hover:bg-cream-100 hover:text-foreground',
                 )}
               >

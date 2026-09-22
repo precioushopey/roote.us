@@ -6,6 +6,7 @@
 
 export const PATHS = {
   home: '/',
+  about: '/about',
   solutions: '/solutions',
   solutionThinning: '/solutions/thinning',
   solutionGray: '/solutions/gray-hair',
@@ -15,10 +16,6 @@ export const PATHS = {
 
   products: '/products',
   product: (slug: string) => `/products/${slug}`,
-
-  bag: '/bag',
-  bagCheckout: '/bag/checkout',
-  bagSuccess: '/bag/success',
 
   login: '/login',
   hairScan: '/hair-scan',

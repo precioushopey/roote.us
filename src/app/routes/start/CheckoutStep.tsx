@@ -5,6 +5,7 @@ import { useSession } from '@/store/sessionStore';
 import { buildReport } from '@/domain/report/buildReport';
 import { recommend } from '@/domain/recommendation/recommend';
 import { rooteContent } from '@/content/roote.config';
+import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { isPending } from '@/content/pending';
 import { pickLocalized } from '@/content/localized';
 import { HAIR_GOAL_OPTIONS } from '@/content/assessment';
@@ -32,6 +33,7 @@ export function CheckoutStep() {
       content: rooteContent,
       locale,
       reportId: session.reportId,
+      assets: TREATMENT_PHOTOS,
     });
   }, [session.diagnosis, session.analysis, session.reportId, locale]);
 

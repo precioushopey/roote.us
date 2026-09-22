@@ -1158,7 +1158,7 @@ export function AccountStep() {
   return (
     <div className="mx-auto flex max-w-sm flex-col gap-4">
       <h1 className="text-xl font-medium">{t('start.account.title')}</h1>
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.account.emailLabel')}
           <input
@@ -1372,7 +1372,7 @@ export function PlanStep() {
   }
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-6">
+    <div className="mx-auto flex max-w-2xl flex-col gap-8">
       <div className="rounded-lg border border-accent bg-accent/5 p-4">
         <span className="w-fit rounded-full bg-accent px-3 py-1 text-[11px] font-medium text-accent-foreground">
           {model.plan.matchedToScanBadge}
@@ -1389,7 +1389,7 @@ export function PlanStep() {
         {model.pricing.compareAll.map((row) => (
           <label
             key={row.days}
-            className="flex items-center justify-between gap-3 rounded-lg border border-border p-3 text-sm has-[:checked]:border-accent"
+            className="flex items-center justify-between gap-4 rounded-lg border border-border p-3 text-sm has-[:checked]:border-accent"
           >
             <span className="flex items-center gap-2">
               <input
@@ -1637,7 +1637,7 @@ export function CheckoutStep() {
   }
 
   return (
-    <div className="mx-auto flex max-w-lg flex-col gap-6">
+    <div className="mx-auto flex max-w-lg flex-col gap-8">
       <section className="rounded-lg border border-border p-4">
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-medium">{t('start.checkout.summaryTitle')}</h2>
@@ -1657,7 +1657,7 @@ export function CheckoutStep() {
         </div>
       </section>
 
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <h2 className="text-sm font-medium">{t('start.checkout.contactTitle')}</h2>
         <label className="flex flex-col gap-1 text-sm">
           {t('start.checkout.name')}
@@ -1690,7 +1690,7 @@ export function CheckoutStep() {
           {t('start.checkout.cardNumber')}
           <input required value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />
         </label>
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           <label className="flex flex-1 flex-col gap-1 text-sm">
             {t('start.checkout.expiry')}
             <input required placeholder="MM/YY" value={expiry} onChange={(e) => setExpiry(e.target.value)} className="rounded-md border border-border bg-input-background px-3 py-2" />

@@ -5,6 +5,7 @@ import { useLocale } from '@/i18n/LocaleProvider';
 import { buildReport } from '@/domain/report/buildReport';
 import { recommend } from '@/domain/recommendation/recommend';
 import { rooteContent } from '@/content/roote.config';
+import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { ReportNotFound } from './ReportNotFound';
 import { ReportView } from '@/app/components/report/ReportView';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
@@ -25,6 +26,7 @@ export function ReportPage() {
       content: rooteContent,
       locale,
       reportId: reportId!,
+      assets: TREATMENT_PHOTOS,
     });
   }, [ready, session.diagnosis, session.analysis, locale, reportId]);
 

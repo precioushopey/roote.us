@@ -178,7 +178,7 @@ export function ProgramCard({
       )}
     >
       {tierLabel ? (
-        <span className="absolute -top-3 start-6 rounded-full bg-deep-950 px-3 py-1 font-body text-sm font-semibold uppercase text-cream-100">
+        <span className="absolute -top-3 start-6 rounded-full bg-deep-950 px-3 py-1 font-body text-xs font-semibold uppercase text-cream-100">
           {tierLabel}
         </span>
       ) : null}

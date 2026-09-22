@@ -28,7 +28,7 @@ export const rooteContent = {
     registrationNumber: '201403110138',
     ein: '46-4692938',
     incorporated: 'January 30, 2014', // TODO: confirm display format / HE localization with client
-    legalUpdated: 'September 3, 2026', // "last updated" date shown on the legal pages
+    legalUpdated: 'September 17, 2026', // "last updated" date shown on the legal pages — from the ROOTÉ Master Legal Pack (2026-09-22); Terms & Conditions' own effective date in that pack is Sept 16
     support: {
       email: 'support@roote.us',
       phone: '+1 (310) 651-7283',
@@ -83,22 +83,28 @@ export const rooteContent = {
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-6': {
-      // Generic name only — client instruction: don't depend on a final branded name yet.
-      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ', ar: 'علاج نمو الشعر ROOTÉ', ru: 'ROOTÉ Средство для роста волос', fr: 'ROOTÉ Traitement pour la croissance capillaire', es: 'ROOTÉ Tratamiento para el crecimiento capilar' } as LocalizedText, // TODO: confirm medical HE
+      // 2026-09-22: named to match the actual product label art (src/assets/products/Level 6.png
+      // — "LEVEL 6", Minoxidil 6%, Finasteride 0.3%), which now exists and confirms the level
+      // numbering; supersedes the earlier generic-name-only caution for these three entries.
+      name: { en: 'ROOTÉ Hair Growth Treatment — Level 6', he: 'טיפול לצמיחת שיער ROOTÉ — רמה 6', ar: 'علاج نمو الشعر ROOTÉ — مستوى 6', ru: 'ROOTÉ Средство для роста волос — Уровень 6', fr: 'ROOTÉ Traitement pour la croissance capillaire — Niveau 6', es: 'ROOTÉ Tratamiento para el crecimiento capilar — Nivel 6' } as LocalizedText, // TODO: confirm medical HE
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-10': {
-      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ', ar: 'علاج نمو الشعر ROOTÉ', ru: 'ROOTÉ Средство для роста волос', fr: 'ROOTÉ Traitement pour la croissance capillaire', es: 'ROOTÉ Tratamiento para el crecimiento capilar' } as LocalizedText,
+      // Label: src/assets/products/Level 10.png — "LEVEL 10", Minoxidil 10%, Finasteride 0.1%,
+      // Azelaic Acid 5%, ABN Complex™ 0.8%.
+      name: { en: 'ROOTÉ Hair Growth Treatment — Level 10', he: 'טיפול לצמיחת שיער ROOTÉ — רמה 10', ar: 'علاج نمو الشعر ROOTÉ — مستوى 10', ru: 'ROOTÉ Средство для роста волос — Уровень 10', fr: 'ROOTÉ Traitement pour la croissance capillaire — Niveau 10', es: 'ROOTÉ Tratamiento para el crecimiento capilar — Nivel 10' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-15': {
-      name: { en: 'ROOTÉ Hair Growth Treatment', he: 'טיפול לצמיחת שיער ROOTÉ', ar: 'علاج نمو الشعر ROOTÉ', ru: 'ROOTÉ Средство для роста волос', fr: 'ROOTÉ Traitement pour la croissance capillaire', es: 'ROOTÉ Tratamiento para el crecimiento capilar' } as LocalizedText,
+      // Label: src/assets/products/Level 15.png — "LEVEL 15", Minoxidil 15%, Finasteride 0.1%,
+      // Retinol 0.025%, Caffeine 0.001%.
+      name: { en: 'ROOTÉ Hair Growth Treatment — Level 15', he: 'טיפול לצמיחת שיער ROOTÉ — רמה 15', ar: 'علاج نمو الشعر ROOTÉ — مستوى 15', ru: 'ROOTÉ Средство для роста волос — Уровень 15', fr: 'ROOTÉ Traitement pour la croissance capillaire — Niveau 15', es: 'ROOTÉ Tratamiento para el crecimiento capilar — Nivel 15' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
       frequencyKey: 'frequency.daily-evening',

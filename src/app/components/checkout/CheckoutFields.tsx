@@ -11,11 +11,11 @@ const EXPIRY_RE = /^(0[1-9]|1[0-2])\/\d{2}$/;
 const CVC_RE = /^\d{3,4}$/;
 
 /**
- * The one contact + card-details form shared by the program checkout (`/start/checkout`)
- * and the bag checkout (`/bag/checkout`). It owns its field state and does shape-only
- * card validation; on a valid submit it hands the caller `{ contact, card }` where `card`
- * is the last four digits + expiry only — the full number and CVC never leave this component.
- * Payment-level failures come back via the `error` prop.
+ * The one contact + card-details form used by the program checkout (`/program/checkout`).
+ * It owns its field state and does shape-only card validation; on a valid submit it hands
+ * the caller `{ contact, card }` where `card` is the last four digits + expiry only — the
+ * full number and CVC never leave this component. Payment-level failures come back via the
+ * `error` prop.
  */
 export function CheckoutFields({
   submitting,
@@ -111,7 +111,7 @@ export function CheckoutFields({
       {shown && <p role="alert" className="text-sm text-destructive">{shown}</p>}
       <p className="text-sm text-muted-foreground">
         {t('checkout.termsAgree')}{' '}
-        <Link to={`${withLocale('/terms')}#terms-of-sale`} className="text-accent underline">{t('marketing.footer.termsOfSale')}</Link>.
+        <Link to={withLocale('/terms')} className="text-accent underline">{t('marketing.legal.terms.title')}</Link>.
       </p>
       <button type="submit" disabled={submitting} className={funnelPrimaryBtn}>
         {submitting && <Loader2 aria-hidden className="h-4 w-4 animate-spin" strokeWidth={2} />}

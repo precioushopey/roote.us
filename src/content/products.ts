@@ -68,6 +68,12 @@ export type Product = {
   role: LocalizedText;
   heroCopy: LocalizedText;
   shortDescription: LocalizedText;
+  /** The printed label's descriptive "Overview" paragraph. Omitted (not
+   *  `null`) when the client hasn't supplied a box-label overview for this
+   *  SKU yet — same convention as `storage` below: omit rather than invent. */
+  overview?: LocalizedText;
+  /** The label's benefits panel (the bulleted "FOR MEN"/"FOR WOMEN" list), verbatim, in print order. */
+  keyBenefits: LocalizedText[];
   /**
    * Working formula reference. Shown publicly as ingredient *names* only while
    * `displayFormulaDetail` is false; the numeric reference is available to the
@@ -144,6 +150,35 @@ const TOPICAL_STORAGE: LocalizedText = L6({
 
 const DENSITY_BADGES: ProductBadge[] = ['vegan', 'cruelty-free', 'fragrance-free'];
 
+// Shared across the three Density topical solutions — the printed benefits
+// panel is byte-identical on all three boxes.
+const DENSITY_BENEFITS: LocalizedText[] = [
+  L6({
+    en: 'Helps Enlarge Hair Follicles',
+    he: 'עוזר להגדיל את זקיקי השיער',
+    ar: 'يساعد على تكبير بصيلات الشعر',
+    ru: 'Помогает увеличить волосяные фолликулы',
+    fr: 'Aide à agrandir les follicules pileux',
+    es: 'Ayuda a agrandar los folículos capilares',
+  }),
+  L6({
+    en: 'Promotes Thicker Hair Growth',
+    he: 'מעודד צמיחת שיער עבה יותר',
+    ar: 'يعزز نمو شعر أكثف',
+    ru: 'Способствует росту более густых волос',
+    fr: 'Favorise une croissance plus épaisse des cheveux',
+    es: 'Favorece un crecimiento del cabello más grueso',
+  }),
+  L6({
+    en: 'Strengthens Hair at the Root',
+    he: 'מחזק את השיער מהשורש',
+    ar: 'يقوّي الشعر من الجذور',
+    ru: 'Укрепляет волосы у корней',
+    fr: 'Renforce les cheveux à la racine',
+    es: 'Fortalece el cabello desde la raíz',
+  }),
+];
+
 export const PRODUCTS: Product[] = [
   {
     slug: 'density-6',
@@ -184,6 +219,15 @@ export const PRODUCTS: Product[] = [
       fr: 'Topique pour le cuir chevelu, une à deux fois par jour. Le point de départ du parcours Densité.',
       es: 'Tratamiento tópico para el cuero cabelludo, una o dos veces al día. El punto de partida de la línea de densidad.',
     }),
+    overview: L6({
+      en: 'ROOTÉ Level 6 is a targeted daily scalp treatment formulated with Minoxidil and Finasteride to support hair growth and help address thinning at the root.',
+      he: 'ROOTÉ Level 6 הוא טיפול יומי ממוקד לקרקפת, מבוסס מינוקסידיל ופינסטריד, לתמיכה בצמיחת השיער ולסיוע בטיפול בדילול בשורש השיער.',
+      ar: 'ROOTÉ Level 6 هو علاج يومي مخصص لفروة الرأس، يحتوي على مينوكسيديل وفيناستيرايد، لدعم نمو الشعر والمساعدة في معالجة الترقق عند جذور الشعر.',
+      ru: 'ROOTÉ Level 6 — это целенаправленное ежедневное средство для кожи головы на основе Миноксидила и Финастерида, помогающее поддерживать рост волос и бороться с истончением у корней.',
+      fr: "ROOTÉ Level 6 est un soin quotidien ciblé pour le cuir chevelu, à base de Minoxidil et de Finastéride, conçu pour soutenir la croissance des cheveux et aider à traiter l'amincissement à la racine.",
+      es: 'ROOTÉ Level 6 es un tratamiento diario específico para el cuero cabelludo, formulado con Minoxidil y Finasterida, que ayuda a favorecer el crecimiento del cabello y a tratar el adelgazamiento en la raíz.',
+    }),
+    keyBenefits: DENSITY_BENEFITS,
     formulaReference: L6({
       en: 'Working reference: 6% Minoxidil + 0.3% Finasteride.',
       he: 'התייחסות עבודה: 6% מינוקסידיל + 0.3% פינסטריד.',
@@ -274,6 +318,15 @@ export const PRODUCTS: Product[] = [
       fr: 'Topique pour le cuir chevelu avec un complexe de soutien plus large. Le palier intermédiaire du parcours Densité.',
       es: 'Tratamiento tópico para el cuero cabelludo con un complejo de apoyo más amplio. El nivel intermedio de la línea de densidad.',
     }),
+    overview: L6({
+      en: 'ROOTÉ Level 10 is a multi-active scalp treatment combining Minoxidil, Finasteride, Azelaic Acid, and ABN Complex™ to support hair growth and a healthier scalp environment.',
+      he: 'ROOTÉ Level 10 הוא טיפול קרקפת רב-רכיבי המשלב מינוקסידיל, פינסטריד, חומצה אזלאית ו-ABN Complex™, לתמיכה בצמיחת השיער ולסביבת קרקפת בריאה יותר.',
+      ar: 'ROOTÉ Level 10 هو علاج متعدد الفعاليات لفروة الرأس يجمع بين مينوكسيديل وفيناستيرايد وحمض الأزيليك و ABN Complex™، لدعم نمو الشعر وتحسين بيئة فروة الرأس.',
+      ru: 'ROOTÉ Level 10 — это многокомпонентное средство для кожи головы, сочетающее Миноксидил, Финастерид, азелаиновую кислоту и ABN Complex™, для поддержки роста волос и более здорового состояния кожи головы.',
+      fr: 'ROOTÉ Level 10 est un soin multi-actifs pour le cuir chevelu associant Minoxidil, Finastéride, acide azélaïque et ABN Complex™, pour soutenir la croissance des cheveux et un cuir chevelu plus sain.',
+      es: 'ROOTÉ Level 10 es un tratamiento multiactivo para el cuero cabelludo que combina Minoxidil, Finasterida, ácido azelaico y ABN Complex™, para favorecer el crecimiento del cabello y un cuero cabelludo más sano.',
+    }),
+    keyBenefits: DENSITY_BENEFITS,
     formulaReference: L6({
       en: 'Working reference: 10% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™.',
       he: 'התייחסות עבודה: 10% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית + 0.8% ABN Complex™.',
@@ -401,6 +454,15 @@ export const PRODUCTS: Product[] = [
       fr: 'Le concept topique le plus concentré du parcours Densité. Soumis à un accord médical.',
       es: 'El concepto de tratamiento tópico de mayor concentración de la línea de densidad. Sujeto a aprobación médica.',
     }),
+    overview: L6({
+      en: 'ROOTÉ Level 15 is an advanced multi-active scalp formula combining high-strength Minoxidil with Finasteride, Azelaic Acid, ABN Complex™, Retinol, and Caffeine designed for intensive hair-growth support.',
+      he: 'ROOTÉ Level 15 הוא פורמולת קרקפת רב-רכיבית מתקדמת, המשלבת מינוקסידיל בעוצמה גבוהה עם פינסטריד, חומצה אזלאית, ABN Complex™, רטינול וקפאין, שנועדה לתמיכה אינטנסיבית בצמיחת השיער.',
+      ar: 'ROOTÉ Level 15 هو تركيبة متقدمة ومتعددة الفعاليات لفروة الرأس، تجمع بين مينوكسيديل عالي التركيز وفيناستيرايد وحمض الأزيليك و ABN Complex™ والريتينول والكافيين، وهي مصمّمة لدعم مكثّف لنمو الشعر.',
+      ru: 'ROOTÉ Level 15 — это продвинутая многокомпонентная формула для кожи головы, сочетающая Миноксидил высокой концентрации с Финастеридом, азелаиновой кислотой, ABN Complex™, ретинолом и кофеином, разработанная для интенсивной поддержки роста волос.',
+      fr: "ROOTÉ Level 15 est une formule avancée multi-actifs pour le cuir chevelu, associant un Minoxidil à haute concentration avec du Finastéride, de l'acide azélaïque, de l'ABN Complex™, du rétinol et de la caféine, conçue pour un soutien intensif de la croissance des cheveux.",
+      es: 'ROOTÉ Level 15 es una fórmula avanzada multiactiva para el cuero cabelludo que combina Minoxidil de alta concentración con Finasterida, ácido azelaico, ABN Complex™, retinol y cafeína, diseñada para un apoyo intensivo del crecimiento del cabello.',
+    }),
+    keyBenefits: DENSITY_BENEFITS,
     formulaReference: L6({
       en: 'Working reference: 15% Minoxidil + 0.1% Finasteride + 5% Azelaic Acid + 0.8% ABN Complex™ + 0.025% Retinol + 0.001% Caffeine.',
       he: 'התייחסות עבודה: 15% מינוקסידיל + 0.1% פינסטריד + 5% חומצה אזלאית + 0.8% ABN Complex™ + 0.025% רטינול + 0.001% קפאין.',
@@ -558,6 +620,40 @@ export const PRODUCTS: Product[] = [
       fr: 'Un sérum quotidien sans rinçage. La moitié topique du système Cheveux gris.',
       es: 'Un sérum diario sin aclarado. La mitad tópica del sistema de canas.',
     }),
+    overview: L6({
+      en: 'ROOTÉ Gray Serum is a lightweight daily scalp serum formulated with advanced pigment-supporting actives and nourishing botanicals to support natural-looking hair color, scalp health, and stronger, healthier-looking hair.',
+      he: 'ROOTÉ Gray Serum הוא סרום יומי קליל לקרקפת, המכיל רכיבים פעילים מתקדמים לתמיכה בפיגמנט וצמחים מזינים, לתמיכה בגוון שיער טבעי-מראה, בבריאות הקרקפת ובשיער חזק ובריא יותר במראהו.',
+      ar: 'ROOTÉ Gray Serum هو سيروم يومي خفيف لفروة الرأس، تمت صياغته بفعاليات متقدمة داعمة للتصبغ ومستخلصات نباتية مغذية، لدعم مظهر طبيعي للون الشعر وصحة فروة الرأس وشعر أقوى وأكثر صحة في مظهره.',
+      ru: 'ROOTÉ Gray Serum — это лёгкая ежедневная сыворотка для кожи головы с современными активными компонентами для поддержки пигментации и питательными растительными экстрактами, поддерживающая естественный вид цвета волос, здоровье кожи головы и более крепкие, здоровые на вид волосы.',
+      fr: "ROOTÉ Gray Serum est un sérum quotidien léger pour le cuir chevelu, formulé avec des actifs avancés de soutien de la pigmentation et des extraits botaniques nourrissants, pour soutenir une couleur de cheveux d'apparence naturelle, la santé du cuir chevelu et des cheveux plus forts et d'apparence plus saine.",
+      es: 'ROOTÉ Gray Serum es un sérum diario ligero para el cuero cabelludo, formulado con activos avanzados de apoyo a la pigmentación y botánicos nutritivos, que ayuda a mantener un color de cabello de aspecto natural, la salud del cuero cabelludo y un cabello más fuerte y de aspecto más saludable.',
+    }),
+    keyBenefits: [
+      L6({
+        en: 'Supports Natural Hair Pigment',
+        he: 'תומך בפיגמנט הטבעי של השיער',
+        ar: 'يدعم التصبغ الطبيعي للشعر',
+        ru: 'Поддерживает естественный пигмент волос',
+        fr: 'Soutient la pigmentation naturelle des cheveux',
+        es: 'Ayuda a mantener el pigmento natural del cabello',
+      }),
+      L6({
+        en: 'Helps Slow Visible Graying',
+        he: 'מסייע להאט הופעת שיער אפור נראה לעין',
+        ar: 'يساعد على إبطاء ظهور الشيب المرئي',
+        ru: 'Помогает замедлить появление видимой седины',
+        fr: "Aide à ralentir l'apparition visible des cheveux gris",
+        es: 'Ayuda a ralentizar la aparición visible de canas',
+      }),
+      L6({
+        en: 'Nourishes Hair & Scalp',
+        he: 'מזין את השיער והקרקפת',
+        ar: 'يغذّي الشعر وفروة الرأس',
+        ru: 'Питает волосы и кожу головы',
+        fr: 'Nourrit les cheveux et le cuir chevelu',
+        es: 'Nutre el cabello y el cuero cabelludo',
+      }),
+    ],
     formulaReference: null,
     displayFormulaDetail: true,
     ingredients: [
@@ -793,6 +889,33 @@ export const PRODUCTS: Product[] = [
       fr: 'Une gélule par jour. La moitié « interne » du système Cheveux gris.',
       es: 'Una cápsula al día. La mitad «interna» del sistema de canas.',
     }),
+    // No box label on hand yet for Gray Support (bottle label only) — overview omitted rather than invented.
+    keyBenefits: [
+      L6({
+        en: 'Advanced Hair & Pigment Support',
+        he: 'תמיכה מתקדמת לשיער ולפיגמנט',
+        ar: 'دعم متقدم للشعر والتصبغ',
+        ru: 'Продвинутая поддержка волос и пигментации',
+        fr: 'Soutien avancé pour les cheveux et la pigmentation',
+        es: 'Apoyo avanzado para el cabello y la pigmentación',
+      }),
+      L6({
+        en: 'Supports Natural Hair Pigment',
+        he: 'תומך בפיגמנט הטבעי של השיער',
+        ar: 'يدعم التصبغ الطبيعي للشعر',
+        ru: 'Поддерживает естественный пигмент волос',
+        fr: 'Soutient la pigmentation naturelle des cheveux',
+        es: 'Ayuda a mantener el pigmento natural del cabello',
+      }),
+      L6({
+        en: 'Supports Healthy Hair Growth',
+        he: 'תומך בצמיחת שיער בריאה',
+        ar: 'يدعم نمو شعر صحي',
+        ru: 'Поддерживает здоровый рост волос',
+        fr: 'Favorise une croissance capillaire saine',
+        es: 'Favorece un crecimiento capilar saludable',
+      }),
+    ],
     formulaReference: null,
     displayFormulaDetail: true,
     ingredients: [
@@ -980,6 +1103,41 @@ export const PRODUCTS: Product[] = [
       fr: 'À utiliser à la place de votre shampooing habituel. L’étape de nettoyage quotidienne.',
       es: 'Usar en lugar de su champú habitual. El paso de limpieza diario.',
     }),
+    // Front box panel (with its overview paragraph) not supplied yet — omitted rather than invented.
+    keyBenefits: [
+      L6({
+        en: 'Supports Healthy-Looking Hair Growth',
+        he: 'תומך בצמיחת שיער בעל מראה בריא',
+        ar: 'يدعم مظهر نمو شعر صحي',
+        ru: 'Поддерживает здоровый на вид рост волос',
+        fr: "Favorise une croissance capillaire à l'apparence saine",
+        es: 'Favorece un crecimiento capilar de aspecto saludable',
+      }),
+      L6({
+        en: 'Nourishes and Supports the Scalp',
+        he: 'מזין ותומך בקרקפת',
+        ar: 'يغذّي فروة الرأس ويدعمها',
+        ru: 'Питает и поддерживает кожу головы',
+        fr: 'Nourrit et soutient le cuir chevelu',
+        es: 'Nutre y ayuda al cuero cabelludo',
+      }),
+      L6({
+        en: 'Strengthens Hair from Root to Ends',
+        he: 'מחזק את השיער מהשורש ועד הקצוות',
+        ar: 'يقوّي الشعر من الجذور حتى الأطراف',
+        ru: 'Укрепляет волосы от корней до кончиков',
+        fr: 'Renforce les cheveux de la racine aux pointes',
+        es: 'Fortalece el cabello desde la raíz hasta las puntas',
+      }),
+      L6({
+        en: 'Leaves Hair Softer, Hydrated, & Fresh',
+        he: 'משאיר את השיער רך, לח ורענן',
+        ar: 'يترك الشعر أكثر نعومة ورطوبة ونضارة',
+        ru: 'Оставляет волосы более мягкими, увлажнёнными и свежими',
+        fr: 'Laisse les cheveux plus doux, hydratés et frais',
+        es: 'Deja el cabello más suave, hidratado y fresco',
+      }),
+    ],
     formulaReference: null,
     displayFormulaDetail: true,
     ingredients: [

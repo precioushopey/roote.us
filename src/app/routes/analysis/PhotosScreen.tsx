@@ -1,21 +1,26 @@
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate, useNavigate, useOutletContext } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { DisplayTitle, Prose, Button, ConsentPanel } from '@/app/components/roote';
+import { DisplayTitle, Prose, ConsentPanel } from '@/app/components/roote';
 import { PhotoUpload } from '@/app/components/diagnosis/PhotoUpload';
 import { track } from '@/analytics/analytics';
 import { PATHS } from '@/app/paths';
-import { redirectForAnalysisStep } from './guards';
+import { redirectForAnalysisStep, backPathForAnalysisStep } from './guards';
+import { QuizFooterNav } from './QuizFooterNav';
 import type { AngleKey } from '@/store/sessionStore';
 
 const ANGLES: AngleKey[] = ['front', 'top', 'crown', 'hairline'];
 
-/** Step 4 — guided photos + explicit consent before any upload (brief §12, §26). */
+/** Step 4 — guided photos + explicit consent before any upload (brief §12, §26).
+ *  Already required an explicit Continue before the 2026-09-22 auto-advance
+ *  removal (4 photos + consent, not a single-select) — only the shared
+ *  footer bar (Start Over/Back) is new here. */
 export function PhotosScreen() {
   const t = useT();
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
+  const { requestStartOver } = useOutletContext<{ requestStartOver: () => void }>();
 
   const redirect = redirectForAnalysisStep('photos', session);
   if (redirect) return <Navigate to={withLocale(redirect)} replace />;
@@ -65,16 +70,16 @@ export function PhotosScreen() {
         </p>
       )}
 
-      <Button
-        block
-        disabled={!canContinue}
-        onClick={() => {
+      <QuizFooterNav
+        backPath={backPathForAnalysisStep('photos', session)}
+        onStartOver={requestStartOver}
+        nextDisabled={!canContinue}
+        nextLabel={t('common.continue')}
+        onNext={() => {
           track('photo_upload_started');
           navigate(withLocale(PATHS.analysisStep('scanning')));
         }}
-      >
-        {t('common.continue')}
-      </Button>
+      />
     </section>
   );
 }

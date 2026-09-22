@@ -188,8 +188,8 @@ export function AccountToday() {
 
       <Card tone="cream" className="flex flex-col gap-8">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-row items-start gap-3">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col-reverse items-start gap-4">
               {primaryTreatment && (
                 <DisplayTitle as="h2" step="sm" className="min-w-0 flex-1">
                   {primaryTreatment.name}
@@ -297,6 +297,7 @@ export function AccountToday() {
                 label={t('app.today.title')}
                 value={slot ?? availableSlots[0]}
                 onChange={setActiveSlot}
+                className="w-fit"
                 options={availableSlots.map((s) => {
                   const Icon = SLOT_ICON[s];
                   return {

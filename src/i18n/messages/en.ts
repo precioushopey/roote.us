@@ -6,6 +6,8 @@ export const en = {
   'common.cancel': 'Cancel',
   'common.startOver': 'Start over',
   'common.progressLabel': 'Progress',
+  'common.showPassword': 'Show password',
+  'common.hidePassword': 'Hide password',
   'brand.tagline': 'Personalized Hair Growth System',
   'meta.title': 'Personalized Hair Growth System',
   'nav.language.open': 'Change language',
@@ -108,14 +110,18 @@ export const en = {
   'report.plan.review.professional': 'Based on what you told us, we recommend a professional evaluation before starting any treatment. We’ve held the automatic product recommendation; your analysis results below are still ready to view.',
   'report.plan.review.pendingApproval': 'Your Hair Growth treatment plan has been matched to your pattern and is finalizing clinical review before we can show it here. Your analysis results below are ready in the meantime.',
   'recommend.rationale.thickerFuller': 'Matched to your goal of thicker, fuller-looking hair.',
+  'recommend.rationale.thickerFullerReview': 'Thicker, fuller-looking hair needs a known pattern set, so we held the automatic recommendation.',
+  'recommend.rationale.thickerFullerPending': 'Your thicker, fuller-hair treatment strength has been matched to your pattern and is pending clinical approval before activation.',
+  'recommend.rationale.thickerFullerActive': 'Matched to your pattern’s treatment strength for thicker, fuller-looking hair.',
   'recommend.rationale.slowGraying': 'Matched to your goal of slowing further graying.',
   'recommend.rationale.stopLoss': 'Matched to your goal of stopping ongoing hair loss.',
   'recommend.rationale.hairGrowthReview': 'Hair Growth treatment strength needs a known pattern set, so we held the automatic recommendation.',
   'recommend.rationale.hairGrowthPending': 'Your Hair Growth treatment strength has been matched to your pattern and is pending clinical approval before activation.',
+  'recommend.rationale.hairGrowthActive': 'Matched to your pattern’s Hair Growth treatment strength.',
   'recommend.rationale.other': 'Your goal needs a little more information before we can recommend a program.',
   'recommend.rationale.fallback': 'We could not determine a recommendation from your answers.',
   'report.hairLossType.typeLabel': '{band} pattern',
-  'report.cta.label': 'Start My Program',
+  'report.cta.label': 'Proceed to Checkout',
   'report.pdf.title': 'Your Personalized Hair Report',
   'report.pdf.download': 'Download PDF',
   'report.duration.label': '{days} Days',
@@ -126,6 +132,9 @@ export const en = {
   'report.pricing.perDayLabel': 'per day',
   'report.pricing.compareTitle': 'Compare all program lengths',
   'report.pricing.recommendedBadge': 'Recommended',
+  'report.pricing.totalLabel': 'Total',
+  'report.pricing.features':
+    'Progress tracking with photos|Reminders for every step|Ongoing support from your care team|Adjust your plan as you go',
   'report.claims.effectiveness.label': 'Effectiveness',
   'report.claims.timeToVisibleResults.label': 'Typical Time to Visible Results',
   'report.claims.doctorFollowUpCost.label': 'Doctor Follow-Up Cost',
@@ -293,6 +302,15 @@ export const en = {
   'start.success.point2': 'We will remind you when to apply each step.',
   'start.success.point3': 'Track your progress with photos as you go.',
   'start.success.cta': 'Go to my program',
+  'start.success.stepsTitle': 'What happens next',
+  'start.success.step1.title': 'Your kit ships',
+  'start.success.step1.body': 'Your products are prepared and on their way to you.',
+  'start.success.step2.title': 'Confirm delivery',
+  'start.success.step2.body': 'Once it arrives, confirm it in your account to start your Day 1.',
+  'start.success.step3.title': 'Follow your routine',
+  'start.success.step3.body': "We'll remind you when to apply each step.",
+  'start.success.step4.title': 'Track your progress',
+  'start.success.step4.body': 'Log photos as you go to see how things change over time.',
 
   'marketing.nav.howItWorks': 'Process',
   'marketing.nav.solutions': 'Solutions',
@@ -558,6 +576,8 @@ export const en = {
   'marketing.pdp.pricePending': 'Pending',
   'marketing.pdp.fitTitle': 'How it fits your program',
   'marketing.pdp.fitBody': 'Your program lists exactly which products to use and when. This page explains the product on its own.',
+  'marketing.pdp.keyBenefits': 'Key benefits',
+  'marketing.pdp.overview': 'Overview',
   'marketing.pdp.format': '{size} per unit',
   'marketing.pdp.activesTitle': 'Key actives',
   'marketing.pdp.detailsTitle': 'Details',
@@ -585,6 +605,16 @@ export const en = {
   'marketing.pdp.badge.fragranceFree': 'Fragrance Free',
   'marketing.pdp.badge.parabenFree': 'Paraben Free',
   'marketing.pdp.badge.sulfateFree': 'Sulfate Free',
+  'marketing.pdp.activesBody': "The active ingredients behind this formula: what each one does, and how confident the evidence is.",
+  'marketing.pdp.directionsTitle': 'Directions & safety',
+  'marketing.pdp.directionsBody': 'How to apply it, who should avoid it, and how to store it, straight from the label.',
+  'marketing.pdp.detailsBody': 'Formula specifics and the questions we hear most about this product.',
+  'marketing.pdp.relatedBody': 'From your program, chosen to work alongside this product.',
+  'marketing.pdp.faqPrescription.q': 'Is a prescription or treatment review required?',
+  'marketing.pdp.faqPrescription.aYes': "Yes, this product is only added to your program after a treatment review confirms it's appropriate for you.",
+  'marketing.pdp.faqPrescription.aNo': "No, this product doesn't require a prescription or treatment review.",
+  'marketing.pdp.faqStrength.q': 'How is my Level chosen?',
+  'marketing.pdp.faqStrength.a': "You don't select a Level yourself. Your program and any change in strength are set through your assessment and a treatment review, based on what's appropriate for you.",
 
   'marketing.howItWorks.hero.title': 'How it works',
   'marketing.howItWorks.hero.body': 'From your first photo to your ongoing plan, here is exactly what happens at each step.',
@@ -841,54 +871,17 @@ export const en = {
   'marketing.support.help.cta': 'View FAQ',
   'marketing.support.cta.title': 'Ready to start?',
 
-  'marketing.legal.terms.title': 'Terms of Service',
+  'marketing.legal.terms.title': 'Terms & Conditions',
   'marketing.legal.privacy.title': 'Privacy Policy',
   'marketing.legal.updated': 'Last updated',
-  'marketing.legal.terms.s1': 'Acceptance of terms',
-  'marketing.legal.terms.s2': 'Use of the service',
-  'marketing.legal.terms.s3': 'Medical disclaimer',
-  'marketing.legal.terms.s4': 'Payment & subscriptions',
-  'marketing.legal.terms.s5': 'Limitation of liability',
-  'marketing.legal.terms.s6': 'Governing law',
-  'marketing.legal.privacy.s1': 'Information we collect',
-  'marketing.legal.privacy.s2': 'How we use your photos',
-  'marketing.legal.privacy.s3': 'Data retention',
-  'marketing.legal.privacy.s4': 'Your rights',
-  'marketing.legal.privacy.s5': 'Third-party sharing',
-  'marketing.legal.privacy.s6': 'Contact',
 
-  // Privacy Policy — section bodies (headings are marketing.legal.privacy.s1–s6 above).
-  // Describes the preview build's actual (client-only) data handling; production specifics are TODOs.
+  // Privacy Policy hero intro. Main clause bodies for /terms and /privacy now live in the
+  // content layer (src/content/legal.ts LEGAL_BODIES, from the ROOTÉ Master Legal Pack,
+  // 2026-09-22) so legal/product owners can replace copy without touching i18n message keys.
   'marketing.legal.privacy.intro':
-    'This policy explains what information we handle and how. This service is operated by 91 ENTERPRISE LLC (see the “Company details” section on our Terms pages), which is the data controller.',
-  'marketing.legal.privacy.s1.body':
-    'When you use this service you may provide: the photos you upload for your hair assessment; your answers to the assessment questionnaire; your email address; and, if you create an account or place an order, your name, contact and delivery details and a masked reference to your payment card (only the last four digits and expiry date, never the full card number or security code). From this, we generate an assessment result and, after a purchase, a program record.',
-  'marketing.legal.privacy.s2.body':
-    'Your photos and questionnaire answers are used only to produce your hair assessment and personalized plan, and to show you before/after comparisons over time. In this preview build the assessment runs entirely in your browser and never leaves your device. If you separately use our AI hair chat, see the Third-party sharing section below for how that data is handled. We do not use your photos for advertising, model training, or any purpose you have not agreed to.',
-  'marketing.legal.privacy.s3.body':
-    'In this preview build, everything you enter (photos, answers, email, account, cart, and program) is stored only in your own browser (its local storage and database) and remains on your device until you clear it. Nothing is kept on our servers. Once real accounts and orders are introduced, the retention period for each type of data will be published here.', // TODO: confirm retention periods with client once a backend exists
-  'marketing.legal.privacy.s4.body':
-    'You can view and delete the information held in your browser at any time by clearing this site’s data in your browser settings; doing so removes your assessment, account, and program from this device. Where applicable law gives you rights to access, correct, export, or erase personal data, or to object to or restrict its processing, you can exercise them by contacting us using the details below.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
-  'marketing.legal.privacy.s5.body':
-    'We do not sell your personal data. In this preview build the third parties involved are Google Fonts, which serves the site’s typefaces, and, if you use our AI hair chat, our partner HairHealth.ai, which receives what you share there (your answers and photos) and adds it to our contact list via HubSpot so our team can follow up with you. Production services for payment, shipping, email, and hosting will be listed here as they are added.', // TODO: confirm the production sub-processor list with client
-  'marketing.legal.privacy.s6.body':
-    'For any privacy question or request, contact us at support@roote.us or +1 (310) 651-7283.',
+    'This policy explains what information ROOTÉ collects, why, and how you can control it.',
 
-  // Terms of Service — section bodies (headings are marketing.legal.terms.s1–s6 above)
-  'marketing.legal.terms.s1.body':
-    'By accessing this website or creating an account, you agree to these Terms of Service, our Terms of Sale, and our Privacy Policy. If you do not agree, do not use the service. We may update these terms; material changes take effect when posted with a new "last updated" date.',
-  'marketing.legal.terms.s2.body':
-    'We provide an AI-assisted, photo-based hair assessment and a personalized product regimen. You must be at least 18 years old and provide accurate information. You may not misuse the service, upload photos of anyone other than yourself, attempt to reverse-engineer the analysis, or resell any part of the service.',
-  'marketing.legal.terms.s3.body':
-    'The analysis and report are a preliminary visual estimate, not a medical diagnosis, and do not replace advice from a licensed physician. Consult a doctor before starting, changing, or stopping any treatment, especially if you are pregnant or nursing, take medication, or have a scalp or skin condition. Stop use and seek medical advice if you experience an adverse reaction.',
-  'marketing.legal.terms.s4.body':
-    'Purchases of products and program subscriptions are governed by our Terms of Sale, which cover pricing, payment, shipping, returns, refunds, and subscription auto-renewal. Please review the Terms of Sale before you buy.',
-  'marketing.legal.terms.s5.body':
-    'To the fullest extent permitted by law, 91 ENTERPRISE LLC is not liable for indirect, incidental, or consequential damages arising from use of the service. Nothing in these terms excludes liability that cannot be excluded under applicable law. Our total liability for any claim is limited to the amount you paid us in the twelve months before the claim.',
-  'marketing.legal.terms.s6.body':
-    'These terms are governed by the laws of the State of California, USA, without regard to its conflict-of-laws rules. Disputes that cannot be resolved informally will be brought before the state or federal courts located in Los Angeles County, California.',
-
-  // Company / legal-entity details — shown on /terms, which absorbs /terms-of-sale (facts in roote.config company)
+  // Company / legal-entity details — shown on /terms (facts in roote.config company)
   'marketing.legal.company.title': 'Company details',
   'marketing.legal.company.intro': 'This service is operated by the company below.',
   'marketing.legal.company.legalNameLabel': 'Registered company name',
@@ -903,49 +896,6 @@ export const en = {
   'marketing.legal.company.addressLabel': 'Registered address',
   'marketing.legal.company.emailLabel': 'Email',
   'marketing.legal.company.phoneLabel': 'Phone',
-
-  // Terms of Sale — now a sub-group within /terms, not its own route
-  'marketing.legalSale.title': 'Terms of Sale',
-  'marketing.legalSale.intro':
-    "These Terms of Sale govern your purchase of products and program subscriptions from 91 ENTERPRISE LLC (“we”, “us”). They apply together with our Terms of Service and Privacy Policy. Please read them before placing an order.",
-  'marketing.legalSale.s1.title': 'Orders and order acceptance',
-  'marketing.legalSale.s1.body':
-    'Placing an order is an offer to buy. Your order is accepted, and a contract is formed, only when we send an order-confirmation email or dispatch the products, whichever is first. We may decline or cancel an order (for example if an item is out of stock, a price is shown in error, or we cannot verify payment or delivery details) and will refund any amount already charged.',
-  'marketing.legalSale.s2.title': 'Prices, taxes, and currency',
-  'marketing.legalSale.s2.body':
-    'Prices are shown at checkout in the displayed currency and may change at any time, but the price confirmed when you order is the price you pay. Unless stated otherwise, prices exclude taxes, customs duties, and import fees, which are calculated at checkout or charged on delivery according to the destination.',
-  'marketing.legalSale.s3.title': 'Payment',
-  'marketing.legalSale.s3.body':
-    'Payment is taken when you order, through our third-party payment processor, using the methods shown at checkout. We do not store full card numbers. If a payment is reversed or charged back without cause, we may suspend your account and any related subscriptions.',
-  'marketing.legalSale.s4.title': 'Shipping and delivery',
-  'marketing.legalSale.s4.body':
-    'We ship to the destinations listed at checkout. Orders are usually prepared for dispatch within 2–5 business days; delivery estimates shown at checkout are not guaranteed. Risk of loss passes to you on delivery. If an order arrives damaged or incomplete, contact us within 14 days of delivery.',
-  'marketing.legalSale.s5.title': 'Returns and your right to cancel',
-  'marketing.legalSale.s5.body':
-    'You may return unopened, unused products in their original packaging within 30 days of delivery for a refund of the product price. To start a return, email support@roote.us with your order number. Return shipping is paid by you unless the item was defective, damaged, or sent in error. For hygiene and safety reasons, opened topical or oral products cannot be returned unless faulty. A personalized analysis already delivered is non-refundable.',
-  'marketing.legalSale.s6.title': 'Refunds',
-  'marketing.legalSale.s6.body':
-    'Approved refunds are issued to the original payment method within 14 days of us receiving the returned item or agreeing to the refund. A refund covers the product price and, where the return is due to our error or a defect, the original standard shipping cost. Taxes and duties are refunded where required by law.',
-  'marketing.legalSale.s7.title': 'Subscription programs and auto-renewal',
-  'marketing.legalSale.s7.body':
-    'Your program is a subscription. When you enroll, you authorize recurring charges for the program term you select. Unless you cancel before the renewal date, the subscription renews automatically for a further term of the same length at the then-current price, and we send a reminder before each renewal where required by law. Each renewal ships a new supply.',
-  'marketing.legalSale.s8.title': 'Changing, pausing, or cancelling a subscription',
-  'marketing.legalSale.s8.body':
-    'You can cancel or change your subscription at any time from your account or by contacting support, effective from the next renewal. Cancelling stops future charges and shipments; it does not refund a term already started or products already shipped, except where required by law or under the returns section above. We may change subscription pricing with at least 30 days’ notice before it applies to you.',
-  'marketing.legalSale.s9.title': 'Product use and medical disclaimer',
-  'marketing.legalSale.s9.body':
-    'Products are cosmetic or over-the-counter items to be used as directed on the label and in your plan. The analysis is a preliminary visual estimate, not a medical diagnosis. Consult a physician before starting if you are pregnant or nursing, under 18, taking medication, or have a scalp or skin condition, and stop use if you have an adverse reaction. Results vary and are not guaranteed.',
-  'marketing.legalSale.s10.title': 'Product warranty and complaints',
-  'marketing.legalSale.s10.body':
-    'We warrant that products are free from defects in materials and workmanship at delivery and match their description. If a product is faulty or not as described, email support@roote.us within a reasonable time and we will replace or refund it. This does not affect your statutory rights.',
-  'marketing.legalSale.s11.title': 'Our liability',
-  'marketing.legalSale.s11.body':
-    'To the fullest extent permitted by law, our liability for any claim connected to a purchase is limited to the amount you paid for the affected order or, for a subscription, the amount paid in the twelve months before the claim. We are not liable for indirect or consequential losses. Nothing here limits liability for death or personal injury caused by our negligence, for fraud, or for anything that cannot be limited under applicable law.',
-  'marketing.legalSale.s12.title': 'Governing law and disputes',
-  'marketing.legalSale.s12.body':
-    'These Terms of Sale are governed by the laws of the State of California, USA. We will try to resolve any complaint informally first: email support@roote.us. Disputes that cannot be resolved that way will be subject to the state or federal courts located in Los Angeles County, California, without prejudice to any mandatory consumer-protection rights in your country of residence.',
-  'marketing.legalSale.contact':
-    'Questions about an order or a return? Email support@roote.us or call +1 (310) 651-7283.',
 
   // Support page — contact block (replaces the pending placeholders)
   'marketing.support.contact.emailLabel': 'Email',
@@ -998,6 +948,7 @@ export const en = {
 
   'analysis.scanning.title': 'Analyzing your hair…',
   'analysis.scanning.body': 'Your scan is being organized while you answer a few questions.',
+  'analysis.scanning.percent': 'Analyzing… {pct}%',
 
   'analysis.results.title': 'Your hair analysis is ready',
   'analysis.results.cardTitle': 'Your hair profile',
@@ -1058,6 +1009,54 @@ export const en = {
   'app.subscription.legal': 'Recurring billing, shipment frequency, the renewal price, taxes, and shipping are disclosed before you turn this on. You can cancel here at any time, and your local consumer-protection rights are unaffected.',
   'app.noProgram.body': 'No active program on this device. Complete a purchase, or load a demo program.',
   'app.noProgram.devSeedCta': 'Load a demo program (dev only)',
+  'app.preDelivery.title': 'Your program is on its way',
+  'app.preDelivery.subtitle': "Here's what to expect before your first day.",
+  'app.preDelivery.planReady': 'Your plan is ready',
+  'app.preDelivery.orderTitle': 'Your order',
+  'app.preDelivery.orderedOn': 'Ordered on {date}',
+  'app.preDelivery.shippingNote': "Your order is being prepared and shipped. This preview doesn't have live carrier tracking, so once your package arrives, confirm it below to start your program.",
+  'app.preDelivery.supportTitle': 'Questions about your order?',
+  'app.preDelivery.supportBody': 'Reach out any time.',
+  'app.preDelivery.confirmCta': 'Package arrived? Confirm to start your Day 1',
+  'app.preDelivery.viewShipping': 'View shipping details',
+  'app.preDelivery.mapPending': 'live shipping map',
+  'app.preDelivery.orderedStage': 'Ordered',
+  'app.preDelivery.preparingStage': 'Preparing & shipping',
+  'app.preDelivery.whileYouWaitTitle': 'While you wait',
+  'app.preDelivery.reviewPlanRow': 'Review your plan',
+  'app.preDelivery.reviewPlanTitle': 'How to use your plan',
+  'app.preDelivery.contactRow': 'Contact support',
+  'app.preDelivery.shipping.title': 'Shipping information',
+  'app.preDelivery.shipping.orderSummary': 'Order summary',
+  'app.preDelivery.shipping.priceLabel': 'Order total',
+  'app.preDelivery.shipping.supportCenter': 'Support center',
+  'app.preDelivery.shipping.refundRow': 'Refund or return request',
+  'app.preDelivery.shipping.contactRow': 'Contact support',
+  'app.preDelivery.shipping.helpRow': 'Help center',
+  'app.preDelivery.refund.title': 'Refund or return request',
+  'app.preDelivery.refund.intro': "Tell us what happened and we'll review your request.",
+  'app.preDelivery.refund.reasonLabel': 'Reason',
+  'app.preDelivery.refund.reasonDamaged': 'Damaged product',
+  'app.preDelivery.refund.reasonNotExpected': 'Not what I expected',
+  'app.preDelivery.refund.reasonNoLongerNeeded': 'No longer needed',
+  'app.preDelivery.refund.reasonOther': 'Other',
+  'app.preDelivery.refund.detailsLabel': 'Details (optional)',
+  'app.preDelivery.refund.detailsPlaceholder': 'Tell us more...',
+  'app.preDelivery.refund.submit': 'Send request',
+  'app.preDelivery.refundSent.title': 'Request sent',
+  'app.preDelivery.refundSent.body': "We've received your request and will follow up by email.",
+  'app.preDelivery.refundSent.back': 'Back to shipping information',
+  'app.preDelivery.contact.title': 'Contact support',
+  'app.preDelivery.contact.body': 'Our team is available by email or phone for questions about your order, your plan, or your products.',
+  'app.preDelivery.help.title': 'Help center',
+  'app.preDelivery.help.q1': 'When will my order arrive?',
+  'app.preDelivery.help.a1': "This preview doesn't have live carrier tracking. Once your package arrives, come back here and confirm it to start your program.",
+  'app.preDelivery.help.q2': 'How does my program work?',
+  'app.preDelivery.help.a2': 'Your program combines the products and routine your assessment matched you with, tracked from the day you confirm your delivery.',
+  'app.preDelivery.help.q3': 'Can I change my plan or products?',
+  'app.preDelivery.help.a3': "Contact support and we'll help you update your plan or products.",
+  'app.preDelivery.help.q4': 'What do I do if a product arrives damaged?',
+  'app.preDelivery.help.a4': 'Submit a refund or return request with details about the damage.',
   'app.task.pendingName': 'Your treatment',
 
   'app.today.title': 'Today',
@@ -1304,6 +1303,8 @@ export const en = {
   'app.rescan.compare.latest': 'Latest',
   'app.profile.title': 'Your profile',
   'app.profile.account.title': 'Account',
+  'app.profile.preferences.title': 'Preferences',
+  'app.profile.chooseLanguage': 'Choose language',
   'app.profile.email': 'Email',
   'app.profile.memberSince': 'Member since',
   'app.profile.program.title': 'Your program',

@@ -34,7 +34,7 @@ export function useTrackingMigration() {
       id: p.id,
       checkpointId: 'baseline-d0',
       view: p.angleKey,
-      capturedAt: program.startDate,
+      capturedAt: program.startDate ?? program.orderedAt,
       blobId: p.blobId,
       thumb: p.thumb,
     }));

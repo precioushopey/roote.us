@@ -9,6 +9,8 @@ export const he: Record<MessageKey, string> = {
   'common.cancel': 'ביטול',
   'common.startOver': 'התחלה מחדש',
   'common.progressLabel': 'התקדמות',
+  'common.showPassword': 'הצג סיסמה',
+  'common.hidePassword': 'הסתר סיסמה',
   'brand.tagline': 'מערכת אישית לצמיחת שיער',
   'nav.language.open': 'שינוי שפה',
   'nav.language.title': 'שפה',
@@ -111,14 +113,18 @@ export const he: Record<MessageKey, string> = {
   'report.plan.review.professional': 'בהתאם למה ששיתפת, אנו ממליצים על הערכה מקצועית לפני תחילת כל טיפול. עצרנו את המלצת המוצר האוטומטית, ותוצאות הניתוח שלך למטה עדיין זמינות לצפייה.',
   'report.plan.review.pendingApproval': 'תוכנית טיפול צמיחת השיער שלך הותאמה לדפוס שלך וממתינה לסיום בדיקה קלינית לפני שנוכל להציג אותה כאן. תוצאות הניתוח שלך למטה מוכנות בינתיים.',
   'recommend.rationale.thickerFuller': 'הותאם למטרה שלך של שיער סמיך ומלא יותר.',
+  'recommend.rationale.thickerFullerReview': 'למטרת שיער סמיך ומלא יותר נדרש דפוס ידוע, לכן עצרנו את ההמלצה האוטומטית.',
+  'recommend.rationale.thickerFullerPending': 'עוצמת הטיפול לצפיפות ולמלאות הותאמה לדפוס שלך וממתינה לאישור קליני לפני ההפעלה.',
+  'recommend.rationale.thickerFullerActive': 'הותאם לעוצמת הטיפול של הדפוס שלך לשיער סמיך ומלא יותר.',
   'recommend.rationale.slowGraying': 'הותאם למטרה שלך של האטת הזדקנות שיער נוספת.',
   'recommend.rationale.stopLoss': 'הותאם למטרה שלך של עצירת נשירת שיער מתמשכת.',
   'recommend.rationale.hairGrowthReview': 'טיפול לצמיחת שיער דורש דפוס ידוע, לכן עצרנו את ההמלצה האוטומטית.',
   'recommend.rationale.hairGrowthPending': 'עוצמת טיפול צמיחת השיער שלך הותאמה לדפוס שלך וממתינה לאישור קליני לפני הפעלה.',
+  'recommend.rationale.hairGrowthActive': 'הותאם לעוצמת טיפול צמיחת השיער של הדפוס שלך.',
   'recommend.rationale.other': 'המטרה שלך דורשת מעט מידע נוסף לפני שנוכל להמליץ על תוכנית.',
   'recommend.rationale.fallback': 'לא הצלחנו לקבוע המלצה מהתשובות שלך.',
   'report.hairLossType.typeLabel': 'דפוס {band}',
-  'report.cta.label': 'התחל את התוכנית שלי',
+  'report.cta.label': 'המשך לתשלום',
   'report.pdf.title': 'דוח שיער אישי של ROOTÉ',
   'report.pdf.download': 'הורדת PDF',
   'report.duration.label': '{days} ימים',
@@ -129,6 +135,9 @@ export const he: Record<MessageKey, string> = {
   'report.pricing.perDayLabel': 'ליום',
   'report.pricing.compareTitle': 'השוואת כל אורכי התוכנית',
   'report.pricing.recommendedBadge': 'מומלץ',
+  'report.pricing.totalLabel': 'סה"כ',
+  'report.pricing.features':
+    'מעקב התקדמות עם תמונות|תזכורות לכל שלב|תמיכה מתמשכת מצוות הטיפול שלך|התאמת התוכנית שלך תוך כדי התהליך',
   'report.claims.effectiveness.label': 'יעילות',
   'report.claims.timeToVisibleResults.label': 'זמן טיפוסי לתוצאות נראות לעין',
   'report.claims.doctorFollowUpCost.label': 'עלות מעקב רפואי',
@@ -296,6 +305,15 @@ export const he: Record<MessageKey, string> = {
   'start.success.point2': 'נזכיר לך מתי ליישם כל שלב.',
   'start.success.point3': 'עקבו אחרי ההתקדמות שלכם עם תמונות תוך כדי.',
   'start.success.cta': 'למעבר לתוכנית שלי',
+  'start.success.stepsTitle': 'מה קורה עכשיו',
+  'start.success.step1.title': 'הערכה שלך יוצאת לדרך',
+  'start.success.step1.body': 'המוצרים שלך מוכנים ובדרך אליך.',
+  'start.success.step2.title': 'אישור קבלה',
+  'start.success.step2.body': 'כשהחבילה תגיע, אשר/י זאת בחשבון שלך כדי להתחיל את היום הראשון שלך.',
+  'start.success.step3.title': 'עקוב/י אחרי השגרה שלך',
+  'start.success.step3.body': 'נשלח לך תזכורת לכל שלב.',
+  'start.success.step4.title': 'עקוב/י אחרי ההתקדמות שלך',
+  'start.success.step4.body': 'הוסף/הוסיפי תמונות תוך כדי התהליך כדי לראות שינוי לאורך זמן.',
 
   'marketing.nav.howItWorks': 'תהליך',
   'marketing.nav.solutions': 'פתרונות',
@@ -559,6 +577,8 @@ export const he: Record<MessageKey, string> = {
   'marketing.pdp.pricePending': 'בהמתנה',
   'marketing.pdp.fitTitle': 'איך זה משתלב בתוכנית ROOTÉ שלך',
   'marketing.pdp.fitBody': 'התוכנית שלך מפרטת בדיוק באילו מוצרים להשתמש ומתי. עמוד זה מסביר את המוצר עצמו.',
+  'marketing.pdp.keyBenefits': 'יתרונות עיקריים',
+  'marketing.pdp.overview': 'סקירה כללית',
   'marketing.pdp.format': '{size} ליחידה',
   'marketing.pdp.activesTitle': 'רכיבים פעילים עיקריים',
   'marketing.pdp.detailsTitle': 'פרטים',
@@ -586,6 +606,16 @@ export const he: Record<MessageKey, string> = {
   'marketing.pdp.badge.fragranceFree': 'ללא בישום',
   'marketing.pdp.badge.parabenFree': 'ללא פרבנים',
   'marketing.pdp.badge.sulfateFree': 'ללא סולפטים',
+  'marketing.pdp.activesBody': 'הרכיבים הפעילים שעליהם מבוססת הפורמולה: מה כל אחד מהם עושה, ועד כמה חזקות הראיות שמאחוריו.',
+  'marketing.pdp.directionsTitle': 'אופן שימוש ובטיחות',
+  'marketing.pdp.directionsBody': 'איך למרוח, למי כדאי להימנע, ואיך לאחסן, הכול לפי התווית.',
+  'marketing.pdp.detailsBody': 'פרטי הפורמולה והשאלות שאנחנו נשאלים עליה הכי הרבה.',
+  'marketing.pdp.relatedBody': 'מהתוכנית שלך, נבחרו כדי לפעול יחד עם המוצר הזה.',
+  'marketing.pdp.faqPrescription.q': 'האם נדרש מרשם או בדיקת טיפול?',
+  'marketing.pdp.faqPrescription.aYes': 'כן, מוצר זה נוסף לתוכנית שלך רק לאחר שבדיקת טיפול מאשרת שהוא מתאים לך.',
+  'marketing.pdp.faqPrescription.aNo': 'לא, מוצר זה אינו דורש מרשם או בדיקת טיפול.',
+  'marketing.pdp.faqStrength.q': 'איך נבחרת ה-Level שלי?',
+  'marketing.pdp.faqStrength.a': 'אינך בוחר/ת את ה-Level בעצמך. התוכנית שלך וכל שינוי בעוצמה נקבעים דרך ההערכה שלך ובדיקת טיפול, בהתאם למתאים לך.',
 
   'marketing.howItWorks.hero.title': 'איך ROOTÉ עובד',
   'marketing.howItWorks.hero.body': 'מהתמונה הראשונה שלך ועד לתוכנית המתמשכת, כך בדיוק נראה כל שלב.',
@@ -840,53 +870,17 @@ export const he: Record<MessageKey, string> = {
   'marketing.support.help.cta': 'לשאלות נפוצות',
   'marketing.support.cta.title': 'מוכנים להתחיל?',
 
-  'marketing.legal.terms.title': 'תנאי שימוש',
+  'marketing.legal.terms.title': 'תנאים והגבלות',
   'marketing.legal.privacy.title': 'מדיניות פרטיות',
   'marketing.legal.updated': 'עודכן לאחרונה',
-  'marketing.legal.terms.s1': 'קבלת התנאים',
-  'marketing.legal.terms.s2': 'שימוש בשירות',
-  'marketing.legal.terms.s3': 'הבהרה רפואית',
-  'marketing.legal.terms.s4': 'תשלום ומינויים',
-  'marketing.legal.terms.s5': 'הגבלת אחריות',
-  'marketing.legal.terms.s6': 'דין חל',
-  'marketing.legal.privacy.s1': 'מידע שאנו אוספים',
-  'marketing.legal.privacy.s2': 'איך אנחנו משתמשים בתמונות שלך',
-  'marketing.legal.privacy.s3': 'שמירת מידע',
-  'marketing.legal.privacy.s4': 'הזכויות שלך',
-  'marketing.legal.privacy.s5': 'שיתוף עם צדדים שלישיים',
-  'marketing.legal.privacy.s6': 'יצירת קשר',
 
-  // Privacy Policy — גוף הסעיפים (הכותרות הן marketing.legal.privacy.s1–s6 שלמעלה)
+  // כוונת הפתיחה של מדיניות הפרטיות. גוף הסעיפים העיקרי של /terms ו-/privacy עבר לשכבת
+  // התוכן (src/content/legal.ts LEGAL_BODIES, מתוך חבילת המסמכים המשפטיים של ROOTÉ, 2026-09-22)
+  // כדי שגורמי המשפט/מוצר יוכלו להחליף את הטקסט בלי לגעת במפתחות ה-i18n.
   'marketing.legal.privacy.intro':
-    'מדיניות זו מסבירה איזה מידע ROOTÉ מנהל וכיצד. ROOTÉ הוא מותג המופעל על ידי 91 ENTERPRISE LLC (ראו את סעיף ״פרטי החברה״ בעמודי התנאים שלנו), שהיא בעלת השליטה במידע.',
-  'marketing.legal.privacy.s1.body':
-    'בעת השימוש ב-ROOTÉ אתם עשויים למסור: את התמונות שאתם מעלים להערכת השיער; את התשובות לשאלון ההערכה; את כתובת האימייל שלכם; ואם אתם יוצרים חשבון או מבצעים הזמנה, את שמכם, פרטי ההתקשרות והמסירה, וסימון חלקי של כרטיס התשלום (רק ארבע הספרות האחרונות ותאריך התוקף, לעולם לא מספר הכרטיס המלא או קוד האבטחה). מתוך מידע זה ROOTÉ מפיקה תוצאת הערכה, ולאחר רכישה, רשומת תוכנית.',
-  'marketing.legal.privacy.s2.body':
-    'התמונות והתשובות לשאלון משמשות אך ורק להפקת הערכת השיער והתוכנית האישית שלכם, ולהצגת השוואות ״לפני ואחרי״ לאורך זמן. בגרסת התצוגה הזו ההערכה מתבצעת כולה בדפדפן שלכם ואינה עוזבת את המכשיר שלכם. אם אתם משתמשים בנפרד בצ׳אט השיער מבוסס הבינה המלאכותית שלנו, ראו את הסעיף ״שיתוף עם צדדים שלישיים״ בהמשך לגבי אופן הטיפול במידע הזה. איננו משתמשים בתמונות שלכם לפרסום, לאימון מודלים, או לכל מטרה שלא הסכמתם לה.',
-  'marketing.legal.privacy.s3.body':
-    'בגרסת התצוגה הזו, כל מה שאתם מזינים (תמונות, תשובות, אימייל, חשבון, סל ותוכנית) נשמר רק בדפדפן שלכם (באחסון המקומי ובמסד הנתונים שלו) ונשאר במכשירכם עד שתמחקו אותו. דבר אינו נשמר בשרת של ROOTÉ. עם הכנסת חשבונות והזמנות אמיתיים, תקופת השמירה לכל סוג מידע תפורסם כאן.', // TODO: confirm retention periods with client once a backend exists
-  'marketing.legal.privacy.s4.body':
-    'תוכלו לצפות במידע השמור בדפדפן שלכם ולמחוק אותו בכל עת על ידי ניקוי נתוני האתר בהגדרות הדפדפן; פעולה זו מסירה מהמכשיר את ההערכה, החשבון והתוכנית שלכם. במקום שבו הדין החל מקנה לכם זכויות לעיין במידע אישי, לתקנו, לייצאו או למחקו, או להתנגד לעיבודו או להגבילו, תוכלו לממש אותן בפנייה אלינו בפרטים שלהלן.', // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
-  'marketing.legal.privacy.s5.body':
-    'איננו מוכרים את המידע האישי שלכם. בגרסת התצוגה הזו הצדדים השלישיים המעורבים הם Google Fonts, המספק את הגופנים של האתר, וכן, אם אתם משתמשים בצ׳אט השיער מבוסס הבינה המלאכותית שלנו, השותפה שלנו HairHealth.ai, המקבלת את מה ששיתפתם שם (התשובות והתמונות שלכם) ומוסיפה זאת לרשימת אנשי הקשר שלנו דרך HubSpot כדי שצוותנו יוכל ליצור איתכם קשר. שירותי הייצור לתשלום, משלוח, אימייל ואירוח יפורטו כאן עם הוספתם.', // TODO: confirm the production sub-processor list with client
-  'marketing.legal.privacy.s6.body':
-    'לכל שאלה או בקשה בנושא פרטיות, פנו אל ROOTÉ בכתובת support@roote.us או בטלפון ‎+1 (310) 651-7283‎.',
+    'מדיניות זו מסבירה אילו מידע ROOTÉ אוספת, למה, ואיך אפשר לשלוט בכך.',
 
-  // Terms of Service — גוף הסעיפים (הכותרות הן marketing.legal.terms.s1–s6 שלמעלה)
-  'marketing.legal.terms.s1.body':
-    'בכניסה לאתר ROOTÉ או ביצירת חשבון, אתם מסכימים לתנאי השימוש האלה, לתנאי המכר שלנו ולמדיניות הפרטיות. אם אינכם מסכימים, אין להשתמש בשירות. אנו רשאים לעדכן את התנאים; שינויים מהותיים נכנסים לתוקף עם פרסומם ועדכון תאריך ״עודכן לאחרונה״.',
-  'marketing.legal.terms.s2.body':
-    'ROOTÉ מספקת הערכת שיער מבוססת-תמונות בסיוע בינה מלאכותית ומשלב מוצרים מותאם אישית. עליכם להיות בני 18 לפחות ולמסור מידע מדויק. אין לעשות שימוש לרעה בשירות, להעלות תמונות של אדם אחר מלבדכם, לנסות לבצע הנדסה לאחור של הניתוח, או למכור מחדש חלק כלשהו מהשירות.',
-  'marketing.legal.terms.s3.body':
-    'הניתוח והדוח הם הערכה חזותית ראשונית, אינם אבחון רפואי, ואינם מחליפים ייעוץ של רופא מוסמך. התייעצו עם רופא לפני התחלה, שינוי או הפסקה של טיפול, במיוחד אם אתם בהיריון או מניקות, נוטלים תרופות, או סובלים ממצב עורי או של הקרקפת. הפסיקו את השימוש ופנו לייעוץ רפואי אם מופיעה תגובה שלילית.',
-  'marketing.legal.terms.s4.body':
-    'רכישת מוצרים ומינויי תוכנית כפופים לתנאי המכר שלנו, המסדירים תמחור, תשלום, משלוח, החזרות, החזרים כספיים וחידוש אוטומטי של מינוי. אנא עיינו בתנאי המכר לפני הרכישה.',
-  'marketing.legal.terms.s5.body':
-    'במידה המרבית המותרת בחוק, ROOTÉ ו-91 ENTERPRISE LLC אינן אחראיות לנזקים עקיפים, מקריים או תוצאתיים הנובעים משימוש בשירות. אין באמור כדי לשלול אחריות שאינה ניתנת לשלילה לפי הדין החל. סך אחריותנו לכל תביעה מוגבל לסכום ששילמתם לנו בשנים-עשר החודשים שקדמו לתביעה.',
-  'marketing.legal.terms.s6.body':
-    'התנאים כפופים לדיני מדינת קליפורניה, ארה״ב, מבלי להתחשב בכללי ברירת הדין שלה. מחלוקות שלא ניתן ליישב באופן בלתי-פורמלי יידונו בבתי המשפט המדינתיים או הפדרליים במחוז לוס אנג׳לס, קליפורניה.',
-
-  // פרטי החברה / הישות המשפטית — משותף ל-/terms ול-/terms-of-sale (העובדות ב-roote.config company)
+  // פרטי החברה / הישות המשפטית — מוצגים ב-/terms (העובדות ב-roote.config company)
   'marketing.legal.company.title': 'פרטי החברה',
   'marketing.legal.company.intro': 'ROOTÉ הוא מותג המופעל על ידי החברה שלהלן.',
   'marketing.legal.company.legalNameLabel': 'שם החברה הרשום',
@@ -901,49 +895,6 @@ export const he: Record<MessageKey, string> = {
   'marketing.legal.company.addressLabel': 'כתובת רשומה',
   'marketing.legal.company.emailLabel': 'אימייל',
   'marketing.legal.company.phoneLabel': 'טלפון',
-
-  // תנאי מכר (/terms-of-sale)
-  'marketing.legalSale.title': 'תנאי מכר',
-  'marketing.legalSale.intro':
-    'תנאי מכר אלה מסדירים את רכישת מוצרי ROOTÉ ומינויי התוכנית מ-91 ENTERPRISE LLC (״ROOTÉ״, ״אנחנו״, ״אנו״). הם חלים יחד עם תנאי השימוש ומדיניות הפרטיות שלנו. אנא קראו אותם לפני ביצוע הזמנה.',
-  'marketing.legalSale.s1.title': 'הזמנות וקבלת הזמנה',
-  'marketing.legalSale.s1.body':
-    'ביצוע הזמנה מהווה הצעה לרכישה. ההזמנה מתקבלת, וחוזה נכרת, רק כאשר אנו שולחים אימייל אישור הזמנה או שולחים את המוצרים, לפי המוקדם. אנו רשאים לדחות או לבטל הזמנה (למשל אם פריט אינו במלאי, אם מחיר הוצג בטעות, או אם לא ניתן לאמת את פרטי התשלום או המסירה) ונחזיר כל סכום שכבר חויב.',
-  'marketing.legalSale.s2.title': 'מחירים, מסים ומטבע',
-  'marketing.legalSale.s2.body':
-    'המחירים מוצגים בעת התשלום במטבע המוצג ועשויים להשתנות בכל עת, אך המחיר שאושר בעת ההזמנה הוא המחיר שתשלמו. אלא אם צוין אחרת, המחירים אינם כוללים מסים, מכסים ודמי יבוא, המחושבים בעת התשלום או נגבים במסירה בהתאם ליעד.',
-  'marketing.legalSale.s3.title': 'תשלום',
-  'marketing.legalSale.s3.body':
-    'התשלום נגבה בעת ההזמנה, באמצעות ספק סליקה חיצוני, בשיטות המוצגות בעת התשלום. איננו שומרים מספרי כרטיס מלאים. אם תשלום מבוטל או מוחזר ללא הצדקה, אנו רשאים להשעות את חשבונכם וכל מינוי קשור.',
-  'marketing.legalSale.s4.title': 'משלוח ומסירה',
-  'marketing.legalSale.s4.body':
-    'אנו שולחים ליעדים המפורטים בעת התשלום. הזמנות נערכות למשלוח בדרך כלל בתוך 2–5 ימי עסקים; הערכות המסירה המוצגות בעת התשלום אינן מובטחות. סיכון האובדן עובר אליכם עם המסירה. אם הזמנה מגיעה פגומה או חסרה, פנו אלינו בתוך 14 יום ממועד המסירה.',
-  'marketing.legalSale.s5.title': 'החזרות וזכות הביטול',
-  'marketing.legalSale.s5.body':
-    'ניתן להחזיר מוצרים סגורים ובלתי-משומשים באריזתם המקורית בתוך 30 יום ממועד המסירה, לקבלת החזר של מחיר המוצר. לפתיחת החזרה, שלחו אימייל אל support@roote.us עם מספר ההזמנה. דמי משלוח ההחזרה חלים עליכם, אלא אם המוצר היה פגום, ניזוק או נשלח בטעות. מטעמי היגיינה ובטיחות, מוצרים מקומיים או לבליעה שנפתחו אינם ניתנים להחזרה אלא אם הם פגומים. ניתוח מותאם אישית שכבר סופק אינו ניתן להחזר כספי.',
-  'marketing.legalSale.s6.title': 'החזרים כספיים',
-  'marketing.legalSale.s6.body':
-    'החזרים שאושרו מבוצעים לאמצעי התשלום המקורי בתוך 14 יום מרגע שקיבלנו את הפריט המוחזר או הסכמנו להחזר. ההחזר מכסה את מחיר המוצר, ובמקרה שההחזרה נובעת מטעות שלנו או מפגם, גם את עלות המשלוח הרגיל המקורי. מסים ומכסים מוחזרים כנדרש בחוק.',
-  'marketing.legalSale.s7.title': 'תוכניות מינוי וחידוש אוטומטי',
-  'marketing.legalSale.s7.body':
-    'תוכנית ROOTÉ היא מינוי. בהרשמה אתם מאשרים חיובים חוזרים עבור תקופת התוכנית שבחרתם. אלא אם תבטלו לפני מועד החידוש, המינוי מתחדש אוטומטית לתקופה נוספת באותו אורך ובמחיר התקף באותה עת, ואנו שולחים תזכורת לפני כל חידוש כנדרש בחוק. כל חידוש שולח אספקה חדשה.',
-  'marketing.legalSale.s8.title': 'שינוי, השהיה או ביטול של מינוי',
-  'marketing.legalSale.s8.body':
-    'ניתן לבטל או לשנות את המינוי בכל עת מהחשבון או בפנייה לתמיכה, בתוקף מהחידוש הבא. ביטול עוצר חיובים ומשלוחים עתידיים; הוא אינו מזכה בהחזר עבור תקופה שכבר החלה או מוצרים שכבר נשלחו, למעט כנדרש בחוק או לפי סעיף ההחזרות לעיל. אנו רשאים לשנות את תמחור המינוי בהודעה מוקדמת של 30 יום לפחות לפני שהשינוי חל עליכם.',
-  'marketing.legalSale.s9.title': 'שימוש במוצר והבהרה רפואית',
-  'marketing.legalSale.s9.body':
-    'המוצרים הם פריטים קוסמטיים או ללא מרשם, לשימוש לפי ההוראות על התווית ובתוכנית שלכם. הניתוח של ROOTÉ הוא הערכה חזותית ראשונית, לא אבחון רפואי. התייעצו עם רופא לפני התחלה אם אתם בהיריון או מניקות, מתחת לגיל 18, נוטלים תרופות, או סובלים ממצב עורי או של הקרקפת, והפסיקו את השימוש אם מופיעה תגובה שלילית. התוצאות משתנות מאדם לאדם ואינן מובטחות.',
-  'marketing.legalSale.s10.title': 'אחריות למוצר ותלונות',
-  'marketing.legalSale.s10.body':
-    'אנו מתחייבים שהמוצרים נקיים מפגמים בחומרים ובעבודה בעת המסירה ותואמים לתיאורם. אם מוצר פגום או אינו כמתואר, שלחו אימייל אל support@roote.us בתוך זמן סביר, ואנו נחליף אותו או נחזיר את תמורתו. אין בכך כדי לפגוע בזכויותיכם על פי דין.',
-  'marketing.legalSale.s11.title': 'אחריותנו',
-  'marketing.legalSale.s11.body':
-    'במידה המרבית המותרת בחוק, אחריותנו לכל תביעה הקשורה לרכישה מוגבלת לסכום ששילמתם עבור ההזמנה הרלוונטית, או, במינוי, לסכום ששולם בשנים-עשר החודשים שקדמו לתביעה. איננו אחראים לנזקים עקיפים או תוצאתיים. אין באמור כדי להגביל אחריות למוות או לנזקי גוף שנגרמו ברשלנותנו, למרמה, או לכל דבר שאינו ניתן להגבלה לפי הדין החל.',
-  'marketing.legalSale.s12.title': 'דין חל ומחלוקות',
-  'marketing.legalSale.s12.body':
-    'תנאי מכר אלה כפופים לדיני מדינת קליפורניה, ארה״ב. תחילה ננסה ליישב כל תלונה באופן בלתי-פורמלי: שלחו אימייל אל support@roote.us. מחלוקות שלא ניתן ליישב כך יידונו בבתי המשפט המדינתיים או הפדרליים במחוז לוס אנג׳לס, קליפורניה, מבלי לגרוע מזכויות צרכניות מחייבות במדינת מגוריכם.',
-  'marketing.legalSale.contact':
-    'שאלות על הזמנה או החזרה? כתבו אל support@roote.us או חייגו ‎+1 (310) 651-7283‎.',
 
   // עמוד התמיכה — פרטי יצירת קשר (מחליף את מצייני ה-pending)
   'marketing.support.contact.emailLabel': 'אימייל',
@@ -996,6 +947,7 @@ export const he: Record<MessageKey, string> = {
 
   'analysis.scanning.title': 'מנתחים את השיער שלך…',
   'analysis.scanning.body': 'הסריקה שלך מאורגנת בזמן שאת/ה עונה על כמה שאלות.',
+  'analysis.scanning.percent': 'מנתח/ת… {pct}%',
 
   'analysis.results.title': 'אבחון השיער שלך מוכן',
   'analysis.results.cardTitle': 'פרופיל השיער שלך',
@@ -1056,6 +1008,54 @@ export const he: Record<MessageKey, string> = {
   'app.subscription.legal': 'חיוב מתחדש, תדירות משלוח, מחיר החידוש, מסים ומשלוח מוצגים לפני ההפעלה. ניתן לבטל כאן בכל עת, וזכויות הגנת הצרכן המקומיות שלך נשמרות.',
   'app.noProgram.body': 'אין תוכנית פעילה במכשיר הזה. השלימו רכישה, או טענו תוכנית הדגמה.',
   'app.noProgram.devSeedCta': 'טעינת תוכנית הדגמה (למפתחים בלבד)',
+  'app.preDelivery.title': 'התוכנית שלך בדרך',
+  'app.preDelivery.subtitle': 'הנה למה לצפות לפני היום הראשון שלך.',
+  'app.preDelivery.planReady': 'התוכנית שלך מוכנה',
+  'app.preDelivery.orderTitle': 'ההזמנה שלך',
+  'app.preDelivery.orderedOn': 'הוזמן בתאריך {date}',
+  'app.preDelivery.shippingNote': 'ההזמנה שלך בהכנה ובדרך אליך. בגרסת התצוגה הזו אין מעקב משלוחים חי, כך שברגע שהחבילה תגיע, יש לאשר זאת למטה כדי להתחיל את התוכנית.',
+  'app.preDelivery.supportTitle': 'יש לך שאלות לגבי ההזמנה?',
+  'app.preDelivery.supportBody': 'אפשר לפנות אלינו בכל עת.',
+  'app.preDelivery.confirmCta': 'החבילה הגיעה? אשרו כדי להתחיל את היום הראשון שלכם',
+  'app.preDelivery.viewShipping': 'צפייה בפרטי המשלוח',
+  'app.preDelivery.mapPending': 'מפת משלוח חיה',
+  'app.preDelivery.orderedStage': 'ההזמנה בוצעה',
+  'app.preDelivery.preparingStage': 'בהכנה ובמשלוח',
+  'app.preDelivery.whileYouWaitTitle': 'בזמן שאת/ה ממתין/ה',
+  'app.preDelivery.reviewPlanRow': 'סקירת התוכנית שלך',
+  'app.preDelivery.reviewPlanTitle': 'איך להשתמש בתוכנית שלך',
+  'app.preDelivery.contactRow': 'יצירת קשר עם התמיכה',
+  'app.preDelivery.shipping.title': 'פרטי משלוח',
+  'app.preDelivery.shipping.orderSummary': 'סיכום ההזמנה',
+  'app.preDelivery.shipping.priceLabel': 'סך ההזמנה',
+  'app.preDelivery.shipping.supportCenter': 'מרכז תמיכה',
+  'app.preDelivery.shipping.refundRow': 'בקשת החזר או החזרה',
+  'app.preDelivery.shipping.contactRow': 'יצירת קשר עם התמיכה',
+  'app.preDelivery.shipping.helpRow': 'מרכז עזרה',
+  'app.preDelivery.refund.title': 'בקשת החזר או החזרה',
+  'app.preDelivery.refund.intro': 'ספרו לנו מה קרה ונבדוק את הבקשה שלכם.',
+  'app.preDelivery.refund.reasonLabel': 'סיבה',
+  'app.preDelivery.refund.reasonDamaged': 'מוצר פגום',
+  'app.preDelivery.refund.reasonNotExpected': 'לא מה שציפיתי לו',
+  'app.preDelivery.refund.reasonNoLongerNeeded': 'כבר לא נחוץ לי',
+  'app.preDelivery.refund.reasonOther': 'אחר',
+  'app.preDelivery.refund.detailsLabel': 'פרטים (לא חובה)',
+  'app.preDelivery.refund.detailsPlaceholder': 'ספרו לנו עוד...',
+  'app.preDelivery.refund.submit': 'שליחת בקשה',
+  'app.preDelivery.refundSent.title': 'הבקשה נשלחה',
+  'app.preDelivery.refundSent.body': 'קיבלנו את בקשתכם ונחזור אליכם במייל.',
+  'app.preDelivery.refundSent.back': 'חזרה לפרטי המשלוח',
+  'app.preDelivery.contact.title': 'יצירת קשר עם התמיכה',
+  'app.preDelivery.contact.body': 'הצוות שלנו זמין במייל או בטלפון לשאלות לגבי ההזמנה, התוכנית או המוצרים שלכם.',
+  'app.preDelivery.help.title': 'מרכז עזרה',
+  'app.preDelivery.help.q1': 'מתי ההזמנה שלי תגיע?',
+  'app.preDelivery.help.a1': 'בגרסת התצוגה הזו אין מעקב משלוחים חי. ברגע שהחבילה תגיע, חיזרו לכאן ואשרו זאת כדי להתחיל את התוכנית.',
+  'app.preDelivery.help.q2': 'איך התוכנית שלי עובדת?',
+  'app.preDelivery.help.a2': 'התוכנית משלבת את המוצרים והשגרה שהערכה שלכם התאימה לכם, ומתועדת החל מהיום שבו תאשרו את קבלת המשלוח.',
+  'app.preDelivery.help.q3': 'אפשר לשנות את התוכנית או המוצרים שלי?',
+  'app.preDelivery.help.a3': 'צרו קשר עם התמיכה ונעזור לכם לעדכן את התוכנית או המוצרים.',
+  'app.preDelivery.help.q4': 'מה עושים אם מוצר מגיע פגום?',
+  'app.preDelivery.help.a4': 'יש להגיש בקשת החזר או החזרה עם פרטים על הנזק.',
   'app.task.pendingName': 'הטיפול שלך',
 
   'app.today.title': 'היום',
@@ -1299,6 +1299,8 @@ export const he: Record<MessageKey, string> = {
   'app.rescan.compare.latest': 'עדכני',
   'app.profile.title': 'הפרופיל שלך',
   'app.profile.account.title': 'חשבון',
+  'app.profile.preferences.title': 'העדפות',
+  'app.profile.chooseLanguage': 'בחירת שפה',
   'app.profile.email': 'אימייל',
   'app.profile.memberSince': 'חבר/ה מאז',
   'app.profile.program.title': 'התוכנית שלך',

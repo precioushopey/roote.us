@@ -106,7 +106,7 @@ function ProgressMetricsPanel({ onGoBeforeAfter }: { onGoBeforeAfter: () => void
 
         {baselineMetrics.length === 0 ? (
           <Card tone="cream">
-            <Prose>{t('app.progress.noBaseline')}</Prose>
+            <Prose className="text-sm sm:text-sm md:text-sm">{t('app.progress.noBaseline')}</Prose>
           </Card>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -142,11 +142,11 @@ function ProgressMetricsPanel({ onGoBeforeAfter }: { onGoBeforeAfter: () => void
 
         {scans.length === 0 ? (
           <Card tone="cream" className="flex flex-col gap-2">
-            <Prose>{t('app.progress.noScanYet')}</Prose>
-            <Prose className="text-muted-foreground">{t('app.progress.metricsNote')}</Prose>
+            <Prose className="text-sm sm:text-sm md:text-sm">{t('app.progress.noScanYet')}</Prose>
+            <Prose className="text-sm sm:text-sm md:text-sm text-muted-foreground">{t('app.progress.metricsNote')}</Prose>
           </Card>
         ) : (
-          <Prose className="text-muted-foreground">{t('app.progress.metricsNote')}</Prose>
+          <Prose className="text-sm sm:text-sm md:text-sm text-muted-foreground">{t('app.progress.metricsNote')}</Prose>
         )}
       </section>
 
@@ -202,7 +202,7 @@ export function AccountProgress() {
       <AccountPageHeader eyebrow={t('app.nav.progress')} title={t('app.progress.title')} />
 
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <Prose>{t('app.progress.subtitle')}</Prose>
+        <Prose className="text-sm sm:text-sm md:text-sm">{t('app.progress.subtitle')}</Prose>
         <Button to={withLocale(`${PATHS.accountSection('progress')}?tab=scans`)} variant="secondary">
           {t('app.care.rescanLink')}
         </Button>

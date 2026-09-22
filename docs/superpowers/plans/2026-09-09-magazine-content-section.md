@@ -742,7 +742,7 @@ export function Magazine() {
         <DisplayTitle as="h2" step="lg" className="mt-2 max-w-2xl">
           {t('marketing.magazine.formatsHeading')}
         </DisplayTitle>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {(Object.keys(FORMAT_EXPLANATIONS) as Array<keyof typeof FORMAT_EXPLANATIONS>).map((format) => (
             <div key={format} className="flex flex-col gap-2 rounded-xl border border-border bg-card p-6">
               <p className="font-display text-md text-foreground">{t(FORMAT_LABEL_KEY[format])}</p>
@@ -759,7 +759,7 @@ export function Magazine() {
         </DisplayTitle>
         {/* Reuses each product's own already-approved shortDescription as the
             teaser, rather than drafting new copy that could drift from /products. */}
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((p) => (
             <Link
               key={p.slug}

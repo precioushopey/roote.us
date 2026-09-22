@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { SessionProvider } from '@/store/sessionStore';
 import { AuthProvider } from '@/store/auth';
-import { CartProvider } from '@/store/cart';
 import { TrackingProvider } from '@/store/tracking';
 import { ToastProvider } from '@/app/components/roote';
 import { LocaleGate, BareOrLegacyPathRedirect, LocalizedNavigate } from './LocaleGate';
@@ -86,13 +85,11 @@ export default function App() {
   return (
     <AuthProvider>
       <SessionProvider>
-        <CartProvider>
-          <TrackingProvider>
-            <ToastProvider>
-              <RouterProvider router={router} />
-            </ToastProvider>
-          </TrackingProvider>
-        </CartProvider>
+        <TrackingProvider>
+          <ToastProvider>
+            <RouterProvider router={router} />
+          </ToastProvider>
+        </TrackingProvider>
       </SessionProvider>
     </AuthProvider>
   );

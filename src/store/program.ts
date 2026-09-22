@@ -11,7 +11,9 @@ function addDays(iso: string, days: number): string {
   return toIsoDate(d);
 }
 
-/** Builds a frozen Program from the just-purchased order. Pure aside from reading `today`. */
+/** Builds a frozen Program from the just-purchased order. `startDate` stays
+ *  `null` — the routine's Day 0 isn't set until `confirmDelivery` runs. Pure
+ *  aside from reading `today`. */
 export function buildProgram(input: {
   orderId: string;
   reportId: string;
@@ -20,17 +22,26 @@ export function buildProgram(input: {
   plan: Pick<ReportModel['plan'], 'core' | 'supporting'>;
   today?: Date;
 }): Program {
-  const startDate = toIsoDate(input.today ?? new Date());
+  const orderedAt = toIsoDate(input.today ?? new Date());
   return {
     orderId: input.orderId,
     reportId: input.reportId,
     analysisSnapshot: input.analysis,
     durationDays: input.durationDays,
-    startDate,
-    endDate: addDays(startDate, input.durationDays),
+    orderedAt,
+    startDate: null,
+    endDate: null,
     plan: { core: input.plan.core, supporting: input.plan.supporting },
     completionLog: {},
     progressPhotos: [],
     reminders: [],
   };
+}
+
+/** Confirms the package arrived — sets Day 0 to `today` and computes
+ *  `endDate` from it. Pure; the caller persists the result via
+ *  `session.setProgram`. */
+export function confirmDelivery(program: Program, today?: Date): Program {
+  const startDate = toIsoDate(today ?? new Date());
+  return { ...program, startDate, endDate: addDays(startDate, program.durationDays) };
 }

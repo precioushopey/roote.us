@@ -91,17 +91,18 @@ function shiftIso(iso: string, deltaDays: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-/** 1-based day within the program, clamped to [1, durationDays]. */
+/** 1-based day within the program, clamped to [1, durationDays]. Callers only
+ *  reach this once delivery is confirmed (see Program.startDate), so it's set. */
 export function programDay(program: Program, today: string = isoToday()): number {
-  return Math.min(program.durationDays, Math.max(1, daysBetween(program.startDate, today) + 1));
+  return Math.min(program.durationDays, Math.max(1, daysBetween(program.startDate!, today) + 1));
 }
 
 export function daysRemaining(program: Program, today: string = isoToday()): number {
-  return Math.max(0, daysBetween(today, program.endDate));
+  return Math.max(0, daysBetween(today, program.endDate!));
 }
 
 export function reorderDate(program: Program): string {
-  return shiftIso(program.endDate, -rooteContent.reorderLeadDays);
+  return shiftIso(program.endDate!, -rooteContent.reorderLeadDays);
 }
 
 export function isReorderDue(program: Program, today: string = isoToday()): boolean {

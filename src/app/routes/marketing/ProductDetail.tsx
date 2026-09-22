@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import { Check } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
   Section,
@@ -7,7 +8,6 @@ import {
   Eyebrow,
   Button,
   Badge,
-  Card,
   Accordion,
   MediaPlaceholder,
   IngredientCard,
@@ -16,6 +16,7 @@ import {
   CtaSection,
   SectionIntro,
 } from '@/app/components/roote';
+import { useFitTitle } from '@/app/lib/useFitTitle';
 import { PATHS } from '@/app/paths';
 import { INGREDIENT_PHOTOS } from '@/app/components/roote/ingredientPhotos';
 import { pickLocalized } from '@/content/localized';
@@ -28,17 +29,16 @@ import { PagePlaceholder } from '@/app/routes/shared/PagePlaceholder';
 import level6 from '@/assets/products/Level 6.png';
 import level10 from '@/assets/products/Level 10.png';
 import level15 from '@/assets/products/Level 15.png';
-import graySupport from '@/assets/products/Gray Support.png';
-import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
-import graySerum from '@/assets/products/Gray Serum.png';
 
+/* 'gray-support' / 'regrowth-shampoo' / 'gray-serum' are deliberately left
+   out — the client-supplied packaging photography for those three SKUs was
+   a placeholder mockup, not final, so it was pulled project-wide
+   (2026-09-22). Both `<img>` usages below already fall back to
+   `MediaPlaceholder` when a slug has no entry here. */
 const PRODUCT_PHOTOS: Record<string, string> = {
   'density-6': level6,
   'density-10': level10,
   'density-15': level15,
-  'gray-support': graySupport,
-  'regrowth-shampoo': regrowthShampoo,
-  'gray-serum': graySerum,
 };
 
 /** Product page template (brief §20). Secondary to the assessment — the primary
@@ -48,6 +48,7 @@ export function ProductDetail() {
   const t = useT();
   const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
+  const titleRef = useFitTitle<HTMLHeadingElement>(3);
   const product = slug ? getProduct(slug) : undefined;
   const statusLabel: Record<ClaimStatus, string> = {
     approved: t('marketing.sci.status.approved'),
@@ -60,7 +61,6 @@ export function ProductDetail() {
   const related = product.relatedProducts.map(getProduct).filter((p): p is NonNullable<typeof p> => !!p);
   const isGrayConcern = product.concern === 'gray' || product.concern === 'gray-support';
   const eyebrowLabel = isGrayConcern ? t('marketing.shop.filterGray') : t('marketing.shop.filterThinning');
-  const [spotlightIngredient, ...restIngredients] = product.ingredients;
   const badgeLabel: Record<(typeof product.badges)[number], string> = {
     vegan: t('marketing.pdp.badge.vegan'),
     'cruelty-free': t('marketing.pdp.badge.crueltyFree'),
@@ -77,6 +77,16 @@ export function ProductDetail() {
         ? `${pickLocalized(product.formulaReference, cl)} ${t('marketing.pdp.formulaNote')}`
         : t('marketing.pdp.formulaNote'),
     },
+    {
+      id: 'prescription',
+      title: t('marketing.pdp.faqPrescription.q'),
+      body: product.requiresMedicalReview
+        ? t('marketing.pdp.faqPrescription.aYes')
+        : t('marketing.pdp.faqPrescription.aNo'),
+    },
+    ...(product.slug.startsWith('density-')
+      ? [{ id: 'strength', title: t('marketing.pdp.faqStrength.q'), body: t('marketing.pdp.faqStrength.a') }]
+      : []),
     ...PRODUCT_FAQS_COMMON.map((f) => ({
       id: f.id,
       title: pickLocalized(f.q, cl),
@@ -87,13 +97,13 @@ export function ProductDetail() {
   return (
     <>
       <Section tone="teal" width="content" className="py-12 md:py-12">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+        <div className="flex flex-col items-center gap-12 lg:flex-row">
           {PRODUCT_PHOTOS[product.slug] ? (
             <img
               src={PRODUCT_PHOTOS[product.slug]}
               alt={`${product.name} packaging`}
               loading="lazy"
-              className="aspect-square w-full rounded-sm object-contain"
+              className="aspect-square w-full rounded-sm object-contain lg:w-1/2"
             />
           ) : (
             <MediaPlaceholder
@@ -101,11 +111,12 @@ export function ProductDetail() {
               ratio="1"
               alt={`${product.name} packaging`}
               label={`${product.name}: product photography, ${product.requiresMedicalReview ? 'dark-teal' : 'cream'} packaging`}
+              className="w-full lg:w-1/2"
             />
           )}
-          <div className="flex flex-col items-start gap-4">
+          <div className="flex w-full flex-col items-start gap-4 text-start lg:w-1/2">
             <Eyebrow className="text-ink-foreground">{eyebrowLabel}</Eyebrow>
-            <DisplayTitle as="h1" step="md" className="!font-normal">
+            <DisplayTitle ref={titleRef} as="h1" className="!font-normal">
               {product.name}
             </DisplayTitle>
             <Prose className="text-ink-foreground">
@@ -129,76 +140,52 @@ export function ProductDetail() {
                 )}
               </span>
             </div>
-            <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
-              {t('marketing.nav.cta')}
-            </Button>
+            <div className="mt-4 w-full sm:w-auto">
+              <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
+                {t('marketing.nav.cta')}
+              </Button>
+            </div>
           </div>
         </div>
       </Section>
 
       <Section tone="cream" width="content" gap={4}>
-        <SectionIntro
-          eyebrow={"Change this"}
-          title={t('marketing.pdp.fitTitle')}
-          body={"Change this"}
-        />
-        <h2 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.fitTitle')}</h2>
-        <Prose>{pickLocalized(product.shortDescription, cl)}</Prose>
-        <Prose>{t('marketing.pdp.fitBody')}</Prose>
+        <SectionIntro title={t('marketing.pdp.fitTitle')} body={t('marketing.pdp.fitBody')} />
+        <div className="flex flex-col gap-2">
+          <h3 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.keyBenefits')}</h3>
+          <ul className="flex flex-col gap-2">
+            {product.keyBenefits.map((benefit, i) => (
+              <li key={i} className="flex items-start gap-2 font-body text-sm md:text-base text-muted-foreground">
+                <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent" strokeWidth={2} />
+                <span>{pickLocalized(benefit, cl)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {product.overview ? (
+          <div className="flex flex-col gap-2">
+            <h3 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.overview')}</h3>
+            <Prose>{pickLocalized(product.overview, cl)}</Prose>
+          </div>
+        ) : (
+          <Prose>{pickLocalized(product.shortDescription, cl)}</Prose>
+        )}
       </Section>
 
       <Section tone="cream" width="content" gap={8} className="-mt-24">
-        <SectionIntro
-          eyebrow={"Change this"}
-          title={t('marketing.pdp.activesTitle')}
-          body={"Change this"}
-        />
-        {spotlightIngredient ? (
+        <SectionIntro title={t('marketing.pdp.activesTitle')} body={t('marketing.pdp.activesBody')} />
+        {product.ingredients.length > 0 ? (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
-            {INGREDIENT_PHOTOS[spotlightIngredient.name] ? (
-              <img
-                src={INGREDIENT_PHOTOS[spotlightIngredient.name]}
-                alt=""
-                aria-hidden
-                loading="lazy"
-                className="aspect-square w-full rounded-sm object-cover sm:w-40 sm:flex-none"
+            {product.ingredients.map((ing) => (
+              <IngredientCard
+                key={ing.name}
+                name={ing.strength ? `${ing.name} ${ing.strength}` : ing.name}
+                note={pickLocalized(ing.note, cl)}
+                status={ing.claimStatus}
+                statusLabel={ing.claimStatus === 'approved' ? statusLabel[ing.claimStatus] : undefined}
+                image={INGREDIENT_PHOTOS[ing.name]}
               />
-            ) : null}
-            <div className="flex flex-1 flex-col gap-2">
-              <div className="flex items-start justify-between gap-2">
-                <p className="font-display text-xl md:text-2xl text-foreground">
-                  {spotlightIngredient.name}
-                  {spotlightIngredient.strength ? ` ${spotlightIngredient.strength}` : ''}
-                </p>
-                {spotlightIngredient.claimStatus === 'approved' ? (
-                  <Badge tone="success">{statusLabel.approved}</Badge>
-                ) : null}
-              </div>
-              <div className="max-w-[62ch] font-body text-sm md:text-base text-muted-foreground">
-                {spotlightIngredient.claimStatus === 'requires-review' ? (
-                  <PendingChip label={`${spotlightIngredient.name} claim`} />
-                ) : (
-                  pickLocalized(spotlightIngredient.note, cl)
-                )}
-              </div>
-            </div>
-          </div>
-        ) : null}
-        {restIngredients.length > 0 ? (
-          <div className="flex flex-col gap-4">
-            <h3 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.alsoInFormula')}</h3>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
-              {restIngredients.map((ing) => (
-                <IngredientCard
-                  key={ing.name}
-                  name={ing.strength ? `${ing.name} ${ing.strength}` : ing.name}
-                  note={pickLocalized(ing.note, cl)}
-                  status={ing.claimStatus}
-                  statusLabel={ing.claimStatus === 'approved' ? statusLabel[ing.claimStatus] : undefined}
-                  image={INGREDIENT_PHOTOS[ing.name]}
-                />
-              ))}
-            </div>
+            ))}
           </div>
         ) : null}
         {product.fullIngredientList.length > 0 ? (
@@ -214,11 +201,7 @@ export function ProductDetail() {
       </Section>
 
       <Section tone="grid" width="content" gap={8} className="-mt-24">
-        <SectionIntro
-          eyebrow={"Change this"}
-          title={"Title here"}
-          body={"Change this"}
-        />
+        <SectionIntro title={t('marketing.pdp.directionsTitle')} body={t('marketing.pdp.directionsBody')} />
         <div className="flex flex-col gap-2">
           <h2 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.howToUse')}</h2>
           <Prose>{pickLocalized(product.usage, cl)}</Prose>
@@ -247,15 +230,10 @@ export function ProductDetail() {
       {product.supplementFacts ? (
         <Section tone="grid" width="content" gap={8} className="-mt-24">
           <SectionIntro
-            eyebrow={"Change this"}
             title={t('marketing.pdp.supplementFacts.title')}
-            body={"Change this"}
+            body={`${t('marketing.pdp.supplementFacts.servingSize')}: ${product.supplementFacts.servingSize} · ${t('marketing.pdp.supplementFacts.servingsPerContainer')}: ${product.supplementFacts.servingsPerContainer}`}
           />
           <div className="flex flex-col gap-4">
-            <p className="font-body text-sm text-muted-foreground">
-              {t('marketing.pdp.supplementFacts.servingSize')}: {product.supplementFacts.servingSize} ·{' '}
-              {t('marketing.pdp.supplementFacts.servingsPerContainer')}: {product.supplementFacts.servingsPerContainer}
-            </p>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse font-body text-sm">
                 <thead>
@@ -294,21 +272,13 @@ export function ProductDetail() {
       ) : null}
 
       <Section tone="grid" width="content" gap={8} className="-mt-24">
-        <SectionIntro
-          eyebrow={"Change this"}
-          title={t('marketing.pdp.detailsTitle')}
-          body={"Change this"}
-        />
+        <SectionIntro title={t('marketing.pdp.detailsTitle')} body={t('marketing.pdp.detailsBody')} />
         <Accordion items={details} />
       </Section>
 
       {related.length > 0 ? (
         <Section tone="cream" width="content" gap={8} className="-mt-24">
-          <SectionIntro
-            eyebrow={"Change this"}
-            title={t('marketing.pdp.relatedTitle')}
-            body={"Change this"}
-          />
+          <SectionIntro title={t('marketing.pdp.relatedTitle')} body={t('marketing.pdp.relatedBody')} />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
             {related.map((p) => (
               <ProductCard

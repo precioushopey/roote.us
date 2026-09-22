@@ -7,6 +7,7 @@ import {
   Button,
   ConcernCard,
   MediaCaption,
+  MediaPlaceholder,
   Timeline,
   BeforeAfterSlider,
   Hero,
@@ -26,16 +27,12 @@ import heroImage from '@/assets/heroes/Hero.png';
 import concernThinning from '@/assets/concerns/solution-thinning-crown.png';
 import concernGray from '@/assets/concerns/solution-gray-advanced.png';
 import concernBoth from '@/assets/concerns/concern-both.png';
-import systemMen from '@/assets/bundles/system-men.png';
-import systemWomen from '@/assets/bundles/system-women.png';
 import scanBaseline from '@/assets/scans/scan-baseline.png';
 import scanFinal from '@/assets/scans/scan-progress.png';
 import step1Quiz from '@/assets/steps/step-1-quiz.png';
 import step3Formula from '@/assets/steps/step-3-formula.png';
 import step4Progress from '@/assets/steps/step-4-progress.png';
 import step5Track from '@/assets/steps/step-5-track.png';
-import grayBundleMen from '@/assets/bundles/gray-bundle-men.png';
-import grayBundleWomen from '@/assets/bundles/gray-bundle-women.png';
 import level6 from '@/assets/products/Level 6.png';
 import level10 from '@/assets/products/Level 10.png';
 import level15 from '@/assets/products/Level 15.png';
@@ -254,20 +251,22 @@ function SystemAndProgress() {
         />
         <div className="grid gap-8 lg:grid-cols-2">
           <div data-pack="men" className="flex flex-col gap-8">
-            <img
-              src={systemMen}
+            <MediaPlaceholder
               alt={t('marketing.home.system.menMediaAlt')}
-              loading="lazy"
-              className="aspect-[4/3] w-full rounded-sm object-contain shadow-product"
+              label={`${t('marketing.home.system.menMediaAlt')}: product photography`}
+              ratio="4 / 3"
+              tone="cream"
+              className="w-full shadow-product"
             />
             <p className="u-caps text-center font-body text-sm font-medium text-foreground">{t('marketing.home.system.men')}</p>
           </div>
           <div data-pack="women" className="flex flex-col gap-8">
-            <img
-              src={systemWomen}
+            <MediaPlaceholder
               alt={t('marketing.home.system.womenMediaAlt')}
-              loading="lazy"
-              className="aspect-[4/3] w-full rounded-sm object-contain shadow-product"
+              label={`${t('marketing.home.system.womenMediaAlt')}: product photography`}
+              ratio="4 / 3"
+              tone="card"
+              className="w-full shadow-product"
             />
             <p className="u-caps text-center font-body text-sm font-medium text-foreground">{t('marketing.home.system.women')}</p>
           </div>
@@ -380,8 +379,8 @@ function GraySystem() {
   const support = getProduct('gray-support')!;
   const serum = getProduct('gray-serum')!;
   const packs = [
-    { id: 'men', label: t('marketing.home.gray.forMen'), image: grayBundleMen },
-    { id: 'women', label: t('marketing.home.gray.forWomen'), image: grayBundleWomen },
+    { id: 'men' as const, label: t('marketing.home.gray.forMen') },
+    { id: 'women' as const, label: t('marketing.home.gray.forWomen') },
   ];
   return (
     <Section tone="cream" width="content" className="-mt-24">
@@ -400,11 +399,12 @@ function GraySystem() {
           <MediaCaption
             key={pack.id}
             media={
-              <img
-                src={pack.image}
+              <MediaPlaceholder
                 alt={t('marketing.home.gray.mediaAlt')}
-                loading="lazy"
-                className="aspect-[3/4] w-full rounded-sm object-contain"
+                label={`${t('marketing.home.gray.mediaAlt')}: product photography`}
+                ratio="3 / 4"
+                tone={pack.id === 'men' ? 'teal' : 'card'}
+                className="w-full"
               />
             }
             title={pack.label}

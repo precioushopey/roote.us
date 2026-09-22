@@ -903,7 +903,7 @@ export function ReportHeader({ model }: { model: ReportModel }) {
 
 export function ReportPhotos({ model }: { model: ReportModel }) {
   return (
-    <section className="grid grid-cols-2 gap-3 px-4 py-4">
+    <section className="grid grid-cols-2 gap-4 px-4 py-4">
       {model.photos.map((p) => (
         <figure key={p.angleKey} className="flex flex-col gap-1">
           <img src={p.dataUrl} alt={p.caption} className="h-28 w-full rounded-lg object-cover" />
@@ -1095,7 +1095,7 @@ function TextOrPending({ value }: { value: string | { __pending: true; label: st
 export function ReportPlan({ model }: { model: ReportModel }) {
   const p = model.plan;
   return (
-    <section className="flex flex-col gap-3 px-4 py-4">
+    <section className="flex flex-col gap-4 px-4 py-4">
       <span className="w-fit rounded-full bg-accent px-3 py-1 text-[11px] font-medium text-accent-foreground">
         {p.matchedToScanBadge}
       </span>
@@ -1134,7 +1134,7 @@ export function ReportDuration({ model }: { model: ReportModel }) {
 
 export function ReportPricing({ model }: { model: ReportModel }) {
   return (
-    <section className="flex flex-col gap-3 px-4 py-4">
+    <section className="flex flex-col gap-4 px-4 py-4">
       <div className="rounded-lg border border-accent p-4 text-center">
         <p className="text-lg font-medium"><MoneyOrPending value={model.pricing.price} /></p>
         <p className="text-xs text-muted-foreground"><MoneyOrPending value={model.pricing.perDay} /></p>

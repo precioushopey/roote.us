@@ -27,7 +27,11 @@ export function buildUserProgram(input: {
   taskCountPerDay: number;
 }): UserProgram {
   const { program, tracking, today, reorderLeadDays, taskCountPerDay } = input;
-  const { durationDays, startDate, endDate } = program;
+  const { durationDays } = program;
+  // AppShell only renders anything that reaches this builder once delivery
+  // is confirmed (see Program.startDate), so both are set by this point.
+  const startDate = program.startDate!;
+  const endDate = program.endDate!;
 
   const currentDay = programDay(startDate, durationDays, today);
   const rawDay = daysBetween(startDate, today) + 1;

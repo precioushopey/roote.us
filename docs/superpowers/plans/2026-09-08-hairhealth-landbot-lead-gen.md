@@ -373,8 +373,8 @@ export function HairScan() {
   const withLocale = useLocalizedPath();
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-6 py-12">
-      <div className="flex flex-col gap-3">
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-6 py-12">
+      <div className="flex flex-col gap-4">
         <h1 className={funnelHeading}>{t('hairScan.title')}</h1>
         <p className="font-body text-sm text-muted-foreground">{t('hairScan.intro')}</p>
       </div>

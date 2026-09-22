@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
@@ -16,46 +16,32 @@ import {
 } from '@/app/components/roote';
 import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
-import { PRODUCTS, getProduct, type Product } from '@/content/products';
+import { PRODUCTS, type Product } from '@/content/products';
 import { SHOP_BUNDLES } from '@/content/bundles';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
-import { useCart } from '@/store/cart';
-import catalogHero from '@/assets/heroes/catalog-hero.png';
+import heroImage from '@/assets/heroes/Hero.png';
 import level6 from '@/assets/products/Level 6.png';
 import level10 from '@/assets/products/Level 10.png';
 import level15 from '@/assets/products/Level 15.png';
-import graySupport from '@/assets/products/Gray Support.png';
-import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
-import graySerum from '@/assets/products/Gray Serum.png';
-import grayBundleWomen from '@/assets/bundles/gray-bundle-women.png';
-import grayBundleMen from '@/assets/bundles/gray-bundle-men.png';
-import systemWomen from '@/assets/bundles/system-women.png';
-import systemMen from '@/assets/bundles/system-men.png';
-import regrowthBundleMen from '@/assets/bundles/regrowth-bundle-men.png';
-import regrowthBundleWomen from '@/assets/bundles/regrowth-bundle-women.png';
 
+/* 'gray-support' / 'regrowth-shampoo' / 'gray-serum' are deliberately left
+   out — the client-supplied packaging photography for those three SKUs was
+   a placeholder mockup, not final, so it was pulled project-wide
+   (2026-09-22). `ProductCard` renders a `MediaPlaceholder` when a slug has
+   no entry here. */
 const PRODUCT_PHOTOS: Record<string, string> = {
   'density-6': level6,
   'density-10': level10,
   'density-15': level15,
-  'gray-support': graySupport,
-  'regrowth-shampoo': regrowthShampoo,
-  'gray-serum': graySerum,
 };
 
-const BUNDLE_PHOTOS: Record<string, string> = {
-  'complete-system-men': systemMen,
-  'complete-system-women': systemWomen,
-  'gray-support-bundle-men': grayBundleMen,
-  'gray-support-bundle-women': grayBundleWomen,
-  'hair-growth-bundle-men': regrowthBundleMen,
-  'hair-growth-bundle-women': regrowthBundleWomen,
-};
-
-function bundleRequiresReview(bundle: (typeof SHOP_BUNDLES)[number]) {
-  return bundle.skus.some((slug) => getProduct(slug)?.requiresMedicalReview);
-}
+/* Every bundle image was the same superseded dark-green/cream packaging
+   mockup as the individual SKUs above — pulled project-wide (2026-09-22).
+   `BundleCard` renders a `MediaPlaceholder` when a bundle id has no entry
+   here. (`BundleSection` itself is currently hidden — see its call site
+   below — so this only matters once it's re-enabled.) */
+const BUNDLE_PHOTOS: Record<string, string> = {};
 
 type Filter = 'all' | 'thinning' | 'gray';
 
@@ -68,67 +54,8 @@ function matches(p: Product, f: Filter) {
 const OUTLINE_CTA_CLASS =
   'inline-flex w-full items-center justify-center rounded-full border border-accent px-4 py-2.5 font-body text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
 
-const MAX_QTY = 20;
-
-/** Pre-add quantity picker — matches the same +/- stepper already used to
- *  edit line quantities on /bag (BagPage.tsx), just not yet in the cart. */
-function QuantityStepper({ qty, onChange }: { qty: number; onChange: (qty: number) => void }) {
-  const t = useT();
-  return (
-    <div className="inline-flex w-fit items-center self-start rounded-full border border-border">
-      <button
-        type="button"
-        aria-label={t('cart.decrease')}
-        onClick={() => onChange(Math.max(1, qty - 1))}
-        className="px-3 py-2.5 text-sm"
-      >
-        –
-      </button>
-      <span className="min-w-7 text-center text-sm tabular-nums">{qty}</span>
-      <button
-        type="button"
-        aria-label={t('cart.increase')}
-        onClick={() => onChange(Math.min(MAX_QTY, qty + 1))}
-        className="px-3 py-2.5 text-sm"
-      >
-        +
-      </button>
-    </div>
-  );
-}
-
-function AddToBagButton({ sku }: { sku: string }) {
-  const t = useT();
-  const cart = useCart();
-  const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
-  useEffect(() => () => clearTimeout(timer.current), []);
-
-  return (
-    <div className="flex flex-row items-center gap-2">
-      <QuantityStepper qty={qty} onChange={setQty} />
-      <button
-        type="button"
-        aria-live="polite"
-        onClick={() => {
-          for (let i = 0; i < qty; i += 1) cart.add(sku);
-          setAdded(true);
-          setQty(1);
-          clearTimeout(timer.current);
-          timer.current = setTimeout(() => setAdded(false), 1600);
-        }}
-        className={`flex-1 ${OUTLINE_CTA_CLASS}`}
-      >
-        {added ? t('cart.added') : t('cart.add')}
-      </button>
-    </div>
-  );
-}
-
-/* Density SKUs (and bundles that include one) are assessment + review gated —
-   no direct add-to-bag. Point people at the free hair analysis instead of a
-   bare "Review" badge or review note. */
+/* Every product and bundle is assessment-gated — no self-serve add-to-bag.
+   Point people at the free hair analysis instead of a buy button. */
 function FindYourMatchCta() {
   const t = useT();
   const withLocale = useLocalizedPath();
@@ -147,13 +74,7 @@ function FindYourMatchCta() {
 function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   const t = useT();
   const cl = useLocale().locale;
-  const cart = useCart();
-  const requiresReview = bundleRequiresReview(bundle);
   const image = BUNDLE_PHOTOS[bundle.id];
-  const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
-  useEffect(() => () => clearTimeout(timer.current), []);
   const hasDiscount = bundle.price !== null && bundle.compareAtPrice !== null && bundle.compareAtPrice > bundle.price;
 
   return (
@@ -196,36 +117,13 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
           )}
         </div>
       </div>
-      {requiresReview ? (
-        <FindYourMatchCta />
-      ) : (
-        <div className="flex flex-row items-center gap-2">
-          <QuantityStepper qty={qty} onChange={setQty} />
-          <button
-            type="button"
-            aria-live="polite"
-            onClick={() => {
-              for (let i = 0; i < qty; i += 1) cart.addBundle(bundle.id);
-              setAdded(true);
-              setQty(1);
-              clearTimeout(timer.current);
-              timer.current = setTimeout(() => setAdded(false), 1600);
-            }}
-            className={`flex-1 ${OUTLINE_CTA_CLASS}`}
-          >
-            {added ? t('cart.added') : t('marketing.shop.bundles.cta')}
-          </button>
-        </div>
-      )}
+      <FindYourMatchCta />
     </div>
   );
 }
 
 /* "Bundle & save" — 3 product lines × 2 packaging colorways = 6 fixed sets.
-   Gray Support Bundle is non-prescription and adds to bag in one click;
-   Complete System and Hair Growth Bundle both include Density, so their
-   cards show a review note instead (see `bundleRequiresReview`) — Density
-   itself stays assessment + review gated. */
+   Every bundle is assessment-gated, same as the individual products above. */
 function BundleSection() {
   const t = useT();
   return (
@@ -251,9 +149,9 @@ function ShopFinalCta() {
 }
 
 /**
- * The à-la-carte shop — a kept, secondary "refills & add-ons" surface. Programs
- * with a prescription-strength component still require the assessment; this page
- * makes that explicit. Prices render as [PENDING].
+ * The catalogue browse page — every product requires the free assessment
+ * first, so there is no self-serve add-to-bag here; each card points to the
+ * assessment instead. Prices render as [PENDING].
  */
 export function Products() {
   const t = useT();
@@ -273,7 +171,7 @@ export function Products() {
           </Button>
         }
         image={{
-          src: catalogHero,
+          src: heroImage,
           alt: t('marketing.shop.heroMediaAlt'),
           className: 'aspect-[4/3] w-full object-contain shadow-product',
         }}
@@ -309,7 +207,7 @@ export function Products() {
                 mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
-              {p.requiresMedicalReview ? <FindYourMatchCta /> : <AddToBagButton sku={p.slug} />}
+              <FindYourMatchCta />
             </div>
           ))}
         </div>

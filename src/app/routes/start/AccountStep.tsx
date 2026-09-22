@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { DisplayTitle, Button, TextLink } from '@/app/components/roote';
+import { DisplayTitle, Button, TextLink, PasswordField } from '@/app/components/roote';
 import { track } from '@/analytics/analytics';
 
 const ERROR_KEYS: Record<string, string> = {
@@ -33,7 +33,10 @@ export function AccountStep() {
     }
     session.setEmail(email);
     track('account_activated');
-    navigate(withLocale('/program/plan'));
+    // Duration is usually already chosen on the report page (2026-09-22) —
+    // skip the redundant Plan comparison grid and go straight to Checkout
+    // when it's set; Plan stays reachable via its own "Change" link there.
+    navigate(withLocale(session.draftDurationDays ? '/program/checkout' : '/program/plan'));
   }
 
   return (
@@ -48,12 +51,11 @@ export function AccountStep() {
         </label>
         <label className="flex flex-col gap-2 font-body text-sm">
           {t('start.account.passwordLabel')}
-          <input
-            type="password"
+          <PasswordField
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={FIELD}
+            inputClassName={FIELD}
           />
         </label>
         {error && (

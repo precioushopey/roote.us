@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useAuth } from '@/store/auth';
 import { useSession } from '@/store/sessionStore';
+import { PasswordField } from '@/app/components/roote';
 import { funnelField, funnelHeading, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
 import { PATHS } from '@/app/paths';
 import heroImage from '@/assets/heroes/Hero.png';
@@ -55,12 +56,11 @@ export function LoginPage() {
           </label>
           <label className="flex flex-col gap-2 text-sm">
             {t('start.account.passwordLabel')}
-            <input
-              type="password"
+            <PasswordField
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={funnelField}
+              inputClassName={funnelField}
             />
           </label>
           {error && <p role="alert" className="text-sm text-destructive">{error}</p>}

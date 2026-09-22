@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Navigate, useNavigate, useOutletContext } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { DisplayTitle, RadioCard, Button } from '@/app/components/roote';
+import { DisplayTitle, RadioCard } from '@/app/components/roote';
 import { pickLocalized } from '@/content/localized';
 import { questionsForHairGoal } from '@/content/assessment';
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
@@ -11,7 +11,8 @@ import { getAnalysisProvider } from '@/domain/analysis/provider';
 import { getBlob } from '@/store/persistence';
 import { track } from '@/analytics/analytics';
 import { PATHS } from '@/app/paths';
-import { redirectForAnalysisStep } from './guards';
+import { redirectForAnalysisStep, backPathForAnalysisStep } from './guards';
+import { QuizFooterNav } from './QuizFooterNav';
 import type { Answers, HealthCondition } from '@/domain/analysis/types';
 import type { PhotoRef } from '@/store/sessionStore';
 
@@ -46,22 +47,43 @@ async function loadPhotoBlobs(photos: PhotoRef[]) {
 }
 
 /** Step 6 — one question per screen (brief §12), except Health History which is
- *  multi-select with an explicit Continue. Hair-Growth-style or gray branch set
- *  by Hair Goal. */
+ *  multi-select. Hair-Growth-style or gray branch set by Hair Goal. Picking a
+ *  single-select option writes it immediately and advances the pagination
+ *  on its own (2026-09-22 auto-advance removal reverted per user request);
+ *  Health History (multi-select) still needs the shared QuizFooterNav's
+ *  explicit Next, since picking one option there shouldn't move on before
+ *  the visitor can pick more. The advance itself is deferred to an effect
+ *  (`autoAdvance`) rather than fired inline from `pick`, because the last
+ *  question's advance runs analysis off `session.diagnosis.answers` — that
+ *  needs to observe the just-dispatched answer, which isn't visible until
+ *  after this render's session update commits. Back moves within this
+ *  screen's own pagination once you're past the first question; at the
+ *  first question it's the route-level Back to `photos`. */
 export function QuestionsScreen() {
   const t = useT();
   const cl = useLocale().locale;
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
+  const { requestStartOver } = useOutletContext<{ requestStartOver: () => void }>();
   const [i, setI] = useState(0);
   const [busy, setBusy] = useState(false);
+  const [autoAdvance, setAutoAdvance] = useState(false);
   const finishedRef = useRef(false);
 
   const redirect = redirectForAnalysisStep('questions', session);
 
   const hairGoal = session.diagnosis.hairGoal ?? 'other';
   const questions = useMemo(() => questionsForHairGoal(hairGoal), [hairGoal]);
+
+  useEffect(() => {
+    if (!autoAdvance) return;
+    setAutoAdvance(false);
+    void advance();
+    // `advance` closes over the latest `i`/`session` each render and is only
+    // acted on the render after `pick()` flips `autoAdvance` — see comment above.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoAdvance]);
 
   if (redirect) return <Navigate to={withLocale(redirect)} replace />;
   if (session.analysis || session.grayProfile) {
@@ -77,14 +99,6 @@ export function QuestionsScreen() {
     : isGrayId(q.id)
       ? (session.diagnosis.grayAnswers as Record<string, string>)[q.id]
       : (session.diagnosis.answers as Record<string, string>)[q.id];
-
-  const answered = questions.every((qq) =>
-    qq.id === 'health_history'
-      ? session.diagnosis.healthHistory.length > 0
-      : isGrayId(qq.id)
-        ? (session.diagnosis.grayAnswers as Record<string, string>)[qq.id] !== undefined
-        : (session.diagnosis.answers as Record<string, string>)[qq.id] !== undefined,
-  );
 
   async function finish() {
     if (finishedRef.current) return;
@@ -120,8 +134,7 @@ export function QuestionsScreen() {
       session.setAnswer(q.id as keyof Answers, value as never);
     }
     track('question_answered', { id: q.id });
-    if (i < questions.length - 1) setI(i + 1);
-    else void finish();
+    setAutoAdvance(true);
   }
 
   function toggleHealth(value: string) {
@@ -129,25 +142,19 @@ export function QuestionsScreen() {
     track('question_answered', { id: q.id });
   }
 
-  const isLast = i === questions.length - 1;
+  async function advance() {
+    if (i < questions.length - 1) setI(i + 1);
+    else await finish();
+  }
+
   const canAdvanceHealth = isHealthHistory && session.diagnosis.healthHistory.length > 0;
+  const nextDisabled = busy || (isHealthHistory ? !canAdvanceHealth : currentValue === undefined);
 
   return (
     <section data-animate className="flex flex-col gap-8">
-      <div className="flex items-center gap-4">
-        {i > 0 && (
-          <button
-            type="button"
-            onClick={() => setI(i - 1)}
-            className="font-body text-sm font-medium text-muted-foreground hover:text-foreground"
-          >
-            <span aria-hidden className="inline-block rtl:rotate-180">&larr;</span> {t('common.back')}
-          </button>
-        )}
-        <span className="font-body text-sm text-muted-foreground">
-          {t('q.counter', { index: i + 1, total: questions.length })}
-        </span>
-      </div>
+      <span className="font-body text-sm text-muted-foreground">
+        {t('q.counter', { index: i + 1, total: questions.length })}
+      </span>
 
       <DisplayTitle as="h2" step="sm">
         {pickLocalized(q.prompt, cl)}
@@ -185,17 +192,13 @@ export function QuestionsScreen() {
         </div>
       )}
 
-      {isHealthHistory && (
-        <Button block disabled={!canAdvanceHealth || busy} onClick={() => (isLast ? void finish() : setI(i + 1))}>
-          {busy ? t('analysis.finalizing') : t('common.continue')}
-        </Button>
-      )}
-
-      {!isHealthHistory && answered && isLast && (
-        <Button block disabled={busy} onClick={() => void finish()}>
-          {busy ? t('analysis.finalizing') : t('common.continue')}
-        </Button>
-      )}
+      <QuizFooterNav
+        {...(i > 0 ? { onBack: () => setI(i - 1) } : { backPath: backPathForAnalysisStep('questions', session) })}
+        onStartOver={requestStartOver}
+        onNext={() => void advance()}
+        nextDisabled={nextDisabled}
+        nextLabel={busy ? t('analysis.finalizing') : t('common.continue')}
+      />
     </section>
   );
 }

@@ -1,7 +1,8 @@
 import { deriveAnalysis } from '@/domain/analysis/deriveAnalysis';
 import { buildReport } from '@/domain/report/buildReport';
-import { buildProgram } from '@/store/program';
+import { buildProgram, confirmDelivery } from '@/store/program';
 import { rooteContent } from '@/content/roote.config';
+import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import type { HairAnalysis } from '@/domain/analysis/types';
 import type { Program } from '@/domain/program/types';
 import { type LocaleCode } from '@/i18n/locales';
@@ -24,9 +25,7 @@ export function seedDiagnosisAndReport(): {
   const diagnosis: SessionState['diagnosis'] = {
     gender: 'male',
     // slow-graying → gray-support (morning) + gray-serum (evening), so the
-    // Today page's day-part tabs have more than one populated slot to show
-    // (stop-loss is shampoo-only, per rules.ts — a single-tab dead end for
-    // exercising the tab UI).
+    // Today page's day-part tabs have more than one populated slot to show.
     hairGoal: 'slow-graying',
     photos: [],
     answers,
@@ -49,14 +48,18 @@ export function seedProgram(locale: LocaleCode): {
   program: Program;
 } {
   const { diagnosis, analysis, reportId } = seedDiagnosisAndReport();
-  const model = buildReport({ diagnosis, analysis, content: rooteContent, locale, reportId });
-  const program = buildProgram({
+  const model = buildReport({ diagnosis, analysis, content: rooteContent, locale, reportId, assets: TREATMENT_PHOTOS });
+  const startedAt = new Date(Date.now() - 11 * DAY_MS); // start ~11 days ago -> "Day 12"
+  const ordered = buildProgram({
     orderId: `ord-dev-${Date.now()}`,
     reportId,
     analysis,
     durationDays: analysis.recommendedDurationDays,
     plan: model.plan,
-    today: new Date(Date.now() - 11 * DAY_MS), // start ~11 days ago -> "Day 12"
+    today: startedAt,
   });
+  // Dev-seed skips the pre-delivery screen too — confirm delivery immediately
+  // so /app lands straight in the mid-program dashboard it was built to show.
+  const program = confirmDelivery(ordered, startedAt);
   return { diagnosis, analysis, reportId, program };
 }

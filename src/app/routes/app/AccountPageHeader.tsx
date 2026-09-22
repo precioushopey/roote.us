@@ -24,7 +24,7 @@ export function AccountPageHeader({ eyebrow, title }: { eyebrow?: string; title:
   return (
     <header className="-mx-6 -mt-8 sticky top-0 z-40 flex items-start justify-between gap-4 border-b border-ink-foreground/15 bg-white px-6 py-3 lg:static lg:mx-0 lg:mt-0 lg:border-0 lg:bg-transparent lg:px-0 lg:py-0">
       <div className="flex flex-col gap-1">
-        {eyebrow && <p className="u-caps font-body text-sm font-semibold text-accent">{eyebrow}</p>}
+        {eyebrow && <p className="u-caps font-body text-xs font-semibold text-accent">{eyebrow}</p>}
         <DisplayTitle as="h1" step="sm">
           {title}
         </DisplayTitle>

@@ -4,13 +4,12 @@ import { Home, ClipboardList, LineChart, LifeBuoy, User, type LucideProps } from
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { useCart } from '@/store/cart';
 import { seedProgram } from '@/store/devSeed';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { useDocumentMeta } from '@/seo/useDocumentMeta';
 import { useTrackingMigration } from './useTrackingMigration';
+import { AccountPreDelivery } from './AccountPreDelivery';
 import { Wordmark } from '@/app/components/brand/Wordmark';
-import { CartLink } from '@/app/components/shell/CartLink';
 import { Button, LanguagePicker, RouteFade } from '@/app/components/roote';
 import { packagingFor } from '@/domain/recommendation/recommend';
 import { cn } from '@/app/components/ui/utils';
@@ -37,7 +36,6 @@ export function AppShell() {
   const withLocale = useLocalizedPath();
   const session = useSession();
   const auth = useAuth();
-  const cart = useCart();
   const navigate = useNavigate();
   const location = useLocation();
   useRevealOnRoute();
@@ -45,11 +43,10 @@ export function AppShell() {
   useDocumentMeta();
 
   // Order history (now shown on Profile) doesn't depend on having an active
-  // program — a guest who only bought from the à-la-carte bag (no program)
-  // still needs to reach this one page after signing up to see the order
-  // they just placed (store/orders.ts is a flat, unauthenticated list; any
-  // account "sees" every order already in this browser). Every other
-  // /account/* page still requires a program.
+  // program — a signed-up guest still needs to reach this one page to see
+  // any order already recorded for them (store/orders.ts is a flat,
+  // unauthenticated list; any account "sees" every order already in this
+  // browser). Every other /account/* page still requires a program.
   const isProfileRoute = location.pathname.endsWith('/profile');
 
   if (!session.program && !isProfileRoute) {
@@ -84,6 +81,13 @@ export function AppShell() {
     return <Navigate to={withLocale('/')} replace />;
   }
   if (!auth.email) return <Navigate to={withLocale('/login')} replace />;
+
+  // Checked out, but hasn't confirmed the package arrived yet — no real Day 1
+  // to show, so the whole account app (sidebar, tabs, every route) is
+  // replaced by one landing screen until they self-report delivery.
+  if (session.program && !session.program.startDate) {
+    return <AccountPreDelivery program={session.program} />;
+  }
 
   // PO #24: "Prefer not to say" carries an explicit packaging preference instead
   const { gender, packagingPreference } = session.diagnosis;
@@ -126,9 +130,9 @@ export function AppShell() {
         </nav>
         <div className="mt-auto flex items-center justify-between gap-1 border-t border-ink-foreground/15 pt-4">
           {/* "Run a new hair analysis" now lives on Progress, "Shop products" on
-              Profile (nav consolidation, 2026-09-11) — only the bag stays here
-              as persistent chrome, same as Log out / LanguagePicker. One row:
-              Log out (text) at the start, bag + language icons at the end. */}
+              Profile (nav consolidation, 2026-09-11) — this row is just
+              persistent chrome: Log out (text) at the start, language picker
+              at the end. */}
           <button
             type="button"
             onClick={logout}
@@ -137,8 +141,13 @@ export function AppShell() {
             {t('app.profile.logout')}
           </button>
           <div className="flex items-center gap-1 pe-1">
-            <CartLink label={t('cart.open')} count={cart.count} />
-            <LanguagePicker compact locale={locale} onChange={setLocale} className="text-ink-foreground hover:text-ink-foreground" />
+            <LanguagePicker
+              compact
+              locale={locale}
+              onChange={setLocale}
+              menuPosition="top"
+              className="text-ink-foreground hover:text-ink-foreground"
+            />
           </div>
         </div>
       </aside>

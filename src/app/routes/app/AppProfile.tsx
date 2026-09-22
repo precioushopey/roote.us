@@ -4,10 +4,8 @@ import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { LOCALES } from '@/i18n/locales';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { useCart } from '@/store/cart';
 import { readOrders } from '@/store/orders';
-import { Button, Card, Badge, LegalNotice, Prose, LanguagePicker, Modal } from '@/app/components/roote';
-import { CartLink } from '@/app/components/shell/CartLink';
+import { Button, Card, Badge, LegalNotice, Prose, LanguagePicker, Modal, PasswordField } from '@/app/components/roote';
 import { PATHS } from '@/app/paths';
 import { track } from '@/analytics/analytics';
 import { AccountPageHeader } from './AccountPageHeader';
@@ -18,15 +16,14 @@ const PW_ERROR_KEYS: Record<string, string> = {
   'weak-password': 'app.profile.password.error.weak',
 };
 
-/** Reachable without an active program too — a guest who only bought from the
- *  à-la-carte bag lands here to see their order (see AppShell's route guard). */
+/** Reachable without an active program too — a signed-up guest lands here to
+ *  see any order already recorded for them (see AppShell's route guard). */
 export function AppProfile() {
   const t = useT();
   const { locale, setLocale } = useLocale();
   const withLocale = useLocalizedPath();
   const navigate = useNavigate();
   const auth = useAuth();
-  const cart = useCart();
   const program = useSession().program;
 
   const orders = useMemo(() => readOrders(), []);
@@ -84,7 +81,7 @@ export function AppProfile() {
         <div className="flex flex-col gap-4 md:gap-8">
           <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
             <h2 className="font-display text-lg font-medium">{t('app.profile.account.title')}</h2>
-            <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+            <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2 lg:grid-cols-1">
               <div className="flex flex-col">
                 <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.email')}</dt>
                 <dd>{auth.email}</dd>
@@ -183,7 +180,7 @@ export function AppProfile() {
                     <span className="flex flex-col">
                       <span className="tabular-nums" dir="ltr">{o.id}</span>
                       <span className="text-sm text-muted-foreground">
-                        {t(o.kind === 'program' ? 'app.profile.orders.program' : 'app.profile.orders.bag')} · {o.label}
+                        {t('app.profile.orders.program')} · {o.label}
                       </span>
                     </span>
                     <span className="shrink-0 text-sm text-muted-foreground">
@@ -200,7 +197,7 @@ export function AppProfile() {
           {program && (
             <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
               <h2 className="font-display text-lg font-medium">{t('app.profile.program.title')}</h2>
-              <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+              <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2 lg:grid-cols-1">
                 <div className="flex flex-col">
                   <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.orderId')}</dt>
                   <dd className="tabular-nums">{program.orderId}</dd>
@@ -235,22 +232,20 @@ export function AppProfile() {
             <form className="flex flex-col gap-4" onSubmit={changePassword}>
               <label className="flex flex-col gap-2 text-sm">
                 {t('app.profile.password.currentLabel')}
-                <input
-                  type="password"
+                <PasswordField
                   required
                   value={current}
                   onChange={(e) => setCurrent(e.target.value)}
-                  className={fieldClass}
+                  inputClassName={fieldClass}
                 />
               </label>
               <label className="flex flex-col gap-2 text-sm">
                 {t('app.profile.password.newLabel')}
-                <input
-                  type="password"
+                <PasswordField
                   required
                   value={next}
                   onChange={(e) => setNext(e.target.value)}
-                  className={fieldClass}
+                  inputClassName={fieldClass}
                 />
               </label>
               {pwError && <p role="alert" className="text-sm text-destructive">{pwError}</p>}
@@ -264,19 +259,25 @@ export function AppProfile() {
             </form>
           </section>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
-            <div className="flex items-center gap-1">
-              <CartLink label={t('cart.open')} count={cart.count} />
-              <LanguagePicker compact locale={locale} onChange={setLocale} />
+          {/* Duplicates the sidebar's logout/language controls (AppShell.tsx) —
+               deliberately, so they're also reachable from within the page
+               content itself, not only tucked into the desktop sidebar. */}
+          <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
+            <h2 className="font-display text-lg font-medium">{t('app.profile.preferences.title')}</h2>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <span className="font-body text-sm text-muted-foreground">{t('app.profile.chooseLanguage')}</span>
+                <LanguagePicker compact locale={locale} onChange={setLocale} menuPosition="top" />
+              </div>
+              <button
+                type="button"
+                onClick={logout}
+                className="inline-flex w-fit items-center justify-center rounded-full border border-border px-6 py-3 text-sm text-foreground transition-colors hover:border-accent"
+              >
+                {t('app.profile.logout')}
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={logout}
-              className="inline-flex w-fit items-center justify-center rounded-full border border-border px-6 py-3 text-sm text-foreground transition-colors hover:border-accent"
-            >
-              {t('app.profile.logout')}
-            </button>
-          </div>
+          </section>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate, useNavigate, useOutletContext } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, Button, ScanCard, LegalNotice } from '@/app/components/roote';
@@ -18,6 +18,7 @@ export function ResultsScreen() {
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
+  const { requestStartOver } = useOutletContext<{ requestStartOver: () => void }>();
   const [email, setEmail] = useState('');
   const [wantResults, setWantResults] = useState(true); // operational — pre-checked
   const [wantMarketing, setWantMarketing] = useState(false); // optional — never blocks (PO #11)
@@ -116,6 +117,17 @@ export function ResultsScreen() {
         </Button>
         <p className="font-body text-sm text-muted-foreground">{t('analysis.results.consentLine')}</p>
       </form>
+
+      {/* No Back applies here (see backPathForAnalysisStep's docblock — Back
+           from results would just bounce forward again once analysis is
+           computed) and this screen's own emailCta above is its "Next", so
+           only Start Over carries over from the shared QuizFooterNav other
+           screens use. */}
+      <div className="flex justify-center border-t border-border pt-6">
+        <Button variant="ghost" onClick={requestStartOver}>
+          {t('common.startOver')}
+        </Button>
+      </div>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router';
 import { MarketingShell } from '@/app/components/shell/MarketingShell';
 import { Home } from './Home';
+import { About } from './About';
 import { Magazine } from './Magazine';
 import { HairScan } from './HairScan';
 import { Products } from './Products';
@@ -12,9 +13,6 @@ import { Privacy } from './Privacy';
 import { SolutionPage, SolutionsIndex } from './SolutionPage';
 import { LoginPage } from '@/app/routes/auth/LoginPage';
 import { SignUpPage } from '@/app/routes/auth/SignUpPage';
-import { BagPage } from '@/app/routes/bag/BagPage';
-import { BagCheckout } from '@/app/routes/bag/BagCheckout';
-import { BagSuccess } from '@/app/routes/bag/BagSuccess';
 import { LegalPageView } from '@/app/routes/legal/LegalPageView';
 import { LocalizedNavigate } from '@/app/LocaleGate';
 
@@ -37,6 +35,7 @@ export const marketingRoutes: RouteObject = {
   element: <MarketingShell />,
   children: [
     { index: true, element: <Home /> },
+    { path: 'about', element: <About /> },
     { path: 'magazine', element: <Magazine /> },
     { path: 'hair-scan', element: <HairScan /> },
 
@@ -60,10 +59,5 @@ export const marketingRoutes: RouteObject = {
       path: from,
       element: <LocalizedNavigate to={to} replace />,
     })),
-
-    // Shop cart (secondary surface)
-    { path: 'bag', element: <BagPage /> },
-    { path: 'bag/checkout', element: <BagCheckout /> },
-    { path: 'bag/success', element: <BagSuccess /> },
   ],
 };

@@ -9,7 +9,7 @@ import { Button, Stepper, Modal, LanguagePicker, RouteFade } from '@/app/compone
 import { packagingFor } from '@/domain/recommendation/recommend';
 import { pickLocalized } from '@/content/localized';
 import { ASSESSMENT_STEPS } from '@/content/assessment';
-import { RAIL_STEPS, backPathForAnalysisStep, type AnalysisStep } from './guards';
+import { RAIL_STEPS, type AnalysisStep } from './guards';
 import { PATHS } from '@/app/paths';
 
 /**
@@ -41,8 +41,6 @@ export function AnalysisShell() {
   const seg = (segments[segments.indexOf('analysis') + 1] || 'intro') as AnalysisStep;
   const railIndex = RAIL_STEPS.indexOf(seg as (typeof RAIL_STEPS)[number]);
   const showRail = railIndex >= 0;
-  const showNav = seg !== 'intro';
-  const backPath = backPathForAnalysisStep(seg, session);
 
   const steps = ASSESSMENT_STEPS.filter((s) => s.onRail).map((s) => ({
     id: s.id,
@@ -66,8 +64,13 @@ export function AnalysisShell() {
 
   return (
     <div data-pack={pack} className="flex min-h-screen flex-col bg-background font-body text-foreground">
-      <header className="sticky top-0 z-40 border-b border-transparent">
-        <div className="bg-white mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
+      {/* Explicit bg-background (not just inherited from the shell root) —
+           this header is `sticky`, so once the visitor scrolls, page content
+           scrolls up underneath it; without its own opaque background that
+           content would show through instead of staying hidden behind a
+           solid cream bar. */}
+      <header className="sticky top-0 z-40 border-b border-transparent bg-background">
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
           <Link to={withLocale(PATHS.home)} aria-label="ROOTÉ">
             <Wordmark className="w-24" />
           </Link>
@@ -75,28 +78,23 @@ export function AnalysisShell() {
         </div>
       </header>
 
-      {(showRail || showNav) && (
+      {showRail && (
         <div className="mx-auto w-full max-w-3xl px-6 py-5">
-          {showRail && <Stepper steps={steps} current={railIndex} label={t('common.progressLabel')} />}
-          {showNav && (
-            <div className={showRail ? 'mt-3 flex items-center justify-between' : 'flex items-center justify-between'}>
-              {backPath ? (
-                <Button variant="ghost" to={withLocale(backPath)}>
-                  {t('common.back')}
-                </Button>
-              ) : (
-                <span />
-              )}
-              <Button variant="ghost" onClick={() => setConfirmingStartOver(true)}>
-                {t('common.startOver')}
-              </Button>
-            </div>
-          )}
+          <Stepper steps={steps} current={railIndex} label={t('common.progressLabel')} />
         </div>
       )}
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-6 pb-16 pt-4">
-        <RouteFade />
+      <main className="mx-auto w-full max-w-2xl flex-1 px-6 pb-28 pt-4 sm:pb-16">
+        {/* Back/Next/Start-over now render per-screen, below each screen's
+             own content (via QuizFooterNav) — not as shared shell chrome
+             above it. `requestStartOver` stays owned here (the confirm
+             modal + reset-on-return-to-intro race-avoidance below are
+             shell-level concerns) and is handed down through context so
+             every screen can trigger it without re-implementing it. The
+             extra bottom padding below `sm` reserves room for
+             QuizFooterNav's fixed-to-viewport mobile bar so it never
+             covers the tail of a question's content. */}
+        <RouteFade context={{ requestStartOver: () => setConfirmingStartOver(true) }} />
       </main>
 
       <Modal

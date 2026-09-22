@@ -643,7 +643,7 @@ it('renders the four columns and the pending medical disclaimer', () => {
   - **Company**: `/about`, `/blog`, `/support`, `/faq`
   - **Legal**: `/terms`, `/privacy`
   - **Start**: `marketing.footer.startTitle` + `startBody` + `<Link to="/diagnosis" class="…rounded-full bg-primary…">{t('marketing.nav.cta')}</Link>`
-  Base row (`mt-12 flex flex-col gap-3 border-t border-border pt-8 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between`): `<Wordmark className="w-20"/>`, `<LocaleToggle/>`, `© {year} ROOTÉ · {t('marketing.footer.rights')}`, and the medical disclaimer: reuse the current `Footer` logic —
+  Base row (`mt-12 flex flex-col gap-4 border-t border-border pt-8 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between`): `<Wordmark className="w-20"/>`, `<LocaleToggle/>`, `© {year} ROOTÉ · {t('marketing.footer.rights')}`, and the medical disclaimer: reuse the current `Footer` logic —
   ```tsx
   const disclaimer = resolveLocalized(rooteContent.disclaimers.medical, locale, 'footer medical disclaimer (he)');
   isPending(disclaimer) ? <PendingChip label={disclaimer.label} /> : <p className="max-w-xl">{disclaimer}</p>

@@ -1,17 +1,44 @@
+import { useEffect } from 'react';
+import { Check } from 'lucide-react';
 import type { ReportModel } from '@/domain/report/types';
 import type { GrayProfile } from '@/domain/analysis/grayProfile';
 import type { RecommendationOutcome } from '@/domain/recommendation/types';
+import type { ProgramDurationDays } from '@/domain/program/types';
 import { isPending } from '@/content/pending';
 import { LOCALES } from '@/i18n/locales';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { useSession } from '@/store/sessionStore';
 import { useRevealOnRoute } from '@/app/lib/useRevealOnRoute';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { PendingChip } from '@/app/components/brand/PendingChip';
+import { MediaPlaceholder } from '@/app/components/media/MediaPlaceholder';
 import { Button, Badge, LegalNotice } from '@/app/components/roote';
 import { buildRootePdf } from '@/pdf/reportPdf';
 
 function Val({ value }: { value: string | { __pending: true; label: string } }) {
   return isPending(value) ? <PendingChip label={value.label} /> : <>{value}</>;
+}
+
+function nameLabel(name: string | { __pending: true; label: string }): string {
+  return isPending(name) ? name.label : name;
+}
+
+/** A regimen item's product photo, or a `MediaPlaceholder` when the SKU has
+ *  no final packaging photography yet (see `content/treatmentPhotos.ts`). */
+function RegimenPhoto({
+  photo,
+  alt,
+  className,
+}: {
+  photo?: string;
+  alt: string;
+  className: string;
+}) {
+  return photo ? (
+    <img src={photo} alt="" loading="lazy" className={className} />
+  ) : (
+    <MediaPlaceholder alt={alt} label={`${alt}: product photography`} ratio="1" className={className} />
+  );
 }
 
 /** A numbered block in the report. The report reads like a medical summary —
@@ -43,9 +70,20 @@ export function ReportView({
 }) {
   const t = useT();
   const withLocale = useLocalizedPath();
+  const session = useSession();
   useRevealOnRoute();
 
   const generated = new Date(model.meta.generatedAt).toLocaleDateString(LOCALES[model.meta.locale].bcp47);
+
+  // The report already recommends exactly one program duration (section 10)
+  // — Pricing (section 11) confirms pricing for that one program, not a
+  // comparison of every alternative. Persist it as the draft duration so
+  // the funnel downstream (still untouched here, on purpose) already has
+  // it once the visitor proceeds to checkout.
+  const recommendedDays = model.recommendedDuration.days as ProgramDurationDays;
+  useEffect(() => {
+    session.setDraftDurationDays(recommendedDays);
+  }, [recommendedDays]);
 
   let n = 0;
   const next = () => (n += 1);
@@ -92,7 +130,7 @@ export function ReportView({
         </h1>
         <p className="mt-3 max-w-xl font-body text-md text-muted-foreground">{model.intro.body}</p>
         <p className="mt-2 font-body text-sm text-muted-foreground">{model.meta.scaleLine}</p>
-        <div className="mt-4">
+        <div className="mt-4 mb-6">
           <Button onClick={downloadPdf} variant="secondary">
             {t('report.pdf.download')}
           </Button>
@@ -194,6 +232,30 @@ export function ReportView({
           </Sec>
         )}
 
+        {/* What to expect — outcome stats + timeline. Already-computed, already
+             PENDING-guarded (buildReport.ts): nothing here is an invented number,
+             every unconfirmed value renders as a PendingChip via <Val>. */}
+        <Sec n={next()} title={model.expect.title}>
+          <p>{model.expect.intro}</p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {model.expect.stats.map((s) => (
+              <div key={s.label} className="rounded-lg border border-border bg-card p-3">
+                <p className="text-sm text-muted-foreground">{s.label}</p>
+                <p className="mt-1 font-display text-lg text-foreground"><Val value={s.value} /></p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex flex-col gap-2">
+            {model.expect.timeline.map((row, i) => (
+              <div key={i} className="flex items-center justify-between gap-4 border-t border-border pt-2 first:border-t-0 first:pt-0">
+                <span className="text-foreground">{row.label}</span>
+                <Val value={row.outcome} />
+              </div>
+            ))}
+          </div>
+          <p className="mt-4">{model.expect.note}</p>
+        </Sec>
+
         {/* 6 — Personalized treatment plan, or a review notice when the
              recommendation engine held the product (client-confirmed states:
              requires-review / professional-review-recommended / confirmed-but-
@@ -207,75 +269,151 @@ export function ReportView({
 
         {model.plan.isStandard && (
           <>
-            {/* 6 — Personalized treatment plan */}
-            <Sec n={next()} title={model.titles.plan}>
+            {/* 6 — Personalized treatment plan, as a regimen: real product photos,
+                 mechanism-of-action copy, and how-to-apply instructions (richer
+                 than the plain name+usage list this replaced — same underlying
+                 treatments, via model.regimen instead of model.plan.core). */}
+            <Sec n={next()} title={model.regimen.title}>
               <p className="text-foreground">
-                <Badge tone="gold">{model.plan.matchedToScanBadge}</Badge>
+                <Badge tone="gold">{model.regimen.badge}</Badge>
               </p>
               <div className="mt-4 flex flex-col gap-4">
-                {model.plan.core.map((it, i) => (
-                  <div key={i} className="rounded-lg border border-border bg-card p-4">
-                    <p className="font-body font-medium text-foreground">
-                      {isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}
-                    </p>
-                    <p className="mt-1">{it.usage}</p>
+                {model.regimen.items.map((it) => (
+                  <div key={it.key} className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4 sm:flex-row">
+                    <RegimenPhoto
+                      photo={it.photo}
+                      alt={nameLabel(it.name)}
+                      className="aspect-square w-full shrink-0 self-start rounded-sm object-cover sm:w-1/4"
+                    />
+                    <div className="min-w-0">
+                      <p className="font-body font-medium text-foreground">
+                        {isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}
+                      </p>
+                      <p className="mt-1">{it.howToLabel}</p>
+                      {it.mechanism.length > 0 && (
+                        <ul className="mt-2 flex flex-col gap-1">
+                          {it.mechanism.map((m, mi) => (
+                            <li key={mi}>{m}</li>
+                          ))}
+                        </ul>
+                      )}
+                      {(it.addressesLabels.length > 0 || it.badges.length > 0) && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {[...it.addressesLabels, ...it.badges].map((label) => (
+                            <Badge key={label} tone="neutral">{label}</Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
             </Sec>
 
-            {/* 7 — Products included · 8 — Application frequency */}
+            {/* 7 — Products included · 8 — Application frequency. Photos come
+                 from model.regimen.items — built from the same core-treatment
+                 list in the same order as model.plan.core, so index i lines
+                 up between the two (regimen.items is [...core, ...supporting],
+                 core first). */}
             <Sec n={next()} title={t('report.section.productsIncluded')}>
-              <ul className="flex flex-col gap-2">
-                {model.plan.core.map((it, i) => (
-                  <li key={`c${i}`} className="flex flex-wrap items-baseline justify-between gap-2">
-                    <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {model.plan.labels.applicationFrequency}: {it.frequency}
-                    </span>
-                  </li>
-                ))}
+              <ul className="flex flex-col gap-3">
+                {model.plan.core.map((it, i) => {
+                  const photo = model.regimen.items[i]?.photo;
+                  return (
+                    <li key={`c${i}`} className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="flex items-center gap-3">
+                        <RegimenPhoto photo={photo} alt={nameLabel(it.name)} className="h-10 w-10 shrink-0 rounded-sm object-cover" />
+                        <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {model.plan.labels.applicationFrequency}: {it.frequency}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
             </Sec>
           </>
         )}
 
-        {/* 9 — Supporting treatment */}
+        {/* 9 — Supporting treatment. Photos from model.regimen.items again —
+             supporting items sit right after core in that array, so offset
+             by core's length to line up the same index. */}
         {model.plan.isStandard && model.plan.supporting.length > 0 && (
           <Sec n={next()} title={model.plan.labels.supporting}>
-            <ul className="flex flex-col gap-2">
-              {model.plan.supporting.map((it, i) => (
-                <li key={`s${i}`} className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
-                  <span className="text-sm text-muted-foreground">{it.usage} · {it.frequency}</span>
-                </li>
-              ))}
+            <ul className="flex flex-col gap-3">
+              {model.plan.supporting.map((it, i) => {
+                const photo = model.regimen.items[model.plan.core.length + i]?.photo;
+                return (
+                  <li key={`s${i}`} className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="flex items-center gap-3">
+                      <RegimenPhoto photo={photo} alt={nameLabel(it.name)} className="h-10 w-10 shrink-0 rounded-sm object-cover" />
+                      <span className="text-foreground">{isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}</span>
+                    </span>
+                    <span className="text-sm text-muted-foreground">{it.usage} · {it.frequency}</span>
+                  </li>
+                );
+              })}
             </ul>
           </Sec>
         )}
 
-        {/* 10 — Recommended program duration */}
+        {/* 10 — Your Program: duration + products + pricing in one card
+             (was two separate numbered sections — "the name and days,
+             then products, then a features checklist, then the total
+             price" all read as one recommendation now, not a duration
+             pick followed by a separate price lookup). */}
         {model.plan.isStandard && (
           <Sec n={next()} title={model.titles.program}>
-            <p className="font-display text-2xl text-foreground">{model.recommendedDuration.label}</p>
-            <p className="mt-1">{model.recommendedDuration.rationaleNote}</p>
-          </Sec>
-        )}
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <div className="bg-ink px-5 py-6 text-ink-foreground">
+                <span className="u-caps inline-flex items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
+                  {t('start.plan.recommendedBadge')}
+                </span>
+                <p className="mt-3 font-display text-2xl">{model.recommendedDuration.label}</p>
+                <p className="mt-1 text-sm">{model.recommendedDuration.rationaleNote}</p>
+              </div>
 
-        {/* 11 — Pricing */}
-        {model.plan.isStandard && (
-          <Sec n={next()} title={model.titles.pricing}>
-            <div className="flex flex-col gap-2">
-              {model.pricing.compareAll.map((r) => (
-                <div key={r.days} className="flex items-center justify-between">
-                  <span>
-                    {r.label}
-                    {r.isRecommended && <span className="ms-2 text-sm text-deep-800">{model.pricing.recommendedBadge}</span>}
-                  </span>
-                  {isPending(r.price) ? <PendingChip label={r.price.label} /> : <span className="text-foreground">{r.price.formatted}</span>}
+              <div className="bg-card px-5 py-6">
+                {model.regimen.items.length > 0 && (
+                  <div className="flex flex-col gap-3">
+                    {model.regimen.items.map((it) => (
+                      <div key={it.key} className="flex items-center gap-3">
+                        <RegimenPhoto photo={it.photo} alt={nameLabel(it.name)} className="h-12 w-12 shrink-0 rounded-sm object-cover" />
+                        <span className="font-body text-foreground">
+                          {isPending(it.name) ? <PendingChip label={it.name.label} /> : it.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <ul className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
+                  {t('report.pricing.features').split('|').map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-foreground">
+                      <Check aria-hidden className="h-4 w-4 shrink-0 text-accent" strokeWidth={2} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+                  <span className="font-body text-foreground">{t('report.pricing.totalLabel')}</span>
+                  {isPending(model.pricing.price) ? (
+                    <PendingChip label={model.pricing.price.label} />
+                  ) : (
+                    <span className="font-display text-lg text-foreground">{model.pricing.price.formatted}</span>
+                  )}
                 </div>
-              ))}
+              </div>
             </div>
+
+            <div className="mt-4 rounded-lg border border-border bg-cream-100 p-4 text-sm text-muted-foreground">
+              {t('program.plan.priceNote')} <PendingChip label="program pricing" />
+            </div>
+            <Button to={withLocale(model.cta.href)} block caps className="mt-4">
+              {model.cta.label}
+            </Button>
           </Sec>
         )}
 
@@ -294,15 +432,19 @@ export function ReportView({
           </LegalNotice>
         </Sec>
 
-        {/* 13 — CTA */}
-        <div className="mt-10 rounded-2xl bg-ink p-8 text-center text-ink-foreground">
-          <p className="display-heading" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
-            {model.intro.greeting}
-          </p>
-          <Button to={withLocale(model.cta.href)} caps className="mt-6">
-            {model.cta.label}
-          </Button>
-        </div>
+        {/* 13 — CTA, review-required plans only. Standard plans get their CTA
+             folded into the Pricing section above (choosing a duration IS
+             the action) — no second "start" prompt needed for them. */}
+        {!model.plan.isStandard && (
+          <div className="mt-10 rounded-2xl bg-ink p-8 text-center text-ink-foreground">
+            <p className="display-heading" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
+              {model.intro.greeting}
+            </p>
+            <Button to={withLocale(model.cta.href)} caps className="mt-6">
+              {model.cta.label}
+            </Button>
+          </div>
+        )}
 
         <footer className="mt-8 flex flex-col gap-2 border-t border-border pt-6 text-sm text-muted-foreground">
           <p><Val value={model.disclaimers.demo} /></p>

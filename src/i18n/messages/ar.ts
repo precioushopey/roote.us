@@ -22,6 +22,8 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'common.cancel': 'إلغاء',
   'common.startOver': 'البدء من جديد',
   'common.progressLabel': 'التقدّم',
+  'common.showPassword': 'إظهار كلمة المرور',
+  'common.hidePassword': 'إخفاء كلمة المرور',
   'common.remove': 'إزالة',
   'brand.tagline': 'نظام مخصّص لنمو الشعر',
   'meta.title': 'ROOTÉ: نظام مخصّص لنمو الشعر',
@@ -92,10 +94,14 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'ready.consent': 'تُفتح نتائجك في الشاشة التالية. قد نراسلك عبر البريد الإلكتروني بشأن خطتك.',
 
   'recommend.rationale.thickerFuller': 'مُواءم مع هدفك في الحصول على شعر أكثر كثافة وامتلاءً في المظهر.',
+  'recommend.rationale.thickerFullerReview': 'هدف الحصول على شعر أكثر كثافة وامتلاءً يتطلب نمطاً معروفاً، لذا أوقفنا التوصية التلقائية.',
+  'recommend.rationale.thickerFullerPending': 'تمت مطابقة قوة علاج الكثافة والامتلاء مع نمط شعرك وهي بانتظار الموافقة السريرية قبل التفعيل.',
+  'recommend.rationale.thickerFullerActive': 'مُواءم مع قوة العلاج الخاصة بنمطك للحصول على شعر أكثر كثافة وامتلاءً.',
   'recommend.rationale.slowGraying': 'مُواءم مع هدفك في إبطاء المزيد من الشيب.',
   'recommend.rationale.stopLoss': 'مُواءم مع هدفك في وقف تساقط الشعر المستمر.',
   'recommend.rationale.hairGrowthReview': 'يتطلّب تحديد قوة علاج نمو الشعر نمطاً معروفاً، لذلك أوقفنا التوصية التلقائية.',
   'recommend.rationale.hairGrowthPending': 'تمت مواءمة قوة علاج نمو الشعر مع نمطك، وهي بانتظار الموافقة السريرية قبل التفعيل.',
+  'recommend.rationale.hairGrowthActive': 'مُواءم مع قوة علاج نمو الشعر الخاصة بنمطك.',
   'recommend.rationale.other': 'يحتاج هدفك إلى مزيد من المعلومات قبل أن نتمكّن من التوصية بخطة.',
   'recommend.rationale.fallback': 'لم نتمكّن من تحديد توصية من إجاباتك.',
 
@@ -198,6 +204,7 @@ export const ar: Partial<Record<MessageKey, string>> = {
 
   'analysis.scanning.title': 'نحلّل شعرك…',
   'analysis.scanning.body': 'يجري تنظيم فحصك بينما تجيب عن بضعة أسئلة.',
+  'analysis.scanning.percent': 'جارٍ التحليل… {pct}%',
 
   'analysis.results.title': 'تحليل شعرك جاهز',
   'analysis.results.cardTitle': 'ملف شعرك',
@@ -250,7 +257,7 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'report.plan.review.pendingApproval':
     'تمت مواءمة خطة علاج نمو الشعر الخاصة بك مع نمطك، وهي في المراحل الأخيرة من المراجعة السريرية قبل أن نتمكّن من عرضها هنا. نتائج تحليلك أدناه جاهزة في هذه الأثناء.',
   'report.hairLossType.typeLabel': 'نمط {band}',
-  'report.cta.label': 'ابدأ برنامجي',
+  'report.cta.label': 'المتابعة إلى الدفع',
   'report.pdf.title': 'تقرير شعرك المخصّص من ROOTÉ',
   'report.pdf.download': 'تنزيل PDF',
   'report.duration.label': '{days} يوماً',
@@ -261,6 +268,9 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'report.pricing.perDayLabel': 'لليوم',
   'report.pricing.compareTitle': 'قارن كل مدد البرنامج',
   'report.pricing.recommendedBadge': 'مُوصى به',
+  'report.pricing.totalLabel': 'الإجمالي',
+  'report.pricing.features':
+    'تتبع التقدم بالصور|تذكيرات لكل خطوة|دعم مستمر من فريق العناية بك|تعديل خطتك أثناء التقدم',
   'report.claims.effectiveness.label': 'الفعالية',
   'report.claims.timeToVisibleResults.label': 'الوقت المعتاد لظهور نتائج مرئية',
   'report.claims.doctorFollowUpCost.label': 'تكلفة المتابعة الطبية',
@@ -406,6 +416,15 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'start.success.point2': 'سنذكّرك بموعد تطبيق كل خطوة.',
   'start.success.point3': 'تابع تقدّمك بالصور أثناء رحلتك.',
   'start.success.cta': 'الانتقال إلى برنامجي',
+  'start.success.stepsTitle': 'ما الذي يحدث بعد ذلك',
+  'start.success.step1.title': 'يتم شحن مجموعتك',
+  'start.success.step1.body': 'منتجاتك جاهزة وفي طريقها إليك.',
+  'start.success.step2.title': 'أكّد الاستلام',
+  'start.success.step2.body': 'عند وصولها، أكّدها في حسابك لبدء يومك الأول.',
+  'start.success.step3.title': 'اتبع روتينك',
+  'start.success.step3.body': 'سنذكّرك بموعد تطبيق كل خطوة.',
+  'start.success.step4.title': 'تابع تقدّمك',
+  'start.success.step4.body': 'أضف صوراً مع مرور الوقت لترى كيف تتغيّر الأمور.',
 
   'cart.open': 'فتح الحقيبة',
   'cart.close': 'إغلاق',
@@ -480,6 +499,54 @@ export const ar: Partial<Record<MessageKey, string>> = {
     'يتم الإفصاح عن الفوترة المتكرّرة وتكرار الشحن وسعر التجديد والضرائب والشحن قبل تفعيل هذا الخيار. يمكنك الإلغاء هنا في أي وقت، وتبقى حقوقك المحلية في حماية المستهلك دون تأثير.',
   'app.noProgram.body': 'لا يوجد برنامج نشط على هذا الجهاز. أكمل عملية شراء، أو حمّل برنامجاً تجريبياً.',
   'app.noProgram.devSeedCta': 'تحميل برنامج تجريبي (للمطوّرين فقط)',
+  'app.preDelivery.title': 'برنامجك في الطريق إليك',
+  'app.preDelivery.subtitle': 'إليك ما يمكن توقعه قبل يومك الأول.',
+  'app.preDelivery.planReady': 'خطتك جاهزة',
+  'app.preDelivery.orderTitle': 'طلبك',
+  'app.preDelivery.orderedOn': 'تم الطلب في {date}',
+  'app.preDelivery.shippingNote': 'طلبك قيد التحضير والشحن. لا يتوفر تتبّع شحن مباشر في هذه النسخة التجريبية، لذا بمجرد وصول طلبك، يُرجى تأكيد ذلك أدناه لبدء برنامجك.',
+  'app.preDelivery.supportTitle': 'لديك أسئلة حول طلبك؟',
+  'app.preDelivery.supportBody': 'يمكنك التواصل معنا في أي وقت.',
+  'app.preDelivery.confirmCta': 'وصل الطلب؟ أكّد ذلك لبدء يومك الأول',
+  'app.preDelivery.viewShipping': 'عرض تفاصيل الشحن',
+  'app.preDelivery.mapPending': 'خريطة شحن مباشرة',
+  'app.preDelivery.orderedStage': 'تم الطلب',
+  'app.preDelivery.preparingStage': 'قيد التجهيز والشحن',
+  'app.preDelivery.whileYouWaitTitle': 'أثناء الانتظار',
+  'app.preDelivery.reviewPlanRow': 'مراجعة خطتك',
+  'app.preDelivery.reviewPlanTitle': 'كيفية استخدام خطتك',
+  'app.preDelivery.contactRow': 'التواصل مع الدعم',
+  'app.preDelivery.shipping.title': 'معلومات الشحن',
+  'app.preDelivery.shipping.orderSummary': 'ملخص الطلب',
+  'app.preDelivery.shipping.priceLabel': 'إجمالي الطلب',
+  'app.preDelivery.shipping.supportCenter': 'مركز الدعم',
+  'app.preDelivery.shipping.refundRow': 'طلب استرداد أو إرجاع',
+  'app.preDelivery.shipping.contactRow': 'التواصل مع الدعم',
+  'app.preDelivery.shipping.helpRow': 'مركز المساعدة',
+  'app.preDelivery.refund.title': 'طلب استرداد أو إرجاع',
+  'app.preDelivery.refund.intro': 'أخبرنا بما حدث وسنراجع طلبك.',
+  'app.preDelivery.refund.reasonLabel': 'السبب',
+  'app.preDelivery.refund.reasonDamaged': 'منتج تالف',
+  'app.preDelivery.refund.reasonNotExpected': 'ليس كما توقعت',
+  'app.preDelivery.refund.reasonNoLongerNeeded': 'لم أعد بحاجة إليه',
+  'app.preDelivery.refund.reasonOther': 'آخر',
+  'app.preDelivery.refund.detailsLabel': 'التفاصيل (اختياري)',
+  'app.preDelivery.refund.detailsPlaceholder': 'أخبرنا المزيد...',
+  'app.preDelivery.refund.submit': 'إرسال الطلب',
+  'app.preDelivery.refundSent.title': 'تم إرسال الطلب',
+  'app.preDelivery.refundSent.body': 'استلمنا طلبك وسنتواصل معك عبر البريد الإلكتروني.',
+  'app.preDelivery.refundSent.back': 'العودة إلى معلومات الشحن',
+  'app.preDelivery.contact.title': 'التواصل مع الدعم',
+  'app.preDelivery.contact.body': 'فريقنا متاح عبر البريد الإلكتروني أو الهاتف للإجابة عن أسئلتك بخصوص طلبك أو خطتك أو منتجاتك.',
+  'app.preDelivery.help.title': 'مركز المساعدة',
+  'app.preDelivery.help.q1': 'متى سيصل طلبي؟',
+  'app.preDelivery.help.a1': 'لا يتوفر تتبّع شحن مباشر في هذه النسخة التجريبية. بمجرد وصول طلبك، عد إلى هنا وأكّد ذلك لبدء برنامجك.',
+  'app.preDelivery.help.q2': 'كيف يعمل برنامجي؟',
+  'app.preDelivery.help.a2': 'يجمع برنامجك بين المنتجات والروتين اللذين حددهما تقييمك، ويُتابَع بدءًا من اليوم الذي تؤكد فيه استلام طلبك.',
+  'app.preDelivery.help.q3': 'هل يمكنني تغيير خطتي أو منتجاتي؟',
+  'app.preDelivery.help.a3': 'تواصل مع الدعم وسنساعدك على تحديث خطتك أو منتجاتك.',
+  'app.preDelivery.help.q4': 'ماذا أفعل إذا وصل منتج تالفًا؟',
+  'app.preDelivery.help.a4': 'قدّم طلب استرداد أو إرجاع مع تفاصيل عن الضرر.',
   'app.task.pendingName': 'علاجك',
 
   'app.today.title': 'اليوم',
@@ -726,6 +793,8 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'app.rescan.compare.latest': 'الأحدث',
   'app.profile.title': 'ملفك الشخصي',
   'app.profile.account.title': 'الحساب',
+  'app.profile.preferences.title': 'التفضيلات',
+  'app.profile.chooseLanguage': 'اختر اللغة',
   'app.profile.email': 'البريد الإلكتروني',
   'app.profile.memberSince': 'عضو منذ',
   'app.profile.program.title': 'برنامجك',
@@ -1123,6 +1192,8 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'marketing.pdp.fitTitle': 'كيف يتناسب مع برنامج ROOTÉ الخاص بك',
   'marketing.pdp.fitBody':
     'يحدّد برنامجك بالضبط أي المنتجات تستخدم ومتى. توضح هذه الصفحة المنتج بحد ذاته.',
+  'marketing.pdp.keyBenefits': 'أبرز الفوائد',
+  'marketing.pdp.overview': 'نظرة عامة',
   'marketing.pdp.format': '{size} للوحدة',
   'marketing.pdp.activesTitle': 'المكوّنات الفعّالة الرئيسية',
   'marketing.pdp.detailsTitle': 'التفاصيل',
@@ -1151,6 +1222,16 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'marketing.pdp.badge.fragranceFree': 'خالٍ من العطور',
   'marketing.pdp.badge.parabenFree': 'خالٍ من البارابين',
   'marketing.pdp.badge.sulfateFree': 'خالٍ من الكبريتات',
+  'marketing.pdp.activesBody': 'المكونات الفعّالة التي تقوم عليها هذه الصيغة: وظيفة كل مكون، ومدى قوة الأدلة الداعمة له.',
+  'marketing.pdp.directionsTitle': 'طريقة الاستخدام والسلامة',
+  'marketing.pdp.directionsBody': 'كيفية التطبيق، ومن يجب أن يتجنبه، وكيفية تخزينه، كما هو مذكور على الملصق.',
+  'marketing.pdp.detailsBody': 'تفاصيل الصيغة والأسئلة الأكثر شيوعًا حول هذا المنتج.',
+  'marketing.pdp.relatedBody': 'من برنامجك، اختيرت لتُستخدم جنبًا إلى جنب مع هذا المنتج.',
+  'marketing.pdp.faqPrescription.q': 'هل يتطلب هذا وصفة طبية أو فحص علاج؟',
+  'marketing.pdp.faqPrescription.aYes': 'نعم، يُضاف هذا المنتج إلى برنامجك فقط بعد أن يؤكد فحص العلاج أنه مناسب لك.',
+  'marketing.pdp.faqPrescription.aNo': 'لا، لا يتطلب هذا المنتج وصفة طبية أو فحص علاج.',
+  'marketing.pdp.faqStrength.q': 'كيف يتم اختيار المستوى (Level) الخاص بي؟',
+  'marketing.pdp.faqStrength.a': 'لا تختار المستوى بنفسك، بل تُحدَّد خطتك وأي تغيير في التركيز من خلال تقييمك وفحص العلاج، بناءً على ما يناسبك.',
 
   // --- marketing.sol ---
   'marketing.sol.indexHeading': 'افهم شعرك، ثم اختر',
@@ -1304,53 +1385,17 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'marketing.magazine.formatLabel.shampoo': 'الشامبوهات',
 
   // --- marketing.legal ---
-  'marketing.legal.terms.title': 'شروط الخدمة',
+  'marketing.legal.terms.title': 'الشروط والأحكام',
   'marketing.legal.privacy.title': 'سياسة الخصوصية',
   'marketing.legal.updated': 'آخر تحديث',
-  'marketing.legal.terms.s1': 'قبول الشروط',
-  'marketing.legal.terms.s2': 'استخدام الخدمة',
-  'marketing.legal.terms.s3': 'إخلاء المسؤولية الطبية',
-  'marketing.legal.terms.s4': 'الدفع والاشتراكات',
-  'marketing.legal.terms.s5': 'تحديد المسؤولية',
-  'marketing.legal.terms.s6': 'القانون الحاكم',
-  'marketing.legal.privacy.s1': 'المعلومات التي نجمعها',
-  'marketing.legal.privacy.s2': 'كيف نستخدم صورك',
-  'marketing.legal.privacy.s3': 'الاحتفاظ بالبيانات',
-  'marketing.legal.privacy.s4': 'حقوقك',
-  'marketing.legal.privacy.s5': 'المشاركة مع أطراف ثالثة',
-  'marketing.legal.privacy.s6': 'التواصل',
 
-  // Privacy Policy — section bodies (headings are marketing.legal.privacy.s1–s6 above).
+  // مقدّمة صفحة سياسة الخصوصية. أصبح نص الأقسام الرئيسي لصفحتي /terms و/privacy الآن في
+  // طبقة المحتوى (src/content/legal.ts LEGAL_BODIES، من حزمة المستندات القانونية لـROOTÉ،
+  // 2026-09-22) حتى يتمكّن فريق القانون/المنتج من استبدال النص دون لمس مفاتيح i18n.
   'marketing.legal.privacy.intro':
-    'توضح هذه السياسة ما هي المعلومات التي تديرها ROOTÉ وكيف. ROOTÉ علامة تجارية تديرها شركة 91 ENTERPRISE LLC (راجع قسم "بيانات الشركة" في صفحات الشروط لدينا)، وهي الجهة المتحكّمة بالبيانات.',
-  'marketing.legal.privacy.s1.body':
-    'عند استخدامك لـROOTÉ، قد تقدّم: الصور التي ترفعها لتقييم شعرك؛ إجاباتك على استبيان التقييم؛ عنوان بريدك الإلكتروني؛ وإذا أنشأت حساباً أو قدّمت طلباً، اسمك وبيانات التواصل والتسليم وإشارة مقنَّعة إلى بطاقة الدفع (فقط الأرقام الأربعة الأخيرة وتاريخ الانتهاء، ولا رقم البطاقة الكامل أو رمز الأمان أبداً). من هذه المعلومات، تُنتج ROOTÉ نتيجة تقييم، وبعد الشراء، سجلّ برنامج.',
-  'marketing.legal.privacy.s2.body':
-    'تُستخدَم صورك وإجاباتك على الاستبيان فقط لإنتاج تقييم شعرك وخطتك الشخصية، ولعرض مقارنات "قبل/بعد" عبر الزمن. في هذه النسخة التجريبية، يُجرى التقييم بالكامل في متصفحك ولا يغادر جهازك أبداً. إذا استخدمت بشكل منفصل محادثة الشعر بالذكاء الاصطناعي لدينا، راجع قسم المشاركة مع أطراف ثالثة أدناه لمعرفة كيفية التعامل مع تلك البيانات. لا نستخدم صورك للإعلان، أو لتدريب النماذج، أو لأي غرض لم توافق عليه.',
-  'marketing.legal.privacy.s3.body':
-    'في هذه النسخة التجريبية، كل ما تُدخله (الصور، والإجابات، والبريد الإلكتروني، والحساب، والحقيبة، والبرنامج) يُخزَّن فقط في متصفحك الخاص (تخزينه المحلي وقاعدة بياناته) ويبقى على جهازك حتى تحذفه. لا يُحفظ شيء على خوادم ROOTÉ. مع إدخال حسابات وطلبات حقيقية، ستُنشَر مدة الاحتفاظ لكل نوع بيانات هنا.',
-  'marketing.legal.privacy.s4.body':
-    'يمكنك عرض المعلومات المحفوظة في متصفحك وحذفها في أي وقت عبر مسح بيانات هذا الموقع من إعدادات متصفحك؛ يؤدي ذلك إلى إزالة تقييمك وحسابك وبرنامجك من هذا الجهاز. حيثما يمنحك القانون المعمول به حقوقاً في الوصول إلى بياناتك الشخصية أو تصحيحها أو تصديرها أو محوها، أو الاعتراض على معالجتها أو تقييدها، يمكنك ممارسة هذه الحقوق بالتواصل معنا عبر التفاصيل أدناه.',
-  'marketing.legal.privacy.s5.body':
-    'لا نبيع بياناتك الشخصية. في هذه النسخة التجريبية، الأطراف الثالثة المعنية هي Google Fonts، التي توفّر خطوط الموقع، وإذا استخدمت محادثة الشعر بالذكاء الاصطناعي لدينا، شريكتنا HairHealth.ai، التي تستلم ما تشاركه هناك (إجاباتك وصورك) وتضيفه إلى قائمة جهات الاتصال لدينا عبر HubSpot حتى يتمكّن فريقنا من متابعتك. ستُدرَج هنا خدمات الإنتاج الخاصة بالدفع والشحن والبريد الإلكتروني والاستضافة عند إضافتها.',
-  'marketing.legal.privacy.s6.body':
-    'لأي سؤال أو طلب متعلق بالخصوصية، تواصل معنا عبر support@roote.us أو +1 (310) 651-7283.',
+    'توضح هذه السياسة ما المعلومات التي تجمعها ROOTÉ، ولماذا، وكيف يمكنك التحكم بها.',
 
-  // Terms of Service — section bodies (headings are marketing.legal.terms.s1–s6 above)
-  'marketing.legal.terms.s1.body':
-    'بدخولك إلى موقع ROOTÉ أو إنشائك حساباً، فإنك توافق على شروط الخدمة هذه، وشروط البيع لدينا، وسياسة الخصوصية. إذا كنت لا توافق، فلا تستخدم الخدمة. يجوز لنا تحديث هذه الشروط؛ وتسري التغييرات الجوهرية عند نشرها مع تاريخ "آخر تحديث" جديد.',
-  'marketing.legal.terms.s2.body':
-    'تقدّم ROOTÉ تقييم شعر قائماً على الصور بمساعدة الذكاء الاصطناعي، ونظام منتجات مخصّصاً. يجب أن يكون عمرك 18 عاماً على الأقل وأن تقدّم معلومات دقيقة. لا يجوز لك إساءة استخدام الخدمة، أو رفع صور لأي شخص غيرك، أو محاولة الهندسة العكسية للتحليل، أو إعادة بيع أي جزء من الخدمة.',
-  'marketing.legal.terms.s3.body':
-    'التحليل والتقرير تقدير بصري أولي، وليسا تشخيصاً طبياً، ولا يحلّان محل استشارة طبيب مرخّص. استشر طبيباً قبل بدء أي علاج أو تغييره أو إيقافه، خاصة إذا كنت حاملاً أو مرضعة، أو تتناول أدوية، أو لديك حالة في فروة الرأس أو الجلد. أوقف الاستخدام واطلب المشورة الطبية إذا واجهت رد فعل سلبياً.',
-  'marketing.legal.terms.s4.body':
-    'تخضع مشتريات المنتجات واشتراكات البرنامج لشروط البيع لدينا، التي تغطي التسعير والدفع والشحن والإرجاع والاسترداد والتجديد التلقائي للاشتراك. يُرجى مراجعة شروط البيع قبل الشراء.',
-  'marketing.legal.terms.s5.body':
-    'إلى أقصى حد يسمح به القانون، لا تتحمّل ROOTÉ وشركة 91 ENTERPRISE LLC مسؤولية الأضرار غير المباشرة أو العرضية أو التبعية الناشئة عن استخدام الخدمة. لا يستثني أي شيء في هذه الشروط مسؤولية لا يمكن استثناؤها بموجب القانون المعمول به. تقتصر مسؤوليتنا الإجمالية عن أي مطالبة على المبلغ الذي دفعته لنا خلال الاثني عشر شهراً السابقة للمطالبة.',
-  'marketing.legal.terms.s6.body':
-    'تخضع هذه الشروط لقوانين ولاية كاليفورنيا، الولايات المتحدة الأمريكية، بصرف النظر عن قواعد تنازع القوانين فيها. تُعرَض النزاعات التي يتعذّر حلّها ودّياً أمام المحاكم الحكومية أو الفيدرالية الواقعة في مقاطعة لوس أنجلوس، كاليفورنيا.',
-
-  // Company / legal-entity details — shared by /terms and /terms-of-sale (facts in roote.config company)
+  // Company / legal-entity details — shown on /terms (facts in roote.config company)
   'marketing.legal.company.title': 'بيانات الشركة',
   'marketing.legal.company.intro': 'ROOTÉ علامة تجارية تديرها الشركة أدناه.',
   'marketing.legal.company.legalNameLabel': 'الاسم القانوني المسجَّل للشركة',
@@ -1365,47 +1410,4 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'marketing.legal.company.addressLabel': 'العنوان المسجَّل',
   'marketing.legal.company.emailLabel': 'البريد الإلكتروني',
   'marketing.legal.company.phoneLabel': 'الهاتف',
-
-  // --- marketing.legalSale ---
-  'marketing.legalSale.title': 'شروط البيع',
-  'marketing.legalSale.intro':
-    'تحكم شروط البيع هذه شراءك للمنتجات واشتراكات البرنامج من 91 ENTERPRISE LLC ("ROOTÉ"، "نحن"). تنطبق هذه الشروط إلى جانب شروط الخدمة وسياسة الخصوصية لدينا. يُرجى قراءتها قبل تقديم طلب.',
-  'marketing.legalSale.s1.title': 'الطلبات وقبول الطلب',
-  'marketing.legalSale.s1.body':
-    'تقديم طلب هو عرض للشراء. يُقبَل طلبك، ويُبرَم العقد، فقط عندما نرسل بريداً إلكترونياً لتأكيد الطلب أو نشحن المنتجات، أيهما أسبق. يجوز لنا رفض أو إلغاء طلب (على سبيل المثال إذا كان أحد العناصر غير متوفر، أو عُرض سعر بالخطأ، أو تعذّر علينا التحقق من تفاصيل الدفع أو التسليم) وسنعيد أي مبلغ سبق تحصيله.',
-  'marketing.legalSale.s2.title': 'الأسعار والضرائب والعملة',
-  'marketing.legalSale.s2.body':
-    'تُعرَض الأسعار عند الدفع بالعملة المعروضة وقد تتغيّر في أي وقت، لكن السعر المؤكَّد عند طلبك هو السعر الذي تدفعه. ما لم يُذكَر خلاف ذلك، لا تشمل الأسعار الضرائب والرسوم الجمركية ورسوم الاستيراد، التي تُحتسَب عند الدفع أو تُحصَّل عند التسليم وفقاً للوجهة.',
-  'marketing.legalSale.s3.title': 'الدفع',
-  'marketing.legalSale.s3.body':
-    'يُحصَّل الدفع عند طلبك، عبر معالج دفع خارجي، بالطرق المعروضة عند الدفع. لا نحتفظ بأرقام البطاقات الكاملة. إذا تم عكس دفعة أو استردادها دون مبرر، يجوز لنا تعليق حسابك وأي اشتراكات مرتبطة به.',
-  'marketing.legalSale.s4.title': 'الشحن والتسليم',
-  'marketing.legalSale.s4.body':
-    'نشحن إلى الوجهات المدرجة عند الدفع. عادةً ما تُجهَّز الطلبات للشحن خلال 2 إلى 5 أيام عمل؛ وتقديرات التسليم المعروضة عند الدفع غير مضمونة. تنتقل إليك مخاطرة الفقدان عند التسليم. إذا وصل طلبك تالفاً أو ناقصاً، تواصل معنا خلال 14 يوماً من التسليم.',
-  'marketing.legalSale.s5.title': 'الإرجاع وحقك في الإلغاء',
-  'marketing.legalSale.s5.body':
-    'يمكنك إرجاع المنتجات غير المفتوحة وغير المستخدمة في عبوتها الأصلية خلال 30 يوماً من التسليم لاسترداد سعر المنتج. لبدء عملية إرجاع، أرسل بريداً إلكترونياً إلى support@roote.us مع رقم طلبك. تتحمّل أنت تكلفة شحن الإرجاع ما لم يكن المنتج معيباً أو تالفاً أو أُرسِل بالخطأ. لأسباب صحية وأمنية، لا يمكن إرجاع المنتجات الموضعية أو الفموية المفتوحة ما لم تكن معيبة. التحليل الشخصي الذي سبق تسليمه غير قابل للاسترداد.',
-  'marketing.legalSale.s6.title': 'المبالغ المستردة',
-  'marketing.legalSale.s6.body':
-    'تُصدَر المبالغ المستردة المعتمدة إلى وسيلة الدفع الأصلية خلال 14 يوماً من استلامنا للعنصر المُرجَع أو موافقتنا على الاسترداد. يغطي الاسترداد سعر المنتج، وحيثما يكون الإرجاع بسبب خطأ منا أو عيب، تكلفة الشحن القياسي الأصلية أيضاً. تُسترَد الضرائب والرسوم الجمركية حيثما يقتضي القانون ذلك.',
-  'marketing.legalSale.s7.title': 'برامج الاشتراك والتجديد التلقائي',
-  'marketing.legalSale.s7.body':
-    'برنامجك اشتراك. عند تسجيلك، فإنك تخوّل رسوماً متكررة عن مدة البرنامج التي تختارها. ما لم تُلغِ قبل تاريخ التجديد، يتجدّد الاشتراك تلقائياً لمدة إضافية بالطول نفسه وبالسعر المعمول به حينها، ونرسل تذكيراً قبل كل تجديد حيثما يقتضي القانون ذلك. يشحن كل تجديد إمداداً جديداً.',
-  'marketing.legalSale.s8.title': 'تغيير الاشتراك أو إيقافه مؤقتاً أو إلغاؤه',
-  'marketing.legalSale.s8.body':
-    'يمكنك إلغاء اشتراكك أو تغييره في أي وقت من حسابك أو بالتواصل مع الدعم، ليسري ذلك اعتباراً من التجديد التالي. يوقف الإلغاء الرسوم والشحنات المستقبلية؛ ولا يسترد قيمة مدة بدأت بالفعل أو منتجات سبق شحنها، إلا حيثما يقتضي القانون ذلك أو بموجب قسم الإرجاع أعلاه. يجوز لنا تغيير تسعير الاشتراك بإشعار مسبق لا يقل عن 30 يوماً قبل أن يسري عليك.',
-  'marketing.legalSale.s9.title': 'استخدام المنتج وإخلاء المسؤولية الطبية',
-  'marketing.legalSale.s9.body':
-    'المنتجات عناصر تجميلية أو تُصرَف دون وصفة طبية، تُستخدَم وفق التعليمات الموجودة على الملصق وفي خطتك. تحليل ROOTÉ تقدير بصري أولي، وليس تشخيصاً طبياً. استشر طبيباً قبل البدء إذا كنت حاملاً أو مرضعة، أو دون سن 18 عاماً، أو تتناول أدوية، أو لديك حالة في فروة الرأس أو الجلد، وأوقف الاستخدام إذا واجهت رد فعل سلبياً. تختلف النتائج من شخص لآخر وغير مضمونة.',
-  'marketing.legalSale.s10.title': 'ضمان المنتج والشكاوى',
-  'marketing.legalSale.s10.body':
-    'نضمن أن المنتجات خالية من عيوب في المواد والصناعة عند التسليم وتطابق وصفها. إذا كان المنتج معيباً أو غير مطابق للوصف، أرسل بريداً إلكترونياً إلى support@roote.us خلال وقت معقول وسنستبدله أو نسترد قيمته. لا يؤثّر هذا على حقوقك القانونية.',
-  'marketing.legalSale.s11.title': 'مسؤوليتنا',
-  'marketing.legalSale.s11.body':
-    'إلى أقصى حد يسمح به القانون، تقتصر مسؤوليتنا عن أي مطالبة متعلقة بعملية شراء على المبلغ الذي دفعته عن الطلب المتأثر أو، في حالة الاشتراك، المبلغ المدفوع خلال الاثني عشر شهراً السابقة للمطالبة. لسنا مسؤولين عن الخسائر غير المباشرة أو التبعية. لا يحدّ أي شيء هنا من المسؤولية عن الوفاة أو الإصابة الشخصية الناجمة عن إهمالنا، أو عن الاحتيال، أو عن أي أمر لا يجوز الحدّ من المسؤولية عنه بموجب القانون المعمول به.',
-  'marketing.legalSale.s12.title': 'القانون الحاكم والنزاعات',
-  'marketing.legalSale.s12.body':
-    'تخضع شروط البيع هذه لقوانين ولاية كاليفورنيا، الولايات المتحدة الأمريكية. سنحاول أولاً تسوية أي شكوى ودّياً: راسلنا عبر support@roote.us. تُعرَض النزاعات التي يتعذّر تسويتها بهذه الطريقة أمام المحاكم الحكومية أو الفيدرالية الواقعة في مقاطعة لوس أنجلوس، كاليفورنيا، دون المساس بأي حقوق إلزامية لحماية المستهلك في بلد إقامتك.',
-  'marketing.legalSale.contact':
-    'أسئلة حول طلب أو إرجاع؟ راسلنا عبر support@roote.us أو اتصل على +1 (310) 651-7283.',
 };

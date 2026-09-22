@@ -21,15 +21,15 @@ const COLUMNS: Col[] = [
       [PATHS.magazine, 'marketing.nav.magazine'],
       [PATHS.products, 'marketing.nav.products'],
       [PATHS.hairScan, 'marketing.nav.aiSection'],
-      [PATHS.faq, 'marketing.nav.faq'],
+      [PATHS.about, 'marketing.nav.about'],
     ],
   },
 ];
 
 const ACCOUNT_LINKS: Col['links'] = [
+  [PATHS.faq, 'marketing.nav.faq'],
   [PATHS.support, 'marketing.nav.support'],
   [PATHS.account, 'marketing.nav.account'],
-  [PATHS.bag, 'marketing.nav.bag'],
 ];
 
 /** 'thinning' / 'gray' resolve via CONCERN_OPTIONS (localized). */
@@ -181,7 +181,7 @@ export function Footer() {
               {t('marketing.footer.cta')}
             </Button>
             {socialLinks.length > 0 && (
-              <div className="mt-6 flex items-center gap-3">
+              <div className="mt-6 flex items-center gap-4">
                 {socialLinks.map(([key, href]) => {
                   const Icon = SOCIAL_ICONS[key];
                   return (

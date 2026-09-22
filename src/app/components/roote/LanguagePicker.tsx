@@ -9,9 +9,13 @@ type Props = {
   onChange: (l: LocaleCode) => void;
   compact?: boolean;
   className?: string;
+  /** Opens the menu above the trigger instead of below — use when the trigger
+   *  sits at the bottom of the viewport (e.g. a sidebar footer) so the menu
+   *  doesn't get clipped off-screen. Defaults to opening below. */
+  menuPosition?: 'bottom' | 'top';
 };
 
-export function LanguagePicker({ locale, onChange, compact = false, className }: Props) {
+export function LanguagePicker({ locale, onChange, compact = false, className, menuPosition = 'bottom' }: Props) {
   const t = useT();
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -86,7 +90,10 @@ export function LanguagePicker({ locale, onChange, compact = false, className }:
           id={menuId}
           aria-label={t('nav.language.title')}
           onKeyDown={onMenuKeyDown}
-          className="absolute end-0 z-50 mt-2 min-w-44 rounded-sm border border-border bg-white py-1 shadow-lg"
+          className={cn(
+            'absolute end-0 z-50 min-w-44 rounded-sm border border-border bg-white py-1 shadow-lg',
+            menuPosition === 'top' ? 'bottom-full mb-2' : 'mt-2',
+          )}
         >
           {ENABLED_LOCALES.map((code, i) => {
             const meta = LOCALES[code];

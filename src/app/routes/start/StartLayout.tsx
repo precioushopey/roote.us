@@ -19,7 +19,16 @@ export function StartLayout() {
 
   const seg = pathname.split('/')[3]; // ['', locale, 'program', step] — undefined for /program itself, 'plan' | 'checkout' | 'success' otherwise
   const step: StartStep = (START_STEPS as readonly string[]).includes(seg ?? '') ? (seg as StartStep) : 'account';
-  const current = START_STEPS.indexOf(step);
+  // The stepper displays Account/Payment/Plan (2026-09-22 — Plan is usually skipped now that
+  // duration is already chosen on the report page, so Payment reads as the natural 2nd stage);
+  // the actual page order is unchanged (account → plan → checkout → success, see guards.ts's
+  // START_STEPS and redirectForStartStep) — this only maps each real step to its display
+  // position, since START_STEPS.indexOf(step) no longer matches the display order directly.
+  const STEP_DISPLAY_INDEX: Record<StartStep, number> = { account: 0, plan: 2, checkout: 1, success: -1 };
+  const current = STEP_DISPLAY_INDEX[step];
+  // On success, nothing is "in progress" any more (current: -1 above) — Account and Payment
+  // both show as done instead, Plan stays upcoming/grey since it was skipped, not completed.
+  const doneThrough = step === 'success' ? 2 : undefined;
 
   const queryReportId = searchParams.get('report');
   const resolved =
@@ -51,14 +60,14 @@ export function StartLayout() {
 
   const steps = [
     { id: 'account', label: t('start.rail.account') },
-    { id: 'plan', label: t('start.rail.plan') },
     { id: 'payment', label: t('start.rail.payment') },
+    { id: 'plan', label: t('start.rail.plan') },
   ];
 
   return (
     <div className="mx-auto w-full max-w-3xl px-6">
       <div className="py-6">
-        <Stepper steps={steps} current={Math.max(0, Math.min(2, current))} label={t('common.progressLabel')} />
+        <Stepper steps={steps} current={current} doneThrough={doneThrough} label={t('common.progressLabel')} />
       </div>
       <main className="flex-1 pb-16 pt-4">
         <RouteFade />

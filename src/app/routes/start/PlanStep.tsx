@@ -4,6 +4,7 @@ import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { buildReport } from '@/domain/report/buildReport';
 import { rooteContent } from '@/content/roote.config';
+import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { isPending } from '@/content/pending';
 import { pickLocalized } from '@/content/localized';
 import { PROGRAM_DURATIONS, DURATION_TIER_LABEL } from '@/content/programs';
@@ -28,6 +29,7 @@ export function PlanStep() {
       content: rooteContent,
       locale,
       reportId: session.reportId,
+      assets: TREATMENT_PHOTOS,
     });
   }, [session.diagnosis, session.analysis, session.reportId, locale]);
 
@@ -41,6 +43,16 @@ export function PlanStep() {
     ...model.plan.core.map((c) => (isPending(c.name) ? t('app.task.pendingName') : c.name)),
     ...model.plan.supporting.map((s) => (isPending(s.name) ? t('app.task.pendingName') : s.name)),
   ];
+
+  // 3 cards, not all 5: the recommended duration plus one tier shorter and
+  // one tier longer, so the recommended one sits in the middle whenever
+  // possible (2026-09-22). Clamped at either end of the ordered list — e.g.
+  // the shortest duration being recommended shows it plus the next two
+  // longer ones, rather than trying to show a nonexistent "shorter" tier.
+  const allRows = model.pricing.compareAll;
+  const recommendedIndex = allRows.findIndex((r) => r.isRecommended);
+  const windowStart = Math.max(0, Math.min(recommendedIndex - 1, allRows.length - 3));
+  const visibleRows = allRows.slice(windowStart, windowStart + 3);
 
   function choose(days: ProgramDurationDays) {
     setSelected(days);
@@ -71,7 +83,7 @@ export function PlanStep() {
         aria-label={t('start.plan.durationLegend')}
         className="grid gap-4 md:grid-cols-3"
       >
-        {model.pricing.compareAll.map((row) => {
+        {visibleRows.map((row) => {
           const tier = TIER_BY_DAYS[row.days] ?? 'personalized';
           return (
             <ProgramCard

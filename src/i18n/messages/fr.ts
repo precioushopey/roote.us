@@ -15,6 +15,8 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'common.cancel': 'Annuler',
   'common.startOver': 'Recommencer',
   'common.progressLabel': 'Progression',
+  'common.showPassword': 'Afficher le mot de passe',
+  'common.hidePassword': 'Masquer le mot de passe',
   'brand.tagline': 'Système personnalisé de croissance capillaire',
   'meta.title': 'ROOTÉ : Système personnalisé de croissance capillaire',
 
@@ -115,12 +117,16 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'auth.login.error.wrongPassword': 'Ce mot de passe est incorrect.',
 
   'recommend.rationale.thickerFuller': 'Adapté à votre objectif de cheveux plus épais et plus fournis.',
+  'recommend.rationale.thickerFullerReview': 'Cheveux plus épais et plus fournis nécessite un motif capillaire connu, nous avons donc suspendu la recommandation automatique.',
+  'recommend.rationale.thickerFullerPending': 'La force de votre traitement densité et volume a été associée à votre motif capillaire et est en attente d’approbation clinique avant activation.',
+  'recommend.rationale.thickerFullerActive': 'Adapté à la force de traitement de votre motif capillaire pour des cheveux plus épais et plus fournis.',
   'recommend.rationale.slowGraying': "Adapté à votre objectif de ralentir l'apparition de nouveaux cheveux gris.",
   'recommend.rationale.stopLoss': "Adapté à votre objectif d'arrêter la chute de cheveux en cours.",
   'recommend.rationale.hairGrowthReview':
     'La puissance du traitement Hair Growth nécessite un schéma de perte connu, nous avons donc suspendu la recommandation automatique.',
   'recommend.rationale.hairGrowthPending':
     'La puissance de votre traitement Hair Growth a été adaptée à votre schéma et attend une approbation clinique avant son activation.',
+  'recommend.rationale.hairGrowthActive': 'Adapté à la puissance de traitement Hair Growth de votre motif capillaire.',
   'recommend.rationale.other': "Votre objectif nécessite un peu plus d'informations avant que nous puissions vous recommander un programme.",
   'recommend.rationale.fallback': "Nous n'avons pas pu déterminer de recommandation à partir de vos réponses.",
 
@@ -193,6 +199,7 @@ export const fr: Partial<Record<MessageKey, string>> = {
 
   'analysis.scanning.title': 'Analyse de vos cheveux en cours…',
   'analysis.scanning.body': 'Votre scan est en cours de traitement pendant que vous répondez à quelques questions.',
+  'analysis.scanning.percent': 'Analyse en cours… {pct}%',
 
   'analysis.results.title': 'Votre analyse capillaire est prête',
   'analysis.results.cardTitle': 'Votre profil capillaire',
@@ -245,7 +252,7 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'report.plan.review.pendingApproval':
     'Votre programme de traitement Hair Growth a été adapté à votre profil et termine son examen clinique avant de pouvoir être affiché ici. Les résultats de votre analyse ci-dessous sont prêts entre-temps.',
   'report.hairLossType.typeLabel': 'Schéma {band}',
-  'report.cta.label': 'Démarrer mon programme',
+  'report.cta.label': 'Passer au paiement',
   'report.pdf.title': 'Votre rapport capillaire personnalisé',
   'report.pdf.download': 'Télécharger le PDF',
   'report.duration.label': '{days} jours',
@@ -256,6 +263,9 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'report.pricing.perDayLabel': 'par jour',
   'report.pricing.compareTitle': 'Comparer toutes les durées de programme',
   'report.pricing.recommendedBadge': 'Recommandé',
+  'report.pricing.totalLabel': 'Total',
+  'report.pricing.features':
+    'Suivi des progrès avec photos|Rappels pour chaque étape|Assistance continue de votre équipe de soins|Ajustez votre plan au fil du temps',
   'report.claims.effectiveness.label': 'Efficacité',
   'report.claims.timeToVisibleResults.label': 'Délai habituel avant des résultats visibles',
   'report.claims.doctorFollowUpCost.label': 'Coût du suivi médical',
@@ -361,6 +371,15 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'start.success.point2': 'Nous vous rappellerons quand appliquer chaque étape.',
   'start.success.point3': 'Suivez votre progression avec des photos au fil du temps.',
   'start.success.cta': 'Accéder à mon programme',
+  'start.success.stepsTitle': 'Et ensuite ?',
+  'start.success.step1.title': 'Votre kit est expédié',
+  'start.success.step1.body': 'Vos produits sont préparés et en route vers vous.',
+  'start.success.step2.title': 'Confirmez la livraison',
+  'start.success.step2.body': 'Une fois arrivé, confirmez-le dans votre compte pour commencer votre Jour 1.',
+  'start.success.step3.title': 'Suivez votre routine',
+  'start.success.step3.body': 'Nous vous enverrons un rappel pour chaque étape.',
+  'start.success.step4.title': 'Suivez vos progrès',
+  'start.success.step4.body': 'Ajoutez des photos au fil du temps pour observer votre évolution.',
 
   'checkout.contactTitle': 'Contact et livraison',
   'checkout.name': 'Nom complet',
@@ -473,6 +492,54 @@ export const fr: Partial<Record<MessageKey, string>> = {
     "Le prélèvement récurrent, la fréquence d'expédition, le prix de renouvellement, les taxes et les frais de livraison sont indiqués avant l'activation. Vous pouvez annuler ici à tout moment, et vos droits locaux de protection des consommateurs restent inchangés.",
   'app.noProgram.body': 'Aucun programme actif sur cet appareil. Finalisez un achat ou chargez un programme de démonstration.',
   'app.noProgram.devSeedCta': 'Charger un programme de démonstration (développement uniquement)',
+  'app.preDelivery.title': 'Votre programme est en route',
+  'app.preDelivery.subtitle': 'Voici à quoi vous attendre avant votre premier jour.',
+  'app.preDelivery.planReady': 'Votre programme est prêt',
+  'app.preDelivery.orderTitle': 'Votre commande',
+  'app.preDelivery.orderedOn': 'Commande passée le {date}',
+  'app.preDelivery.shippingNote': "Votre commande est en préparation et en cours d'expédition. Cet aperçu ne propose pas de suivi de livraison en temps réel : une fois votre colis arrivé, confirmez-le ci-dessous pour démarrer votre programme.",
+  'app.preDelivery.supportTitle': 'Des questions sur votre commande ?',
+  'app.preDelivery.supportBody': 'Contactez-nous à tout moment.',
+  'app.preDelivery.confirmCta': 'Colis arrivé ? Confirmez pour démarrer votre Jour 1',
+  'app.preDelivery.viewShipping': 'Voir les détails de livraison',
+  'app.preDelivery.mapPending': 'carte de livraison en direct',
+  'app.preDelivery.orderedStage': 'Commandé',
+  'app.preDelivery.preparingStage': 'Préparation et expédition',
+  'app.preDelivery.whileYouWaitTitle': 'En attendant',
+  'app.preDelivery.reviewPlanRow': 'Consulter votre programme',
+  'app.preDelivery.reviewPlanTitle': 'Comment utiliser votre programme',
+  'app.preDelivery.contactRow': 'Contacter le support',
+  'app.preDelivery.shipping.title': 'Informations de livraison',
+  'app.preDelivery.shipping.orderSummary': 'Récapitulatif de la commande',
+  'app.preDelivery.shipping.priceLabel': 'Total de la commande',
+  'app.preDelivery.shipping.supportCenter': "Centre d'assistance",
+  'app.preDelivery.shipping.refundRow': 'Demande de remboursement ou de retour',
+  'app.preDelivery.shipping.contactRow': 'Contacter le support',
+  'app.preDelivery.shipping.helpRow': "Centre d'aide",
+  'app.preDelivery.refund.title': 'Demande de remboursement ou de retour',
+  'app.preDelivery.refund.intro': "Dites-nous ce qui s'est passé, nous examinerons votre demande.",
+  'app.preDelivery.refund.reasonLabel': 'Motif',
+  'app.preDelivery.refund.reasonDamaged': 'Produit endommagé',
+  'app.preDelivery.refund.reasonNotExpected': "Ce n'est pas ce à quoi je m'attendais",
+  'app.preDelivery.refund.reasonNoLongerNeeded': "Je n'en ai plus besoin",
+  'app.preDelivery.refund.reasonOther': 'Autre',
+  'app.preDelivery.refund.detailsLabel': 'Détails (facultatif)',
+  'app.preDelivery.refund.detailsPlaceholder': 'Dites-nous en plus...',
+  'app.preDelivery.refund.submit': 'Envoyer la demande',
+  'app.preDelivery.refundSent.title': 'Demande envoyée',
+  'app.preDelivery.refundSent.body': 'Nous avons bien reçu votre demande et vous recontacterons par e-mail.',
+  'app.preDelivery.refundSent.back': 'Retour aux informations de livraison',
+  'app.preDelivery.contact.title': 'Contacter le support',
+  'app.preDelivery.contact.body': 'Notre équipe est disponible par e-mail ou par téléphone pour toute question sur votre commande, votre programme ou vos produits.',
+  'app.preDelivery.help.title': "Centre d'aide",
+  'app.preDelivery.help.q1': 'Quand ma commande arrivera-t-elle ?',
+  'app.preDelivery.help.a1': 'Cet aperçu ne propose pas de suivi de livraison en temps réel. Une fois votre colis arrivé, revenez ici et confirmez-le pour démarrer votre programme.',
+  'app.preDelivery.help.q2': 'Comment fonctionne mon programme ?',
+  'app.preDelivery.help.a2': 'Votre programme associe les produits et la routine déterminés par votre évaluation, suivis à partir du jour où vous confirmez la réception de votre commande.',
+  'app.preDelivery.help.q3': 'Puis-je changer mon programme ou mes produits ?',
+  'app.preDelivery.help.a3': 'Contactez le support, nous vous aiderons à mettre à jour votre programme ou vos produits.',
+  'app.preDelivery.help.q4': 'Que faire si un produit arrive endommagé ?',
+  'app.preDelivery.help.a4': 'Envoyez une demande de remboursement ou de retour avec le détail du dommage.',
   'app.task.pendingName': 'Votre traitement',
 
   'app.today.title': "Aujourd'hui",
@@ -721,6 +788,8 @@ export const fr: Partial<Record<MessageKey, string>> = {
 
   'app.profile.title': 'Votre profil',
   'app.profile.account.title': 'Compte',
+  'app.profile.preferences.title': 'Préférences',
+  'app.profile.chooseLanguage': 'Choisir la langue',
   'app.profile.email': 'E-mail',
   'app.profile.memberSince': 'Membre depuis',
   'app.profile.program.title': 'Votre programme',
@@ -1104,6 +1173,8 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'marketing.pdp.pricePending': 'En attente',
   'marketing.pdp.fitTitle': 'Sa place dans votre programme',
   'marketing.pdp.fitBody': 'Votre programme indique précisément quels produits utiliser et quand. Cette page présente le produit indépendamment.',
+  'marketing.pdp.keyBenefits': 'Bénéfices clés',
+  'marketing.pdp.overview': "Présentation",
   'marketing.pdp.format': '{size} par unité',
   'marketing.pdp.activesTitle': 'Actifs clés',
   'marketing.pdp.detailsTitle': 'Détails',
@@ -1131,6 +1202,16 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'marketing.pdp.badge.fragranceFree': 'Sans parfum',
   'marketing.pdp.badge.parabenFree': 'Sans paraben',
   'marketing.pdp.badge.sulfateFree': 'Sans sulfates',
+  'marketing.pdp.activesBody': "Les actifs qui composent cette formule : ce que fait chacun d'eux, et le niveau de preuve disponible.",
+  'marketing.pdp.directionsTitle': 'Utilisation et sécurité',
+  'marketing.pdp.directionsBody': "Comment l'appliquer, qui devrait l'éviter, et comment le conserver, directement depuis l'étiquette.",
+  'marketing.pdp.detailsBody': 'Les spécificités de la formule et les questions les plus fréquentes sur ce produit.',
+  'marketing.pdp.relatedBody': 'Issus de votre programme, sélectionnés pour être utilisés avec ce produit.',
+  'marketing.pdp.faqPrescription.q': 'Une ordonnance ou un bilan de traitement est-il nécessaire ?',
+  'marketing.pdp.faqPrescription.aYes': "Oui, ce produit n'est ajouté à votre programme qu'après qu'un bilan de traitement a confirmé qu'il vous convient.",
+  'marketing.pdp.faqPrescription.aNo': 'Non, ce produit ne nécessite ni ordonnance ni bilan de traitement.',
+  'marketing.pdp.faqStrength.q': 'Comment mon niveau (Level) est-il choisi ?',
+  'marketing.pdp.faqStrength.a': "Vous ne choisissez pas vous-même votre niveau. Votre programme et tout changement de concentration sont déterminés par votre évaluation et un bilan de traitement, selon ce qui vous convient.",
 
   // --- marketing.sol.* ---
   'marketing.sol.indexHeading': 'Comprenez vos cheveux, puis choisissez',
@@ -1281,48 +1362,16 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'marketing.magazine.formatLabel.shampoo': 'Shampooings',
 
   // --- marketing.legal.* ---
-  'marketing.legal.terms.title': "Conditions d'utilisation",
+  'marketing.legal.terms.title': 'Conditions générales',
   'marketing.legal.privacy.title': 'Politique de confidentialité',
   'marketing.legal.updated': 'Dernière mise à jour',
-  'marketing.legal.terms.s1': 'Acceptation des conditions',
-  'marketing.legal.terms.s2': 'Utilisation du service',
-  'marketing.legal.terms.s3': 'Avertissement médical',
-  'marketing.legal.terms.s4': 'Paiement et abonnements',
-  'marketing.legal.terms.s5': 'Limitation de responsabilité',
-  'marketing.legal.terms.s6': 'Droit applicable',
-  'marketing.legal.privacy.s1': 'Informations que nous collectons',
-  'marketing.legal.privacy.s2': 'Comment nous utilisons vos photos',
-  'marketing.legal.privacy.s3': 'Conservation des données',
-  'marketing.legal.privacy.s4': 'Vos droits',
-  'marketing.legal.privacy.s5': 'Partage avec des tiers',
-  'marketing.legal.privacy.s6': 'Contact',
 
+  // Intro de la Politique de confidentialité. Le corps des clauses principales de /terms et
+  // /privacy vit désormais dans la couche de contenu (src/content/legal.ts LEGAL_BODIES,
+  // issu du pack juridique ROOTÉ, 2026-09-22) afin que l'équipe juridique/produit puisse
+  // remplacer le texte sans toucher aux clés i18n.
   'marketing.legal.privacy.intro':
-    'Cette politique explique quelles informations nous traitons et comment. Ce service est exploité par 91 ENTERPRISE LLC (voir la section « Informations sur la société » sur nos pages de conditions), qui est le responsable du traitement des données.',
-  'marketing.legal.privacy.s1.body':
-    "Lorsque vous utilisez ce service, vous pouvez fournir : les photos que vous téléchargez pour votre évaluation capillaire ; vos réponses au questionnaire d'évaluation ; votre adresse e-mail ; et, si vous créez un compte ou passez une commande, votre nom, vos coordonnées et informations de livraison, ainsi qu'une référence masquée de votre carte de paiement (uniquement les quatre derniers chiffres et la date d'expiration, jamais le numéro complet de la carte ni le code de sécurité). À partir de ces informations, nous générons un résultat d'évaluation et, après un achat, un enregistrement de programme.",
-  'marketing.legal.privacy.s2.body':
-    "Vos photos et vos réponses au questionnaire sont utilisées uniquement pour établir votre évaluation capillaire et votre programme personnalisé, et pour vous présenter des comparaisons avant/après dans le temps. Dans cette version de démonstration, l'évaluation s'effectue entièrement dans votre navigateur et ne quitte jamais votre appareil. Si vous utilisez par ailleurs notre chat capillaire IA, consultez la section « Partage avec des tiers » ci-dessous pour savoir comment ces données sont traitées. Nous n'utilisons pas vos photos à des fins publicitaires, pour entraîner des modèles, ni pour toute finalité à laquelle vous n'auriez pas consenti.",
-  'marketing.legal.privacy.s3.body':
-    "Dans cette version de démonstration, tout ce que vous saisissez (photos, réponses, e-mail, compte, panier et programme) est stocké uniquement dans votre propre navigateur (son stockage local et sa base de données) et reste sur votre appareil jusqu'à ce que vous l'effaciez. Rien n'est conservé sur nos serveurs. Une fois de véritables comptes et commandes mis en place, la durée de conservation de chaque type de données sera publiée ici.", // TODO: confirm retention periods with client once a backend exists
-  'marketing.legal.privacy.s4.body':
-    "Vous pouvez consulter et supprimer à tout moment les informations conservées dans votre navigateur en effaçant les données de ce site dans les paramètres de votre navigateur ; cette action supprime de cet appareil votre évaluation, votre compte et votre programme. Lorsque le droit applicable vous accorde des droits d'accès, de rectification, d'exportation ou de suppression de vos données personnelles, ou le droit de vous opposer à leur traitement ou d'en demander la limitation, vous pouvez les exercer en nous contactant aux coordonnées ci-dessous.", // TODO: confirm the applicable data-protection framework(s) and supervisory-authority details with client
-  'marketing.legal.privacy.s5.body':
-    "Nous ne vendons pas vos données personnelles. Dans cette version de démonstration, les tiers concernés sont Google Fonts, qui fournit les polices du site, et, si vous utilisez notre chat capillaire IA, notre partenaire HairHealth.ai, qui reçoit ce que vous y partagez (vos réponses et vos photos) et l'ajoute à notre liste de contacts via HubSpot afin que notre équipe puisse vous recontacter. Les services de production pour le paiement, la livraison, l'e-mail et l'hébergement seront répertoriés ici au fur et à mesure de leur mise en place.", // TODO: confirm the production sub-processor list with client
-  'marketing.legal.privacy.s6.body': 'Pour toute question ou demande relative à la confidentialité, contactez-nous à support@roote.us ou au +1 (310) 651-7283.',
-
-  'marketing.legal.terms.s1.body':
-    "En accédant à ce site ou en créant un compte, vous acceptez les présentes Conditions d'utilisation, nos Conditions de vente et notre Politique de confidentialité. Si vous n'êtes pas d'accord, n'utilisez pas le service. Nous pouvons mettre à jour ces conditions ; les modifications substantielles prennent effet dès leur publication, avec une nouvelle date de « dernière mise à jour ».",
-  'marketing.legal.terms.s2.body':
-    "Nous proposons une évaluation capillaire assistée par IA et basée sur des photos, ainsi qu'un traitement personnalisé à base de produits. Vous devez avoir au moins 18 ans et fournir des informations exactes. Vous ne devez pas détourner l'usage du service, télécharger des photos d'une personne autre que vous-même, tenter de rétro-concevoir l'analyse, ni revendre une partie quelconque du service.",
-  'marketing.legal.terms.s3.body':
-    "L'analyse et le rapport constituent une estimation visuelle préliminaire, non un diagnostic médical, et ne remplacent pas l'avis d'un médecin agréé. Consultez un médecin avant de commencer, de modifier ou d'arrêter tout traitement, en particulier si vous êtes enceinte ou allaitez, si vous prenez des médicaments, ou si vous présentez une affection du cuir chevelu ou de la peau. Arrêtez l'utilisation et consultez un médecin en cas de réaction indésirable.",
-  'marketing.legal.terms.s4.body':
-    'Les achats de produits et les abonnements aux programmes sont régis par nos Conditions de vente, qui couvrent la tarification, le paiement, la livraison, les retours, les remboursements et le renouvellement automatique des abonnements. Veuillez consulter les Conditions de vente avant tout achat.',
-  'marketing.legal.terms.s5.body':
-    "Dans toute la mesure permise par la loi, 91 ENTERPRISE LLC n'est pas responsable des dommages indirects, accessoires ou consécutifs résultant de l'utilisation du service. Rien dans les présentes conditions n'exclut une responsabilité qui ne peut être exclue en vertu du droit applicable. Notre responsabilité totale pour toute réclamation est limitée au montant que vous nous avez versé au cours des douze mois précédant la réclamation.",
-  'marketing.legal.terms.s6.body':
-    "Les présentes conditions sont régies par les lois de l'État de Californie, États-Unis, sans égard aux règles de conflit de lois. Les différends qui ne peuvent être résolus à l'amiable seront portés devant les tribunaux d'État ou fédéraux situés dans le comté de Los Angeles, Californie.",
+    'Cette politique explique quelles informations ROOTÉ recueille, pourquoi, et comment vous pouvez les contrôler.',
 
   'marketing.legal.company.title': 'Informations sur la société',
   'marketing.legal.company.intro': 'Ce service est exploité par la société ci-dessous.',
@@ -1338,46 +1387,4 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'marketing.legal.company.addressLabel': 'Adresse enregistrée',
   'marketing.legal.company.emailLabel': 'E-mail',
   'marketing.legal.company.phoneLabel': 'Téléphone',
-
-  // --- marketing.legalSale.* ---
-  'marketing.legalSale.title': 'Conditions de vente',
-  'marketing.legalSale.intro':
-    "Les présentes Conditions de vente régissent votre achat de produits et vos abonnements aux programmes auprès de 91 ENTERPRISE LLC (« nous »). Elles s'appliquent conjointement avec nos Conditions d'utilisation et notre Politique de confidentialité. Veuillez les lire avant de passer commande.",
-  'marketing.legalSale.s1.title': 'Commandes et acceptation des commandes',
-  'marketing.legalSale.s1.body':
-    "Passer une commande constitue une offre d'achat. Votre commande n'est acceptée, et un contrat formé, que lorsque nous envoyons un e-mail de confirmation de commande ou expédions les produits, selon la première de ces éventualités. Nous pouvons refuser ou annuler une commande (par exemple si un article est en rupture de stock, si un prix est affiché par erreur, ou si nous ne pouvons pas vérifier les informations de paiement ou de livraison) et rembourserons tout montant déjà prélevé.",
-  'marketing.legalSale.s2.title': 'Prix, taxes et devise',
-  'marketing.legalSale.s2.body':
-    "Les prix sont affichés au moment du paiement dans la devise indiquée et peuvent changer à tout moment, mais le prix confirmé au moment de votre commande est celui que vous payez. Sauf indication contraire, les prix n'incluent pas les taxes, droits de douane et frais d'importation, qui sont calculés au moment du paiement ou facturés à la livraison selon la destination.",
-  'marketing.legalSale.s3.title': 'Paiement',
-  'marketing.legalSale.s3.body':
-    "Le paiement est prélevé au moment de la commande, via notre prestataire de paiement tiers, selon les méthodes indiquées au moment du paiement. Nous ne stockons pas les numéros de carte complets. Si un paiement est annulé ou contesté sans motif valable, nous pouvons suspendre votre compte et tout abonnement associé.",
-  'marketing.legalSale.s4.title': 'Livraison',
-  'marketing.legalSale.s4.body':
-    "Nous livrons aux destinations indiquées au moment du paiement. Les commandes sont généralement préparées pour expédition sous 2 à 5 jours ouvrés ; les délais de livraison indiqués au moment du paiement ne sont pas garantis. Le risque de perte vous est transféré à la livraison. Si une commande arrive endommagée ou incomplète, contactez-nous dans les 14 jours suivant la livraison.",
-  'marketing.legalSale.s5.title': 'Retours et droit de rétractation',
-  'marketing.legalSale.s5.body':
-    "Vous pouvez retourner les produits non ouverts et non utilisés, dans leur emballage d'origine, dans les 30 jours suivant la livraison, pour un remboursement du prix du produit. Pour lancer un retour, envoyez un e-mail à support@roote.us avec votre numéro de commande. Les frais de retour sont à votre charge, sauf si l'article était défectueux, endommagé ou envoyé par erreur. Pour des raisons d'hygiène et de sécurité, les produits topiques ou oraux ouverts ne peuvent être retournés, sauf s'ils sont défectueux. Une analyse personnalisée déjà fournie n'est pas remboursable.",
-  'marketing.legalSale.s6.title': 'Remboursements',
-  'marketing.legalSale.s6.body':
-    "Les remboursements approuvés sont émis vers le moyen de paiement d'origine dans les 14 jours suivant la réception de l'article retourné ou notre accord sur le remboursement. Un remboursement couvre le prix du produit et, lorsque le retour résulte de notre erreur ou d'un défaut, les frais de livraison standard d'origine. Les taxes et droits sont remboursés lorsque la loi l'exige.",
-  'marketing.legalSale.s7.title': 'Programmes par abonnement et renouvellement automatique',
-  'marketing.legalSale.s7.body':
-    "Votre programme est un abonnement. En vous y inscrivant, vous autorisez des prélèvements récurrents pour la durée de programme que vous choisissez. Sauf annulation avant la date de renouvellement, l'abonnement se renouvelle automatiquement pour une nouvelle période de même durée, au prix alors en vigueur, et nous envoyons un rappel avant chaque renouvellement lorsque la loi l'exige. Chaque renouvellement donne lieu à l'expédition d'un nouvel approvisionnement.",
-  'marketing.legalSale.s8.title': 'Modifier, suspendre ou annuler un abonnement',
-  'marketing.legalSale.s8.body':
-    "Vous pouvez annuler ou modifier votre abonnement à tout moment depuis votre compte ou en contactant l'assistance, avec effet au prochain renouvellement. L'annulation arrête les prélèvements et expéditions futurs ; elle ne rembourse pas une période déjà commencée ou des produits déjà expédiés, sauf si la loi l'exige ou dans le cadre de la section Retours ci-dessus. Nous pouvons modifier la tarification de l'abonnement moyennant un préavis d'au moins 30 jours avant application.",
-  'marketing.legalSale.s9.title': 'Utilisation des produits et avertissement médical',
-  'marketing.legalSale.s9.body':
-    "Les produits sont des articles cosmétiques ou en vente libre, à utiliser selon les indications figurant sur l'étiquette et dans votre programme. L'analyse constitue une estimation visuelle préliminaire, non un diagnostic médical. Consultez un médecin avant de commencer si vous êtes enceinte ou allaitez, si vous avez moins de 18 ans, si vous prenez des médicaments, ou si vous présentez une affection du cuir chevelu ou de la peau, et arrêtez l'utilisation en cas de réaction indésirable. Les résultats varient et ne sont pas garantis.",
-  'marketing.legalSale.s10.title': 'Garantie produit et réclamations',
-  'marketing.legalSale.s10.body':
-    "Nous garantissons que les produits sont exempts de défauts de matériaux et de fabrication à la livraison et conformes à leur description. Si un produit est défectueux ou non conforme à sa description, envoyez un e-mail à support@roote.us dans un délai raisonnable, et nous le remplacerons ou vous rembourserons. Cela n'affecte pas vos droits légaux.",
-  'marketing.legalSale.s11.title': 'Notre responsabilité',
-  'marketing.legalSale.s11.body':
-    "Dans toute la mesure permise par la loi, notre responsabilité pour toute réclamation liée à un achat est limitée au montant que vous avez payé pour la commande concernée ou, pour un abonnement, au montant payé au cours des douze mois précédant la réclamation. Nous ne sommes pas responsables des pertes indirectes ou consécutives. Rien ici ne limite la responsabilité en cas de décès ou de dommage corporel causé par notre négligence, de fraude, ou de tout ce qui ne peut être limité en vertu du droit applicable.",
-  'marketing.legalSale.s12.title': 'Droit applicable et litiges',
-  'marketing.legalSale.s12.body':
-    "Les présentes Conditions de vente sont régies par les lois de l'État de Californie, États-Unis. Nous tenterons d'abord de résoudre toute réclamation à l'amiable : envoyez un e-mail à support@roote.us. Les différends qui ne peuvent être résolus ainsi seront soumis aux tribunaux d'État ou fédéraux situés dans le comté de Los Angeles, Californie, sans préjudice des droits impératifs de protection des consommateurs de votre pays de résidence.",
-  'marketing.legalSale.contact': 'Des questions sur une commande ou un retour ? Écrivez à support@roote.us ou appelez le +1 (310) 651-7283.',
 };

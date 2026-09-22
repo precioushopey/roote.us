@@ -20,7 +20,7 @@ export function AppCare() {
       <AccountPageHeader eyebrow={t('app.nav.support')} title={t('app.care.title')} />
       <p className="text-sm text-muted-foreground">{t('app.care.subtitle')}</p>
 
-      <div className="grid gap-4 md:gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-8">
+      <div className="flex flex-col gap-4 md:gap-8">
         <section className="flex flex-col gap-4">
           {unlocked.map((m) => (
             <article key={m.key} className="rounded-xl border border-border bg-card p-4 shadow-sm">
@@ -32,7 +32,7 @@ export function AppCare() {
           ))}
         </section>
 
-        <div className="flex flex-col gap-4 lg:sticky lg:top-10 lg:self-start">
+        <div className="flex flex-col gap-4">
           <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
             <h2 className="font-display text-lg font-medium">{t('app.care.compose.title')}</h2>
             <form

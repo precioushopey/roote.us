@@ -2300,7 +2300,7 @@ export function IntroStep() {
   return (
     <section className="mx-auto max-w-md text-center flex flex-col gap-8">
       <h1 className="text-2xl">{t('diagnosis.intro.title')}</h1>
-      <ul className="grid gap-3">
+      <ul className="grid gap-4">
         {points.map((p) => (
           <li key={p} className="rounded-lg border border-border bg-card px-4 py-3 text-sm">{p}</li>
         ))}
@@ -2778,7 +2778,7 @@ export function PhotosStep() {
   const canContinue = session.diagnosis.photos.length >= 1;
 
   return (
-    <section className="mx-auto max-w-lg flex flex-col gap-6">
+    <section className="mx-auto max-w-lg flex flex-col gap-8">
       <div className="text-center">
         <h1 className="text-2xl">{t('diagnosis.photos.title')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{t('diagnosis.photos.howto')}</p>
@@ -2947,10 +2947,10 @@ export function QuestionCard({
 }) {
   const t = useT();
   return (
-    <div className="mx-auto max-w-md flex flex-col gap-6">
+    <div className="mx-auto max-w-md flex flex-col gap-8">
       <p className="text-xs text-muted-foreground">{t('q.counter', { index: index + 1, total })}</p>
       <h2 className="text-xl">{t(question.promptKey as never)}</h2>
-      <div className="grid gap-3">
+      <div className="grid gap-4">
         {question.options.map((o) => (
           <button
             key={o.value}
@@ -3232,7 +3232,7 @@ export function AnalyzingStep() {
   };
 
   return (
-    <section className="mx-auto max-w-md flex flex-col gap-6">
+    <section className="mx-auto max-w-md flex flex-col gap-8">
       <AnalyzingStrip running gateReady={allAnswered} onComplete={finish} />
       {step < QUESTIONS.length ? (
         <QuestionCard
@@ -3367,7 +3367,7 @@ export function ReadyStep() {
   }
 
   return (
-    <section className="mx-auto max-w-md text-center flex flex-col gap-6">
+    <section className="mx-auto max-w-md text-center flex flex-col gap-8">
       <h1 className="text-2xl">{t('ready.title')}</h1>
       <p className="text-sm text-muted-foreground">
         {t('ready.teaser', {
@@ -3376,7 +3376,7 @@ export function ReadyStep() {
           zones: a.flaggedZones.length,
         })}
       </p>
-      <form onSubmit={submit} className="flex flex-col gap-3">
+      <form onSubmit={submit} className="flex flex-col gap-4">
         <input
           type="email"
           value={email}

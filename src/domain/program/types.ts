@@ -28,8 +28,14 @@ export type Program = {
   reportId: string;
   analysisSnapshot: HairAnalysis;
   durationDays: ProgramDurationDays;
-  startDate: string; // YYYY-MM-DD
-  endDate: string;   // YYYY-MM-DD, startDate + durationDays
+  /** When checkout completed — always set, immutable. */
+  orderedAt: string; // YYYY-MM-DD
+  /** Day 0 of the routine. `null` until the customer confirms their package
+   *  arrived (see `store/program.ts`'s `confirmDelivery`) — `AppShell` shows
+   *  a pre-delivery landing screen instead of the dashboard while this is
+   *  `null`, so every other /account/* screen can treat it as set. */
+  startDate: string | null; // YYYY-MM-DD
+  endDate: string | null;   // YYYY-MM-DD, startDate + durationDays; null until startDate is set
   plan: { core: Treatment[]; supporting: SupportingTreatment[] };
   completionLog: Record<string, string[]>; // isoDate -> taskKey[]
   progressPhotos: ProgressPhoto[];

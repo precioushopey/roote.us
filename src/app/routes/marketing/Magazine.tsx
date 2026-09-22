@@ -5,6 +5,7 @@ import {
   Button,
   IngredientCard,
   MediaCaption,
+  MediaPlaceholder,
   TextLink,
   Hero,
   CtaSection,
@@ -24,17 +25,16 @@ import type { MessageKey } from '@/i18n/messages';
 import { INGREDIENT_PHOTOS } from '@/app/components/roote/ingredientPhotos';
 import concernThinning from '@/assets/concerns/concern-thinning.png';
 import level10 from '@/assets/products/Level 10.png';
-import graySupport from '@/assets/products/Gray Support.png';
-import graySerum from '@/assets/products/Gray Serum.png';
-import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
 
 /** One representative real SKU photo per format — reuses the same product
- *  assets ProductDetail.tsx uses, not new photography. */
+ *  assets ProductDetail.tsx uses, not new photography.
+ *  'capsule-supplement' / 'serum' / 'shampoo' are deliberately left out —
+ *  the client-supplied packaging photography for those three SKUs was a
+ *  placeholder mockup, not final, so it was pulled project-wide
+ *  (2026-09-22); the format grid below renders a `MediaPlaceholder` for any
+ *  format missing here. */
 const FORMAT_PHOTOS: Record<string, string> = {
   'topical-solution': level10,
-  'capsule-supplement': graySupport,
-  serum: graySerum,
-  shampoo: regrowthShampoo,
 };
 
 /** Same 4 categories `/hair-scan`'s "Your plan" section shows, same i18n keys. */
@@ -151,13 +151,22 @@ export function Magazine() {
             <MediaCaption
               key={format}
               media={
-                <img
-                  src={FORMAT_PHOTOS[format]}
-                  alt=""
-                  aria-hidden
-                  loading="lazy"
-                  className="aspect-square w-full rounded-sm object-contain"
-                />
+                FORMAT_PHOTOS[format] ? (
+                  <img
+                    src={FORMAT_PHOTOS[format]}
+                    alt=""
+                    aria-hidden
+                    loading="lazy"
+                    className="aspect-square w-full rounded-sm object-contain"
+                  />
+                ) : (
+                  <MediaPlaceholder
+                    alt={t(FORMAT_LABEL_KEY[format])}
+                    label={`${t(FORMAT_LABEL_KEY[format])}: product photography`}
+                    ratio="1"
+                    className="w-full"
+                  />
+                )
               }
               title={t(FORMAT_LABEL_KEY[format])}
               description={pickLocalized(FORMAT_EXPLANATIONS[format], cl)}

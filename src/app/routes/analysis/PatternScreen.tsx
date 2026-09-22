@@ -1,22 +1,24 @@
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate, useNavigate, useOutletContext } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { DisplayTitle, Prose, Button } from '@/app/components/roote';
+import { DisplayTitle, Prose } from '@/app/components/roote';
 import { pickLocalized } from '@/content/localized';
 import { MALE_PATTERN_OPTIONS, FEMALE_PATTERN_OPTIONS } from '@/content/assessment';
 import { track } from '@/analytics/analytics';
 import { PATHS } from '@/app/paths';
-import { redirectForAnalysisStep } from './guards';
+import { redirectForAnalysisStep, backPathForAnalysisStep } from './guards';
+import { QuizFooterNav } from './QuizFooterNav';
 import type { PatternCode } from '@/domain/recommendation/types';
 import { cn } from '@/app/components/ui/utils';
 
 /**
  * v3.1 §3 Step 5 — only reachable when Hair Goal = Hair Growth (see
  * redirectForAnalysisStep). Unlike every other single-select question in
- * this flow, this one does NOT auto-advance — v3.1 §6 is explicit that the
- * visitor should be able to review their image choice before continuing,
- * so this renders its own explicit Continue button instead of navigating
- * inside `choose`.
+ * this flow (which auto-advance on choice again as of 2026-09-22), this one
+ * deliberately never auto-advances — v3.1 §6 is explicit that the visitor
+ * should be able to review their image choice before continuing. Uses the
+ * same shared QuizFooterNav as every other screen instead of its own
+ * bespoke Continue button.
  */
 export function PatternScreen() {
   const t = useT();
@@ -24,6 +26,7 @@ export function PatternScreen() {
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const session = useSession();
+  const { requestStartOver } = useOutletContext<{ requestStartOver: () => void }>();
 
   const redirect = redirectForAnalysisStep('pattern', session);
   if (redirect) return <Navigate to={withLocale(redirect)} replace />;
@@ -75,9 +78,13 @@ export function PatternScreen() {
           </label>
         ))}
       </div>
-      <Button block disabled={!current} onClick={proceed}>
-        {t('common.continue')}
-      </Button>
+      <QuizFooterNav
+        backPath={backPathForAnalysisStep('pattern', session)}
+        onStartOver={requestStartOver}
+        onNext={proceed}
+        nextDisabled={!current}
+        nextLabel={t('common.continue')}
+      />
     </section>
   );
 }

@@ -84,6 +84,8 @@ export const INGREDIENT_CATEGORY: Record<string, IngredientCategory> = {
   Caffeine: 'regrowth',
   Ginseng: 'regrowth',
   Rosemary: 'regrowth',
+  'ABN Complex™': 'regrowth',
+  Retinol: 'regrowth',
   // Pigment & nutrition support
   'Greyverse™': 'pigment',
   'Darkenyl™': 'pigment',
@@ -93,6 +95,7 @@ export const INGREDIENT_CATEGORY: Record<string, IngredientCategory> = {
   'L-Tyrosine': 'pigment',
   PABA: 'pigment',
   Zinc: 'pigment',
+  'Red Clover Extract': 'pigment',
   // Scalp & hair conditioning
   'Green Tea': 'conditioning',
   Panthenol: 'conditioning',
@@ -100,12 +103,20 @@ export const INGREDIENT_CATEGORY: Record<string, IngredientCategory> = {
   Horsetail: 'conditioning',
   Sage: 'conditioning',
   Jojoba: 'conditioning',
+  'Canadian Willow Herb': 'conditioning',
+  'Hydrolyzed Wheat Protein': 'conditioning',
 };
 
 /** Longer, Magazine-depth explanation per ingredient — the section's value-add
- *  over `/science`'s one-line note. Deliberately omitted for the 4 supplier-
- *  proprietary actives (Procapil®, Greyverse™, Darkenyl™, Capixyl™); those stay
- *  `requires-review` and render [PENDING] via IngredientCard, unchanged. */
+ *  over `/science`'s one-line note. Deliberately omitted for the 5 supplier-
+ *  proprietary/unreviewed actives (Procapil®, Greyverse™, Darkenyl™, Capixyl™,
+ *  ABN Complex™); those stay `requires-review` and render [PENDING] via
+ *  IngredientCard, unchanged — never shown on `/magazine` at all (see
+ *  `byCategory`'s filter below). Also not yet written for the four round-2
+ *  ingredients newly wired into `INGREDIENT_CATEGORY` above (Retinol, Red
+ *  Clover Extract, Canadian Willow Herb, Hydrolyzed Wheat Protein) — they
+ *  fall back to their shorter `products.ts` note (see the `note` fallback in
+ *  Magazine.tsx) until a longer explanation is written for them too. */
 export const INGREDIENT_EXPLANATIONS: Record<string, LocalizedText> = {
   Minoxidil: L6({
     en: "Widens scalp blood vessels and extends the hair growth cycle's active phase.",

@@ -1,0 +1,104 @@
+ROOTÉ — IMAGE GENERATION PROMPT SHEET
+==================================================================
+The ingredient-cards "round 2" checklist that used to live here (ABN
+Complex™, Retinol, Red Clover Extract, Canadian Willow Herb, Hydrolyzed
+Wheat Protein) is done — all 5 files were generated, saved into
+src/assets/ingredients/, and wired into
+src/app/components/roote/ingredientPhotos.ts (2026-09-22). See "ALREADY
+GENERATED" below for the full 29-card set. This sheet only has the
+unrelated step-photo fix left open (see that section further down).
+
+================================================================================
+ALREADY GENERATED — the full 29-card ingredient set, wired into
+src/app/components/roote/ingredientPhotos.ts (see that file for the
+Ingredient.name → file mapping). Shared style used across all of them:
+"Real macro still-life product photography — not an illustration, not a
+3-D render, not a graphic composite. Set on a warm cream/beige marble or
+travertine surface, soft diffused natural window light with soft shadows,
+shallow depth of field, softly blurred warm-cream background. Minimal,
+elegant apothecary-lab styling using small ceramic or glass bowls/dishes
+and, where noted, plain glass lab vessels (beaker, petri dish, dropper
+bottle with a gold metal collar) — never a branded product bottle, never
+on-image text, never a logo. Square 1:1 crop." A proprietary supplier
+blend with no single natural raw material to photograph honestly gets a
+generic, abstract lab-serum shot instead of an invented "branded
+ingredient" look (Procapil®/Capixyl™/Greyverse™/Darkenyl™/ABN Complex™).
+================================================================================
+DHT-pathway:   ingredient-finasteride.png, ingredient-azelaic-acid.png,
+               ingredient-saw-palmetto.png, ingredient-nettle-root.png
+Regrowth:      ingredient-minoxidil.png, ingredient-procapil.png,
+               ingredient-capixyl.png, ingredient-caffeine.png,
+               ingredient-ginseng.png, ingredient-rosemary.png,
+               ingredient-abn-complex.png, ingredient-retinol.png
+Pigment:       ingredient-greyverse.png, ingredient-darkenyl.png,
+               ingredient-fo-ti.png, ingredient-biotin.png,
+               ingredient-catalase.png, ingredient-l-tyrosine.png,
+               ingredient-paba.png, ingredient-zinc.png,
+               ingredient-red-clover.png
+Conditioning:  ingredient-green-tea.png, ingredient-panthenol.png,
+               ingredient-nettle.png, ingredient-horsetail.png,
+               ingredient-sage.png, ingredient-jojoba.png,
+               ingredient-canadian-willow-herb.png,
+               ingredient-hydrolyzed-wheat-protein.png
+
+(Procapil® has a generated photo but no current product uses it in
+`ingredients` — kept in the mapping in case a future SKU does. ABN
+Complex™ has a photo too, but its `requires-review` claim status keeps it
+off `/magazine`'s ingredient grid — it still shows on the Level 10/15 PDP
+"Key actives" section, [PENDING]-flagged, same as every other
+requires-review active.)
+
+If a new ingredient is added to a product's `ingredients` list later and
+needs a photo, add a new checklist section below this line, following the
+"HOW TO USE" steps and shared-style prompt this sheet used for round 2
+(ask Claude, or check git history on this file, if you need the exact
+wording again).
+
+
+================================================================================
+STEP / LIFESTYLE PHOTOGRAPHY — bottle design fix (unrelated to the ingredient
+set above; different subject, different file)
+================================================================================
+Purpose: src/assets/steps/step-3-formula.png (the "Personalize" step — step 2
+of the numbered systemSteps in src/content/brand.ts, rendered on the Home
+page's "How it works" section, Home.tsx) still shows the OLD bottle design —
+dark-green matte glass with a plain "FOR MEN" cap band and no formula name.
+That packaging was superseded when the site moved to the current bottle
+design (matte black glass + brushed-gold dropper collar, "ALPHA FORMULA"
+labeling) already used everywhere a Level 6 product photo appears
+(src/assets/products/Level 6.png, src/assets/heroes/Hero.png, etc.) — this
+one lifestyle shot was never regenerated to match, so the bottle it shows is
+no longer accurate.
+
+--------------------------------------------------------------------------
+Step 3 — "Personalize": ROOTÉ Level 6 bottle, correct current packaging
+--------------------------------------------------------------------------
+Real lifestyle product photography — not an illustration, not a 3-D render,
+not a graphic composite. Overhead flat-lay on a warm cream/beige paper
+surface, soft diffused natural window light with soft shadows, shallow
+depth of field, softly blurred surface texture.
+
+Subject: one ROOTÉ Level 6 bottle resting at a slight diagonal — a matte
+black opacified glass dropper bottle with a brushed-gold metal collar and a
+frosted white rubber dropper bulb. Gold foil label text on the black glass,
+top to bottom: the ROOTÉ wordmark with its small stylized three-hair-strand
+mark above it, "Personalized Hair Growth System", "LEVEL 6", "Minoxidil 6%,
+Finasteride 0.3%", "Topical Solution", "ALPHA FORMULA". Match the bottle
+shape, cap, and gold-on-black label styling of src/assets/products/Level
+6.png exactly — attach that file as a style/reference image if your tool
+supports one, this is a continuation of an existing design, not a new one.
+Beside the bottle, a cream cardstock card lies at an angle, printed with a
+faint ingredient-list layout (a small leaf icon, a molecule icon, a couple
+more icons, each beside a short line of text) — keep the card's text
+softly out-of-focus/illegible, it's background set dressing, not something
+meant to be read. No hands, no additional bottles, no other products in
+frame.
+
+NEGATIVE PROMPT — append to the generation
+"no visible face, no extra on-bottle text beyond what's specified, no
+watermark, no additional logos, no lens flare, no distorted or garbled
+text, no distorted hands, no dark-green or cream-colored bottle, no 'FOR
+MEN' or 'FOR WOMEN' label text, no additional bottles, no star ratings, no
+price tags, no percentage-off badges"
+
+Save as: src/assets/steps/step-3-formula.png (replace existing file)
