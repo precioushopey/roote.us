@@ -30,6 +30,7 @@ const ACCOUNT_LINKS: Col['links'] = [
   [PATHS.faq, 'marketing.nav.faq'],
   [PATHS.support, 'marketing.nav.support'],
   [PATHS.account, 'marketing.nav.account'],
+  [PATHS.cart, 'marketing.nav.bag'],
 ];
 
 /** 'thinning' / 'gray' resolve via CONCERN_OPTIONS (localized). */

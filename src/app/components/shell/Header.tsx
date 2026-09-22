@@ -5,9 +5,11 @@ import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useScrollCondense } from '@/app/lib/useScrollCondense';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { Button, Drawer, IconButton, LanguagePicker } from '@/app/components/roote';
+import { CartLink } from '@/app/components/shell/CartLink';
 import { cn } from '@/app/components/ui/utils';
 import { PATHS } from '@/app/paths';
 import type { MessageKey } from '@/i18n/messages';
+import { useCart } from '@/store/cart';
 
 // 2026-09-08 nav sketch: Magazine | Products | AI Section. The former
 // Process/Science/About pages were dropped from the header nav then, and were
@@ -23,6 +25,7 @@ export function Header() {
   const t = useT();
   const withLocale = useLocalizedPath();
   const condensed = useScrollCondense();
+  const cart = useCart();
   const { locale, setLocale } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -90,6 +93,7 @@ export function Header() {
                 <User width={20} height={20} strokeWidth={1.5} aria-hidden />
               </Link>
             </div>
+            <CartLink label={t('cart.open')} count={cart.count} />
           </div>
           <Button
             to={withLocale(PATHS.analysis)}
