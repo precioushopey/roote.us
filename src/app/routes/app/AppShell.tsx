@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import { NavLink, Navigate, useLocation, useNavigate } from 'react-router';
-import { Home, ClipboardList, LineChart, LifeBuoy, User, type LucideProps } from 'lucide-react';
+import { Home, ClipboardList, LineChart, Package, User, type LucideProps } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
@@ -20,11 +20,15 @@ import type { MessageKey } from '@/i18n/messages';
 // absorbs Photos/Scans/Before & After as tabs of one screen (AccountProgress.tsx),
 // and Profile absorbs Orders/Subscription (AppProfile.tsx); Overview folded into
 // Today as one combined dashboard+checklist (AccountToday.tsx, now the index route).
+// 2026-09-23: un-consolidated Orders back into its own page (AppOrders.tsx, grid
+// layout) — it now takes this slot, which used to be Care/Support; Care's own
+// content (care-team messages, contact form, rescan link) moved into Profile
+// instead (AppProfile.tsx), so nothing here was dropped, just relocated.
 const TABS: Array<[to: string, key: MessageKey, icon: ComponentType<LucideProps>]> = [
   [PATHS.account, 'app.nav.today', Home],
   [PATHS.accountSection('program'), 'app.nav.plan', ClipboardList],
   [PATHS.accountSection('progress'), 'app.nav.progress', LineChart],
-  [PATHS.accountSection('care'), 'app.nav.support', LifeBuoy],
+  [PATHS.accountSection('orders'), 'app.nav.orders', Package],
   [PATHS.accountSection('profile'), 'app.nav.profile', User],
 ];
 // PO #22: reminders live under Profile, not the primary nav. Upcoming ones also
@@ -42,19 +46,27 @@ export function AppShell() {
   useTrackingMigration();
   useDocumentMeta();
 
-  // Order history (now shown on Profile) doesn't depend on having an active
-  // program — a signed-up guest still needs to reach this one page to see
-  // any order already recorded for them (store/orders.ts is a flat,
-  // unauthenticated list; any account "sees" every order already in this
-  // browser). Every other /account/* page still requires a program.
-  const isProfileRoute = location.pathname.endsWith('/profile');
+  // Order history (its own page again as of 2026-09-23, was on Profile) doesn't
+  // depend on having an active program — a signed-up guest who only ever placed
+  // a cart order (no program) still needs to reach Profile and Orders to see it
+  // (store/orders.ts is a flat, unauthenticated list; any account "sees" every
+  // order already in this browser). Every other /account/* page still requires
+  // a program.
+  const noProgramNeeded = location.pathname.endsWith('/profile') || location.pathname.endsWith('/orders');
 
-  if (!session.program && !isProfileRoute) {
+  if (!session.program && !noProgramNeeded) {
     if (import.meta.env.DEV) {
       return (
         <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
           <p className="max-w-sm font-body text-sm text-muted-foreground">{t('app.noProgram.body')}</p>
-          <Button
+          <Button to={withLocale(PATHS.analysis)} caps>
+            {t('marketing.nav.cta')}
+          </Button>
+          {/* Dev-only shortcut into a mid-program /account, skipping the real
+              analysis + checkout flow — kept, but de-emphasized under the
+              real CTA above so it never reads as the intended user action. */}
+          <button
+            type="button"
             onClick={() => {
               const seed = seedProgram(locale);
               // planKeysForProgram reads live session.diagnosis (not the frozen
@@ -72,9 +84,10 @@ export function AppShell() {
                 auth.signIn('demo@roote.us', 'demo-demo-1');
               }
             }}
+            className="font-body text-sm text-muted-foreground underline"
           >
             {t('app.noProgram.devSeedCta')}
-          </Button>
+          </button>
         </div>
       );
     }

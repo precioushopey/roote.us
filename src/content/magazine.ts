@@ -82,7 +82,6 @@ export const INGREDIENT_CATEGORY: Record<string, IngredientCategory> = {
   'Procapil®': 'regrowth',
   'Capixyl™': 'regrowth',
   Caffeine: 'regrowth',
-  Ginseng: 'regrowth',
   Rosemary: 'regrowth',
   'ABN Complex™': 'regrowth',
   Retinol: 'regrowth',
@@ -96,6 +95,7 @@ export const INGREDIENT_CATEGORY: Record<string, IngredientCategory> = {
   PABA: 'pigment',
   Zinc: 'pigment',
   'Red Clover Extract': 'pigment',
+  Ginseng: 'pigment',
   // Scalp & hair conditioning
   'Green Tea': 'conditioning',
   Panthenol: 'conditioning',

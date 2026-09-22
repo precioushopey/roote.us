@@ -23,7 +23,7 @@ import { AccountResults } from './routes/app/AccountResults';
 import { AccountRenew } from './routes/app/AccountRenew';
 import { AccountReminders } from './routes/app/AccountReminders';
 import { AppPlan } from './routes/app/AppPlan';
-import { AppCare } from './routes/app/AppCare';
+import { AppOrders } from './routes/app/AppOrders';
 import { AppProfile } from './routes/app/AppProfile';
 
 const router = createBrowserRouter([
@@ -60,16 +60,19 @@ const router = createBrowserRouter([
           { path: 'results', element: <AccountResults /> },
           { path: 'renew', element: <AccountRenew /> },
           { path: 'reminders', element: <AccountReminders /> },
-          { path: 'care', element: <AppCare /> },
+          { path: 'orders', element: <AppOrders /> },
           { path: 'profile', element: <AppProfile /> },
           // Nav consolidation (2026-09-11): Overview folded into Today (index);
           // Photos/Scans/Before & After folded into Progress as tabs; Orders/
           // Subscription folded into Profile. Old URLs keep working.
+          // 2026-09-23: Orders un-folded back into its own page (real route
+          // above, not a redirect anymore) — Care took over the redirect
+          // instead, since its content moved into Profile.
           { path: 'today', element: <LocalizedNavigate to="/account" replace /> },
           { path: 'photos', element: <LocalizedNavigate to="/account/progress?tab=photos" replace /> },
           { path: 'scans', element: <LocalizedNavigate to="/account/progress?tab=scans" replace /> },
           { path: 'progress/before-after', element: <LocalizedNavigate to="/account/progress?tab=beforeAfter" replace /> },
-          { path: 'orders', element: <LocalizedNavigate to="/account/profile" replace /> },
+          { path: 'care', element: <LocalizedNavigate to="/account/profile" replace /> },
           { path: 'subscription', element: <LocalizedNavigate to="/account/profile" replace /> },
           // WP2-era sub-segment names
           { path: 'plan', element: <LocalizedNavigate to="/account/program" replace /> },

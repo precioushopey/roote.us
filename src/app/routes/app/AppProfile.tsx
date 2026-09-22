@@ -1,14 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
-import { LOCALES } from '@/i18n/locales';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { readOrders } from '@/store/orders';
-import { Button, Card, Badge, LegalNotice, Prose, LanguagePicker, Modal, PasswordField } from '@/app/components/roote';
-import { PATHS } from '@/app/paths';
+import { Button, Card, Badge, LegalNotice, Prose, LanguagePicker, PasswordField } from '@/app/components/roote';
 import { track } from '@/analytics/analytics';
 import { AccountPageHeader } from './AccountPageHeader';
+import { CARE_MESSAGES, isoToday, programDay } from './programProgress';
+import type { MessageKey } from '@/i18n/messages';
 
 const PW_ERROR_KEYS: Record<string, string> = {
   'not-signed-in': 'app.profile.password.error.wrong',
@@ -17,7 +16,11 @@ const PW_ERROR_KEYS: Record<string, string> = {
 };
 
 /** Reachable without an active program too — a signed-up guest lands here to
- *  see any order already recorded for them (see AppShell's route guard). */
+ *  manage their account even before a program exists (see AppShell's route
+ *  guard). Order history moved to its own page (AppOrders.tsx, 2026-09-23);
+ *  what used to be the separate Care/Support page lives here now instead —
+ *  see the "Care team" section below, gated on `program` like every other
+ *  program-dependent section on this page. */
 export function AppProfile() {
   const t = useT();
   const { locale, setLocale } = useLocale();
@@ -26,10 +29,9 @@ export function AppProfile() {
   const auth = useAuth();
   const program = useSession().program;
 
-  const orders = useMemo(() => readOrders(), []);
   const [subActive, setSubActive] = useState(false);
   const [cancelling, setCancelling] = useState(false);
-  const [leaveWarningOpen, setLeaveWarningOpen] = useState(false);
+  const [careSent, setCareSent] = useState(false);
 
   const [current, setCurrent] = useState('');
   const [next, setNext] = useState('');
@@ -55,16 +57,10 @@ export function AppProfile() {
     navigate(withLocale('/'));
   }
 
-  /* The only intended way out of /account is Log out — a link that browses
-     away (e.g. Shop products) instead confirms first, since it's really
-     asking to sign the user out to go do something else. */
-  function confirmLeaveToShop() {
-    setLeaveWarningOpen(false);
-    auth.signOut();
-    navigate(withLocale(PATHS.products));
-  }
-
   const memberSince = auth.since ? new Date(auth.since).toLocaleDateString() : '-';
+  // Care messages unlock by program day — only meaningful once a program
+  // exists, so the section below this is gated on `program` entirely.
+  const unlockedCareMessages = program ? CARE_MESSAGES.filter((m) => m.day <= programDay(program, isoToday())) : [];
   const fieldClass =
     'rounded-md border border-input bg-input-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-accent';
 
@@ -160,37 +156,52 @@ export function AppProfile() {
             </section>
           )}
 
-          <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <h2 className="font-display text-lg font-medium">{t('app.profile.orders.title')}</h2>
-              <button
-                type="button"
-                onClick={() => setLeaveWarningOpen(true)}
-                className="font-body text-sm text-accent underline"
+          {program && (
+            <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
+              <h2 className="font-display text-lg font-medium">{t('app.care.title')}</h2>
+              <p className="text-sm text-muted-foreground">{t('app.care.subtitle')}</p>
+
+              {unlockedCareMessages.length > 0 && (
+                <div className="flex flex-col gap-4">
+                  {unlockedCareMessages.map((m) => (
+                    <article key={m.key} className="rounded-xl border border-border bg-background p-4">
+                      <p className="text-sm font-medium uppercase text-accent">
+                        {t('app.care.dayTag', { day: m.day })}
+                      </p>
+                      <p className="mt-1 text-sm">{t(m.key as MessageKey)}</p>
+                    </article>
+                  ))}
+                </div>
+              )}
+
+              <form
+                className="flex flex-col gap-4"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setCareSent(true);
+                }}
               >
-                {t('app.nav.shop')}
-              </button>
-            </div>
-            {orders.length === 0 ? (
-              <p className="text-sm text-muted-foreground">{t('app.profile.orders.empty')}</p>
-            ) : (
-              <ul className="flex flex-col divide-y divide-border text-sm">
-                {orders.map((o) => (
-                  <li key={o.id} className="flex items-center justify-between gap-4 py-2.5">
-                    <span className="flex flex-col">
-                      <span className="tabular-nums" dir="ltr">{o.id}</span>
-                      <span className="text-sm text-muted-foreground">
-                        {t(o.kind === 'program' ? 'app.profile.orders.program' : 'app.profile.orders.bag')} · {o.label}
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-sm text-muted-foreground">
-                      {new Date(o.at).toLocaleDateString(LOCALES[locale].bcp47)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
+                <label className="flex flex-col gap-2 text-sm">
+                  {t('app.care.compose.title')}
+                  <textarea
+                    required
+                    rows={4}
+                    className="rounded-md border border-input bg-input-background px-3 py-2 text-sm outline-none focus:border-accent"
+                  />
+                </label>
+                <Button type="submit">{t('app.care.compose.send')}</Button>
+                {careSent && (
+                  <p role="status" className="text-sm text-muted-foreground">
+                    {t('app.care.compose.stub')}
+                  </p>
+                )}
+              </form>
+
+              <Link to={withLocale('/account/rescan')} className="w-fit text-sm text-accent underline">
+                {t('app.care.rescanLink')}
+              </Link>
+            </section>
+          )}
         </div>
 
         <div className="flex flex-col gap-4 md:gap-8">
@@ -280,24 +291,6 @@ export function AppProfile() {
           </section>
         </div>
       </div>
-
-      <Modal
-        open={leaveWarningOpen}
-        onClose={() => setLeaveWarningOpen(false)}
-        title={t('app.profile.leaveWarning.title')}
-        footer={
-          <>
-            <Button variant="ghost" onClick={() => setLeaveWarningOpen(false)}>
-              {t('common.back')}
-            </Button>
-            <Button variant="danger" onClick={confirmLeaveToShop}>
-              {t('app.profile.leaveWarning.confirm')}
-            </Button>
-          </>
-        }
-      >
-        <Prose>{t('app.profile.leaveWarning.body')}</Prose>
-      </Modal>
     </div>
   );
 }

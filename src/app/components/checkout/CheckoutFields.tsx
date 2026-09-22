@@ -11,7 +11,8 @@ const EXPIRY_RE = /^(0[1-9]|1[0-2])\/\d{2}$/;
 const CVC_RE = /^\d{3,4}$/;
 
 /**
- * The one contact + card-details form used by the program checkout (`/program/checkout`).
+ * The one contact + card-details form shared by the program checkout (`/program/checkout`)
+ * and the cart checkout (`/cart/checkout`).
  * It owns its field state and does shape-only card validation; on a valid submit it hands
  * the caller `{ contact, card }` where `card` is the last four digits + expiry only — the
  * full number and CVC never leave this component. Payment-level failures come back via the

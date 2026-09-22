@@ -490,7 +490,7 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'app.subscription.cancelConfirm': "Confirmer l'annulation",
   'app.subscription.legal':
     "Le prélèvement récurrent, la fréquence d'expédition, le prix de renouvellement, les taxes et les frais de livraison sont indiqués avant l'activation. Vous pouvez annuler ici à tout moment, et vos droits locaux de protection des consommateurs restent inchangés.",
-  'app.noProgram.body': 'Aucun programme actif sur cet appareil. Finalisez un achat ou chargez un programme de démonstration.',
+  'app.noProgram.body': 'Démarrez une analyse capillaire gratuite pour obtenir un programme.',
   'app.noProgram.devSeedCta': 'Charger un programme de démonstration (développement uniquement)',
   'app.preDelivery.title': 'Votre programme est en route',
   'app.preDelivery.subtitle': 'Voici à quoi vous attendre avant votre premier jour.',

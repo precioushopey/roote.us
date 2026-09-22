@@ -2,7 +2,7 @@ import { PRODUCTS, getProduct as lookupProduct, type Product } from './products'
 import { L6, type LocalizedText } from './localized';
 
 /**
- * À-la-carte catalogue — the "refills & add-ons" surface (`/bag`). Derived from
+ * À-la-carte catalogue — the "refills & add-ons" surface (`/cart`). Derived from
  * the six launch SKUs in `products.ts` so there is one product source of truth.
  * `price` mirrors each SKU's real, client-supplied price; `null` only for a
  * SKU that hasn't been priced yet, and renders as [PENDING].

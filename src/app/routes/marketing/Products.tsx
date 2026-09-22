@@ -26,16 +26,17 @@ import heroImage from '@/assets/heroes/Hero.png';
 import level6 from '@/assets/products/Level 6.png';
 import level10 from '@/assets/products/Level 10.png';
 import level15 from '@/assets/products/Level 15.png';
+import graySupport from '@/assets/products/Gray Support.png';
+import graySerum from '@/assets/products/Gray Serum.png';
+import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
 
-/* 'gray-support' / 'regrowth-shampoo' / 'gray-serum' are deliberately left
-   out — the client-supplied packaging photography for those three SKUs was
-   a placeholder mockup, not final, so it was pulled project-wide
-   (2026-09-22). `ProductCard` renders a `MediaPlaceholder` when a slug has
-   no entry here. */
 const PRODUCT_PHOTOS: Record<string, string> = {
   'density-6': level6,
   'density-10': level10,
   'density-15': level15,
+  'gray-support': graySupport,
+  'gray-serum': graySerum,
+  'regrowth-shampoo': regrowthShampoo,
 };
 
 /* Every bundle image was the same superseded dark-green/cream packaging
@@ -67,6 +68,52 @@ function FindYourMatchCta() {
     <Link to={withLocale(PATHS.analysis)} className={OUTLINE_CTA_CLASS}>
       {t('marketing.shop.findYourMatchCta')}
     </Link>
+  );
+}
+
+/* Inline quantity stepper + Add to Cart, flanking each other below a product
+   card. Quantity is local to this row (not the cart's own qty — that's
+   edited on /cart) and resets to 1 after each add, so a repeat click on the
+   same card doesn't silently keep whatever was last selected. */
+function AddToCartRow({ slug }: { slug: string }) {
+  const t = useT();
+  const cart = useCart();
+  const toast = useToast();
+  const [qty, setQty] = useState(1);
+
+  return (
+    <div className="flex items-center gap-2">
+      <div className="inline-flex shrink-0 items-center rounded-full border border-border">
+        <button
+          type="button"
+          aria-label={t('cart.decrease')}
+          onClick={() => setQty((q) => Math.max(1, q - 1))}
+          className="px-3 py-2.5 font-body text-sm text-foreground"
+        >
+          −
+        </button>
+        <span className="min-w-7 text-center font-body text-sm tabular-nums text-foreground">{qty}</span>
+        <button
+          type="button"
+          aria-label={t('cart.increase')}
+          onClick={() => setQty((q) => Math.min(20, q + 1))}
+          className="px-3 py-2.5 font-body text-sm text-foreground"
+        >
+          +
+        </button>
+      </div>
+      <Button
+        caps
+        className="flex-1"
+        onClick={() => {
+          cart.add(slug, qty);
+          toast.show(t('cart.added'), 'success');
+          setQty(1);
+        }}
+      >
+        {t('cart.add')}
+      </Button>
+    </div>
   );
 }
 
@@ -161,8 +208,6 @@ export function Products() {
   const t = useT();
   const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
-  const cart = useCart();
-  const toast = useToast();
   const [filter, setFilter] = useState<Filter>('all');
   const items = PRODUCTS.filter((p) => matches(p, filter));
 
@@ -213,16 +258,7 @@ export function Products() {
                 mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
-              <Button
-                caps
-                className="w-full"
-                onClick={() => {
-                  cart.add(p.slug);
-                  toast.show(t('cart.added'), 'success');
-                }}
-              >
-                {t('cart.add')}
-              </Button>
+              <AddToCartRow slug={p.slug} />
             </div>
           ))}
         </div>

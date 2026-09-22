@@ -21,13 +21,14 @@ const COLUMNS: Col[] = [
       [PATHS.magazine, 'marketing.nav.magazine'],
       [PATHS.products, 'marketing.nav.products'],
       [PATHS.hairScan, 'marketing.nav.aiSection'],
-      [PATHS.about, 'marketing.nav.about'],
+      [PATHS.faq, 'marketing.nav.faq'],
     ],
   },
 ];
 
+/* 'marketing.nav.faq' now lives in the Company column above (replacing
+   About, 2026-09-23) — left out here so FAQ doesn't appear twice. */
 const ACCOUNT_LINKS: Col['links'] = [
-  [PATHS.faq, 'marketing.nav.faq'],
   [PATHS.support, 'marketing.nav.support'],
   [PATHS.account, 'marketing.nav.account'],
   [PATHS.cart, 'marketing.nav.bag'],
@@ -95,7 +96,7 @@ export function Footer() {
             <nav key={col.title} aria-label={t(col.title)}>
               <h2 className="u-caps font-body text-sm font-semibold text-ink-foreground">{t(col.title)}</h2>
               <ul className="mt-3 space-y-2">
-                {col.links.map(([to, label]) =>
+                {col.links.filter(([to]) => Boolean(to)).map(([to, label]) =>
                   to.startsWith('http') ? (
                     <li key={to + label}>
                       <a
@@ -124,7 +125,7 @@ export function Footer() {
               {t('marketing.footer.getStarted')}
             </h2>
             <ul className="mt-3 space-y-2">
-              {getStartedLinks.map(({ to, label }) =>
+              {getStartedLinks.filter(({ to }) => Boolean(to)).map(({ to, label }) =>
                 to.startsWith('http') ? (
                   <li key={to + label}>
                     <a
@@ -178,7 +179,7 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-            <Button to={withLocale(PATHS.analysis)} caps variant="secondary" className="mt-6">
+            <Button to={withLocale(PATHS.analysis)} caps variant="secondary" className="mt-6 text-xs sm:text-sm">
               {t('marketing.footer.cta')}
             </Button>
             {socialLinks.length > 0 && (

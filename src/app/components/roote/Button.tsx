@@ -14,7 +14,7 @@ const VARIANT: Record<ButtonVariant, string> = {
 };
 
 const BASE =
-  'inline-flex items-center justify-center gap-2 rounded-full font-body font-medium px-4 md:px-6 py-2 md:py-3 text-sm text-center ' +
+  'inline-flex items-center justify-center gap-2 rounded-full font-body font-medium px-4 md:px-6 py-3 text-sm text-center ' +
   'transition-[color,background-color,border-color,opacity,transform] duration-150 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ' +
   'focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-40 ' +
   'active:scale-[0.97] active:opacity-90 active:duration-100';

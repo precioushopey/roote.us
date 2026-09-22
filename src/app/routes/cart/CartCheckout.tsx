@@ -2,6 +2,7 @@ import { Link, Navigate, useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useCart } from '@/store/cart';
 import { resolveCartLines } from '@/store/cartLines';
+import { useAuth } from '@/store/auth';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
@@ -18,6 +19,7 @@ export function CartCheckout() {
   const navigate = useNavigate();
   const withLocale = useLocalizedPath();
   const cart = useCart();
+  const auth = useAuth();
 
   const lines = resolveCartLines(cart.lines, cl);
   // See CartPage.tsx — real arithmetic on already-supplied per-line prices, not
@@ -33,7 +35,7 @@ export function CartCheckout() {
 
   // Once the order is placed we clear the cart, so the empty-cart guard below
   // must not fire during that same render and bounce us back to /cart.
-  if (cart.lines.length === 0 && !placed) return <Navigate to={withLocale(PATHS.cart)} replace />;
+  if (lines.length === 0 && !placed) return <Navigate to={withLocale(PATHS.cart)} replace />;
 
   async function onSubmit({ contact, card }: { contact: Contact; card: CardRef }) {
     setError(null);
@@ -48,6 +50,12 @@ export function CartCheckout() {
         kind: 'cart',
         at: new Date().toISOString(),
         label: t('bag.checkout.qty', { qty: String(itemCount) }),
+        // `lines` is already resolved against the catalog (real names, not
+        // raw skus/bundle ids) — captured here, before `cart.clear()` below,
+        // so order history can show exactly what was bought. `slug` (SKU
+        // lines only) lets order history render the product's real photo/
+        // subtitle/badges, not just its name.
+        items: lines.map((l) => ({ name: l.name, qty: l.qty, slug: l.sku })),
       });
       navigate(withLocale(PATHS.cartSuccess), { state: { orderId: result.orderId } });
       cart.clear();
@@ -66,7 +74,13 @@ export function CartCheckout() {
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1fr]">
         <div className="flex flex-col gap-4">
-          <CheckoutFields className="max-w-lg" submitting={submitting} error={error} onSubmit={onSubmit} />
+          <CheckoutFields
+            className="max-w-lg"
+            submitting={submitting}
+            error={error}
+            defaultEmail={auth.email ?? ''}
+            onSubmit={onSubmit}
+          />
           <Link to={withLocale(PATHS.cart)} className="max-w-lg text-center text-sm text-muted-foreground underline">
             {t('bag.checkout.back')}
           </Link>

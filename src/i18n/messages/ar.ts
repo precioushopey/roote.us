@@ -497,7 +497,7 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'app.subscription.cancelConfirm': 'تأكيد الإلغاء',
   'app.subscription.legal':
     'يتم الإفصاح عن الفوترة المتكرّرة وتكرار الشحن وسعر التجديد والضرائب والشحن قبل تفعيل هذا الخيار. يمكنك الإلغاء هنا في أي وقت، وتبقى حقوقك المحلية في حماية المستهلك دون تأثير.',
-  'app.noProgram.body': 'لا يوجد برنامج نشط على هذا الجهاز. أكمل عملية شراء، أو حمّل برنامجاً تجريبياً.',
+  'app.noProgram.body': 'ابدأ تحليل الشعر المجاني للحصول على برنامج.',
   'app.noProgram.devSeedCta': 'تحميل برنامج تجريبي (للمطوّرين فقط)',
   'app.preDelivery.title': 'برنامجك في الطريق إليك',
   'app.preDelivery.subtitle': 'إليك ما يمكن توقعه قبل يومك الأول.',
@@ -1181,7 +1181,7 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'marketing.shop.bundles.heading': 'تزوّد مرة واحدة، وتخطَّ إعادة الطلب.',
   'marketing.shop.bundles.body':
     'النظام الكامل، وGray Support، ونمو الشعر: كل باقة بعبوة للرجال وأخرى للنساء. تُضاف الباقات القائمة على Density إلى برنامجك بعد مراجعة علاجية.',
-  'marketing.shop.bundles.cta': 'أضف إلى الحقيبة',
+  'marketing.shop.bundles.cta': 'أضف إلى السلة',
   'marketing.shop.bundles.save': 'وفّر {amount}',
   'marketing.shop.finalCta.heading': 'لست متأكداً مما تحتاجه؟',
   'marketing.shop.finalCta.body': 'ابدأ بتحليل شعر مجاني واحصل على برنامج مبني حول نتائجك.',

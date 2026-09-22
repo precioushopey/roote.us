@@ -10,6 +10,7 @@ import { cn } from '@/app/components/ui/utils';
 import { PATHS } from '@/app/paths';
 import type { MessageKey } from '@/i18n/messages';
 import { useCart } from '@/store/cart';
+import { resolveCartLines } from '@/store/cartLines';
 
 // 2026-09-08 nav sketch: Magazine | Products | AI Section. The former
 // Process/Science/About pages were dropped from the header nav then, and were
@@ -27,6 +28,7 @@ export function Header() {
   const condensed = useScrollCondense();
   const cart = useCart();
   const { locale, setLocale } = useLocale();
+  const resolvedCartCount = resolveCartLines(cart.lines, locale).reduce((n, l) => n + l.qty, 0);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -93,7 +95,7 @@ export function Header() {
                 <User width={20} height={20} strokeWidth={1.5} aria-hidden />
               </Link>
             </div>
-            <CartLink label={t('cart.open')} count={cart.count} />
+            <CartLink label={t('cart.open')} count={resolvedCartCount} />
           </div>
           <Button
             to={withLocale(PATHS.analysis)}

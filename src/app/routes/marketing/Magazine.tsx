@@ -25,16 +25,17 @@ import type { MessageKey } from '@/i18n/messages';
 import { INGREDIENT_PHOTOS } from '@/app/components/roote/ingredientPhotos';
 import concernThinning from '@/assets/concerns/concern-thinning.png';
 import level10 from '@/assets/products/Level 10.png';
+import graySupport from '@/assets/products/Gray Support.png';
+import graySerum from '@/assets/products/Gray Serum.png';
+import regrowthShampoo from '@/assets/products/Regrowth Shampoo.png';
 
 /** One representative real SKU photo per format — reuses the same product
- *  assets ProductDetail.tsx uses, not new photography.
- *  'capsule-supplement' / 'serum' / 'shampoo' are deliberately left out —
- *  the client-supplied packaging photography for those three SKUs was a
- *  placeholder mockup, not final, so it was pulled project-wide
- *  (2026-09-22); the format grid below renders a `MediaPlaceholder` for any
- *  format missing here. */
+ *  assets ProductDetail.tsx uses, not new photography. */
 const FORMAT_PHOTOS: Record<string, string> = {
   'topical-solution': level10,
+  'capsule-supplement': graySupport,
+  serum: graySerum,
+  shampoo: regrowthShampoo,
 };
 
 /** Same 4 categories `/hair-scan`'s "Your plan" section shows, same i18n keys. */

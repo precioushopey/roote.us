@@ -3,9 +3,9 @@ import { L6, type LocalizedText } from './localized';
 /**
  * "Buy the set" bundles for the à-la-carte shop — three product lines, each
  * in men's and women's packaging (brief §9). Gray Support and Hair Growth
- * are non-prescription and eligible for one-click add-to-bag. Complete
+ * are non-prescription and eligible for one-click add-to-cart. Complete
  * System and Hair Growth both include a Density SKU, which stays assessment
- * + review gated — their cards show a review note instead of "Add to bag"
+ * + review gated — their cards show a review note instead of "Add to cart"
  * (see `bundleRequiresReview` in Products.tsx).
  *
  * `compareAtPrice` is the sum of the bundle's own component SKU prices (the
