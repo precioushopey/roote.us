@@ -976,6 +976,8 @@ export const en = {
   'analysis.gender.note': 'This sets how packaging is shown. Treatment recommendations come from your assessment and the eligibility rules, not from this choice.',
   'analysis.gender.packagingTitle': 'Choose your preferred packaging',
 
+  'analysis.age.title': 'What is your age range?',
+
   'analysis.goal.title': 'What is your main goal?',
 
   'analysis.photos.title': 'Guided photos',

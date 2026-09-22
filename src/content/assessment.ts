@@ -21,7 +21,11 @@ import f4 from '@/assets/patterns/F4.png';
 export type AssessmentStepId =
   | 'intro'
   | 'gender'
+  | 'age'
+  | 'previous-products'
+  | 'satisfaction'
   | 'goal'
+  | 'pattern'
   | 'photos'
   | 'scanning'
   | 'questions'
@@ -40,7 +44,26 @@ export type AssessmentStep = {
 export const ASSESSMENT_STEPS: AssessmentStep[] = [
   { id: 'intro', path: '', label: L6({ en: 'Start', he: 'התחלה', ar: 'البداية', ru: 'Начало', fr: 'Début', es: 'Inicio' }), onRail: false },
   { id: 'gender', path: 'gender', label: L6({ en: 'You', he: 'את/ה', ar: 'أنت', ru: 'Вы', fr: 'Vous', es: 'Usted' }), onRail: true },
+  { id: 'age', path: 'age', label: L6({ en: 'Age', he: 'גיל', ar: 'العمر', ru: 'Возраст', fr: 'Âge', es: 'Edad' }), onRail: true },
+  {
+    id: 'previous-products',
+    path: 'previous-products',
+    label: L6({ en: 'History', he: 'היסטוריה', ar: 'السجل', ru: 'История', fr: 'Antécédents', es: 'Historial' }),
+    onRail: true,
+  },
+  {
+    id: 'satisfaction',
+    path: 'satisfaction',
+    label: L6({ en: 'History', he: 'היסטוריה', ar: 'السجل', ru: 'История', fr: 'Antécédents', es: 'Historial' }),
+    onRail: false,
+  },
   { id: 'goal', path: 'goal', label: L6({ en: 'Goal', he: 'מטרה', ar: 'الهدف', ru: 'Цель', fr: 'Objectif', es: 'Objetivo' }), onRail: true },
+  {
+    id: 'pattern',
+    path: 'pattern',
+    label: L6({ en: 'Pattern', he: 'דפוס', ar: 'النمط', ru: 'Узор', fr: 'Motif', es: 'Patrón' }),
+    onRail: false,
+  },
   { id: 'photos', path: 'photos', label: L6({ en: 'Scan', he: 'סריקה', ar: 'المسح', ru: 'Сканирование', fr: 'Scan', es: 'Escaneo' }), onRail: true },
   { id: 'scanning', path: 'scanning', label: L6({ en: 'Analysis', he: 'ניתוח', ar: 'التحليل', ru: 'Анализ', fr: 'Analyse', es: 'Análisis' }), onRail: true },
   { id: 'questions', path: 'questions', label: L6({ en: 'Questions', he: 'שאלות', ar: 'أسئلة', ru: 'Вопросы', fr: 'Questions', es: 'Preguntas' }), onRail: true },

@@ -170,6 +170,8 @@ export const fr: Partial<Record<MessageKey, string>> = {
     "Ce choix détermine l'affichage de l'emballage. Les recommandations de traitement découlent de votre évaluation et des critères d'éligibilité, pas de ce choix.",
   'analysis.gender.packagingTitle': "Choisissez l'emballage que vous préférez",
 
+  'analysis.age.title': 'Quelle est votre tranche d’âge ?',
+
   'analysis.goal.title': 'Quel est votre objectif principal ?',
 
   'analysis.photos.title': 'Photos guidées',

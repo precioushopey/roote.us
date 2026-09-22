@@ -974,6 +974,8 @@ export const he: Record<MessageKey, string> = {
   'analysis.gender.note': 'זה קובע כיצד מוצגת האריזה. המלצות הטיפול נובעות מהאבחון ומכללי ההתאמה, לא מהבחירה הזו.',
   'analysis.gender.packagingTitle': 'בחרו את אריזת ROOTÉ המועדפת עליכם',
 
+  'analysis.age.title': 'מה טווח הגיל שלך?',
+
   'analysis.goal.title': 'מה המטרה הראשית שלך?',
 
   'analysis.photos.title': 'תמונות מודרכות',

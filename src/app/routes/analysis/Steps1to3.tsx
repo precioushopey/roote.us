@@ -63,12 +63,12 @@ export function GenderScreen() {
       setNeedPackaging(true);
       return;
     }
-    navigate(withLocale(PATHS.analysisStep('goal')));
+    navigate(withLocale(PATHS.analysisStep('age')));
   };
 
   const choosePackaging = (p: 'men' | 'women') => {
     session.setPackagingPreference(p);
-    navigate(withLocale(PATHS.analysisStep('goal')));
+    navigate(withLocale(PATHS.analysisStep('age')));
   };
 
   return (

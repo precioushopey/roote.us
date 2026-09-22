@@ -166,6 +166,8 @@ export const ru: Partial<Record<MessageKey, string>> = {
   'analysis.gender.note': 'Это определяет, как отображается упаковка. Рекомендации по лечению основаны на вашей диагностике и правилах соответствия, а не на этом выборе.',
   'analysis.gender.packagingTitle': 'Выберите предпочитаемую упаковку',
 
+  'analysis.age.title': 'Какой у вас возрастной диапазон?',
+
   'analysis.goal.title': 'Какова ваша основная цель?',
 
   'analysis.photos.title': 'Пошаговые фото',

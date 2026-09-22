@@ -175,6 +175,8 @@ export const ar: Partial<Record<MessageKey, string>> = {
     'يحدّد هذا كيفية عرض العبوة. توصيات العلاج تأتي من تقييمك ومن قواعد الأهلية، لا من هذا الاختيار.',
   'analysis.gender.packagingTitle': 'اختر عبوة ROOTÉ المفضّلة لديك',
 
+  'analysis.age.title': 'ما هو نطاقك العمري؟',
+
   'analysis.goal.title': 'ما هو هدفك الرئيسي؟',
 
   'analysis.photos.title': 'صور موجَّهة',

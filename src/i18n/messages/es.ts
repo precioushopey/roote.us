@@ -935,6 +935,8 @@ export const es: Partial<Record<MessageKey, string>> = {
   'analysis.gender.note': 'Esto define cómo se muestra el envase. Las recomendaciones de tratamiento provienen de su evaluación y de las reglas de elegibilidad, no de esta elección.',
   'analysis.gender.packagingTitle': 'Elija el envase que prefiera',
 
+  'analysis.age.title': '¿Cuál es su rango de edad?',
+
   'analysis.goal.title': '¿Cuál es su objetivo principal?',
 
   'analysis.photos.title': 'Fotos guiadas',
