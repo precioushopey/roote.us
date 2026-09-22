@@ -15,6 +15,9 @@ import { LoginPage } from '@/app/routes/auth/LoginPage';
 import { SignUpPage } from '@/app/routes/auth/SignUpPage';
 import { LegalPageView } from '@/app/routes/legal/LegalPageView';
 import { LocalizedNavigate } from '@/app/LocaleGate';
+import { CartPage } from '@/app/routes/cart/CartPage';
+import { CartCheckout } from '@/app/routes/cart/CartCheckout';
+import { CartSuccess } from '@/app/routes/cart/CartSuccess';
 
 /** Legal slugs handled by the generic registry view (Terms / Privacy keep their
  *  own richer drafts). */
@@ -50,6 +53,11 @@ export const marketingRoutes: RouteObject = {
 
     { path: 'products', element: <Products /> },
     { path: 'products/:slug', element: <ProductDetail /> },
+
+    // Shop cart (secondary surface)
+    { path: 'cart', element: <CartPage /> },
+    { path: 'cart/checkout', element: <CartCheckout /> },
+    { path: 'cart/success', element: <CartSuccess /> },
 
     // Legal (brief §25) — compressed to 5 pages, 2026-09-14
     { path: 'terms', element: <Terms /> },

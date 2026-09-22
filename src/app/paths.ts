@@ -17,6 +17,10 @@ export const PATHS = {
   products: '/products',
   product: (slug: string) => `/products/${slug}`,
 
+  cart: '/cart',
+  cartCheckout: '/cart/checkout',
+  cartSuccess: '/cart/success',
+
   login: '/login',
   hairScan: '/hair-scan',
   accountHairHealthRescan: '/account/hairhealth-rescan',
