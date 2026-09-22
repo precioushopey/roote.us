@@ -41,16 +41,12 @@ export const PATHS = {
 } as const;
 
 /**
- * External HairHealth.ai assessment quiz (Landbot fullpage). Per 2026-09-08 team
- * decision, every "Start free hair analysis" marketing CTA points here instead of
- * ROOTÉ's own `/analysis` flow. This is explicitly the TEST link Justine shared,
- * not the production one — swap this one constant once HairHealth.ai provides the
- * real URL. `/analysis` itself (and its own domain/report/program pipeline) is left
- * fully intact and still reachable directly; it's just unlinked from marketing CTAs,
- * the same pattern already used for `/hair-scan`. Account-app "redo my assessment"
- * actions for an existing signed-in customer (`AccountResults`, `AccountRenew`) keep
- * pointing at `PATHS.analysis` on purpose — they need the session/program context an
- * anonymous third-party lead form can't provide.
+ * External HairHealth.ai assessment quiz (Landbot fullpage) — used ONLY by
+ * `/hair-scan`'s own CTA (`HairScan.tsx`), a separate, secondary lead-gen
+ * surface. As of 2026-09-22, every marketing "Start free hair analysis" CTA
+ * points at ROOTÉ's own `PATHS.analysis` again (reverting the 2026-09-08
+ * decision — see docs/superpowers/specs/2026-09-22-quiz-redesign-design.md).
+ * This is still the TEST link Justine shared, not a production one.
  */
 export const EXTERNAL_ASSESSMENT_URL = 'https://roote.vercel.app/test/landbot/fullpage';
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { useT } from '@/i18n/LocaleProvider';
-import { EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { PATHS } from '@/app/paths';
 import { cn } from '@/app/components/ui/utils';
 import { Button } from './Button';
 import { DisplayTitle, Prose } from './Text';
@@ -21,8 +21,8 @@ export type CtaSectionProps = {
   /** Benefit checklist rendered under `body` — only meaningful in the
    *  `image` variant (Home's is the one caller that needs it). */
   items?: ReactNode[];
-  /** Defaults cover every current call site: they all point to the same
-   *  external assessment quiz with the same label. */
+  /** Defaults cover every current call site: they all point to ROOTÉ's own
+   *  analysis flow with the same label. */
   ctaLabel?: ReactNode;
   ctaHref?: string;
   external?: boolean;
@@ -45,14 +45,16 @@ export function CtaSection({
   body,
   items,
   ctaLabel,
-  ctaHref = EXTERNAL_ASSESSMENT_URL,
-  external = true,
+  ctaHref,
+  external = false,
   image,
   className,
 }: CtaSectionProps) {
   const t = useT();
+  const withLocale = useLocalizedPath();
   const titleRef = useFitTitle<HTMLHeadingElement>(3);
   const label = ctaLabel ?? t('marketing.nav.cta');
+  const href = ctaHref ?? withLocale(PATHS.analysis);
 
   if (image) {
     return (
@@ -72,7 +74,7 @@ export function CtaSection({
                 ))}
               </ul>
             ) : null}
-            <Button to={ctaHref} external={external} caps className="w-full sm:w-auto mt-4">
+            <Button to={href} external={external} caps className="w-full sm:w-auto mt-4">
               {label}
             </Button>
           </div>
@@ -89,7 +91,7 @@ export function CtaSection({
           {title}
         </DisplayTitle>
         {body ? <Prose className="mx-auto text-center text-ink-foreground">{body}</Prose> : null}
-        <Button to={ctaHref} external={external} caps className="w-full sm:w-auto mt-4">
+        <Button to={href} external={external} caps className="w-full sm:w-auto mt-4">
           {label}
         </Button>
       </div>
