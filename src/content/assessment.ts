@@ -294,6 +294,93 @@ export const PHOTO_ANGLES: Array<{
   },
 ];
 
+/* --- new for v3.1: age, previous-product-use, texture, stress, vegetable,
+   gray level (design spec 2026-09-22, §6) --------------------------------- */
+import type { AgeRange, HairTexture, StressLevel, VegetableIntake, GrayHairLevel } from '@/domain/analysis/types';
+
+export const AGE_RANGE_OPTIONS: Array<{ value: AgeRange; label: LocalizedText }> = [
+  { value: '18_29', label: L6({ en: '18–29', he: '29–18', ar: '18–29', ru: '18–29', fr: '18–29', es: '18–29' }) },
+  { value: '30_44', label: L6({ en: '30–44', he: '44–30', ar: '30–44', ru: '30–44', fr: '30–44', es: '30–44' }) },
+  { value: '45_64', label: L6({ en: '45–64', he: '64–45', ar: '45–64', ru: '45–64', fr: '45–64', es: '45–64' }) },
+  { value: '65_plus', label: L6({ en: '65+', he: '+65', ar: '65+', ru: '65+', fr: '65+', es: '65+' }) },
+];
+
+/** Reused for both "Have you tried hair-loss products before?" and,
+ *  conditionally, "Were you satisfied with the products you tried?" —
+ *  both are plain Yes/No per v3.1 §3 Steps 3/3A. */
+export const YES_NO_OPTIONS: Array<{ value: 'yes' | 'no'; label: LocalizedText }> = [
+  { value: 'yes', label: L6({ en: 'Yes', he: 'כן', ar: 'نعم', ru: 'Да', fr: 'Oui', es: 'Sí' }) },
+  { value: 'no', label: L6({ en: 'No', he: 'לא', ar: 'لا', ru: 'Нет', fr: 'Non', es: 'No' }) },
+];
+
+export const TEXTURE_OPTIONS: Array<{ value: HairTexture; label: LocalizedText }> = [
+  { value: 'straight', label: L6({ en: 'Straight', he: 'ישר', ar: 'مستقيم', ru: 'Прямые', fr: 'Raides', es: 'Liso' }) },
+  { value: 'wavy', label: L6({ en: 'Wavy', he: 'גלי', ar: 'مموّج', ru: 'Волнистые', fr: 'Ondulés', es: 'Ondulado' }) },
+  { value: 'curly', label: L6({ en: 'Curly', he: 'מתולתל', ar: 'مجعّد', ru: 'Кудрявые', fr: 'Bouclés', es: 'Rizado' }) },
+  { value: 'coily', label: L6({ en: 'Coily', he: 'קווצי', ar: 'مجعّد بشدة', ru: 'Афро-кудри', fr: 'Crépus', es: 'Afro' }) },
+];
+
+export const STRESS_OPTIONS: Array<{ value: StressLevel; label: LocalizedText }> = [
+  {
+    value: 'mostly_peaceful',
+    label: L6({
+      en: 'Mostly peaceful', he: 'רגוע ברובו', ar: 'هادئة في الغالب', ru: 'В основном спокойная',
+      fr: 'Plutôt paisible', es: 'Mayormente tranquila',
+    }),
+  },
+  {
+    value: 'moderately_stressed',
+    label: L6({
+      en: 'Moderately stressed', he: 'לחץ בינוני', ar: 'ضغط متوسط', ru: 'Умеренный стресс',
+      fr: 'Modérément stressant', es: 'Moderadamente estresante',
+    }),
+  },
+  {
+    value: 'very_stressed',
+    label: L6({
+      en: 'Very stressed', he: 'לחץ גבוה', ar: 'ضغط شديد', ru: 'Высокий стресс',
+      fr: 'Très stressant', es: 'Muy estresante',
+    }),
+  },
+];
+
+export const VEGETABLE_OPTIONS: Array<{ value: VegetableIntake; label: LocalizedText }> = [
+  {
+    value: 'usually_none',
+    label: L6({
+      en: 'Usually none', he: 'בדרך כלל ללא', ar: 'عادةً لا شيء', ru: 'Обычно нет',
+      fr: 'Généralement aucun', es: 'Generalmente ninguna',
+    }),
+  },
+  {
+    value: 'one_two',
+    label: L6({
+      en: 'One or two servings', he: 'מנה אחת או שתיים', ar: 'حصة أو حصتان', ru: 'Одна-две порции',
+      fr: 'Une à deux portions', es: 'Una o dos porciones',
+    }),
+  },
+  {
+    value: 'three_plus',
+    label: L6({
+      en: 'Three or more servings', he: 'שלוש מנות או יותר', ar: 'ثلاث حصص أو أكثر', ru: 'Три порции и более',
+      fr: 'Trois portions ou plus', es: 'Tres o más porciones',
+    }),
+  },
+];
+
+export const GRAY_LEVEL_OPTIONS: Array<{ value: GrayHairLevel; label: LocalizedText }> = [
+  { value: 'none', label: L6({ en: 'None', he: 'ללא', ar: 'لا يوجد', ru: 'Нет', fr: 'Aucun', es: 'Ninguna' }) },
+  { value: 'few', label: L6({ en: 'A few hairs', he: 'כמה שערות', ar: 'بضع شعرات', ru: 'Немного волос', fr: 'Quelques cheveux', es: 'Algunos cabellos' }) },
+  { value: 'about_half', label: L6({ en: 'About half', he: 'בערך מחצית', ar: 'حوالي النصف', ru: 'Примерно половина', fr: 'Environ la moitié', es: 'Aproximadamente la mitad' }) },
+  {
+    value: 'mostly_all',
+    label: L6({
+      en: 'All or mostly gray', he: 'כולו או רובו אפור', ar: 'كله أو معظمه رمادي', ru: 'Весь или почти весь седой',
+      fr: 'Entièrement ou majoritairement gris', es: 'Todo o mayormente cano',
+    }),
+  },
+];
+
 /* --- step 5: analysis state categories (brief §12 step 5) ------------ */
 export const SCAN_CATEGORIES: LocalizedText[] = [
   L6({ en: 'Hair density', he: 'צפיפות שיער', ar: 'كثافة الشعر', ru: 'Густота волос', fr: 'Densité capillaire', es: 'Densidad capilar' }),
