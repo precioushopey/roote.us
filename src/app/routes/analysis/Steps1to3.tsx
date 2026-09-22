@@ -125,7 +125,7 @@ export function GoalScreen() {
   const choose = (g: HairGoal) => {
     session.setHairGoal(g);
     track('hair_goal_selected', { hairGoal: g });
-    navigate(withLocale(PATHS.analysisStep('photos')));
+    navigate(withLocale(PATHS.analysisStep(g === 'hair-growth' ? 'pattern' : 'photos')));
   };
 
   return (

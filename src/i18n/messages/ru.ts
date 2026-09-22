@@ -173,6 +173,8 @@ export const ru: Partial<Record<MessageKey, string>> = {
 
   'analysis.goal.title': 'Какова ваша основная цель?',
 
+  'analysis.pattern.title': 'Какое изображение больше всего похоже на ваш текущий узор роста волос?',
+
   'analysis.photos.title': 'Пошаговые фото',
   'analysis.photos.body': 'Четыре фото с телефона: спереди, сверху, макушка и линия роста волос. На каждом шаге показан контур и пример.',
   'analysis.photos.needConsent': 'Чтобы продолжить, подтвердите согласие на фото выше.',

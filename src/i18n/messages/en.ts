@@ -983,6 +983,8 @@ export const en = {
 
   'analysis.goal.title': 'What is your main goal?',
 
+  'analysis.pattern.title': 'Which image looks most similar to your current hair pattern?',
+
   'analysis.photos.title': 'Guided photos',
   'analysis.photos.body': 'Four photos from your phone: front, top, crown, and hairline. Each step shows an outline and an example.',
   'analysis.photos.needConsent': 'Agree to the photo consent above to continue.',

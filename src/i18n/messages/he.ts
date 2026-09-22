@@ -981,6 +981,8 @@ export const he: Record<MessageKey, string> = {
 
   'analysis.goal.title': 'מה המטרה הראשית שלך?',
 
+  'analysis.pattern.title': 'איזו תמונה הכי דומה לדפוס השיער הנוכחי שלך?',
+
   'analysis.photos.title': 'תמונות מודרכות',
   'analysis.photos.body': 'ארבע תמונות מהטלפון: חזית, מלמעלה, קודקוד וקו השיער. בכל שלב מוצגים קו מתאר ודוגמה.',
   'analysis.photos.needConsent': 'יש לאשר את הסכמת התמונות למעלה כדי להמשיך.',

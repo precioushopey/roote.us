@@ -177,6 +177,8 @@ export const fr: Partial<Record<MessageKey, string>> = {
 
   'analysis.goal.title': 'Quel est votre objectif principal ?',
 
+  'analysis.pattern.title': 'Quelle image ressemble le plus à votre motif capillaire actuel ?',
+
   'analysis.photos.title': 'Photos guidées',
   'analysis.photos.body':
     "Quatre photos prises avec votre téléphone : face, dessus, vertex et ligne d'implantation. Chaque étape affiche un contour et un exemple.",

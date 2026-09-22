@@ -1,6 +1,7 @@
 import type {
   Answers, Gender, HairAnalysis, HairGoal, Level, PlanEmphasis, SeverityBand, ZoneKey,
 } from './types';
+import { stageForPattern } from '@/domain/recommendation/hairGrowthTable';
 
 export const RECOMMENDED_DURATION_TABLE: Record<string, HairAnalysis['recommendedDurationDays']> = {
   'mild:stabilize': 120, 'mild:regrow': 180, 'mild:stabilize-regrow': 180,
@@ -44,10 +45,21 @@ export function deriveAnalysis(input: { gender: Gender; hairGoal: HairGoal; answ
   // Applies to both scales — Ludwig now spans 1–4 so it can carry the F1–F4
   // pattern codes the client's Hair Growth strength table is keyed on.
   const bump = answers.q1_area === 'entire-scalp' ? 1 : 0;
+  // v3.1 §10.1: when the visitor picked their pattern directly on the new
+  // image-select screen (Hair Goal = Hair Growth, gender known), that pick
+  // is authoritative for `stage` — it replaces the q1_area/q2_onset-derived
+  // number rather than being layered on top of it. Every other goal, and
+  // every Hair-Growth visitor with gender 'unspecified' (who never sees the
+  // pattern screen — see `redirectForAnalysisStep`), keeps today's behavior.
+  const patternStage =
+    answers.hair_pattern_id && (gender === 'male' || gender === 'female')
+      ? stageForPattern(gender, answers.hair_pattern_id)
+      : null;
   const stage =
-    scale === 'norwood'
+    patternStage ??
+    (scale === 'norwood'
       ? clamp(2 + sevIndex[severityBand] + bump, 2, 6)
-      : clamp(1 + sevIndex[severityBand] + bump, 1, 4);
+      : clamp(1 + sevIndex[severityBand] + bump, 1, 4));
 
   const flaggedZoneKeys = zonesForArea(answers.q1_area);
   const zoneSeverity: 'mild' | 'moderate' = severityBand === 'mild' ? 'mild' : 'moderate';

@@ -38,6 +38,22 @@ export function patternCodeFor(gender: 'male' | 'female', stage: number): Patter
   return table[stage] ?? null;
 }
 
+const MALE_STAGE_BY_PATTERN: Record<string, number> = { M1: 2, M2: 3, M3: 4, M4: 5, M5: 6 };
+const FEMALE_STAGE_BY_PATTERN: Record<string, number> = { F1: 1, F2: 2, F3: 3, F4: 4 };
+
+/**
+ * Inverse of `patternCodeFor` — used when the visitor picked their pattern
+ * directly (the new v3.1 image-select screen) instead of it being derived
+ * from `q1_area`/`q2_onset` (design spec 2026-09-22 §10.1). Returns `null`
+ * for a mismatched gender/pattern pair (e.g. an `F`-code with `gender:
+ * 'male'`), which should never happen from the UI but is guarded here
+ * rather than assumed.
+ */
+export function stageForPattern(gender: 'male' | 'female', pattern: PatternCode): number | null {
+  const table = gender === 'male' ? MALE_STAGE_BY_PATTERN : FEMALE_STAGE_BY_PATTERN;
+  return table[pattern] ?? null;
+}
+
 export function hairGrowthTierFor(gender: Gender, stage: number): HairGrowthTier | null {
   if (gender !== 'male' && gender !== 'female') return null;
   const pattern = patternCodeFor(gender, stage);

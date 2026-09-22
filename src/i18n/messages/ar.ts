@@ -182,6 +182,8 @@ export const ar: Partial<Record<MessageKey, string>> = {
 
   'analysis.goal.title': 'ما هو هدفك الرئيسي؟',
 
+  'analysis.pattern.title': 'أي صورة تشبه نمط شعرك الحالي أكثر؟',
+
   'analysis.photos.title': 'صور موجَّهة',
   'analysis.photos.body':
     'أربع صور من هاتفك: أمامية، علوية، تاج الرأس، وخط الشعر. تعرض كل خطوة مخطّطاً ومثالاً.',

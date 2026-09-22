@@ -5,6 +5,7 @@ import { IntroScreen, GenderScreen, GoalScreen } from './Steps1to3';
 import { AgeScreen } from './AgeScreen';
 import { PreviousProductsScreen } from './PreviousProductsScreen';
 import { SatisfactionScreen } from './SatisfactionScreen';
+import { PatternScreen } from './PatternScreen';
 import { PhotosScreen } from './PhotosScreen';
 import { ScanningScreen } from './ScanningScreen';
 import { QuestionsScreen } from './QuestionsScreen';
@@ -23,6 +24,7 @@ export const analysisRoutes: RouteObject = {
     { path: 'goal', element: <GoalScreen /> },
     // legacy path alias — old shared links / bookmarks used "concern"
     { path: 'concern', element: <LocalizedNavigate to="/analysis/goal" replace /> },
+    { path: 'pattern', element: <PatternScreen /> },
     { path: 'photos', element: <PhotosScreen /> },
     { path: 'scanning', element: <ScanningScreen /> },
     { path: 'questions', element: <QuestionsScreen /> },
