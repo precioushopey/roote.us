@@ -3,6 +3,8 @@ import { LocalizedNavigate } from '@/app/LocaleGate';
 import { AnalysisShell } from './AnalysisShell';
 import { IntroScreen, GenderScreen, GoalScreen } from './Steps1to3';
 import { AgeScreen } from './AgeScreen';
+import { PreviousProductsScreen } from './PreviousProductsScreen';
+import { SatisfactionScreen } from './SatisfactionScreen';
 import { PhotosScreen } from './PhotosScreen';
 import { ScanningScreen } from './ScanningScreen';
 import { QuestionsScreen } from './QuestionsScreen';
@@ -16,6 +18,8 @@ export const analysisRoutes: RouteObject = {
     { index: true, element: <IntroScreen /> },
     { path: 'gender', element: <GenderScreen /> },
     { path: 'age', element: <AgeScreen /> },
+    { path: 'previous-products', element: <PreviousProductsScreen /> },
+    { path: 'satisfaction', element: <SatisfactionScreen /> },
     { path: 'goal', element: <GoalScreen /> },
     // legacy path alias — old shared links / bookmarks used "concern"
     { path: 'concern', element: <LocalizedNavigate to="/analysis/goal" replace /> },

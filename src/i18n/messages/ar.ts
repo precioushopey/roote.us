@@ -177,6 +177,9 @@ export const ar: Partial<Record<MessageKey, string>> = {
 
   'analysis.age.title': 'ما هو نطاقك العمري؟',
 
+  'analysis.previousProducts.title': 'هل جرّبت من قبل منتجات لتساقط الشعر؟',
+  'analysis.satisfaction.title': 'هل كنت راضياً عن المنتجات التي جرّبتها؟',
+
   'analysis.goal.title': 'ما هو هدفك الرئيسي؟',
 
   'analysis.photos.title': 'صور موجَّهة',

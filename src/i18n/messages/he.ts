@@ -976,6 +976,9 @@ export const he: Record<MessageKey, string> = {
 
   'analysis.age.title': 'מה טווח הגיל שלך?',
 
+  'analysis.previousProducts.title': 'האם ניסית בעבר מוצרים לנשירת שיער?',
+  'analysis.satisfaction.title': 'האם היית מרוצה מהמוצרים שניסית?',
+
   'analysis.goal.title': 'מה המטרה הראשית שלך?',
 
   'analysis.photos.title': 'תמונות מודרכות',

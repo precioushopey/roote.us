@@ -937,6 +937,9 @@ export const es: Partial<Record<MessageKey, string>> = {
 
   'analysis.age.title': '¿Cuál es su rango de edad?',
 
+  'analysis.previousProducts.title': '¿Ha probado antes productos para la caída del cabello?',
+  'analysis.satisfaction.title': '¿Quedó satisfecho con los productos que probó?',
+
   'analysis.goal.title': '¿Cuál es su objetivo principal?',
 
   'analysis.photos.title': 'Fotos guiadas',

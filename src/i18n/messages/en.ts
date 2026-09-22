@@ -978,6 +978,9 @@ export const en = {
 
   'analysis.age.title': 'What is your age range?',
 
+  'analysis.previousProducts.title': 'Have you tried hair-loss products before?',
+  'analysis.satisfaction.title': 'Were you satisfied with the products you tried?',
+
   'analysis.goal.title': 'What is your main goal?',
 
   'analysis.photos.title': 'Guided photos',

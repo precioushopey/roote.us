@@ -168,6 +168,9 @@ export const ru: Partial<Record<MessageKey, string>> = {
 
   'analysis.age.title': 'Какой у вас возрастной диапазон?',
 
+  'analysis.previousProducts.title': 'Пробовали ли вы раньше средства от выпадения волос?',
+  'analysis.satisfaction.title': 'Остались ли вы довольны средствами, которые пробовали?',
+
   'analysis.goal.title': 'Какова ваша основная цель?',
 
   'analysis.photos.title': 'Пошаговые фото',

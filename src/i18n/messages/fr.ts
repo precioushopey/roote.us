@@ -172,6 +172,9 @@ export const fr: Partial<Record<MessageKey, string>> = {
 
   'analysis.age.title': 'Quelle est votre tranche d’âge ?',
 
+  'analysis.previousProducts.title': 'Avez-vous déjà essayé des produits contre la chute des cheveux ?',
+  'analysis.satisfaction.title': 'Avez-vous été satisfait(e) des produits essayés ?',
+
   'analysis.goal.title': 'Quel est votre objectif principal ?',
 
   'analysis.photos.title': 'Photos guidées',
