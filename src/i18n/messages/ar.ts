@@ -183,6 +183,7 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'analysis.goal.title': 'ما هو هدفك الرئيسي؟',
 
   'analysis.pattern.title': 'أي صورة تشبه نمط شعرك الحالي أكثر؟',
+  'analysis.pattern.body': 'اختر/ي التطابق الأقرب. يمكنك العودة وتغيير اختيارك.',
 
   'analysis.photos.title': 'صور خط الأساس الخاصة بك',
   'analysis.photos.body':

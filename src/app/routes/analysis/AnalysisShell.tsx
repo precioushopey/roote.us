@@ -41,7 +41,8 @@ export function AnalysisShell() {
   const seg = (segments[segments.indexOf('analysis') + 1] || 'intro') as AnalysisStep;
   const railIndex = RAIL_STEPS.indexOf(seg as (typeof RAIL_STEPS)[number]);
   const showRail = railIndex >= 0;
-  const backPath = showRail ? backPathForAnalysisStep(seg) : null;
+  const showNav = seg !== 'intro';
+  const backPath = backPathForAnalysisStep(seg, session);
 
   const steps = ASSESSMENT_STEPS.filter((s) => s.onRail).map((s) => ({
     id: s.id,
@@ -74,21 +75,23 @@ export function AnalysisShell() {
         </div>
       </header>
 
-      {showRail && (
+      {(showRail || showNav) && (
         <div className="mx-auto w-full max-w-3xl px-6 py-5">
-          <Stepper steps={steps} current={railIndex} label={t('common.progressLabel')} />
-          <div className="mt-3 flex items-center justify-between">
-            {backPath ? (
-              <Button variant="ghost" to={withLocale(backPath)}>
-                {t('common.back')}
+          {showRail && <Stepper steps={steps} current={railIndex} label={t('common.progressLabel')} />}
+          {showNav && (
+            <div className={showRail ? 'mt-3 flex items-center justify-between' : 'flex items-center justify-between'}>
+              {backPath ? (
+                <Button variant="ghost" to={withLocale(backPath)}>
+                  {t('common.back')}
+                </Button>
+              ) : (
+                <span />
+              )}
+              <Button variant="ghost" onClick={() => setConfirmingStartOver(true)}>
+                {t('common.startOver')}
               </Button>
-            ) : (
-              <span />
-            )}
-            <Button variant="ghost" onClick={() => setConfirmingStartOver(true)}>
-              {t('common.startOver')}
-            </Button>
-          </div>
+            </div>
+          )}
         </div>
       )}
 

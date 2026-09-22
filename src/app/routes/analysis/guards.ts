@@ -28,7 +28,6 @@ const BACK_STEP: Partial<Record<AnalysisStep, AnalysisStep | 'intro'>> = {
   satisfaction: 'previous-products',
   goal: 'previous-products',
   pattern: 'goal',
-  photos: 'goal',
   questions: 'photos',
 };
 
@@ -41,8 +40,18 @@ const BACK_STEP: Partial<Record<AnalysisStep, AnalysisStep | 'intro'>> = {
  * from `goal` should return to the last step every visitor actually saw,
  * and `satisfaction` is skipped for anyone who answered "No" to
  * `previous-products`, so it can't be a universal back target for `goal`.
+ *
+ * `photos` is handled specially, not via the static `BACK_STEP` map: a
+ * Hair-Growth visitor with a known gender came from `pattern`, everyone
+ * else came from `goal` — the correct target depends on session state, not
+ * just the step name (2026-09-22 final review, minor M1).
  */
-export function backPathForAnalysisStep(step: AnalysisStep): string | null {
+export function backPathForAnalysisStep(step: AnalysisStep, s: SessionState): string | null {
+  if (step === 'photos') {
+    const { gender, hairGoal } = s.diagnosis;
+    const cameViaPattern = hairGoal === 'hair-growth' && (gender === 'male' || gender === 'female');
+    return PATHS.analysisStep(cameViaPattern ? 'pattern' : 'goal');
+  }
   const target = BACK_STEP[step];
   if (!target) return null;
   return target === 'intro' ? PATHS.analysis : PATHS.analysisStep(target);

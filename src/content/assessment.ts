@@ -902,7 +902,5 @@ export const GRAY_QUESTIONS: AssessmentQuestion[] = [
 
 export function questionsForHairGoal(goal: HairGoal): AssessmentQuestion[] {
   if (goal === 'slow-graying') return GRAY_QUESTIONS;
-  return goal === 'hair-growth'
-    ? THINNING_QUESTIONS.filter((q) => q.id !== 'q1_area')
-    : THINNING_QUESTIONS;
+  return THINNING_QUESTIONS;
 }

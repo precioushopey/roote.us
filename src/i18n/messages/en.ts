@@ -984,6 +984,7 @@ export const en = {
   'analysis.goal.title': 'What is your main goal?',
 
   'analysis.pattern.title': 'Which image looks most similar to your current hair pattern?',
+  'analysis.pattern.body': 'Select the closest match. You will be able to go back and change your selection.',
 
   'analysis.photos.title': 'Your baseline photos',
   'analysis.photos.body': 'Four photos from your phone: front, top, crown, and hairline. These become your baseline record for tracking progress over time — your questionnaire answers, not these photos, drive today’s recommendation.',

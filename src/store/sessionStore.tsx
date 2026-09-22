@@ -71,11 +71,25 @@ function reducer(state: SessionState, action: Action): SessionState {
     case 'HYDRATE':
       return action.state;
     case 'SET_GENDER':
-      return { ...state, diagnosis: { ...state.diagnosis, gender: action.gender } };
+      return {
+        ...state,
+        diagnosis: {
+          ...state.diagnosis,
+          gender: action.gender,
+          answers: { ...state.diagnosis.answers, hair_pattern_id: undefined },
+        },
+      };
     case 'SET_PACKAGING_PREFERENCE':
       return { ...state, diagnosis: { ...state.diagnosis, packagingPreference: action.value } };
     case 'SET_HAIR_GOAL':
-      return { ...state, diagnosis: { ...state.diagnosis, hairGoal: action.hairGoal } };
+      return {
+        ...state,
+        diagnosis: {
+          ...state.diagnosis,
+          hairGoal: action.hairGoal,
+          answers: { ...state.diagnosis.answers, hair_pattern_id: undefined },
+        },
+      };
     case 'TOGGLE_HEALTH_HISTORY': {
       const current = state.diagnosis.healthHistory;
       // Client rule: "None" clears every other condition; picking any other

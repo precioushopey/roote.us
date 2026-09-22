@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { DisplayTitle, Button } from '@/app/components/roote';
+import { DisplayTitle, Prose, Button } from '@/app/components/roote';
 import { pickLocalized } from '@/content/localized';
 import { MALE_PATTERN_OPTIONS, FEMALE_PATTERN_OPTIONS } from '@/content/assessment';
 import { track } from '@/analytics/analytics';
@@ -32,7 +32,8 @@ export function PatternScreen() {
   }
 
   const options = session.diagnosis.gender === 'female' ? FEMALE_PATTERN_OPTIONS : MALE_PATTERN_OPTIONS;
-  const current = session.diagnosis.answers.hair_pattern_id;
+  const stored = session.diagnosis.answers.hair_pattern_id;
+  const current = options.some((o) => o.value === stored) ? stored : undefined;
 
   const choose = (value: PatternCode) => {
     session.setAnswer('hair_pattern_id', value);
@@ -45,10 +46,13 @@ export function PatternScreen() {
 
   return (
     <section data-animate className="flex flex-col gap-8">
-      <DisplayTitle as="h1" step="md">
-        {t('analysis.pattern.title')}
-      </DisplayTitle>
-      <div className="grid grid-cols-2 gap-4">
+      <div>
+        <DisplayTitle as="h1" step="md">
+          {t('analysis.pattern.title')}
+        </DisplayTitle>
+        <Prose className="mt-3">{t('analysis.pattern.body')}</Prose>
+      </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         {options.map((o) => (
           <label
             key={o.value}

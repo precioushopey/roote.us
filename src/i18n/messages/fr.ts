@@ -178,6 +178,7 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'analysis.goal.title': 'Quel est votre objectif principal ?',
 
   'analysis.pattern.title': 'Quelle image ressemble le plus à votre motif capillaire actuel ?',
+  'analysis.pattern.body': 'Choisissez la correspondance la plus proche. Vous pourrez revenir en arrière et modifier votre sélection.',
 
   'analysis.photos.title': 'Vos photos de référence',
   'analysis.photos.body':
