@@ -55,8 +55,13 @@ export type Answers = {
   /** v3.1 §3 Step 5 — image-selected pattern code. Only asked when Hair Goal =
    *  Hair Growth; when present, `deriveAnalysis` uses it directly for `stage`
    *  instead of `q1_area` (design spec §10.1). `PatternCode` lives in
-   *  `domain/recommendation/types.ts` — imported via `import type` only, to
-   *  avoid a runtime dependency from `domain/analysis` on `domain/recommendation`. */
+   *  `domain/recommendation/types.ts` — this field's own reference to it is
+   *  `import type` only. `deriveAnalysis.ts` separately imports
+   *  `stageForPattern` (a value, from `domain/recommendation/hairGrowthTable`)
+   *  to resolve it, so `domain/analysis` does carry a real runtime dependency
+   *  on `domain/recommendation` overall — both stay inside `src/domain/**`,
+   *  so CLAUDE.md's purity rule (no React/DOM/storage/i18n-provider) still
+   *  holds either way. */
   hair_pattern_id?: import('@/domain/recommendation/types').PatternCode;
   /** v3.1 §3 Step 6 — profile context only. */
   hair_texture?: HairTexture;
