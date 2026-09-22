@@ -1,4 +1,14 @@
 import { L6, type LocalizedText } from './localized';
+import type { PatternCode } from '@/domain/recommendation/types';
+import m1 from '@/assets/patterns/M1.png';
+import m2 from '@/assets/patterns/M2.png';
+import m3 from '@/assets/patterns/M3.png';
+import m4 from '@/assets/patterns/M4.png';
+import m5 from '@/assets/patterns/M5.png';
+import f1 from '@/assets/patterns/F1.png';
+import f2 from '@/assets/patterns/F2.png';
+import f3 from '@/assets/patterns/F3.png';
+import f4 from '@/assets/patterns/F4.png';
 
 /**
  * Free Hair Analysis flow config (brief §12), realigned 2026-09-07 to the
@@ -381,6 +391,96 @@ export const GRAY_LEVEL_OPTIONS: Array<{ value: GrayHairLevel; label: LocalizedT
   },
 ];
 
+/* --- v3.1 §3 Step 5: visual hair-loss pattern selection. Image-select,
+   gender-specific set, shown only when Hair Goal = Hair Growth. The
+   6%/10%/15% concentration each pattern maps to lives in
+   `domain/recommendation/hairGrowthTable.ts` — this array only carries the
+   label/image, never the strength, keeping the regulated number in one
+   place. */
+export const MALE_PATTERN_OPTIONS: Array<{ value: PatternCode; label: LocalizedText; imageSrc: string }> = [
+  {
+    value: 'M1',
+    imageSrc: m1,
+    label: L6({
+      en: 'Very advanced — most of scalp affected', he: 'מתקדם מאוד — רוב הקרקפת מושפעת',
+      ar: 'متقدّم جداً — معظم فروة الرأس متأثرة', ru: 'Очень выраженное — затронута большая часть кожи головы',
+      fr: 'Très avancé — la majeure partie du cuir chevelu est touchée', es: 'Muy avanzado — la mayor parte del cuero cabelludo está afectada',
+    }),
+  },
+  {
+    value: 'M2',
+    imageSrc: m2,
+    label: L6({
+      en: 'Large crown area', he: 'אזור קודקוד גדול', ar: 'منطقة تاج كبيرة', ru: 'Большая зона на макушке',
+      fr: 'Grande zone du vertex', es: 'Zona amplia en la coronilla',
+    }),
+  },
+  {
+    value: 'M3',
+    imageSrc: m3,
+    label: L6({
+      en: 'Small crown area', he: 'אזור קודקוד קטן', ar: 'منطقة تاج صغيرة', ru: 'Небольшая зона на макушке',
+      fr: 'Petite zone du vertex', es: 'Zona pequeña en la coronilla',
+    }),
+  },
+  {
+    value: 'M4',
+    imageSrc: m4,
+    label: L6({
+      en: 'Large temple recession', he: 'נסיגה גדולה ברקות', ar: 'تراجع كبير في الصُدغين', ru: 'Значительное отступление у висков',
+      fr: 'Recul important au niveau des tempes', es: 'Retroceso importante en las sienes',
+    }),
+  },
+  {
+    value: 'M5',
+    imageSrc: m5,
+    label: L6({
+      en: 'Small temple / hairline recession', he: 'נסיגה קטנה ברקות / בקו השיער', ar: 'تراجع بسيط في الصُدغين / خط الشعر',
+      ru: 'Небольшое отступление у висков / линии роста волос', fr: 'Léger recul des tempes / de la ligne d’implantation',
+      es: 'Retroceso leve en las sienes / línea del cabello',
+    }),
+  },
+];
+
+export const FEMALE_PATTERN_OPTIONS: Array<{ value: PatternCode; label: LocalizedText; imageSrc: string }> = [
+  {
+    value: 'F1',
+    imageSrc: f1,
+    label: L6({
+      en: 'Fuller coverage — no visible central widening', he: 'כיסוי מלא יותר — ללא הרחבה מרכזית נראית לעין',
+      ar: 'تغطية أكثر امتلاءً — دون اتساع مركزي ظاهر', ru: 'Более полное покрытие — без заметного расширения пробора',
+      fr: 'Couverture plus fournie — pas d’élargissement central visible', es: 'Cobertura más completa — sin ensanchamiento central visible',
+    }),
+  },
+  {
+    value: 'F2',
+    imageSrc: f2,
+    label: L6({
+      en: 'Narrow central part — early widening', he: 'שביל מרכזי צר — הרחבה ראשונית',
+      ar: 'فرق مركزي ضيق — اتساع مبكّر', ru: 'Узкий центральный пробор — раннее расширение',
+      fr: 'Raie centrale étroite — élargissement précoce', es: 'Raya central estrecha — ensanchamiento inicial',
+    }),
+  },
+  {
+    value: 'F3',
+    imageSrc: f3,
+    label: L6({
+      en: 'More pronounced central widening', he: 'הרחבה מרכזית בולטת יותר',
+      ar: 'اتساع مركزي أكثر وضوحاً', ru: 'Более выраженное расширение пробора',
+      fr: 'Élargissement central plus marqué', es: 'Ensanchamiento central más pronunciado',
+    }),
+  },
+  {
+    value: 'F4',
+    imageSrc: f4,
+    label: L6({
+      en: 'Advanced central / diffuse visibility', he: 'מתקדם במרכז / נראות מפושטת',
+      ar: 'متقدّم في المنطقة المركزية / وضوح منتشر', ru: 'Выраженное центральное / диффузное поредение',
+      fr: 'Avancé au centre / visibilité diffuse', es: 'Avanzado en el centro / visibilidad difusa',
+    }),
+  },
+];
+
 /* --- step 5: analysis state categories (brief §12 step 5) ------------ */
 export const SCAN_CATEGORIES: LocalizedText[] = [
   L6({ en: 'Hair density', he: 'צפיפות שיער', ar: 'كثافة الشعر', ru: 'Густота волос', fr: 'Densité capillaire', es: 'Densidad capilar' }),
@@ -468,6 +568,53 @@ export const HEALTH_HISTORY_QUESTION: AssessmentQuestion = {
     },
   ],
 };
+
+/**
+ * v3.1 §3 Steps 6/8/9/10 — "Always" per the spec, regardless of Hair Goal.
+ * Spliced into both `THINNING_QUESTIONS` and `GRAY_QUESTIONS` below, right
+ * before `HEALTH_HISTORY_QUESTION` (which was already shared by both).
+ */
+export const COMMON_CONTEXT_QUESTIONS: AssessmentQuestion[] = [
+  {
+    id: 'hair_texture',
+    prompt: L6({
+      en: 'What’s your natural hair texture?', he: 'מהי מרקם השיער הטבעי שלך?',
+      ar: 'ما ملمس شعرك الطبيعي؟', ru: 'Какая у вас естественная текстура волос?',
+      fr: 'Quelle est la texture naturelle de vos cheveux ?', es: '¿Cuál es la textura natural de su cabello?',
+    }),
+    options: TEXTURE_OPTIONS,
+  },
+  {
+    id: 'stress_level',
+    prompt: L6({
+      en: 'How would you describe your daily life?', he: 'כיצד היית מתאר/ת את חיי היומיום שלך?',
+      ar: 'كيف تصف حياتك اليومية؟', ru: 'Как бы вы описали свою повседневную жизнь?',
+      fr: 'Comment décririez-vous votre vie quotidienne ?', es: '¿Cómo describiría su vida diaria?',
+    }),
+    options: STRESS_OPTIONS,
+  },
+  {
+    id: 'vegetable_intake',
+    prompt: L6({
+      en: 'How many green, yellow, or orange vegetables do you eat per week?',
+      he: 'כמה ירקות ירוקים, צהובים או כתומים את/ה אוכל/ת בשבוע?',
+      ar: 'كم عدد الخضراوات الخضراء أو الصفراء أو البرتقالية التي تتناولها أسبوعياً؟',
+      ru: 'Сколько зелёных, жёлтых или оранжевых овощей вы едите в неделю?',
+      fr: 'Combien de légumes verts, jaunes ou orange consommez-vous par semaine ?',
+      es: '¿Cuántas verduras verdes, amarillas o naranjas come por semana?',
+    }),
+    options: VEGETABLE_OPTIONS,
+  },
+  {
+    id: 'gray_hair_level',
+    prompt: L6({
+      en: 'How much of your hair is gray?', he: 'כמה מהשיער שלך אפור?',
+      ar: 'ما مقدار الشعر الرمادي لديك؟', ru: 'Какая часть ваших волос седая?',
+      fr: 'Quelle proportion de vos cheveux est grise ?', es: '¿Qué proporción de su cabello es cana?',
+    }),
+    options: GRAY_LEVEL_OPTIONS,
+  },
+];
 
 /**
  * Hair-loss/thinning branch — used by Thicker/Fuller Hair, Stop Hair Loss, Hair
@@ -623,6 +770,7 @@ export const THINNING_QUESTIONS: AssessmentQuestion[] = [
       },
     ],
   },
+  ...COMMON_CONTEXT_QUESTIONS,
   HEALTH_HISTORY_QUESTION,
 ];
 
@@ -725,9 +873,13 @@ export const GRAY_QUESTIONS: AssessmentQuestion[] = [
       { value: 'regularly', label: L6({ en: 'Regularly', he: 'באופן קבוע', ar: 'بانتظام', ru: 'Регулярно', fr: 'Régulièrement', es: 'Con regularidad' }) },
     ],
   },
+  ...COMMON_CONTEXT_QUESTIONS,
   HEALTH_HISTORY_QUESTION,
 ];
 
 export function questionsForHairGoal(goal: HairGoal): AssessmentQuestion[] {
-  return goal === 'slow-graying' ? GRAY_QUESTIONS : THINNING_QUESTIONS;
+  if (goal === 'slow-graying') return GRAY_QUESTIONS;
+  return goal === 'hair-growth'
+    ? THINNING_QUESTIONS.filter((q) => q.id !== 'q1_area')
+    : THINNING_QUESTIONS;
 }
