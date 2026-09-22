@@ -315,7 +315,8 @@ export function Products() {
         </div>
       </Section>
 
-      <BundleSection />
+      {/* TODO: BundleSection hidden 2026-09-22 per request — re-enable when bundles are ready to launch. */}
+      {/* <BundleSection /> */}
       <ShopFinalCta />
     </>
   );
