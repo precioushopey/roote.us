@@ -10,7 +10,7 @@ import {
   CtaSection,
   MediaCaption,
 } from '@/app/components/roote';
-import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getSolution } from '@/content/solutions';
 import { getProduct } from '@/content/products';
@@ -103,7 +103,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
         title={pickLocalized(solution.hero.title, cl)}
         body={pickLocalized(solution.hero.body, cl)}
         cta={
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+          <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         }

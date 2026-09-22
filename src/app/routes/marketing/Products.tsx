@@ -14,7 +14,7 @@ import {
   CtaSection,
   renderWithEmphasis,
 } from '@/app/components/roote';
-import { PATHS, EXTERNAL_ASSESSMENT_URL } from '@/app/paths';
+import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { PRODUCTS, getProduct, type Product } from '@/content/products';
 import { SHOP_BUNDLES } from '@/content/bundles';
@@ -131,8 +131,9 @@ function AddToBagButton({ sku }: { sku: string }) {
    bare "Review" badge or review note. */
 function FindYourMatchCta() {
   const t = useT();
+  const withLocale = useLocalizedPath();
   return (
-    <Link to={EXTERNAL_ASSESSMENT_URL} target="_blank" rel="noopener noreferrer" className={OUTLINE_CTA_CLASS}>
+    <Link to={withLocale(PATHS.analysis)} className={OUTLINE_CTA_CLASS}>
       {t('marketing.shop.findYourMatchCta')}
     </Link>
   );
@@ -267,7 +268,7 @@ export function Products() {
         title={renderWithEmphasis(t('marketing.shop.heading'))}
         body={t('marketing.shop.body')}
         cta={
-          <Button to={EXTERNAL_ASSESSMENT_URL} external caps className="w-full sm:w-auto">
+          <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
             {t('marketing.nav.cta')}
           </Button>
         }
