@@ -15,8 +15,10 @@ import {
   PendingChip,
   CtaSection,
   SectionIntro,
+  useToast,
 } from '@/app/components/roote';
 import { useFitTitle } from '@/app/lib/useFitTitle';
+import { useCart } from '@/store/cart';
 import { PATHS } from '@/app/paths';
 import { INGREDIENT_PHOTOS } from '@/app/components/roote/ingredientPhotos';
 import { pickLocalized } from '@/content/localized';
@@ -41,14 +43,17 @@ const PRODUCT_PHOTOS: Record<string, string> = {
   'density-15': level15,
 };
 
-/** Product page template (brief §20). Secondary to the assessment — the primary
- *  action is always "Start free hair analysis". */
+/** Product page template (brief §20). Primary action is a direct
+ *  "Add to Cart" (2026-09-22, product-owner request) — no assessment
+ *  required to buy. */
 export function ProductDetail() {
   const { slug } = useParams();
   const t = useT();
   const cl = useLocale().locale;
   const withLocale = useLocalizedPath();
   const titleRef = useFitTitle<HTMLHeadingElement>(3);
+  const cart = useCart();
+  const toast = useToast();
   const product = slug ? getProduct(slug) : undefined;
   const statusLabel: Record<ClaimStatus, string> = {
     approved: t('marketing.sci.status.approved'),
@@ -141,8 +146,15 @@ export function ProductDetail() {
               </span>
             </div>
             <div className="mt-4 w-full sm:w-auto">
-              <Button to={withLocale(PATHS.analysis)} caps className="w-full sm:w-auto">
-                {t('marketing.nav.cta')}
+              <Button
+                caps
+                className="w-full sm:w-auto"
+                onClick={() => {
+                  cart.add(product.slug);
+                  toast.show(t('cart.added'), 'success');
+                }}
+              >
+                {t('cart.add')}
               </Button>
             </div>
           </div>
