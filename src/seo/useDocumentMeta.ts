@@ -4,12 +4,12 @@ import { useLocale } from '@/i18n/LocaleProvider';
 import { ENABLED_LOCALES } from '@/i18n/locales';
 import { metaForPath, fullTitle } from './meta';
 import { pickLocalized } from '@/content/localized';
-import logo from '@/assets/logo.png';
+import shareImage from '@/assets/OpenGraph Banner.png';
 
 const SITE_ORIGIN = 'https://roote.us';
-/** Wide wordmark (~1400×435), not a 1200×630 crop — good enough for a `summary` Twitter
- *  card until a dedicated social-share image exists (SEO-AUDIT.md H5). */
-const SHARE_IMAGE = `${SITE_ORIGIN}${logo}`;
+/** Dedicated 1232×630 social-share banner (SEO-AUDIT.md H5's flagged follow-up — was the
+ *  wordmark logo, a summary_large_image-shaped crop now exists). */
+const SHARE_IMAGE = `${SITE_ORIGIN}${shareImage}`;
 
 function upsertMeta(selector: string, attr: 'name' | 'property', key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(selector);
@@ -75,7 +75,7 @@ export function useDocumentMeta() {
     upsertMeta('meta[property="og:url"]', 'property', 'og:url', canonical);
     upsertMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'ROOTÉ');
     upsertMeta('meta[property="og:image"]', 'property', 'og:image', SHARE_IMAGE);
-    upsertMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
+    upsertMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
     upsertMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
     upsertMeta('meta[name="twitter:image"]', 'name', 'twitter:image', SHARE_IMAGE);

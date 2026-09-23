@@ -140,12 +140,12 @@ shortDescription fields, all already client-approved copy).
 `useDocumentMeta.ts` sets `og:title`/`og:description`/`og:type` only. No image means link
 previews render with no thumbnail at all (compounding C3's static-HTML problem — even once JS
 runs, there is still nothing to show). No `twitter:card` means Twitter/X falls back to a
-generic, unstyled link. **Fix:** add `og:image` (absolute URL, using the existing `logo.png`
-brand asset — no new asset invented), `og:url`, `og:site_name`, and `twitter:card`/`twitter:title`/
-`twitter:description`/`twitter:image`. Using `summary` (not `summary_large_image`) as the
-Twitter card type, since `logo.png` is a wide wordmark (~1400×435) rather than the ~1200×630
-landscape crop `summary_large_image` expects — a proper social-share image (1200×630, distinct
-from the wordmark) is recommended as a future asset request, not fabricated here.
+generic, unstyled link. **Fix:** add `og:image` (absolute URL), `og:url`, `og:site_name`, and
+`twitter:card`/`twitter:title`/`twitter:description`/`twitter:image`. First pass used the
+`logo.png` wordmark with `summary` as the Twitter card type, since a wordmark isn't the ~1200×630
+landscape crop `summary_large_image` expects. 2026-09-23: the client supplied a dedicated
+1232×630 social-share banner (`src/assets/OpenGraph Banner.png`) — `SHARE_IMAGE` now points to
+it and the card type is `summary_large_image`.
 
 ### H6. No real HTTP redirects for legacy URLs — hosting-level gap
 `LEGACY_PREFIX_REDIRECTS`/`LEGACY_EXACT_REDIRECTS` (`src/app/paths.ts`) are mounted as

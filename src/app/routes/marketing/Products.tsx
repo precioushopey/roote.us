@@ -21,7 +21,7 @@ import { PRODUCTS, type Product } from '@/content/products';
 import { SHOP_BUNDLES } from '@/content/bundles';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
-import heroImage from '@/assets/heroes/Hero.png';
+import catalogHero from '@/assets/heroes/catalog-hero.png';
 import level6 from '@/assets/products/Level 6.png';
 import level10 from '@/assets/products/Level 10.png';
 import level15 from '@/assets/products/Level 15.png';
@@ -230,7 +230,7 @@ export function Products() {
           </Button>
         }
         image={{
-          src: heroImage,
+          src: catalogHero,
           alt: t('marketing.shop.heroMediaAlt'),
           className: 'aspect-[4/3] w-full object-contain shadow-product',
         }}
