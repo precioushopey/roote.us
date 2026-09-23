@@ -20,9 +20,19 @@ const SLOTS: Record<string, SlotDef[]> = {
     { timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' },
   ],
   'density-serum': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],
-  'density-6': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],
-  'density-10': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],
-  'density-15': [{ timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' }],
+  // Label: "1 full dropper (1 mL) … twice daily, morning and evening" (products.ts TOPICAL_USAGE).
+  'density-6': [
+    { timeOfDay: 'morning', dose: 'app.today.dose.applyScalp' },
+    { timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' },
+  ],
+  'density-10': [
+    { timeOfDay: 'morning', dose: 'app.today.dose.applyScalp' },
+    { timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' },
+  ],
+  'density-15': [
+    { timeOfDay: 'morning', dose: 'app.today.dose.applyScalp' },
+    { timeOfDay: 'evening', dose: 'app.today.dose.applyScalp' },
+  ],
   // supporting
   'derma-stim': [{ timeOfDay: 'evening', dose: 'app.today.dose.weekly' }],
   cleanser: [{ timeOfDay: 'shampoo', dose: 'app.today.dose.shampoo' }],

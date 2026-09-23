@@ -89,7 +89,7 @@ export const rooteContent = {
       name: { en: 'ROOTÉ Hair Growth Treatment — Level 6', he: 'טיפול לצמיחת שיער ROOTÉ — רמה 6', ar: 'علاج نمو الشعر ROOTÉ — مستوى 6', ru: 'ROOTÉ Средство для роста волос — Уровень 6', fr: 'ROOTÉ Traitement pour la croissance capillaire — Niveau 6', es: 'ROOTÉ Tratamiento para el crecimiento capilar — Nivel 6' } as LocalizedText, // TODO: confirm medical HE
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
-      frequencyKey: 'frequency.daily-evening',
+      frequencyKey: 'frequency.twice-daily',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-10': {
@@ -98,7 +98,7 @@ export const rooteContent = {
       name: { en: 'ROOTÉ Hair Growth Treatment — Level 10', he: 'טיפול לצמיחת שיער ROOTÉ — רמה 10', ar: 'علاج نمو الشعر ROOTÉ — مستوى 10', ru: 'ROOTÉ Средство для роста волос — Уровень 10', fr: 'ROOTÉ Traitement pour la croissance capillaire — Niveau 10', es: 'ROOTÉ Tratamiento para el crecimiento capilar — Nivel 10' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
-      frequencyKey: 'frequency.daily-evening',
+      frequencyKey: 'frequency.twice-daily',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'density-15': {
@@ -107,7 +107,7 @@ export const rooteContent = {
       name: { en: 'ROOTÉ Hair Growth Treatment — Level 15', he: 'טיפול לצמיחת שיער ROOTÉ — רמה 15', ar: 'علاج نمو الشعر ROOTÉ — مستوى 15', ru: 'ROOTÉ Средство для роста волос — Уровень 15', fr: 'ROOTÉ Traitement pour la croissance capillaire — Niveau 15', es: 'ROOTÉ Tratamiento para el crecimiento capilar — Nivel 15' } as LocalizedText,
       form: 'topical' as const,
       usageKey: 'usage.apply-scalp-affected',
-      frequencyKey: 'frequency.daily-evening',
+      frequencyKey: 'frequency.twice-daily',
       appliesToZones: ['frontal-hairline', 'temples', 'crown-vertex'] as const,
     },
     'regrowth-shampoo': {
