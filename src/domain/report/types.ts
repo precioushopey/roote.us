@@ -84,7 +84,7 @@ export type ReportModel = {
     intro: string;
     stats: { label: string; value: Resolved<string> }[];
     note: string;
-    timeline: { label: string; outcome: PendingMarker }[];
+    timeline: { label: string; outcome: Resolved<string> }[];
   };
   faq: { title: string; items: { q: string; a: string }[] };
   recommendedDuration: { days: number; label: string; rationaleNote: string };
@@ -95,7 +95,13 @@ export type ReportModel = {
     perDayLabel: string;
     compareTitle: string;
     recommendedBadge: string;
-    compareAll: { days: number; label: string; price: Money | PendingMarker; isRecommended: boolean }[];
+    compareAll: {
+      days: number;
+      label: string;
+      price: Money | PendingMarker;
+      perDay: Money | PendingMarker;
+      isRecommended: boolean;
+    }[];
   };
   claims: { key: 'effectiveness' | 'timeToVisibleResults' | 'doctorFollowUpCost'; label: string; valueLabel: string | PendingMarker }[];
   cta: { label: string; href: string };

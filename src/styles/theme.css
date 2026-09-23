@@ -3,33 +3,42 @@
 /* =========================================================================
    ROOTÉ — Personalized Hair Growth System
    Design tokens. Cream/ivory ground throughout (2026-09-08 retint, matched to
-   MDhair's colour structure — see brainstorming chat), emerald reserved for
-   buttons + accents (the role gold/teal used to play), a warm taupe "anchor"
+   MDhair's colour structure — see brainstorming chat), buttons are yellow ochre,
+   gold is the accent (a darker gold for text), a warm taupe "anchor"
    tone for header/footer/sidebar/hero bands instead of a dark ink fill.
    Source of truth for colour + radius. src/styles/tokens.ts mirrors the
    palette for JS; src/styles/tokens.test.ts keeps them honest.
    ========================================================================= */
 
 :root {
-  /* --- primitive scales (brief §6) ------------------------------------- */
-  --roote-emerald-950: #0a2a1c;
-  --roote-emerald-900: #123726;
-  --roote-emerald-800: #1b4b32;
-  --roote-emerald-700: #235e3f;
-  --roote-emerald-600: #34805a;
+  /* --- primitive scales (brief §6) -------------------------------------
+     Gold, the logo's own colour (2026-09-23; replaced the earlier amber and
+     emerald palettes). 500 is the logo gold itself: only ~2.3:1 against cream
+     and ~1.5:1 against the taupe band, so it is never a button fill (a first
+     pass tried that and it washed into the taupe hero) and never small text.
+     950 is the deepest surface (dark badges, overlays, toasts). 800/900 are the same hue darkened for text, icons and rules (about
+     6.9:1 and 8.6:1 on cream, 4.5:1 and 5.7:1 on the taupe band), and
+     700/600 are the mid steps, the focus ring and the outlined-button border. */
+  --roote-gold-950: #2a2110;
+  --roote-gold-900: #5c4510;
+  --roote-gold-800: #6e5310;
+  --roote-gold-700: #8a6a1f;
+  --roote-gold-600: #a98343;
+  --roote-gold-500: #c6a15a;
+
+  /* Yellow ochre, the button colour (2026-09-23). 800 is the primary fill (cream
+     label about 5.3:1, and 3.5:1 against the taupe band so it stays distinct);
+     900 is its hover/pressed tint. Bright gold-500 and a darker taupe were both
+     tried as the button first. */
+  --roote-ochre-800: #8b6009;
+  --roote-ochre-900: #6b4906;
 
   --roote-cream-50: #fcf9f3;
   --roote-cream-100: #f6efe4;
   --roote-cream-200: #ede1cf;
   --roote-cream-300: #e6dac6;
 
-  /* Kept only for the logo artwork's own on-ink silhouette (Wordmark
-     `onInk`) — the brand mark itself stays gold on purpose (2026-09-08
-     decision). No longer used as a UI accent color anywhere else. */
-  --roote-gold-500: #c6a15a;
-  --roote-gold-600: #a98343;
-
-  /* Warm sand "anchor" tone — replaces the near-black emerald ink band.
+  /* Warm sand "anchor" tone — replaces the old near-black ink band.
      2026-09-09: retinted from a grayer taupe (#c7b6a8) to a warmer, more
      golden sand sampled from hero-system.png's own background, then
      lightened ~15% (mixed toward white) per feedback that the first pass
@@ -69,7 +78,7 @@
   --popover: #ffffff;
   --popover-foreground: var(--roote-ink);
 
-  --primary: var(--roote-emerald-800);
+  --primary: var(--roote-ochre-800);
   --primary-foreground: var(--roote-cream-50);
 
   --secondary: var(--roote-cream-100);
@@ -77,9 +86,9 @@
   --muted: var(--roote-cream-200);
   --muted-foreground: var(--roote-muted);
 
-  /* Emerald — rules, numerals, active state, buttons. The one accent
-     color (2026-09-08: replaces gold everywhere except the logo itself). */
-  --accent: var(--roote-emerald-800);
+  /* Dark gold, the text-safe accent: rules, numerals, links, icons. (Bright
+     gold-500 is too faint for small text; see the scale above.) */
+  --accent: var(--roote-gold-800);
   --accent-foreground: var(--roote-cream-50);
 
   --destructive: #b3261e;
@@ -88,14 +97,14 @@
   --success-foreground: #ffffff;
   --warning: #a8681c;
   --warning-foreground: #ffffff;
-  --info: var(--roote-emerald-700);
+  --info: var(--roote-gold-700);
   --info-foreground: #ffffff;
 
   --border: var(--roote-cream-300);
   --input: var(--roote-cream-300);
   --input-background: #ffffff;
   --switch-background: #cbc0ac;
-  --ring: var(--roote-emerald-600);
+  --ring: var(--roote-gold-600);
 
   /* Editorial "anchor" band — header, footer, AppShell sidebar, marketing
      hero/closing-CTA sections. Warm taupe, not a dark fill (2026-09-08:
@@ -104,13 +113,13 @@
   --ink-foreground: var(--roote-ink);
 
   /* Decorative two-tone "ghost" display words (aria-hidden). */
-  --accent-ghost: #d7e6dc;
-  --ink-ghost: #284a3a;
+  --accent-ghost: #f3e6c6;
+  --ink-ghost: #4d3d16;
 
-  /* --- charts / data viz — emerald→cream spectrum ------------------- */
-  --chart-1: #1b4b32;
-  --chart-2: #34805a;
-  --chart-3: #5fa97f;
+  /* --- charts / data viz — gold→cream spectrum ----------------------- */
+  --chart-1: #8a6a1f;
+  --chart-2: #c6a15a;
+  --chart-3: #e1c98f;
   --chart-4: #c7b6a8;
   --chart-5: #e6dac6;
 
@@ -125,12 +134,12 @@
   /* --- app sidebar (kept; repointed) ------------------------------- */
   --sidebar: var(--roote-cream-100);
   --sidebar-foreground: var(--roote-ink);
-  --sidebar-primary: var(--roote-emerald-800);
+  --sidebar-primary: var(--roote-ochre-800);
   --sidebar-primary-foreground: var(--roote-cream-50);
   --sidebar-accent: var(--roote-cream-200);
   --sidebar-accent-foreground: var(--roote-ink);
   --sidebar-border: var(--roote-cream-300);
-  --sidebar-ring: var(--roote-emerald-600);
+  --sidebar-ring: var(--roote-gold-600);
 
   /* --- motion (brief: "feel like iOS" pass, 2026-09-14) -------------
      `--ease-entrance` is the existing scroll-reveal curve (marketing.css);
@@ -142,27 +151,27 @@
 }
 
 .dark {
-  --background: var(--roote-emerald-950);
+  --background: var(--roote-gold-950);
   --foreground: var(--roote-cream-100);
-  --card: var(--roote-emerald-900);
+  --card: var(--roote-gold-900);
   --card-foreground: var(--roote-cream-100);
-  --popover: var(--roote-emerald-900);
+  --popover: var(--roote-gold-900);
   --popover-foreground: var(--roote-cream-100);
   --primary: var(--roote-cream-100);
-  --primary-foreground: var(--roote-emerald-950);
-  --secondary: var(--roote-emerald-800);
+  --primary-foreground: var(--roote-gold-950);
+  --secondary: var(--roote-gold-800);
   --secondary-foreground: var(--roote-cream-100);
-  --muted: var(--roote-emerald-800);
-  --muted-foreground: #9fb3b2;
+  --muted: var(--roote-gold-800);
+  --muted-foreground: #c7b8a6;
   --accent: var(--roote-cream-100);
-  --accent-foreground: var(--roote-emerald-950);
+  --accent-foreground: var(--roote-gold-950);
   --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.12);
-  --input-background: var(--roote-emerald-900);
+  --input-background: var(--roote-gold-900);
   --ring: var(--roote-cream-100);
-  --ink: var(--roote-emerald-950);
+  --ink: var(--roote-gold-950);
   --ink-foreground: var(--roote-cream-100);
-  --sidebar: var(--roote-emerald-900);
+  --sidebar: var(--roote-gold-900);
   --sidebar-foreground: var(--roote-cream-100);
   --sidebar-border: rgba(255, 255, 255, 0.12);
 }
@@ -206,18 +215,20 @@
   --color-accent-ghost: var(--accent-ghost);
   --color-ink-ghost: var(--ink-ghost);
 
-  /* emerald / cream / gold primitives as Tailwind colours */
-  --color-deep-950: var(--roote-emerald-950);
-  --color-deep-900: var(--roote-emerald-900);
-  --color-deep-800: var(--roote-emerald-800);
-  --color-deep-700: var(--roote-emerald-700);
-  --color-deep-600: var(--roote-emerald-600);
+  /* gold / cream primitives as Tailwind colours (the dark gold steps stay exposed as `deep-*`) */
+  --color-deep-950: var(--roote-gold-950);
+  --color-deep-900: var(--roote-gold-900);
+  --color-deep-800: var(--roote-gold-800);
+  --color-deep-700: var(--roote-gold-700);
+  --color-deep-600: var(--roote-gold-600);
   --color-cream-50: var(--roote-cream-50);
   --color-cream-100: var(--roote-cream-100);
   --color-cream-200: var(--roote-cream-200);
   --color-cream-300: var(--roote-cream-300);
   --color-gold-500: var(--roote-gold-500);
   --color-gold-600: var(--roote-gold-600);
+  --color-ochre-800: var(--roote-ochre-800);
+  --color-ochre-900: var(--roote-ochre-900);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);

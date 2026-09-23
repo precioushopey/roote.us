@@ -6,20 +6,23 @@
 
 /** Primitive colour scales — brief §6. */
 export const primitives = {
-  emerald950: '#0A2A1C',
-  emerald900: '#123726',
-  emerald800: '#1B4B32',
-  emerald700: '#235E3F',
-  emerald600: '#34805A',
   cream50: '#FCF9F3',
   cream100: '#F6EFE4',
   cream200: '#EDE1CF',
   cream300: '#E6DAC6',
-  // Kept only for the logo artwork's own on-ink silhouette (Wordmark
-  // `onInk`) — no longer used as a UI accent anywhere else (2026-09-08).
-  gold500: '#C6A15A',
+  // Gold, the logo's colour (2026-09-23). 500 is the logo gold (too faint for fills or
+  // small text); 950 is the deepest surface; 800/900 are the text-safe darks.
+  // See theme.css for the contrast numbers.
+  gold950: '#2A2110',
+  gold900: '#5C4510',
+  gold800: '#6E5310',
+  gold700: '#8A6A1F',
   gold600: '#A98343',
-  // Warm sand "anchor" tone — replaces the near-black emerald ink band.
+  gold500: '#C6A15A',
+  // Yellow ochre, the button colour: 800 is the fill (cream label), 900 its hover tint.
+  ochre800: '#8B6009',
+  ochre900: '#6B4906',
+  // Warm sand "anchor" tone — replaces the old near-black ink band.
   taupe500: '#E0C9B6',
   ink: '#172022',
   body: '#333A3C',
@@ -32,23 +35,23 @@ export const palette = {
   background: primitives.cream50,
   foreground: primitives.ink,
   card: '#FFFFFF',
-  primary: primitives.emerald800,
+  primary: primitives.ochre800, // yellow ochre fill; carries cream text
   primaryForeground: primitives.cream50,
   secondary: primitives.cream100,
   muted: primitives.cream200,
   mutedForeground: primitives.muted,
-  accent: primitives.emerald800, // the one accent color (2026-09-08: replaces gold)
+  accent: primitives.gold800, // the text-safe dark gold
   accentForeground: primitives.cream50,
   border: primitives.cream300,
-  ring: primitives.emerald600,
+  ring: primitives.gold600,
   ink: primitives.taupe500, // editorial "anchor" band — warm taupe, not dark
   inkForeground: primitives.ink,
-  accentGhost: '#D7E6DC',
-  inkGhost: '#284A3A',
+  accentGhost: '#F3E6C6',
+  inkGhost: '#4D3D16',
   destructive: '#B3261E',
   success: '#1F7A53',
   warning: '#A8681C',
-  info: primitives.emerald700,
+  info: primitives.gold700,
 } as const;
 
 export const fonts = {

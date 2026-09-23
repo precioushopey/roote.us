@@ -287,8 +287,8 @@ export const he: Record<MessageKey, string> = {
   'program.checkout.recommendedFor': 'מומלץ עבור',
   'program.checkout.includes': 'כולל',
   'program.checkout.packaging': 'אריזה',
-  'program.checkout.packMen': 'טורקיז כהה',
-  'program.checkout.packWomen': 'קרם',
+  'program.checkout.packMen': 'שחור',
+  'program.checkout.packWomen': 'ענבר',
   'program.checkout.review': 'בדיקת טיפול',
   'program.checkout.reviewRequired': 'נדרשת',
   'program.checkout.reviewNotRequired': 'לא נדרשת',
@@ -430,7 +430,7 @@ export const he: Record<MessageKey, string> = {
   'marketing.home.hero.support':
     'ענו על שאלון קצר וצרפו תמונה של הקרקפת לקבלת אבחון שיער חינם בסיוע בינה מלאכותית ותוכנית טיפול מותאמת אישית.',
   'marketing.home.hero.mediaAlt':
-    'בקבוקי ROOTÉ ברמות 6, 10 ו-15 באריזות ירוק אמרלד כהה וקרם, עומדים על בסיסי אבן',
+    'בקבוקי ROOTÉ ברמות 6, 10 ו-15 באריזות שחורות וענבר, עומדים על בסיסי אבן',
 
   'marketing.home.strip.item1': 'אבחון שיער בסיוע בינה מלאכותית',
   'marketing.home.strip.item2': 'תוכנית אישית',
@@ -466,8 +466,8 @@ export const he: Record<MessageKey, string> = {
     'תוכנית ROOTÉ שלך יכולה לשלב טיפולים ממוקדים ומוצרי תמיכה לפי ההערכה וההתאמה שלך.',
   'marketing.home.system.men': 'מערכת לגברים',
   'marketing.home.system.women': 'מערכת לנשים',
-  'marketing.home.system.menMediaAlt': 'מערכת ROOTÉ לגברים באריזת טורקיז כהה',
-  'marketing.home.system.womenMediaAlt': 'מערכת ROOTÉ לנשים באריזת קרם',
+  'marketing.home.system.menMediaAlt': 'מערכת ROOTÉ לגברים באריזה שחורה',
+  'marketing.home.system.womenMediaAlt': 'מערכת ROOTÉ לנשים באריזת ענבר',
   'marketing.home.system.cta': 'חנות מוצרים',
   'marketing.home.how.cta': 'לשאלות נפוצות',
 
@@ -1064,7 +1064,6 @@ export const he: Record<MessageKey, string> = {
   'app.preDelivery.supportBody': 'אפשר לפנות אלינו בכל עת.',
   'app.preDelivery.confirmCta': 'החבילה הגיעה? אשרו כדי להתחיל את היום הראשון שלכם',
   'app.preDelivery.viewShipping': 'צפייה בפרטי המשלוח',
-  'app.preDelivery.mapPending': 'מפת משלוח חיה',
   'app.preDelivery.orderedStage': 'ההזמנה בוצעה',
   'app.preDelivery.preparingStage': 'בהכנה ובמשלוח',
   'app.preDelivery.whileYouWaitTitle': 'בזמן שאת/ה ממתין/ה',
@@ -1384,4 +1383,15 @@ export const he: Record<MessageKey, string> = {
   'accountRescan.disclosure':
     'הסריקה החוזרת הזו מופעלת על ידי השותפה שלנו, HairHealth.ai. המידע שתשתפו כאן נשלח אליה ומתווסף לרשימת אנשי הקשר שלנו, ומותאם לחשבון שלכם לפי כתובת האימייל.',
   'accountRescan.notConfigured': 'הסריקות החוזרות עדיין לא מחוברות, נא לבדוק שוב בקרוב.',
+  'report.expect.outcome.m1': 'השגרה שלך מתבססת. ייתכנו נשירה זמנית מוגברת בזמן שמחזור השיער מתאפס.',
+  'report.expect.outcome.m3': 'הנשירה בדרך כלל מתייצבת, ושינויים ראשוניים במרקם ובכיסוי עשויים להתחיל להופיע.',
+  'report.expect.outcome.m6': 'שינויים נראים בצפיפות ובכיסוי מדווחים בדרך כלל עם המשך שימוש.',
+  'app.preDelivery.mapCaption': 'מעקב המשלוח יופיע כאן ברגע שההזמנה שלך תצא לדרך.',
+  'app.profile.orders.status': 'סטטוס',
+  'app.profile.orders.statusConfirmed': 'ההזמנה אושרה',
+  'app.profile.orders.payment': 'תשלום',
+  'app.profile.orders.cardEnding': 'כרטיס שמסתיים ב-{last4}',
+  'app.profile.orders.shipTo': 'משלוח אל',
+  'app.profile.orders.programLength': 'משך התוכנית',
+  'app.profile.orders.includes': 'מה כלול',
 };

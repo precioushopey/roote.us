@@ -14,7 +14,7 @@ import { getProduct } from '@/content/products';
 import { PendingChip, LegalNotice } from '@/app/components/roote';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type ProgramOrder, type Contact, type CardRef } from '@/store/checkout';
-import { recordOrder } from '@/store/orders';
+import { recordOrder, shipToLabel } from '@/store/orders';
 import { buildProgram } from '@/store/program';
 import { track } from '@/analytics/analytics';
 import type { ProgramDurationDays } from '@/domain/program/types';
@@ -99,6 +99,10 @@ export function CheckoutStep() {
         label: row!.label,
         email: contact.email.trim(),
         items: orderItems,
+        total: isPending(row!.price) ? undefined : row!.price.amount,
+        durationDays: days!,
+        cardLast4: card.last4,
+        shipTo: shipToLabel(contact.shipping),
       });
       // No signup step before checkout any more — sign the buyer in now so
       // /program/success → /account works (order number + email gets them back later).
@@ -155,7 +159,11 @@ export function CheckoutStep() {
         <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3 font-body text-sm">
           <div className="flex justify-between">
             <span className="text-muted-foreground">{t('start.checkout.total')}</span>
-            <PendingChip label="program total" />
+            {isPending(row.price) ? (
+              <PendingChip label="program total" />
+            ) : (
+              <span className="font-medium text-foreground">{row.price.formatted}</span>
+            )}
           </div>
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>{t('start.checkout.shipping')}</span>

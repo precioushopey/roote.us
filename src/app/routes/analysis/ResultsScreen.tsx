@@ -44,7 +44,16 @@ export function ResultsScreen() {
       ]
     : analysis
       ? [
-          { label: t('analysis.results.rowDensity'), value: null, pendingLabel: 'density' },
+          {
+            label: t('analysis.results.rowDensity'),
+            // The analysis already derives a real relative-density level (deriveAnalysis.ts);
+            // it only renders as [PENDING] if that metric is somehow absent.
+            value: (() => {
+              const density = analysis.metrics.find((m) => m.key === 'relative-density');
+              return density ? t(`level.${density.level}` as 'level.low') : null;
+            })(),
+            pendingLabel: 'density',
+          },
           { label: t('analysis.results.rowPattern'), value: t(`severity.${analysis.severityBand}` as 'severity.mild') },
           { label: t('analysis.results.rowProgression'), value: t(analysis.summaryPlainKey as 'summary.norwood.mild') },
         ]

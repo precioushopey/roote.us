@@ -145,19 +145,30 @@ export const rooteContent = {
     }
   >,
 
+  // TEMP-PLACEHOLDER: every price below is an invented stand-in (2026-09-23, product-owner
+  // request to fill all [PENDING] slots). Roughly 2 products per month at the real SKU prices,
+  // with a small volume discount. `savingsPct` is vs. the 90-day per-day rate. Replace with the
+  // client's price list (or set back to null to restore the [PENDING] chip).
   programDurations: [
-    { days: 90,  key: 'd90',  price: null, perDayFrom: null },
-    { days: 120, key: 'd120', price: null, perDayFrom: null },
-    { days: 180, key: 'd180', price: null, perDayFrom: null },
-    { days: 270, key: 'd270', price: null, perDayFrom: null },
-    { days: 360, key: 'd360', price: null, perDayFrom: null },
+    { days: 90,  key: 'd90',  price: 249, perDayFrom: 2.77, savingsPct: 0 },
+    { days: 120, key: 'd120', price: 319, perDayFrom: 2.66, savingsPct: 4 },
+    { days: 180, key: 'd180', price: 459, perDayFrom: 2.55, savingsPct: 8 },
+    { days: 270, key: 'd270', price: 649, perDayFrom: 2.4,  savingsPct: 13 },
+    { days: 360, key: 'd360', price: 829, perDayFrom: 2.3,  savingsPct: 17 },
   ],
 
+  // TEMP-PLACEHOLDER: invented cart shipping rate (2026-09-23). Program orders ship free
+  // (folded into the program price, see start.checkout.shippingFree).
+  shipping: { flatRate: 6, freeOverSubtotal: 75 },
+
+  // TEMP-PLACEHOLDER: every value below is an invented stand-in, not a substantiated claim
+  // (2026-09-23, product-owner request). The footnote keys still point at the "source" footnotes,
+  // so do not ship these to real customers before they are replaced or removed.
   claims: {
-    effectiveness:        { value: null, footnoteKey: 'footnote.effectiveness-source' },
-    timeToVisibleResults: { value: null, footnoteKey: 'footnote.results-timing-source' },
-    rescanWindow:         { value: null, footnoteKey: null },
-    doctorFollowUpCost:   { value: null, footnoteKey: null }, // TODO: confirm ROOTÉ offers follow-ups
+    effectiveness:        { value: '82%', footnoteKey: 'footnote.effectiveness-source' },
+    timeToVisibleResults: { value: '3 to 6 months', footnoteKey: 'footnote.results-timing-source' },
+    rescanWindow:         { value: 'Every 30 days', footnoteKey: null },
+    doctorFollowUpCost:   { value: 'Included', footnoteKey: null },
   },
 
   recommendedDurationTable: {

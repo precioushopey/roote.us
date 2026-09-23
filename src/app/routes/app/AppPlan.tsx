@@ -1,8 +1,35 @@
 import { useT, useLocale } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { resolvePlanTreatments, planKeysForProgram } from './programProgress';
+import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
+import { resolvePlanTreatments, planKeysForProgram, type ResolvedTreatment } from './programProgress';
 import { AccountPageHeader } from './AccountPageHeader';
 import type { MessageKey } from '@/i18n/messages';
+
+/* One plan card: product photo beside the name/usage/frequency copy. A
+   treatment with no photo (the scalp-care routine) renders text-only. */
+function TreatmentCard({ tr, core }: { tr: ResolvedTreatment; core: boolean }) {
+  const t = useT();
+  const photo = TREATMENT_PHOTOS[tr.key];
+  return (
+    <div
+      className={`flex items-center gap-4 rounded-xl border p-4 shadow-sm ${
+        core ? 'border-accent bg-accent/5' : 'border-border bg-card'
+      }`}
+    >
+      {photo && <img src={photo} alt="" loading="lazy" className="h-24 w-24 shrink-0 object-contain sm:h-28 sm:w-28" />}
+      <div className="min-w-0">
+        <p className="font-medium">{tr.name}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{tr.usage}</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {t('report.plan.applicationFrequencyLabel')}: {tr.frequency}
+          {core && tr.appliesToLabels.length
+            ? ` · ${t('report.plan.appliesToLabel')}: ${tr.appliesToLabels.join(', ')}`
+            : ''}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export function AppPlan() {
   const t = useT();
@@ -30,27 +57,14 @@ export function AppPlan() {
         <section className="flex flex-col gap-4">
           <h2 className="font-display text-xl font-medium">{t('report.plan.core.title')}</h2>
           {plan.core.map((tr) => (
-            <div key={tr.key} className="rounded-xl border border-accent bg-accent/5 p-4 shadow-sm">
-              <p className="font-medium">{tr.name}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{tr.usage}</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {t('report.plan.applicationFrequencyLabel')}: {tr.frequency}
-                {tr.appliesToLabels.length ? ` · ${t('report.plan.appliesToLabel')}: ${tr.appliesToLabels.join(', ')}` : ''}
-              </p>
-            </div>
+            <TreatmentCard key={tr.key} tr={tr} core />
           ))}
         </section>
 
         <section className="flex flex-col gap-4">
           <h2 className="font-display text-xl font-medium">{t('report.plan.supporting.title')}</h2>
           {plan.supporting.map((tr) => (
-            <div key={tr.key} className="rounded-xl border border-border bg-card p-4 shadow-sm">
-              <p className="font-medium">{tr.name}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{tr.usage}</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {t('report.plan.applicationFrequencyLabel')}: {tr.frequency}
-              </p>
-            </div>
+            <TreatmentCard key={tr.key} tr={tr} core={false} />
           ))}
         </section>
       </div>

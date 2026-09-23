@@ -22,7 +22,25 @@ export type OrderRecord = {
    *  to plain `name`/`qty` when absent or when the product no longer
    *  resolves (e.g. removed from the catalog after the order was placed). */
   items?: { name: string; qty: number; slug?: string }[];
+  /** Order total in the display currency: the program price, or a cart's
+   *  subtotal + shipping. Optional: orders recorded before 2026-09-23 lack it,
+   *  and it is left unset when a price was still [PENDING] at purchase. */
+  total?: number;
+  /** Cart orders only: the two parts of `total`. */
+  subtotal?: number;
+  shipping?: number;
+  /** Program orders only: how long the purchased program runs. */
+  durationDays?: number;
+  /** Last four digits of the payment card. Never the full number, expiry or CVC. */
+  cardLast4?: string;
+  /** Shipping destination as "City, ST 90036" (no street address is kept). */
+  shipTo?: string;
 };
+
+/** "Los Angeles, CA 90036" from a checkout address; street lines are deliberately dropped. */
+export function shipToLabel(a: { city: string; state: string; postal: string }): string {
+  return `${a.city.trim()}, ${a.state.trim()} ${a.postal.trim()}`;
+}
 
 /** Newest first. */
 export function readOrders(): OrderRecord[] {

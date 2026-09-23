@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState, type PointerEvent } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
@@ -144,6 +144,37 @@ function LevelSelectorControls({ count, index, onGo }: { count: number; index: n
   );
 }
 
+const SWIPE_MIN_PX = 40;
+
+/* Horizontal swipe for touch and pen input (mouse users have the hover
+   chevrons). Spread the result onto the swipeable element and give it
+   `touch-pan-y` so the browser keeps handling vertical scroll: a vertical pan
+   fires pointercancel, which discards the gesture. Dragging toward the start
+   edge means "next" in LTR and "previous" in RTL, mirroring how the chevrons
+   sit on the start and end sides. */
+function useSwipe(onPrev: () => void, onNext: () => void) {
+  const { dir } = useLocale();
+  const origin = useRef<{ x: number; y: number } | null>(null);
+  return {
+    onPointerDown: (e: PointerEvent) => {
+      origin.current = e.pointerType === 'mouse' ? null : { x: e.clientX, y: e.clientY };
+    },
+    onPointerUp: (e: PointerEvent) => {
+      const from = origin.current;
+      origin.current = null;
+      if (!from) return;
+      const dx = e.clientX - from.x;
+      const dy = e.clientY - from.y;
+      if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dx) <= Math.abs(dy)) return;
+      const towardNext = dir === 'rtl' ? dx > 0 : dx < 0;
+      (towardNext ? onNext : onPrev)();
+    },
+    onPointerCancel: () => {
+      origin.current = null;
+    },
+  };
+}
+
 /* A fixed "buy the set" bundle — one product line in one packaging colorway,
    with its own direct Add to Cart (2026-09-23, matching the individual
    products above, no assessment required to buy here either). `variants`
@@ -162,6 +193,11 @@ function BundleCard({ variants }: { variants: ShopBundle[] }) {
   const added = useAddedToCartPanel();
   const [qty, setQty] = useState(1);
   const [index, setIndex] = useState(0);
+  const count = variants.length;
+  const swipe = useSwipe(
+    () => setIndex((i) => (i - 1 + count) % count),
+    () => setIndex((i) => (i + 1) % count),
+  );
   const bundle = variants[index];
   const image = BUNDLE_PHOTOS[bundle.id];
   const name = bundleDisplayName(bundle, cl);
@@ -170,9 +206,15 @@ function BundleCard({ variants }: { variants: ShopBundle[] }) {
   return (
     <div className="flex flex-col place-content-between gap-4">
       {added.panel}
-      <div className="group relative w-full">
+      <div className="group relative w-full touch-pan-y touch-pinch-zoom" {...swipe}>
         {image ? (
-          <img src={image} alt={name} loading="lazy" className="aspect-[3/4] w-full rounded-sm object-contain" />
+          <img
+            src={image}
+            alt={name}
+            loading="lazy"
+            draggable={false}
+            className="aspect-[3/4] w-full rounded-sm object-contain"
+          />
         ) : (
           <MediaPlaceholder
             alt={name}

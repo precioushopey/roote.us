@@ -8,7 +8,7 @@ import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { isPending } from '@/content/pending';
 import { pickLocalized } from '@/content/localized';
 import { PROGRAM_DURATIONS, DURATION_TIER_LABEL } from '@/content/programs';
-import { DisplayTitle, Prose, Button, ProgramCard, Badge, PendingChip } from '@/app/components/roote';
+import { DisplayTitle, Prose, Button, ProgramCard, Badge } from '@/app/components/roote';
 import { track } from '@/analytics/analytics';
 import type { ProgramDurationDays } from '@/domain/program/types';
 
@@ -97,7 +97,7 @@ export function PlanStep() {
               emphasised={row.isRecommended}
               selected={selected === row.days}
               priceLabel={isPending(row.price) ? null : row.price.formatted}
-              perDayLabel={isPending(model.pricing.perDay) ? null : model.pricing.perDay.formatted}
+              perDayLabel={isPending(row.perDay) ? null : `${row.perDay.formatted} ${model.pricing.perDayLabel}`}
               includes={includes}
               onSelect={() => choose(row.days as ProgramDurationDays)}
               selectLabel={selected === row.days ? t('common.continue') : t('start.plan.continue')}
@@ -107,7 +107,7 @@ export function PlanStep() {
       </div>
 
       <div className="rounded-lg border border-border bg-cream-100 p-4 text-sm text-muted-foreground">
-        {t('program.plan.priceNote')} <PendingChip label="program pricing" />
+        {t('program.plan.priceNote')}
       </div>
 
       <Button block onClick={handleContinue} disabled={!selected}>

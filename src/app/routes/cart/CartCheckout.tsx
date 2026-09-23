@@ -5,9 +5,11 @@ import { resolveCartLines } from '@/store/cartLines';
 import { useAuth } from '@/store/auth';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
+import { cartTotals } from '@/domain/cart/totals';
+import { CartTotalRows } from '@/app/components/cart/CartTotalRows';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type CartOrder, type Contact, type CardRef } from '@/store/checkout';
-import { recordOrder } from '@/store/orders';
+import { recordOrder, shipToLabel } from '@/store/orders';
 import { Section, DisplayTitle } from '@/app/components/roote';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { PATHS } from '@/app/paths';
@@ -22,12 +24,7 @@ export function CartCheckout() {
   const auth = useAuth();
 
   const lines = resolveCartLines(cart.lines, cl);
-  // See CartPage.tsx — real arithmetic on already-supplied per-line prices, not
-  // invented; stays [PENDING] if any line lacks one, or (for the total) since
-  // shipping has no supplied rate yet.
-  const subtotal = lines.every((l) => l.price !== null)
-    ? lines.reduce((sum, l) => sum + l.price! * l.qty, 0)
-    : null;
+  const totals = cartTotals(lines, rooteContent.shipping);
 
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -57,6 +54,11 @@ export function CartCheckout() {
         // lines only) lets order history render the product's real photo/
         // subtitle/badges, not just its name.
         items: lines.map((l) => ({ name: l.name, qty: l.qty, slug: l.sku })),
+        subtotal: totals.subtotal ?? undefined,
+        shipping: totals.shipping ?? undefined,
+        total: totals.total ?? undefined,
+        cardLast4: card.last4,
+        shipTo: shipToLabel(contact.shipping),
       });
       if (!auth.email) auth.signInAfterPurchase(contact.email);
       navigate(withLocale(PATHS.cartSuccess), { state: { orderId: result.orderId } });
@@ -119,22 +121,7 @@ export function CartCheckout() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex items-center justify-between text-sm">
-            <span>{t('cart.subtotal')}</span>
-            {subtotal === null ? (
-              <PendingChip label="cart subtotal" />
-            ) : (
-              <span className="text-foreground">{formatMoney(subtotal, rooteContent.currency, cl).formatted}</span>
-            )}
-          </div>
-          <div className="mt-1 flex items-center justify-between text-sm text-muted-foreground">
-            <span>{t('bag.shipping')}</span>
-            <PendingChip label="shipping" />
-          </div>
-          <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-sm font-medium">
-            <span>{t('bag.total')}</span>
-            <PendingChip label="cart total" />
-          </div>
+          <CartTotalRows totals={totals} />
         </aside>
       </div>
     </Section>

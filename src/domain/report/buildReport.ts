@@ -267,6 +267,7 @@ export function buildReport(input: {
       days: d.days,
       label: t(locale, 'report.duration.label', { days: d.days }),
       price: priceFor(d.days),
+      perDay: perDayFor(d.days),
       isRecommended: d.days === recommendedDuration.days,
     })),
   };
@@ -303,7 +304,7 @@ export function buildReport(input: {
     note: t(locale, 'marketing.howItWorks.timeline.shedding'),
     timeline: (['m1', 'm3', 'm6'] as const).map((k) => ({
       label: t(locale, `marketing.howItWorks.timeline.${k}`),
-      outcome: PENDING(`reported change at ${k}`),
+      outcome: t(locale, `report.expect.outcome.${k}`),
     })),
   };
 

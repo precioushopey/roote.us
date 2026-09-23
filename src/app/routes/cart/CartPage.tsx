@@ -4,6 +4,8 @@ import { useCart } from '@/store/cart';
 import { resolveCartLines } from '@/store/cartLines';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
+import { cartTotals } from '@/domain/cart/totals';
+import { CartTotalRows } from '@/app/components/cart/CartTotalRows';
 import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { PATHS } from '@/app/paths';
@@ -15,13 +17,7 @@ export function CartPage() {
   const cart = useCart();
 
   const lines = resolveCartLines(cart.lines, cl);
-  // Subtotal is real arithmetic on each line's own already-supplied price —
-  // not invented — but only when every line has one; a single unpriced line
-  // means the true subtotal isn't knowable yet, so it (and the total, which
-  // also depends on the still-unset shipping rate below) stay [PENDING].
-  const subtotal = lines.every((l) => l.price !== null)
-    ? lines.reduce((sum, l) => sum + l.price! * l.qty, 0)
-    : null;
+  const totals = cartTotals(lines, rooteContent.shipping);
 
   return (
     <Section tone="cream" className="pt-28 md:pt-32" gap={12}>
@@ -93,22 +89,7 @@ export function CartPage() {
 
           <aside className="h-fit rounded-xl border border-border bg-background p-6">
             <h2 className="font-display text-lg font-medium">{t('bag.summary')}</h2>
-            <div className="mt-4 flex items-center justify-between text-sm">
-              <span>{t('cart.subtotal')}</span>
-              {subtotal === null ? (
-                <PendingChip label="cart subtotal" />
-              ) : (
-                <span className="text-foreground">{formatMoney(subtotal, rooteContent.currency, cl).formatted}</span>
-              )}
-            </div>
-            <div className="mt-1 flex items-center justify-between text-sm text-muted-foreground">
-              <span>{t('bag.shipping')}</span>
-              <PendingChip label="shipping" />
-            </div>
-            <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-sm font-medium">
-              <span>{t('bag.total')}</span>
-              <PendingChip label="cart total" />
-            </div>
+            <CartTotalRows totals={totals} />
             <Button to={withLocale(PATHS.cartCheckout)} block className="mt-5">
               {t('bag.checkout')}
             </Button>

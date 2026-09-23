@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
-import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
+import { Link } from 'react-router';
+import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { useAuth } from '@/store/auth';
-import { Button, Card, Badge, LegalNotice, Prose, LanguagePicker, PasswordField } from '@/app/components/roote';
+import { Button, Card, Badge, LegalNotice, Prose, PasswordField } from '@/app/components/roote';
 import { track } from '@/analytics/analytics';
 import { AccountPageHeader } from './AccountPageHeader';
 import { CARE_MESSAGES, isoToday, programDay } from './programProgress';
@@ -23,9 +23,7 @@ const PW_ERROR_KEYS: Record<string, string> = {
  *  program-dependent section on this page. */
 export function AppProfile() {
   const t = useT();
-  const { locale, setLocale } = useLocale();
   const withLocale = useLocalizedPath();
-  const navigate = useNavigate();
   const auth = useAuth();
   const program = useSession().program;
 
@@ -52,11 +50,6 @@ export function AppProfile() {
     setPwOk(true);
   }
 
-  function logout() {
-    auth.signOut();
-    navigate(withLocale('/'));
-  }
-
   const memberSince = auth.since ? new Date(auth.since).toLocaleDateString() : '-';
   // Care messages unlock by program day — only meaningful once a program
   // exists, so the section below this is gated on `program` entirely.
@@ -78,7 +71,9 @@ export function AppProfile() {
           {program && (
             <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
               <h2 className="font-display text-lg font-medium">{t('app.subscription.title')}</h2>
-              <Card>
+              {/* padded={false}: this card is borderless and shares the section's own
+                  background, so its default p-6 only stacked on the section's p-5. */}
+              <Card padded={false}>
                 <div className="flex items-center justify-between gap-4">
                   <p className="font-body text-sm text-foreground">{t('app.subscription.status')}</p>
                   <Badge tone={subActive ? 'success' : 'neutral'}>
@@ -268,26 +263,6 @@ export function AppProfile() {
                 {t('app.profile.password.submit')}
               </button>
             </form>
-          </section>
-
-          {/* Duplicates the sidebar's logout/language controls (AppShell.tsx) —
-               deliberately, so they're also reachable from within the page
-               content itself, not only tucked into the desktop sidebar. */}
-          <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
-            <h2 className="font-display text-lg font-medium">{t('app.profile.preferences.title')}</h2>
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-2">
-                <span className="font-body text-sm text-muted-foreground">{t('app.profile.chooseLanguage')}</span>
-                <LanguagePicker compact locale={locale} onChange={setLocale} menuPosition="top" />
-              </div>
-              <button
-                type="button"
-                onClick={logout}
-                className="inline-flex w-fit items-center justify-center rounded-full border border-border px-6 py-3 text-sm text-foreground transition-colors hover:border-accent"
-              >
-                {t('app.profile.logout')}
-              </button>
-            </div>
           </section>
         </div>
       </div>

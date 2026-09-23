@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { LOCALES, type LocaleCode } from '@/i18n/locales';
 import { useAuth } from '@/store/auth';
+import { useSession } from '@/store/sessionStore';
 import { readOrders, type OrderRecord } from '@/store/orders';
 import { getProduct, PRODUCTS, type ProductBadge } from '@/content/products';
 import { pickLocalized } from '@/content/localized';
@@ -12,6 +13,7 @@ import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { Badge, Button, Modal, Prose, ProductCard } from '@/app/components/roote';
 import { PATHS } from '@/app/paths';
 import { AccountPageHeader } from './AccountPageHeader';
+import { planKeysForProgram } from './programProgress';
 
 const BADGE_LABEL_KEY: Record<ProductBadge, string> = {
   vegan: 'marketing.pdp.badge.vegan',
@@ -74,6 +76,43 @@ function OrderItemCard({ item, locale }: { item: NonNullable<OrderRecord['items'
   );
 }
 
+function Detail({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-4">
+      <dt className="font-body text-sm text-muted-foreground">{label}</dt>
+      <dd className="text-end font-body text-sm text-foreground">{value}</dd>
+    </div>
+  );
+}
+
+/** The facts of one order: status, money, program length, payment card, and
+ *  destination. Each row appears only when the order has that fact, so orders
+ *  recorded before these fields existed simply show fewer rows. */
+function OrderDetails({ order, durationDays, locale }: { order: OrderRecord; durationDays?: number; locale: LocaleCode }) {
+  const t = useT();
+  const money = (n: number) => formatMoney(n, rooteContent.currency, locale).formatted;
+  return (
+    <dl className="grid gap-x-8 gap-y-2 rounded-lg bg-cream-100 p-4 sm:grid-cols-2">
+      <Detail label={t('app.profile.orders.status')} value={t('app.profile.orders.statusConfirmed')} />
+      {durationDays !== undefined && (
+        <Detail label={t('app.profile.orders.programLength')} value={t('report.duration.label', { days: durationDays })} />
+      )}
+      {order.subtotal !== undefined && <Detail label={t('cart.subtotal')} value={money(order.subtotal)} />}
+      {order.shipping !== undefined && (
+        <Detail
+          label={t('bag.shipping')}
+          value={order.shipping === 0 ? t('start.checkout.shippingFree') : money(order.shipping)}
+        />
+      )}
+      {order.total !== undefined && <Detail label={t('bag.total')} value={money(order.total)} />}
+      {order.cardLast4 && (
+        <Detail label={t('app.profile.orders.payment')} value={t('app.profile.orders.cardEnding', { last4: order.cardLast4 })} />
+      )}
+      {order.shipTo && <Detail label={t('app.profile.orders.shipTo')} value={order.shipTo} />}
+    </dl>
+  );
+}
+
 /**
  * Dedicated order-history page (2026-09-23) — was a short list embedded in
  * Profile; split back out to its own page taking over the sidebar/
@@ -96,6 +135,7 @@ export function AppOrders() {
   const withLocale = useLocalizedPath();
   const navigate = useNavigate();
   const auth = useAuth();
+  const session = useSession();
   const orders = useMemo(() => readOrders(), []);
   const [leaveWarningOpen, setLeaveWarningOpen] = useState(false);
 
@@ -107,6 +147,25 @@ export function AppOrders() {
     setLeaveWarningOpen(false);
     auth.signOut();
     navigate(withLocale(PATHS.products));
+  }
+
+  /* Program orders recorded before `items` / `durationDays` existed: when this
+     is the customer's active program, its purchased treatments and length are
+     still known, so fill them in rather than showing only a bare duration. */
+  function resolveOrder(o: OrderRecord): { items?: OrderRecord['items']; durationDays?: number } {
+    const program = session.program;
+    if (o.kind !== 'program' || !program || program.orderId !== o.id) {
+      return { items: o.items, durationDays: o.durationDays };
+    }
+    const keys = planKeysForProgram(session.diagnosis, program.analysisSnapshot);
+    const fromPlan = [...keys.core, ...keys.supporting].flatMap((slug) => {
+      const product = getProduct(slug);
+      return product ? [{ name: product.name, qty: 1, slug }] : [];
+    });
+    return {
+      items: o.items && o.items.length > 0 ? o.items : fromPlan,
+      durationDays: o.durationDays ?? program.durationDays,
+    };
   }
 
   return (
@@ -127,39 +186,47 @@ export function AppOrders() {
         <p className="text-sm text-muted-foreground">{t('app.profile.orders.empty')}</p>
       ) : (
         <div className="flex flex-col gap-8">
-          {orders.map((o) => (
-            <section
-              key={o.id}
-              className="flex flex-col gap-4 border-t border-border pt-8 first:border-t-0 first:pt-0"
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-3">
-                  <Badge tone="neutral">
-                    {t(o.kind === 'program' ? 'app.profile.orders.program' : 'app.profile.orders.bag')}
-                  </Badge>
-                  <p className="font-body text-sm font-medium tabular-nums" dir="ltr">
-                    {o.id}
-                  </p>
+          {orders.map((o) => {
+            const { items, durationDays } = resolveOrder(o);
+            return (
+              <section
+                key={o.id}
+                className="flex flex-col gap-4 border-t border-border pt-8 first:border-t-0 first:pt-0"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
+                    <Badge tone="neutral">
+                      {t(o.kind === 'program' ? 'app.profile.orders.program' : 'app.profile.orders.bag')}
+                    </Badge>
+                    <p className="font-body text-sm font-medium tabular-nums" dir="ltr">
+                      {o.id}
+                    </p>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    {new Date(o.at).toLocaleDateString(LOCALES[locale].bcp47)}
+                  </span>
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {new Date(o.at).toLocaleDateString(LOCALES[locale].bcp47)}
-                </span>
-              </div>
 
-              {/* Older orders (recorded before `items` existed) only ever have
-                  the generic "Qty N" label — fall back to that rather than
-                  showing nothing. */}
-              {o.items && o.items.length > 0 ? (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {o.items.map((item, i) => (
-                    <OrderItemCard key={i} item={item} locale={locale} />
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-muted-foreground">{o.label}</p>
-              )}
-            </section>
-          ))}
+                <OrderDetails order={o} durationDays={durationDays} locale={locale} />
+
+                {/* Older orders (recorded before `items` existed) only ever have
+                    the generic "Qty N" label — fall back to that rather than
+                    showing nothing. */}
+                {items && items.length > 0 ? (
+                  <div className="flex flex-col gap-4">
+                    <h3 className="font-body text-sm font-medium text-foreground">{t('app.profile.orders.includes')}</h3>
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {items.map((item, i) => (
+                        <OrderItemCard key={i} item={item} locale={locale} />
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">{o.label}</p>
+                )}
+              </section>
+            );
+          })}
         </div>
       )}
 

@@ -6,8 +6,11 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'quiet' | 'dange
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const VARIANT: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-primary-foreground hover:bg-deep-900',
-  secondary: 'border border-primary bg-transparent text-primary hover:border-cream-200',
+  primary: 'bg-primary text-primary-foreground hover:bg-ochre-900',
+  // Primary is yellow ochre with a cream label: it reads on both cream and the taupe hero band
+  // (bright gold washed into the taupe). Secondary labels use deep-900 and the border
+  // deep-600: bright gold is only ~2.3:1 on cream and ~1.5:1 on the taupe band, too faint for either.
+  secondary: 'border border-deep-600 bg-transparent text-deep-900 hover:border-cream-200',
   ghost: 'bg-transparent text-foreground hover:bg-cream-100',
   quiet: 'bg-cream-100 text-foreground hover:bg-cream-200',
   danger: 'bg-destructive text-destructive-foreground hover:opacity-90',

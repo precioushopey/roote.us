@@ -54,7 +54,7 @@ summary {
 }
 
 /* --- imagery -------------------------------------------------------------
-   Subtle unifying grade. No sepia (it fights the emerald). */
+   Subtle unifying grade. No sepia (it fights the gold). */
 .img-editorial {
   filter: saturate(0.96) contrast(1.03);
 }

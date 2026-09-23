@@ -103,9 +103,9 @@ export const GENDER_OPTIONS: Array<{
 export const PACKAGING_OPTIONS: Array<{ value: 'men' | 'women'; label: LocalizedText }> = [
   {
     value: 'men',
-    label: L6({ en: 'Dark teal', he: 'טורקיז כהה', ar: 'تركواز داكن', ru: 'Тёмно-бирюзовый', fr: 'Sarcelle foncé', es: 'Verde azulado oscuro' }),
+    label: L6({ en: 'Black', he: 'שחור', ar: 'أسود', ru: 'Чёрный', fr: 'Noir', es: 'Negro' }),
   },
-  { value: 'women', label: L6({ en: 'Cream', he: 'שמנת', ar: 'كريمي', ru: 'Кремовый', fr: 'Crème', es: 'Crema' }) },
+  { value: 'women', label: L6({ en: 'Amber', he: 'ענבר', ar: 'كهرماني', ru: 'Янтарный', fr: 'Ambre', es: 'Ámbar' }) },
 ];
 
 /* --- step 3: Hair Goal (client-confirmed 2026-09-07) ------------------

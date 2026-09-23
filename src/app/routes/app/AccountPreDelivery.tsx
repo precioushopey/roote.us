@@ -164,13 +164,13 @@ export function AccountPreDelivery({ program }: { program: Program }) {
                 {t('app.preDelivery.orderedOn', { date: program.orderedAt })}
               </p>
 
-              {/* Placeholder, not a real map — no carrier integration exists in this
-                   build to plot an actual shipment. Flagged the same way every other
-                   unsupplied value in this app is (PendingChip's [PENDING: …]
-                   bracket), rather than a live-looking map with invented positions. */}
+              {/* Placeholder, not a real map: no carrier integration exists in this
+                   build to plot an actual shipment, so the caption says tracking will
+                   appear later rather than showing a live-looking map with invented
+                   positions. */}
               <div className="flex h-40 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-accent bg-cream-100">
                 <MapIcon aria-hidden className="h-6 w-6 text-accent" strokeWidth={1.5} />
-                <PendingChip label={t('app.preDelivery.mapPending')} />
+                <p className="px-4 text-center font-body text-sm text-muted-foreground">{t('app.preDelivery.mapCaption')}</p>
               </div>
 
               {/* Honest 2-stage progress — no live carrier tracking exists in this
@@ -241,7 +241,7 @@ export function AccountPreDelivery({ program }: { program: Program }) {
                    exists in this build, so no real map/route to show. */}
               <div className="flex h-40 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-accent bg-cream-100">
                 <MapIcon aria-hidden className="h-6 w-6 text-accent" strokeWidth={1.5} />
-                <PendingChip label={t('app.preDelivery.mapPending')} />
+                <p className="px-4 text-center font-body text-sm text-muted-foreground">{t('app.preDelivery.mapCaption')}</p>
               </div>
 
               <div className="flex items-center gap-2 py-1">

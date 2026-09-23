@@ -1,12 +1,14 @@
 import { L6, type LocalizedText } from './localized';
+import { rooteContent } from './roote.config';
 
 /**
  * Program compositions and durations (brief §15). A program sells a *process*:
  * targeted treatments + support products + tracking, over a supply period.
  *
- * No prices, savings, or per-day figures are invented — `price` / `perDay` are
- * `null` and render as [PENDING] until the client supplies a price list
- * (OQ-BIZ-1). Density components stay eligibility-gated (brief §9).
+ * Money figures come from `rooteContent.programDurations` (currently
+ * TEMP-PLACEHOLDER stand-ins, see roote.config.ts) so there is one price
+ * source; a `null` there renders as [PENDING] (OQ-BIZ-1). Density components
+ * stay eligibility-gated (brief §9).
  */
 
 export type ProgramKind = 'density' | 'gray' | 'complete';
@@ -100,10 +102,15 @@ export type ProgramDuration = {
   /** Marketing emphasis (brief §11, §15). 120 / 270 are personalized-only. */
   tier: DurationTier;
   label: LocalizedText;
-  /** All money is [PENDING] until supplied. */
+  /** Money, from `rooteContent.programDurations`; null renders as [PENDING]. */
   price: number | null;
   perDay: number | null;
   savingsPct: number | null;
+};
+
+const pricingFor = (days: DurationDays) => {
+  const row = rooteContent.programDurations.find((d) => d.days === days);
+  return { price: row?.price ?? null, perDay: row?.perDayFrom ?? null, savingsPct: row?.savingsPct ?? null };
 };
 
 export const PROGRAM_DURATIONS: ProgramDuration[] = [
@@ -111,41 +118,31 @@ export const PROGRAM_DURATIONS: ProgramDuration[] = [
     days: 90,
     tier: 'start',
     label: L6({ en: '90 days', he: '90 יום', ar: '90 يوماً', ru: '90 дней', fr: '90 jours', es: '90 días' }),
-    price: null,
-    perDay: null,
-    savingsPct: null,
+    ...pricingFor(90),
   },
   {
     days: 120,
     tier: 'personalized',
     label: L6({ en: '120 days', he: '120 יום', ar: '120 يوماً', ru: '120 дней', fr: '120 jours', es: '120 días' }),
-    price: null,
-    perDay: null,
-    savingsPct: null,
+    ...pricingFor(120),
   },
   {
     days: 180,
     tier: 'recommended',
     label: L6({ en: '180 days', he: '180 יום', ar: '180 يوماً', ru: '180 дней', fr: '180 jours', es: '180 días' }),
-    price: null,
-    perDay: null,
-    savingsPct: null,
+    ...pricingFor(180),
   },
   {
     days: 270,
     tier: 'personalized',
     label: L6({ en: '270 days', he: '270 יום', ar: '270 يوماً', ru: '270 дней', fr: '270 jours', es: '270 días' }),
-    price: null,
-    perDay: null,
-    savingsPct: null,
+    ...pricingFor(270),
   },
   {
     days: 360,
     tier: 'best-value',
     label: L6({ en: '360 days', he: '360 יום', ar: '360 يوماً', ru: '360 дней', fr: '360 jours', es: '360 días' }),
-    price: null,
-    perDay: null,
-    savingsPct: null,
+    ...pricingFor(360),
   },
 ];
 

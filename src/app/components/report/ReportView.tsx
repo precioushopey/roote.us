@@ -409,7 +409,7 @@ export function ReportView({
             </div>
 
             <div className="mt-4 rounded-lg border border-border bg-cream-100 p-4 text-sm text-muted-foreground">
-              {t('program.plan.priceNote')} <PendingChip label="program pricing" />
+              {t('program.plan.priceNote')}
             </div>
             <Button to={withLocale(model.cta.href)} block caps className="mt-4">
               {model.cta.label}

@@ -284,8 +284,8 @@ export const en = {
   'program.checkout.recommendedFor': 'Recommended for',
   'program.checkout.includes': 'Includes',
   'program.checkout.packaging': 'Packaging',
-  'program.checkout.packMen': 'Dark teal',
-  'program.checkout.packWomen': 'Cream',
+  'program.checkout.packMen': 'Black',
+  'program.checkout.packWomen': 'Amber',
   'program.checkout.review': 'Treatment review',
   'program.checkout.reviewRequired': 'Required',
   'program.checkout.reviewNotRequired': 'Not required',
@@ -427,7 +427,7 @@ export const en = {
   'marketing.home.hero.support':
     'Take a short quiz and a photo of your scalp for a free AI hair analysis and a personalized treatment plan.',
   'marketing.home.hero.mediaAlt':
-    'ROOTÉ Level 6, 10, and 15 bottles in deep-emerald and cream packaging, standing on stone pedestals',
+    'ROOTÉ Level 6, 10, and 15 bottles in black and amber packaging, standing on stone pedestals',
 
   'marketing.home.strip.item1': 'AI-assisted hair analysis',
   'marketing.home.strip.item2': 'Personalized program',
@@ -464,8 +464,8 @@ export const en = {
     'Your program can combine targeted treatments and support products according to your assessment and eligibility.',
   'marketing.home.system.men': "Men's system",
   'marketing.home.system.women': "Women's system",
-  'marketing.home.system.menMediaAlt': "Men's system in dark-teal packaging",
-  'marketing.home.system.womenMediaAlt': "Women's system in cream packaging",
+  'marketing.home.system.menMediaAlt': "Men's system in black packaging",
+  'marketing.home.system.womenMediaAlt': "Women's system in amber packaging",
   'marketing.home.system.cta': 'Shop products',
   'marketing.home.how.cta': 'See the FAQ',
 
@@ -1065,7 +1065,6 @@ export const en = {
   'app.preDelivery.supportBody': 'Reach out any time.',
   'app.preDelivery.confirmCta': 'Package arrived? Confirm to start your Day 1',
   'app.preDelivery.viewShipping': 'View shipping details',
-  'app.preDelivery.mapPending': 'live shipping map',
   'app.preDelivery.orderedStage': 'Ordered',
   'app.preDelivery.preparingStage': 'Preparing & shipping',
   'app.preDelivery.whileYouWaitTitle': 'While you wait',
@@ -1388,6 +1387,17 @@ export const en = {
   'accountRescan.disclosure':
     'This rescan is powered by our partner, HairHealth.ai. What you share here is sent to them and added to our contact list, matched to your account by your email address.',
   'accountRescan.notConfigured': "Rescans aren't connected yet; please check back soon.",
+  'report.expect.outcome.m1': 'Your routine is established. Temporary extra shedding can happen as the hair cycle resets.',
+  'report.expect.outcome.m3': 'Shedding usually settles and early changes in texture and coverage may start to show.',
+  'report.expect.outcome.m6': 'Visible changes in density and coverage are commonly reported with continued use.',
+  'app.preDelivery.mapCaption': 'Shipment tracking will appear here once your order is on its way.',
+  'app.profile.orders.status': 'Status',
+  'app.profile.orders.statusConfirmed': 'Order confirmed',
+  'app.profile.orders.payment': 'Payment',
+  'app.profile.orders.cardEnding': 'Card ending {last4}',
+  'app.profile.orders.shipTo': 'Ship to',
+  'app.profile.orders.programLength': 'Program length',
+  'app.profile.orders.includes': 'What is included',
 } as const;
 
 export type MessageKey = keyof typeof en;
