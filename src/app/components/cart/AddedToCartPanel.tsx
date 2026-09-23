@@ -3,18 +3,18 @@ import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Button, Drawer } from '@/app/components/roote';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { getProduct } from '@/content/products';
-import { findBundle } from '@/content/bundles';
+import { findBundle, bundleDisplayName } from '@/content/bundles';
 import { pickLocalized } from '@/content/localized';
 import { rooteContent } from '@/content/roote.config';
 import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
+import { BUNDLE_PHOTOS } from '@/content/bundlePhotos';
 import { formatMoney } from '@/domain/report/money';
 import { PATHS } from '@/app/paths';
 
 type Added = ({ kind: 'sku'; slug: string } | { kind: 'bundle'; bundleId: string }) & { qty: number };
 
-/** Resolves either kind of added line to the same display shape — a bundle
- *  has no `TREATMENT_PHOTOS` entry (no bundle photography exists yet, see
- *  Products.tsx's `BUNDLE_PHOTOS`), so `photo` is simply absent for one. */
+/** Resolves either kind of added line to the same display shape: a SKU
+ *  looks up `TREATMENT_PHOTOS`, a bundle looks up `BUNDLE_PHOTOS`. */
 function resolveAdded(added: Added, locale: ReturnType<typeof useLocale>['locale']) {
   if (added.kind === 'sku') {
     const product = getProduct(added.slug);
@@ -23,7 +23,7 @@ function resolveAdded(added: Added, locale: ReturnType<typeof useLocale>['locale
   }
   const bundle = findBundle(added.bundleId);
   if (!bundle) return null;
-  return { name: pickLocalized(bundle.name, locale), subtitle: pickLocalized(bundle.summary, locale), price: bundle.price, photo: undefined };
+  return { name: bundleDisplayName(bundle, locale), subtitle: pickLocalized(bundle.summary, locale), price: bundle.price, photo: BUNDLE_PHOTOS[bundle.id] };
 }
 
 /**

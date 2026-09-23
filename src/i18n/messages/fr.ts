@@ -461,6 +461,11 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'bag.success.analysisTitle': "Vous n’avez pas encore fait votre analyse capillaire gratuite ?",
   'bag.success.analysisBody': "Faites-la maintenant : vos résultats et l’orientation de votre traitement apparaîtront dans votre compte.",
 
+  'getStarted.title': 'Configurez votre compte de suivi',
+  'getStarted.body': "Vous n'avez pas encore de compte de suivi. Faites le diagnostic capillaire gratuit pour obtenir un programme personnalisé et commencer à suivre vos progrès.",
+  'getStarted.haveAccount': 'Vous avez déjà un compte ?',
+  'getStarted.logIn': 'Se connecter',
+
   'cart.open': 'Ouvrir le panier',
   'cart.close': 'Fermer',
   'cart.title': 'Votre panier',
@@ -1200,6 +1205,9 @@ export const fr: Partial<Record<MessageKey, string>> = {
     "Complete System, Gray Support et Hair Growth : chaque pack existe en emballage homme et femme. Les packs à base de Density sont ajoutés à votre programme après un examen de traitement.",
   'marketing.shop.bundles.cta': 'Ajouter au panier',
   'marketing.shop.bundles.save': 'Économisez {amount}',
+  'marketing.shop.bundles.carousel.previous': 'Photo précédente',
+  'marketing.shop.bundles.carousel.next': 'Photo suivante',
+  'marketing.shop.bundles.carousel.goToImage': 'Afficher la photo {index}',
   'marketing.shop.finalCta.heading': 'Vous ne savez pas ce dont vous avez besoin ?',
   'marketing.shop.finalCta.body': 'Commencez par une analyse capillaire gratuite et obtenez un programme construit autour de vos résultats.',
 

@@ -9,6 +9,7 @@ import { CONCERN_OPTIONS } from '@/content/assessment';
 import { pickLocalized } from '@/content/localized';
 import { Wordmark } from '@/app/components/brand/Wordmark';
 import { Button, LanguagePicker } from '@/app/components/roote';
+import { useAuth } from '@/store/auth';
 import { PATHS } from '@/app/paths';
 
 type Col = { title: MessageKey; links: Array<[to: string, label: MessageKey]> };
@@ -27,12 +28,16 @@ const COLUMNS: Col[] = [
 ];
 
 /* 'marketing.nav.faq' now lives in the Company column above (replacing
-   About, 2026-09-23) — left out here so FAQ doesn't appear twice. */
-const ACCOUNT_LINKS: Col['links'] = [
-  [PATHS.support, 'marketing.nav.support'],
-  [PATHS.account, 'marketing.nav.account'],
-  [PATHS.cart, 'marketing.nav.bag'],
-];
+   About, 2026-09-23), left out here so FAQ doesn't appear twice. The
+   Account link's `to` is filled in per-render below (auth.email decides
+   /account vs. /get-started, same guest nudge as Header.tsx). */
+function accountLinks(accountTo: string): Col['links'] {
+  return [
+    [PATHS.support, 'marketing.nav.support'],
+    [accountTo, 'marketing.nav.account'],
+    [PATHS.cart, 'marketing.nav.bag'],
+  ];
+}
 
 /** 'thinning' / 'gray' resolve via CONCERN_OPTIONS (localized). */
 const SOLUTION_LINKS: Array<[to: string, kind: string]> = [
@@ -69,6 +74,7 @@ export function Footer() {
   const t = useT();
   const withLocale = useLocalizedPath();
   const { locale, setLocale } = useLocale();
+  const auth = useAuth();
   const year = new Date().getFullYear();
   const { company, brand } = rooteContent;
   const socialLinks = Object.entries(brand.social).filter(
@@ -80,7 +86,7 @@ export function Footer() {
       to,
       label: pickLocalized(CONCERN_OPTIONS.find((c) => c.value === kind)!.title, locale),
     })),
-    ...ACCOUNT_LINKS.map(([to, label]) => ({ to, label: t(label) })),
+    ...accountLinks(auth.email ? PATHS.account : PATHS.getStarted).map(([to, label]) => ({ to, label: t(label) })),
   ];
 
   const legalLinks = LEGAL_PAGES.map((p) => ({ key: p.slug, to: PATHS.legal(p.slug), label: pickLocalized(p.title, locale) }));

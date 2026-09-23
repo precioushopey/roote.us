@@ -601,6 +601,9 @@ export const he: Record<MessageKey, string> = {
   'marketing.shop.bundles.body': 'המערכת המלאה, הטיפול בשיער אפור, וצמיחת שיער: כל חבילה באריזה לגברים ולנשים. חבילות המבוססות על טיפול הצפיפות מתווספות לתוכנית שלך לאחר בדיקת טיפול.',
   'marketing.shop.bundles.cta': 'הוספה לסל',
   'marketing.shop.bundles.save': 'חיסכון של {amount}',
+  'marketing.shop.bundles.carousel.previous': 'תמונה קודמת',
+  'marketing.shop.bundles.carousel.next': 'תמונה הבאה',
+  'marketing.shop.bundles.carousel.goToImage': 'הצג תמונה {index}',
   'marketing.shop.finalCta.heading': 'לא בטוחים במה אתם צריכים?',
   'marketing.shop.finalCta.body': 'התחילו באבחון שיער חינמי וקבלו תוכנית שנבנתה סביב התוצאות שלכם.',
 
@@ -758,6 +761,11 @@ export const he: Record<MessageKey, string> = {
   'marketing.products.item.showerHose.desc': 'ראש מקלחת נייד וצינור עם אותו סינון פנימי.',
   'marketing.products.item.mountedCartridge.desc': 'מחסנית סינון חלופית לראש המקלחת הקבוע.',
   'marketing.products.item.handheldCartridge.desc': 'מחסנית סינון חלופית לראש המקלחת הנייד.',
+
+  'getStarted.title': 'הגדירו את חשבון המעקב שלכם',
+  'getStarted.body': 'עדיין אין לכם חשבון מעקב. בצעו את אבחון השיער החינמי כדי לקבל תוכנית מותאמת אישית ולהתחיל לעקוב אחר ההתקדמות שלכם.',
+  'getStarted.haveAccount': 'כבר יש לכם חשבון?',
+  'getStarted.logIn': 'התחברות',
 
   'cart.open': 'פתיחת הסל',
   'cart.close': 'סגירה',

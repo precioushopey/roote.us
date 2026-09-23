@@ -7,7 +7,6 @@ import {
   Button,
   ConcernCard,
   MediaCaption,
-  MediaPlaceholder,
   Timeline,
   BeforeAfterSlider,
   Hero,
@@ -20,6 +19,7 @@ import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
 import { getProduct } from '@/content/products';
 import { getSolution } from '@/content/solutions';
+import { BUNDLE_PHOTOS } from '@/content/bundlePhotos';
 import { brandLines, systemSteps } from '@/content/brand';
 import { CONCERN_OPTIONS } from '@/content/assessment';
 import type { MessageKey } from '@/i18n/messages';
@@ -251,22 +251,20 @@ function SystemAndProgress() {
         />
         <div className="grid gap-8 lg:grid-cols-2">
           <div data-pack="men" className="flex flex-col gap-8">
-            <MediaPlaceholder
+            <img
+              src={BUNDLE_PHOTOS['complete-system-men-15']}
               alt={t('marketing.home.system.menMediaAlt')}
-              label={`${t('marketing.home.system.menMediaAlt')}: product photography`}
-              ratio="4 / 3"
-              tone="cream"
-              className="w-full shadow-product"
+              loading="lazy"
+              className="aspect-[4/3] w-full rounded-sm object-contain shadow-product"
             />
             <p className="u-caps text-center font-body text-sm font-medium text-foreground">{t('marketing.home.system.men')}</p>
           </div>
           <div data-pack="women" className="flex flex-col gap-8">
-            <MediaPlaceholder
+            <img
+              src={BUNDLE_PHOTOS['complete-system-women-15']}
               alt={t('marketing.home.system.womenMediaAlt')}
-              label={`${t('marketing.home.system.womenMediaAlt')}: product photography`}
-              ratio="4 / 3"
-              tone="card"
-              className="w-full shadow-product"
+              loading="lazy"
+              className="aspect-[4/3] w-full rounded-sm object-contain shadow-product"
             />
             <p className="u-caps text-center font-body text-sm font-medium text-foreground">{t('marketing.home.system.women')}</p>
           </div>
@@ -399,12 +397,11 @@ function GraySystem() {
           <MediaCaption
             key={pack.id}
             media={
-              <MediaPlaceholder
+              <img
+                src={BUNDLE_PHOTOS[`gray-support-bundle-${pack.id}`]}
                 alt={t('marketing.home.gray.mediaAlt')}
-                label={`${t('marketing.home.gray.mediaAlt')}: product photography`}
-                ratio="3 / 4"
-                tone={pack.id === 'men' ? 'teal' : 'card'}
-                className="w-full"
+                loading="lazy"
+                className="aspect-[3/4] w-full rounded-sm object-contain"
               />
             }
             title={pack.label}

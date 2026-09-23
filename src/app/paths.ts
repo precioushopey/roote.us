@@ -22,6 +22,7 @@ export const PATHS = {
   cartSuccess: '/cart/success',
 
   login: '/login',
+  getStarted: '/get-started',
   hairScan: '/hair-scan',
   accountHairHealthRescan: '/account/hairhealth-rescan',
 

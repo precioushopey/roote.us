@@ -10,6 +10,7 @@ import { cn } from '@/app/components/ui/utils';
 import { PATHS } from '@/app/paths';
 import type { MessageKey } from '@/i18n/messages';
 import { useCart } from '@/store/cart';
+import { useAuth } from '@/store/auth';
 import { resolveCartLines } from '@/store/cartLines';
 
 // 2026-09-08 nav sketch: Magazine | Products | AI Section. The former
@@ -27,9 +28,14 @@ export function Header() {
   const withLocale = useLocalizedPath();
   const condensed = useScrollCondense();
   const cart = useCart();
+  const auth = useAuth();
   const { locale, setLocale } = useLocale();
   const resolvedCartCount = resolveCartLines(cart.lines, locale).reduce((n, l) => n + l.qty, 0);
   const [menuOpen, setMenuOpen] = useState(false);
+  // A guest with no account can't reach the authenticated /account app (it
+  // redirects away, see AppShell.tsx), so send them to the guest-facing
+  // nudge page instead of a link that silently bounces them.
+  const accountLink = auth.email ? PATHS.account : PATHS.getStarted;
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
@@ -88,7 +94,7 @@ export function Header() {
                 className="text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
               />
               <Link
-                to={withLocale(PATHS.account)}
+                to={withLocale(accountLink)}
                 aria-label={t('marketing.nav.account')}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
               >
@@ -117,7 +123,7 @@ export function Header() {
 
       <Drawer open={menuOpen} onClose={() => setMenuOpen(false)} title={t('marketing.nav.menuLabel')} side="right">
         <nav className="flex flex-col gap-0">
-          {[...NAV, ['marketing.nav.account', PATHS.account] as [MessageKey, string]].map(([key, to]) => (
+          {[...NAV, ['marketing.nav.account', accountLink] as [MessageKey, string]].map(([key, to]) => (
             <Link
               key={to}
               to={withLocale(to)}

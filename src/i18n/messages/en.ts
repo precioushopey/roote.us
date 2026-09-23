@@ -600,6 +600,9 @@ export const en = {
   'marketing.shop.bundles.body': 'Complete System, Gray Support, and Hair Growth: each bundle in men’s and women’s packaging. Density-based bundles are added to your program after a treatment review.',
   'marketing.shop.bundles.cta': 'Add to cart',
   'marketing.shop.bundles.save': 'Save {amount}',
+  'marketing.shop.bundles.carousel.previous': 'Previous photo',
+  'marketing.shop.bundles.carousel.next': 'Next photo',
+  'marketing.shop.bundles.carousel.goToImage': 'Show photo {index}',
   'marketing.shop.finalCta.heading': 'Not sure what you need?',
   'marketing.shop.finalCta.body': 'Start with a free hair analysis and get a program built around your results.',
 
@@ -759,6 +762,11 @@ export const en = {
   'marketing.products.item.showerHose.desc': 'Handheld head and hose with the same in-line filtration.',
   'marketing.products.item.mountedCartridge.desc': 'Replacement filter cartridge for the wall-mount head.',
   'marketing.products.item.handheldCartridge.desc': 'Replacement filter cartridge for the handheld head.',
+
+  'getStarted.title': 'Set up your tracking account',
+  'getStarted.body': "You don't have a tracking account yet. Take the free hair analysis to get a personalized plan and start tracking your progress.",
+  'getStarted.haveAccount': 'Already have an account?',
+  'getStarted.logIn': 'Log in',
 
   'cart.open': 'Open cart',
   'cart.close': 'Close',

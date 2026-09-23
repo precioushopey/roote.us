@@ -459,6 +459,11 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'start.success.step4.title': 'تابع تقدّمك',
   'start.success.step4.body': 'أضف صوراً مع مرور الوقت لترى كيف تتغيّر الأمور.',
 
+  'getStarted.title': 'أنشئ حساب المتابعة الخاص بك',
+  'getStarted.body': 'ليس لديك حساب متابعة بعد. أجرِ تحليل الشعر المجاني للحصول على خطة مخصصة والبدء بمتابعة تقدمك.',
+  'getStarted.haveAccount': 'هل لديك حساب بالفعل؟',
+  'getStarted.logIn': 'تسجيل الدخول',
+
   'cart.open': 'فتح السلة',
   'cart.close': 'إغلاق',
   'cart.title': 'سلتك',
@@ -1218,6 +1223,9 @@ export const ar: Partial<Record<MessageKey, string>> = {
     'النظام الكامل، وGray Support، ونمو الشعر: كل باقة بعبوة للرجال وأخرى للنساء. تُضاف الباقات القائمة على Density إلى برنامجك بعد مراجعة علاجية.',
   'marketing.shop.bundles.cta': 'أضف إلى السلة',
   'marketing.shop.bundles.save': 'وفّر {amount}',
+  'marketing.shop.bundles.carousel.previous': 'الصورة السابقة',
+  'marketing.shop.bundles.carousel.next': 'الصورة التالية',
+  'marketing.shop.bundles.carousel.goToImage': 'عرض الصورة {index}',
   'marketing.shop.finalCta.heading': 'لست متأكداً مما تحتاجه؟',
   'marketing.shop.finalCta.body': 'ابدأ بتحليل شعر مجاني واحصل على برنامج مبني حول نتائجك.',
 

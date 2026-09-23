@@ -438,6 +438,11 @@ export const ru: Partial<Record<MessageKey, string>> = {
   'start.success.step4.title': 'Отслеживайте прогресс',
   'start.success.step4.body': 'Добавляйте фото по мере продвижения, чтобы видеть изменения со временем.',
 
+  'getStarted.title': 'Настройте аккаунт для отслеживания',
+  'getStarted.body': 'У вас пока нет аккаунта для отслеживания. Пройдите бесплатный анализ волос, чтобы получить персональный план и начать отслеживать прогресс.',
+  'getStarted.haveAccount': 'Уже есть аккаунт?',
+  'getStarted.logIn': 'Войти',
+
   'cart.open': 'Открыть корзину',
   'cart.close': 'Закрыть',
   'cart.title': 'Ваша корзина',
@@ -1176,6 +1181,9 @@ export const ru: Partial<Record<MessageKey, string>> = {
   'marketing.shop.bundles.body': 'Полная система, уход против седины и рост волос: каждый комплект в мужской и женской упаковке. Комплекты для густоты волос добавляются в вашу программу после проверки лечения.',
   'marketing.shop.bundles.cta': 'Добавить в корзину',
   'marketing.shop.bundles.save': 'Экономия {amount}',
+  'marketing.shop.bundles.carousel.previous': 'Предыдущее фото',
+  'marketing.shop.bundles.carousel.next': 'Следующее фото',
+  'marketing.shop.bundles.carousel.goToImage': 'Показать фото {index}',
   'marketing.shop.finalCta.heading': 'Не уверены, что вам нужно?',
   'marketing.shop.finalCta.body': 'Начните с бесплатной диагностики волос и получите программу, построенную вокруг ваших результатов.',
 

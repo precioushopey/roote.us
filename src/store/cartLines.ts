@@ -1,6 +1,6 @@
 import { lineId, type CartLine } from './cart';
 import { findProduct } from '@/content/catalog';
-import { findBundle } from '@/content/bundles';
+import { findBundle, bundleDisplayName } from '@/content/bundles';
 import { pickLocalized } from '@/content/localized';
 import type { LocaleCode } from '@/i18n/locales';
 
@@ -39,7 +39,7 @@ export function resolveCartLines(lines: CartLine[], locale: LocaleCode): Resolve
       resolved.push({
         id: lineId(line),
         qty: line.qty,
-        name: pickLocalized(bundle.name, locale),
+        name: bundleDisplayName(bundle, locale),
         subtitle: pickLocalized(bundle.summary, locale),
         price: bundle.price,
       });

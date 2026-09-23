@@ -99,7 +99,7 @@ and mounts `LocaleProvider` around the routed page tree; a bare or invalid path 
 
 | Shell | Routes | Chrome |
 |---|---|---|
-| `MarketingShell` | `/`, `/magazine`, `/hair-scan`, `/solutions` (+ `/thinning`, `/gray-hair`), `/faq`, `/support`, `/login`, `/signup`, `/products` (+ `/:slug`), `/terms`, `/terms-of-sale`, `/privacy`, legal registry (`/shipping`, `/returns`, `/cancellation`, `/subscription-terms`, `/medical-disclaimer`, `/accessibility`, `/cookies`), `/bag`, `/bag/checkout`, `/bag/success` | Header + Footer + skip-link |
+| `MarketingShell` | `/`, `/magazine`, `/hair-scan`, `/solutions` (+ `/thinning`, `/gray-hair`), `/faq`, `/support`, `/login`, `/signup`, `/get-started`, `/products` (+ `/:slug`), `/terms`, `/terms-of-sale`, `/privacy`, legal registry (`/shipping`, `/returns`, `/cancellation`, `/subscription-terms`, `/medical-disclaimer`, `/accessibility`, `/cookies`), `/cart`, `/cart/checkout`, `/cart/success` | Header + Footer + skip-link |
 | `AnalysisShell` | `/analysis` (index) + `gender`/`goal`/`photos`/`scanning`/`questions`/`results` | wordmark (→ `/`) + progress rail + `LanguagePicker` |
 | `FunnelShell` | `/account/hairhealth-rescan`; `/program` + `plan`/`checkout`/`success` | wordmark (→ `/`) + `LanguagePicker` only |
 | *(own inline)* | `/report/:reportId` | wordmark header + disclaimer footer |
@@ -110,6 +110,11 @@ Old URLs still work: `/diagnosis`, `/start`, `/app` prefixes redirect to `/analy
 `/account`; older `/account` sub-paths (`today`, `photos`, `scans`, `orders`, `subscription`, …)
 redirect to their consolidated homes. `src/app/paths.ts` (`PATHS`) is the single source of truth for
 internal links — always build hrefs from it, never hand-write a path string.
+
+`/get-started` is a guest-only landing page, not part of the authenticated `/account` app: the
+header's and footer's account icon/link point there instead of `/account` whenever `auth.email` is
+empty, since a signed-out visitor has no tracking account to view and `AppShell`'s own guard would
+otherwise just bounce them off `/account` with no explanation.
 
 ## Internationalization (`src/i18n` + `src/content`)
 
@@ -195,8 +200,8 @@ src/
     paths.ts                   PATHS — single source of truth for every internal link
     routes/
       marketing/                Home, Faq, Support, Terms, Privacy, Magazine, HairScan,
-                                 Products, ProductDetail, SolutionPage, marketingRoutes
-      bag/                      BagPage, BagCheckout, BagSuccess
+                                 Products, ProductDetail, SolutionPage, GetStarted, marketingRoutes
+      cart/                     CartPage, CartCheckout, CartSuccess
       auth/                     LoginPage, SignUpPage
       analysis/                 AnalysisShell, guards, Steps1to3, PhotosScreen, ScanningScreen,
                                  QuestionsScreen, ResultsScreen, analysisRoutes
@@ -218,7 +223,7 @@ src/
       tracking/                GuidedPhotoCapture
       media/                   MediaPlaceholder (labelled, no-fetch image slot)
       report/                  ReportView
-      checkout/                CheckoutFields (shared program + bag checkout form)
+      checkout/                CheckoutFields (shared program + cart checkout form)
       funnel/                  funnelStyles
       ui/                      shadcn/ui primitives — mostly unused template baggage; only cn() (utils.ts)
                                is actually imported project-wide
@@ -229,7 +234,11 @@ src/
     catalog.ts                 à-la-carte catalogue view, derived from products.ts (one product
                                source of truth) — do not hand-maintain a second SKU list
     products.ts                the 6 launch SKUs (+ 1 archived concept)
-    bundles.ts, programs.ts, solutions.ts, assessment.ts, faqs.ts, legal.ts, magazine.ts, brand.ts
+    bundles.ts                 shop bundles; two of the three lines (Complete System, Hair Growth)
+                               carry three real density-level variants each (6/10/15, own SKU/price
+                               apiece via ShopBundle.level; see bundleDisplayName())
+    bundlePhotos.ts             bundle product photography, keyed by ShopBundle.id
+    programs.ts, solutions.ts, assessment.ts, faqs.ts, legal.ts, magazine.ts, brand.ts
     localized.ts                LocalizedText helpers (L6() etc.)
     pending.ts                  PENDING() / isPending() / collectPending()
   domain/

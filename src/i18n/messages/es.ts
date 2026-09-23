@@ -591,6 +591,9 @@ export const es: Partial<Record<MessageKey, string>> = {
   'marketing.shop.bundles.body': 'Sistema completo, anticanas y crecimiento capilar: cada pack en envase para hombre y para mujer. Los packs de densidad se añaden a su programa tras una revisión de tratamiento.',
   'marketing.shop.bundles.cta': 'Añadir al carrito',
   'marketing.shop.bundles.save': 'Ahorre {amount}',
+  'marketing.shop.bundles.carousel.previous': 'Foto anterior',
+  'marketing.shop.bundles.carousel.next': 'Foto siguiente',
+  'marketing.shop.bundles.carousel.goToImage': 'Mostrar foto {index}',
   'marketing.shop.finalCta.heading': '¿No está seguro de lo que necesita?',
   'marketing.shop.finalCta.body': 'Empiece con un análisis capilar gratuito y obtenga un programa construido en torno a sus resultados.',
 
@@ -749,6 +752,11 @@ export const es: Partial<Record<MessageKey, string>> = {
   'marketing.products.item.handheldCartridge.desc': 'Cartucho de filtro de repuesto para la alcachofa de mano.',
 
   // --- cart.* ---
+  'getStarted.title': 'Configura tu cuenta de seguimiento',
+  'getStarted.body': 'Aún no tienes una cuenta de seguimiento. Haz el análisis capilar gratuito para obtener un plan personalizado y empezar a seguir tu progreso.',
+  'getStarted.haveAccount': '¿Ya tienes una cuenta?',
+  'getStarted.logIn': 'Iniciar sesión',
+
   'cart.open': 'Abrir el carrito',
   'cart.close': 'Cerrar',
   'cart.title': 'Su carrito',

@@ -13,6 +13,7 @@ import { Privacy } from './Privacy';
 import { SolutionPage, SolutionsIndex } from './SolutionPage';
 import { LoginPage } from '@/app/routes/auth/LoginPage';
 import { SignUpPage } from '@/app/routes/auth/SignUpPage';
+import { GetStarted } from './GetStarted';
 import { LegalPageView } from '@/app/routes/legal/LegalPageView';
 import { LocalizedNavigate } from '@/app/LocaleGate';
 import { CartPage } from '@/app/routes/cart/CartPage';
@@ -50,6 +51,7 @@ export const marketingRoutes: RouteObject = {
     { path: 'support', element: <Support /> },
     { path: 'login', element: <LoginPage /> },
     { path: 'signup', element: <SignUpPage /> },
+    { path: 'get-started', element: <GetStarted /> },
 
     { path: 'products', element: <Products /> },
     { path: 'products/:slug', element: <ProductDetail /> },
