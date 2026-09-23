@@ -1,6 +1,6 @@
 import { useId, useState, type ReactNode } from 'react';
 import { cn } from '@/app/components/ui/utils';
-import { useLocale } from '@/i18n/LocaleProvider';
+import { useLocale, useT } from '@/i18n/LocaleProvider';
 import { dirOf } from '@/i18n/locales';
 
 type Props = {
@@ -32,6 +32,7 @@ export function BeforeAfterSlider({
 }: Props) {
   const [pos, setPos] = useState(Math.min(100, Math.max(0, initial)));
   const id = useId();
+  const t = useT();
   // `clip-path: inset()` only takes physical offsets (top/right/bottom/left)
   // — it never flips for RTL on its own, unlike the handle below (which uses
   // the logical `insetInlineStart`). Flip which physical side gets clipped
@@ -83,7 +84,7 @@ export function BeforeAfterSlider({
         className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
       />
       <figcaption className="sr-only">
-        {beforeLabel} / {afterLabel} comparison
+        {t('common.beforeAfterComparison', { before: beforeLabel, after: afterLabel })}
       </figcaption>
     </figure>
   );

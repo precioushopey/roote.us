@@ -1,5 +1,6 @@
 import { useId, useState, type ReactNode } from 'react';
 import { cn } from '@/app/components/ui/utils';
+import { useT } from '@/i18n/LocaleProvider';
 
 /* --- LegalNotice ------------------------------------------------------
    Inline callout for medical / legal disclaimers. */
@@ -43,6 +44,7 @@ export function ConsentPanel({
   details: ReactNode;
   className?: string;
 }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const detailId = useId();
   return (
@@ -66,7 +68,7 @@ export function ConsentPanel({
         onClick={() => setOpen((v) => !v)}
         className="mt-3 font-body text-sm font-medium text-deep-800 underline underline-offset-4"
       >
-        {open ? 'Hide details' : 'What this means'}
+        {open ? t('common.hideDetails') : t('common.whatThisMeans')}
       </button>
       <div id={detailId} hidden={!open} className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
         {details}

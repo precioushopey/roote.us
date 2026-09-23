@@ -9,6 +9,9 @@ export type OrderRecord = {
   kind: Order['kind'];
   at: string; // ISO timestamp
   label: string; // human summary, e.g. "180-day program" or "3 items"
+  /** Buyer's checkout email — with `id`, the credential for order-number sign-in
+   *  (`auth.signInWithOrder`). Optional: orders recorded before 2026-09-23 lack it. */
+  email?: string;
   /** Resolved product/bundle names + quantities for a cart order, so order
    *  history can show what was actually bought, not just a total count.
    *  Optional: a program order's `label` already names the specific

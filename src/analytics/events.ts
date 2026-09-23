@@ -16,6 +16,8 @@ export const ANALYTICS_EVENTS = [
   'analysis_processing',
   'question_answered',
   'analysis_completed',
+  // results_viewed → email_result_submitted is the email-gate conversion rate
+  'results_viewed',
   'email_result_submitted',
   // report → program
   'report_viewed',

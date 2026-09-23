@@ -96,19 +96,19 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     skus: ['gray-support', 'gray-serum'],
     name: L6({
       en: 'Gray Support Bundle: Men',
-      he: 'חבילת Gray Support: לגברים',
-      ar: 'باقة Gray Support: للرجال',
-      ru: 'Комплект Gray Support: для мужчин',
-      fr: 'Pack Gray Support : pour hommes',
-      es: 'Pack Gray Support: para hombres',
+      he: 'חבילת הטיפול בשיער אפור: לגברים',
+      ar: 'باقة العناية بالشيب: للرجال',
+      ru: 'Комплект против седины: для мужчин',
+      fr: 'Pack anti-cheveux gris : pour hommes',
+      es: 'Pack anticanas: para hombres',
     }),
     summary: L6({
       en: 'Gray Support and Gray Serum, in men’s packaging.',
-      he: 'Gray Support ו-Gray Serum, באריזה לגברים.',
-      ar: 'Gray Support وGray Serum، بعبوة للرجال.',
-      ru: 'Gray Support и Gray Serum, в мужской упаковке.',
-      fr: 'Gray Support et Gray Serum, en emballage homme.',
-      es: 'Gray Support y Gray Serum, en envase para hombre.',
+      he: 'קפסולות וסרום לשיער אפור, באריזה לגברים.',
+      ar: 'كبسولات وسيروم العناية بالشيب، بعبوة للرجال.',
+      ru: 'Капсулы и сыворотка против седины, в мужской упаковке.',
+      fr: 'Gélules et sérum anti-cheveux gris, en emballage homme.',
+      es: 'Cápsulas y sérum anticanas, en envase para hombre.',
     }),
     // Matches Advanced Anti-Grey Hair Treatment Kit (Gray Escape + Root Revival Serum, 1 kit), heyhair.co.
     // compareAtPrice is the real sum of its own components: gray-support (38) + gray-serum (52) = 90.
@@ -121,19 +121,19 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     skus: ['gray-support', 'gray-serum'],
     name: L6({
       en: 'Gray Support Bundle: Women',
-      he: 'חבילת Gray Support: לנשים',
-      ar: 'باقة Gray Support: للنساء',
-      ru: 'Комплект Gray Support: для женщин',
-      fr: 'Pack Gray Support : pour femmes',
-      es: 'Pack Gray Support: para mujeres',
+      he: 'חבילת הטיפול בשיער אפור: לנשים',
+      ar: 'باقة العناية بالشيب: للنساء',
+      ru: 'Комплект против седины: для женщин',
+      fr: 'Pack anti-cheveux gris : pour femmes',
+      es: 'Pack anticanas: para mujeres',
     }),
     summary: L6({
       en: 'Gray Support and Gray Serum, in women’s packaging.',
-      he: 'Gray Support ו-Gray Serum, באריזה לנשים.',
-      ar: 'Gray Support وGray Serum، بعبوة للنساء.',
-      ru: 'Gray Support и Gray Serum, в женской упаковке.',
-      fr: 'Gray Support et Gray Serum, en emballage femme.',
-      es: 'Gray Support y Gray Serum, en envase para mujer.',
+      he: 'קפסולות וסרום לשיער אפור, באריזה לנשים.',
+      ar: 'كبسولات وسيروم العناية بالشيب، بعبوة للنساء.',
+      ru: 'Капсулы и сыворотка против седины, в женской упаковке.',
+      fr: 'Gélules et sérum anti-cheveux gris, en emballage femme.',
+      es: 'Cápsulas y sérum anticanas, en envase para mujer.',
     }),
     // Matches Advanced Anti-Grey Hair Treatment Kit (Gray Escape + Root Revival Serum, 1 kit), heyhair.co.
     // compareAtPrice is the real sum of its own components: gray-support (38) + gray-serum (52) = 90.
@@ -154,11 +154,11 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     }),
     summary: L6({
       en: 'Density treatment and Regrowth Shampoo, in men’s packaging.',
-      he: 'טיפול Density ושמפו Regrowth, באריזה לגברים.',
-      ar: 'علاج الكثافة وشامبو Regrowth، بعبوة للرجال.',
-      ru: 'Уход за плотностью волос и шампунь Regrowth, в мужской упаковке.',
-      fr: 'Le soin Densité et le shampooing Regrowth, en emballage homme.',
-      es: 'El tratamiento de densidad y el champú Regrowth, en envase para hombre.',
+      he: 'טיפול לצפיפות השיער ושמפו לצמיחה מחדש, באריזה לגברים.',
+      ar: 'علاج الكثافة وشامبو إعادة النمو، بعبوة للرجال.',
+      ru: 'Уход за плотностью волос и шампунь для восстановления роста, в мужской упаковке.',
+      fr: 'Le soin Densité et le shampooing repousse, en emballage homme.',
+      es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para hombre.',
     }),
     // Sum of components: density-15 (53) + regrowth-shampoo (40) = 93.
     // ~10% off to match heyhair.co's bundle-discount pattern (2026-09-08).
@@ -179,11 +179,11 @@ export const SHOP_BUNDLES: ShopBundle[] = [
     }),
     summary: L6({
       en: 'Density treatment and Regrowth Shampoo, in women’s packaging.',
-      he: 'טיפול Density ושמפו Regrowth, באריזה לנשים.',
-      ar: 'علاج الكثافة وشامبو Regrowth، بعبوة للنساء.',
-      ru: 'Уход за плотностью волос и шампунь Regrowth, в женской упаковке.',
-      fr: 'Le soin Densité et le shampooing Regrowth, en emballage femme.',
-      es: 'El tratamiento de densidad y el champú Regrowth, en envase para mujer.',
+      he: 'טיפול לצפיפות השיער ושמפו לצמיחה מחדש, באריזה לנשים.',
+      ar: 'علاج الكثافة وشامبو إعادة النمو، بعبوة للنساء.',
+      ru: 'Уход за плотностью волос и шампунь для восстановления роста, в женской упаковке.',
+      fr: 'Le soin Densité et le shampooing repousse, en emballage femme.',
+      es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para mujer.',
     }),
     // Sum of components: density-15 (53) + regrowth-shampoo (40) = 93.
     // ~10% off to match heyhair.co's bundle-discount pattern (2026-09-08).

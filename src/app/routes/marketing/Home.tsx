@@ -229,11 +229,11 @@ function SystemAndProgress() {
   const t = useT();
   const withLocale = useLocalizedPath();
   const milestones = [
-    { id: 'd0', dayLabel: 'Day 0', title: t('marketing.home.progress.baseline'), state: 'done' as const },
-    { id: 'd30', dayLabel: 'Day 30', title: t('marketing.home.progress.progressPhoto'), state: 'done' as const },
-    { id: 'd60', dayLabel: 'Day 60', title: t('marketing.home.progress.progressPhoto'), state: 'done' as const },
-    { id: 'd90', dayLabel: 'Day 90', title: t('marketing.home.progress.progressScan'), state: 'current' as const },
-    { id: 'd180', dayLabel: 'Day 180', title: t('marketing.home.progress.finalScan'), state: 'upcoming' as const },
+    { id: 'd0', dayLabel: t('marketing.sys.day', { n: 0 }), title: t('marketing.home.progress.baseline'), state: 'done' as const },
+    { id: 'd30', dayLabel: t('marketing.sys.day', { n: 30 }), title: t('marketing.home.progress.progressPhoto'), state: 'done' as const },
+    { id: 'd60', dayLabel: t('marketing.sys.day', { n: 60 }), title: t('marketing.home.progress.progressPhoto'), state: 'done' as const },
+    { id: 'd90', dayLabel: t('marketing.sys.day', { n: 90 }), title: t('marketing.home.progress.progressScan'), state: 'current' as const },
+    { id: 'd180', dayLabel: t('marketing.sys.day', { n: 180 }), title: t('marketing.home.progress.finalScan'), state: 'upcoming' as const },
   ];
   const includes = [
     t('marketing.home.durations.includesDensity'),

@@ -91,7 +91,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
   const withLocale = useLocalizedPath();
   const solution = slug ? getSolution(slug) : undefined;
 
-  if (!solution) return <PagePlaceholder title="Solution" body="This solution page could not be found." />;
+  if (!solution) return <PagePlaceholder title={t('notFound.solution.title')} body={t('notFound.solution.body')} />;
 
   const program = PROGRAMS[solution.relatedProgram];
   const products = solution.relatedProducts.map(getProduct).filter((p): p is NonNullable<typeof p> => !!p);
@@ -178,7 +178,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
               subtitle={pickLocalized(p.subtitle, cl)}
               to={withLocale(PATHS.product(p.slug))}
               priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
-              mediaAlt={`${p.name} packaging`}
+              mediaAlt={t('common.packagingAlt', { name: p.name })}
               mediaLabel={`${p.name}: product photography`}
               image={PRODUCT_PHOTOS[p.slug]}
             />

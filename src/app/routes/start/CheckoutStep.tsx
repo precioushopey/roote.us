@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
+import { useAuth } from '@/store/auth';
 import { buildReport } from '@/domain/report/buildReport';
 import { recommend } from '@/domain/recommendation/recommend';
 import { rooteContent } from '@/content/roote.config';
@@ -23,6 +24,7 @@ export function CheckoutStep() {
   const withLocale = useLocalizedPath();
   const navigate = useNavigate();
   const session = useSession();
+  const auth = useAuth();
   const [subscribe, setSubscribe] = useState(false);
 
   const model = useMemo(() => {
@@ -80,7 +82,17 @@ export function CheckoutStep() {
         plan: model!.plan,
       });
       session.setProgram(program);
-      recordOrder({ id: result.orderId, kind: 'program', at: new Date().toISOString(), label: row!.label });
+      recordOrder({
+        id: result.orderId,
+        kind: 'program',
+        at: new Date().toISOString(),
+        label: row!.label,
+        email: contact.email.trim(),
+      });
+      // No signup step before checkout any more — sign the buyer in now so
+      // /program/success → /account works (order number + email gets them back later).
+      if (!auth.email) auth.signInAfterPurchase(contact.email);
+      session.setEmail(contact.email.trim());
       track('checkout_completed', { days: days!, subscribe });
       navigate(withLocale('/program/success'));
     } catch {

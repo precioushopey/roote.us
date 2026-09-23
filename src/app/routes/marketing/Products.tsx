@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import {
   Section,
@@ -13,8 +12,8 @@ import {
   Hero,
   CtaSection,
   renderWithEmphasis,
-  useToast,
 } from '@/app/components/roote';
+import { useAddedToCartPanel } from '@/app/components/cart/AddedToCartPanel';
 import { useCart } from '@/store/cart';
 import { PATHS } from '@/app/paths';
 import { pickLocalized } from '@/content/localized';
@@ -40,10 +39,9 @@ const PRODUCT_PHOTOS: Record<string, string> = {
 };
 
 /* Every bundle image was the same superseded dark-green/cream packaging
-   mockup as the individual SKUs above — pulled project-wide (2026-09-22).
-   `BundleCard` renders a `MediaPlaceholder` when a bundle id has no entry
-   here. (`BundleSection` itself is currently hidden — see its call site
-   below — so this only matters once it's re-enabled.) */
+   mockup as the individual SKUs above — pulled project-wide (2026-09-22), no
+   replacement shot yet. `BundleCard` renders a `MediaPlaceholder` when a
+   bundle id has no entry here. */
 const BUNDLE_PHOTOS: Record<string, string> = {};
 
 type Filter = 'all' | 'thinning' | 'gray';
@@ -54,60 +52,53 @@ function matches(p: Product, f: Filter) {
   return p.concern === 'gray' || p.concern === 'gray-support';
 }
 
-const OUTLINE_CTA_CLASS =
-  'inline-flex w-full items-center justify-center rounded-full border border-accent px-4 py-2.5 font-body text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground';
-
-/* 2026-09-22: individual products now get a direct "Add to Cart" button
-   (below, in `Products()`) instead of this — per-product purchase no longer
-   requires the assessment. This CTA now only survives for the (currently
-   hidden) BundleSection/BundleCard, which hasn't been revisited yet. */
-function FindYourMatchCta() {
+/* Shared quantity stepper, extracted from the two "flanking Add to Cart"
+   rows below (product and bundle) so the stepper markup and behavior — reset
+   to 1 after each add, clamp 1–20 — stay in one place instead of drifting
+   apart. Quantity is local to the row (not the cart's own qty — that's
+   edited on /cart). */
+function QtyStepper({ qty, setQty }: { qty: number; setQty: (fn: (q: number) => number) => void }) {
   const t = useT();
-  const withLocale = useLocalizedPath();
   return (
-    <Link to={withLocale(PATHS.analysis)} className={OUTLINE_CTA_CLASS}>
-      {t('marketing.shop.findYourMatchCta')}
-    </Link>
+    <div className="inline-flex shrink-0 items-center rounded-full border border-border">
+      <button
+        type="button"
+        aria-label={t('cart.decrease')}
+        onClick={() => setQty((q) => Math.max(1, q - 1))}
+        className="px-3 py-2.5 font-body text-sm text-foreground"
+      >
+        −
+      </button>
+      <span className="min-w-7 text-center font-body text-sm tabular-nums text-foreground">{qty}</span>
+      <button
+        type="button"
+        aria-label={t('cart.increase')}
+        onClick={() => setQty((q) => Math.min(20, q + 1))}
+        className="px-3 py-2.5 font-body text-sm text-foreground"
+      >
+        +
+      </button>
+    </div>
   );
 }
 
-/* Inline quantity stepper + Add to Cart, flanking each other below a product
-   card. Quantity is local to this row (not the cart's own qty — that's
-   edited on /cart) and resets to 1 after each add, so a repeat click on the
-   same card doesn't silently keep whatever was last selected. */
+/* Inline quantity stepper + Add to Cart, flanking each other below a product card. */
 function AddToCartRow({ slug }: { slug: string }) {
   const t = useT();
   const cart = useCart();
-  const toast = useToast();
+  const added = useAddedToCartPanel();
   const [qty, setQty] = useState(1);
 
   return (
     <div className="flex items-center gap-2">
-      <div className="inline-flex shrink-0 items-center rounded-full border border-border">
-        <button
-          type="button"
-          aria-label={t('cart.decrease')}
-          onClick={() => setQty((q) => Math.max(1, q - 1))}
-          className="px-3 py-2.5 font-body text-sm text-foreground"
-        >
-          −
-        </button>
-        <span className="min-w-7 text-center font-body text-sm tabular-nums text-foreground">{qty}</span>
-        <button
-          type="button"
-          aria-label={t('cart.increase')}
-          onClick={() => setQty((q) => Math.min(20, q + 1))}
-          className="px-3 py-2.5 font-body text-sm text-foreground"
-        >
-          +
-        </button>
-      </div>
+      {added.panel}
+      <QtyStepper qty={qty} setQty={setQty} />
       <Button
         caps
         className="flex-1"
         onClick={() => {
           cart.add(slug, qty);
-          toast.show(t('cart.added'), 'success');
+          added.show(slug, qty);
           setQty(1);
         }}
       >
@@ -117,19 +108,24 @@ function AddToCartRow({ slug }: { slug: string }) {
   );
 }
 
-/* A fixed "buy the set" bundle — one product line in one packaging colorway.
-   Price stays [PENDING] until the client supplies a price list — never
-   invented. `compareAtPrice` (the real sum of the bundle's own components)
-   renders struck through with a "Save $X" badge when it's set and higher
-   than `price` — both are derived numbers, never invented (see bundles.ts). */
+/* A fixed "buy the set" bundle — one product line in one packaging colorway,
+   with its own direct Add to Cart (2026-09-23, matching the individual
+   products above — no assessment required to buy here either). `compareAtPrice`
+   (the real sum of the bundle's own components) renders struck through with a
+   "Save $X" badge when it's set and higher than `price` — both are derived
+   numbers, never invented (see bundles.ts). */
 function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
   const t = useT();
   const cl = useLocale().locale;
+  const cart = useCart();
+  const added = useAddedToCartPanel();
+  const [qty, setQty] = useState(1);
   const image = BUNDLE_PHOTOS[bundle.id];
   const hasDiscount = bundle.price !== null && bundle.compareAtPrice !== null && bundle.compareAtPrice > bundle.price;
 
   return (
     <div className="flex flex-col place-content-between gap-4">
+      {added.panel}
       {image ? (
         <img src={image} alt={pickLocalized(bundle.name, cl)} loading="lazy" className="aspect-[3/4] w-full rounded-sm object-contain" />
       ) : (
@@ -168,13 +164,25 @@ function BundleCard({ bundle }: { bundle: (typeof SHOP_BUNDLES)[number] }) {
           )}
         </div>
       </div>
-      <FindYourMatchCta />
+      <div className="flex items-center gap-2">
+        <QtyStepper qty={qty} setQty={setQty} />
+        <Button
+          caps
+          className="flex-1"
+          onClick={() => {
+            cart.addBundle(bundle.id, qty);
+            added.showBundle(bundle.id, qty);
+            setQty(1);
+          }}
+        >
+          {t('cart.add')}
+        </Button>
+      </div>
     </div>
   );
 }
 
-/* "Bundle & save" — 3 product lines × 2 packaging colorways = 6 fixed sets.
-   Every bundle is assessment-gated, same as the individual products above. */
+/* "Bundle & save" — 3 product lines × 2 packaging colorways = 6 fixed sets. */
 function BundleSection() {
   const t = useT();
   return (
@@ -254,7 +262,7 @@ export function Products() {
                 to={withLocale(PATHS.product(p.slug))}
                 priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
                 packaging={p.concern === 'gray' || p.concern === 'gray-support' ? 'women' : 'men'}
-                mediaAlt={`${p.name} packaging`}
+                mediaAlt={t('common.packagingAlt', { name: p.name })}
                 mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />
@@ -264,8 +272,7 @@ export function Products() {
         </div>
       </Section>
 
-      {/* TODO: BundleSection hidden 2026-09-22 per request — re-enable when bundles are ready to launch. */}
-      {/* <BundleSection /> */}
+      <BundleSection />
       <ShopFinalCta />
     </>
   );

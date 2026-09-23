@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
+import { useT } from '@/i18n/LocaleProvider';
 import { cn } from '@/app/components/ui/utils';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { Badge, type BadgeTone } from './Badge';
@@ -229,7 +230,7 @@ export function IngredientCard({
   status = 'working',
   statusLabel,
   onReadMore,
-  readMoreLabel = 'Read more',
+  readMoreLabel,
   image,
 }: {
   name: string;
@@ -242,6 +243,7 @@ export function IngredientCard({
   /** Real ingredient photography (see INGREDIENT_PHOTOS). Card renders text-only when omitted. */
   image?: string;
 }) {
+  const t = useT();
   return (
     <div className="flex flex-col gap-4">
       {image ? <img src={image} alt="" aria-hidden loading="lazy" className="aspect-square w-full rounded-sm object-cover" /> : null}
@@ -259,7 +261,7 @@ export function IngredientCard({
             onClick={onReadMore}
             className="mt-3 font-body text-sm font-medium text-deep-800 underline underline-offset-4"
           >
-            {readMoreLabel}
+            {readMoreLabel ?? t('common.readMore')}
           </button>
         ) : null}
       </div>

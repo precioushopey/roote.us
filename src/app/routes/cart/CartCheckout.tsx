@@ -5,6 +5,7 @@ import { resolveCartLines } from '@/store/cartLines';
 import { useAuth } from '@/store/auth';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
+import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type CartOrder, type Contact, type CardRef } from '@/store/checkout';
 import { recordOrder } from '@/store/orders';
@@ -50,6 +51,7 @@ export function CartCheckout() {
         kind: 'cart',
         at: new Date().toISOString(),
         label: t('bag.checkout.qty', { qty: String(itemCount) }),
+        email: contact.email.trim(),
         // `lines` is already resolved against the catalog (real names, not
         // raw skus/bundle ids) — captured here, before `cart.clear()` below,
         // so order history can show exactly what was bought. `slug` (SKU
@@ -57,6 +59,7 @@ export function CartCheckout() {
         // subtitle/badges, not just its name.
         items: lines.map((l) => ({ name: l.name, qty: l.qty, slug: l.sku })),
       });
+      if (!auth.email) auth.signInAfterPurchase(contact.email);
       navigate(withLocale(PATHS.cartSuccess), { state: { orderId: result.orderId } });
       cart.clear();
     } catch {
@@ -94,7 +97,15 @@ export function CartCheckout() {
           <ul className="mt-4 flex flex-col divide-y divide-border">
             {lines.map((line) => (
               <li key={line.id} className="flex items-center gap-4 py-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-cream-100" />
+                {line.sku && TREATMENT_PHOTOS[line.sku] ? (
+                  <img
+                    src={TREATMENT_PHOTOS[line.sku]}
+                    alt=""
+                    className="h-12 w-12 shrink-0 rounded-md bg-cream-100 object-contain"
+                  />
+                ) : (
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-cream-100" />
+                )}
                 <div className="flex flex-1 flex-col">
                   <span className="text-sm">{line.name}</span>
                   <span className="text-sm text-muted-foreground">{t('bag.checkout.qty', { qty: String(line.qty) })}</span>

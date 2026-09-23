@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import { Section, DisplayTitle, Prose } from '@/app/components/roote';
-import { useLocale } from '@/i18n/LocaleProvider';
+import { useLocale, useT } from '@/i18n/LocaleProvider';
 import { getLegalPage, getLegalBody } from '@/content/legal';
 import { pickLocalized } from '@/content/localized';
 import { rooteContent } from '@/content/roote.config';
@@ -15,10 +15,11 @@ export function LegalPageView({ slug: slugProp }: { slug?: string } = {}) {
   const params = useParams();
   const slug = slugProp ?? params.slug;
   const cl = useLocale().locale;
+  const t = useT();
   const page = slug ? getLegalPage(slug) : undefined;
 
   if (!page) {
-    return <PagePlaceholder title="Policy" body="This policy page could not be found." />;
+    return <PagePlaceholder title={t('notFound.policy.title')} body={t('notFound.policy.body')} />;
   }
 
   const sections = getLegalBody(page.slug);
@@ -48,12 +49,12 @@ export function LegalPageView({ slug: slugProp }: { slug?: string } = {}) {
       </ol>
 
       <p className="border-t border-border pt-6 font-body text-sm text-muted-foreground">
-        A brand of{' '}
+        {t('common.brandOf')}{' '}
         <span dir="ltr">
           {company.legalName} · {company.address.join(', ')} · {company.support.email}
         </span>
         <br />
-        <span className="text-sm">Last updated: {company.legalUpdated}</span>
+        <span className="text-sm">{t('marketing.legal.updated')}: {company.legalUpdated}</span>
       </p>
     </Section>
   );

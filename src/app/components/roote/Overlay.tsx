@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
+import { useT } from '@/i18n/LocaleProvider';
 import { cn } from '@/app/components/ui/utils';
 
 function useDismissable(onClose: () => void, active: boolean) {
@@ -63,6 +64,7 @@ type ModalProps = {
 /** Centered dialog. Focus-trapped, Esc + backdrop close, scroll-locked. */
 export function Modal({ open, onClose, title, hideTitle, children, footer, className }: ModalProps) {
   const ref = useDismissable(onClose, open);
+  const t = useT();
   if (!open) return null;
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-6">
@@ -86,7 +88,7 @@ export function Modal({ open, onClose, title, hideTitle, children, footer, class
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t('common.close')}
             className="ms-auto inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-cream-100"
           >
             <X className="h-5 w-5" strokeWidth={1.6} aria-hidden />
@@ -125,6 +127,7 @@ const DRAWER_SIDE_CLASS = {
 /** Edge sheet. Used for the mobile nav. `side` defaults to the RTL-aware 'end'. */
 export function Drawer({ open, onClose, title, side = 'end', children, className }: DrawerProps) {
   const ref = useDismissable(onClose, open);
+  const t = useT();
   if (!open) return null;
   return createPortal(
     <div className="fixed inset-0 z-50">
@@ -145,7 +148,7 @@ export function Drawer({ open, onClose, title, side = 'end', children, className
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t('common.close')}
             className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-cream-100"
           >
             <X className="h-5 w-5" strokeWidth={1.6} aria-hidden />

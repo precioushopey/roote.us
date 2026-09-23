@@ -186,7 +186,7 @@ export const PRODUCTS: Product[] = [
     // public-facing descriptor — PO #6 (2026-09-04)
     subtitle: L6({
       en: 'Personalized Density Treatment',
-      he: 'טיפול Density מותאם אישית',
+      he: 'טיפול מותאם אישית לצפיפות השיער',
       ar: 'علاج الكثافة المخصص',
       ru: 'Персонализированное лечение плотности волос',
       fr: 'Soin Densité personnalisé',
@@ -197,7 +197,7 @@ export const PRODUCTS: Product[] = [
     size: '60 mL (2 fl oz)',
     role: L6({
       en: 'Entry / lower-strength Density program.',
-      he: 'תוכנית Density בעוצמה נמוכה, לשלב הראשון.',
+      he: 'תוכנית צפיפות בעוצמה נמוכה, לשלב הראשון.',
       ar: 'برنامج الكثافة التمهيدي، بتركيز أقل.',
       ru: 'Начальная программа плотности с более низкой концентрацией.',
       fr: 'Programme Densité d’entrée, à concentration plus faible.',
@@ -205,7 +205,7 @@ export const PRODUCTS: Product[] = [
     }),
     heroCopy: L6({
       en: 'A lower-strength topical to open a Density program where the assessment supports one.',
-      he: 'תרחיף בעוצמה נמוכה לפתיחת תוכנית Density, כאשר ההערכה תומכת בכך.',
+      he: 'תרחיף בעוצמה נמוכה לפתיחת תוכנית צפיפות, כאשר ההערכה תומכת בכך.',
       ar: 'محلول موضعي بتركيز أقل لبدء برنامج الكثافة، عندما يدعم التقييم ذلك.',
       ru: 'Топическое средство более низкой концентрации для начала программы плотности, когда это подтверждается оценкой.',
       fr: 'Un soin topique à concentration plus faible pour ouvrir un programme Densité, lorsque l’évaluation le confirme.',
@@ -213,7 +213,7 @@ export const PRODUCTS: Product[] = [
     }),
     shortDescription: L6({
       en: 'Once- or twice-daily scalp topical. The starting point of the Density track.',
-      he: 'תרחיף לקרקפת, פעם או פעמיים ביום. נקודת ההתחלה של מסלול Density.',
+      he: 'תרחיף לקרקפת, פעם או פעמיים ביום. נקודת ההתחלה של מסלול הצפיפות.',
       ar: 'محلول موضعي للفروة، مرة أو مرتين يوميًا. نقطة البداية في مسار الكثافة.',
       ru: 'Средство для кожи головы, один или два раза в день. Отправная точка линии плотности.',
       fr: 'Topique pour le cuir chevelu, une à deux fois par jour. Le point de départ du parcours Densité.',
@@ -285,7 +285,7 @@ export const PRODUCTS: Product[] = [
     name: 'ROOTÉ Level 10',
     subtitle: L6({
       en: 'Advanced Density Treatment',
-      he: 'טיפול Density מתקדם',
+      he: 'טיפול מתקדם לצפיפות השיער',
       ar: 'علاج الكثافة المتقدم',
       ru: 'Продвинутое лечение плотности волос',
       fr: 'Soin Densité avancé',
@@ -296,7 +296,7 @@ export const PRODUCTS: Product[] = [
     size: '60 mL (2 fl oz)',
     role: L6({
       en: 'Advanced Density program.',
-      he: 'תוכנית Density מתקדמת.',
+      he: 'תוכנית צפיפות מתקדמת.',
       ar: 'برنامج الكثافة المتقدم.',
       ru: 'Продвинутая программа плотности.',
       fr: 'Programme Densité avancé.',
@@ -304,7 +304,7 @@ export const PRODUCTS: Product[] = [
     }),
     heroCopy: L6({
       en: 'A higher-concentration topical with added scalp-support actives for an advanced Density program.',
-      he: 'תרחיף בריכוז גבוה יותר עם רכיבי תמיכה לקרקפת, לתוכנית Density מתקדמת.',
+      he: 'תרחיף בריכוז גבוה יותר עם רכיבי תמיכה לקרקפת, לתוכנית צפיפות מתקדמת.',
       ar: 'محلول موضعي بتركيز أعلى مع مكوّنات فعّالة داعمة لفروة الرأس، لبرنامج الكثافة المتقدم.',
       ru: 'Топическое средство более высокой концентрации с добавленными активными компонентами для поддержки кожи головы — для продвинутой программы плотности.',
       fr: 'Un soin topique plus concentré, enrichi en actifs de soutien du cuir chevelu, pour un programme Densité avancé.',
@@ -312,7 +312,7 @@ export const PRODUCTS: Product[] = [
     }),
     shortDescription: L6({
       en: 'Scalp topical with a broader support complex. The mid tier of the Density track.',
-      he: 'תרחיף לקרקפת עם קומפלקס תמיכה רחב יותר. השלב האמצעי במסלול Density.',
+      he: 'תרחיף לקרקפת עם קומפלקס תמיכה רחב יותר. השלב האמצעי במסלול הצפיפות.',
       ar: 'محلول موضعي للفروة مع مركّب دعم أوسع. المرحلة الوسطى في مسار الكثافة.',
       ru: 'Средство для кожи головы с более широким поддерживающим комплексом. Средний уровень линии плотности.',
       fr: 'Topique pour le cuir chevelu avec un complexe de soutien plus large. Le palier intermédiaire du parcours Densité.',
@@ -421,7 +421,7 @@ export const PRODUCTS: Product[] = [
     name: 'ROOTÉ Level 15',
     subtitle: L6({
       en: 'Intensive Density Treatment',
-      he: 'טיפול Density אינטנסיבי',
+      he: 'טיפול אינטנסיבי לצפיפות השיער',
       ar: 'علاج الكثافة المكثف',
       ru: 'Интенсивное лечение плотности волос',
       fr: 'Soin Densité intensif',
@@ -432,7 +432,7 @@ export const PRODUCTS: Product[] = [
     size: '60 mL (2 fl oz)',
     role: L6({
       en: 'Intensive / highest-strength Density concept.',
-      he: 'קונספט Density בעוצמה הגבוהה ביותר.',
+      he: 'קונספט הצפיפות בעוצמה הגבוהה ביותר.',
       ar: 'مفهوم الكثافة المكثف، بأعلى تركيز.',
       ru: 'Интенсивная концепция плотности максимальной концентрации.',
       fr: 'Concept Densité intensif, à la concentration la plus élevée.',
@@ -440,7 +440,7 @@ export const PRODUCTS: Product[] = [
     }),
     heroCopy: L6({
       en: 'The most concentrated Density concept. Considered only through a treatment review; never selected from a score.',
-      he: 'קונספט Density המרוכז ביותר. נשקל רק דרך בדיקת טיפול, לעולם לא נבחר לפי ניקוד.',
+      he: 'קונספט הצפיפות המרוכז ביותר. נשקל רק דרך בדיקת טיפול, לעולם לא נבחר לפי ניקוד.',
       ar: 'مفهوم الكثافة الأعلى تركيزًا. يُنظر فيه فقط من خلال فحص العلاج؛ ولا يُختار أبدًا بناءً على النتيجة.',
       ru: 'Концепция плотности с максимальной концентрацией. Рассматривается только по результатам осмотра перед лечением; никогда не выбирается по итогам оценки.',
       fr: "Le concept Densité le plus concentré. Envisagé uniquement lors d'un bilan de traitement ; jamais sélectionné sur la base d'un score.",
@@ -448,7 +448,7 @@ export const PRODUCTS: Product[] = [
     }),
     shortDescription: L6({
       en: 'The highest-strength topical concept in the Density track. Clinician-gated.',
-      he: 'קונספט התרחיף בעוצמה הגבוהה ביותר במסלול Density. בכפוף לאישור רפואי.',
+      he: 'קונספט התרחיף בעוצמה הגבוהה ביותר במסלול הצפיפות. בכפוף לאישור רפואי.',
       ar: 'مفهوم المحلول الموضعي الأعلى تركيزًا في مسار الكثافة. مشروط بموافقة طبية.',
       ru: 'Концепция топического средства максимальной концентрации в линии плотности. Требует одобрения врача.',
       fr: 'Le concept topique le plus concentré du parcours Densité. Soumis à un accord médical.',
@@ -598,7 +598,7 @@ export const PRODUCTS: Product[] = [
     size: '50 mL',
     role: L6({
       en: 'Topical half of the Gray system.',
-      he: 'החצי המקומי של מערכת Gray.',
+      he: 'החצי המקומי של המערכת לשיער אפור.',
       ar: 'النصف الموضعي من نظام الشعر الرمادي.',
       ru: 'Топическая часть системы седины.',
       fr: 'La moitié topique du système Cheveux gris.',
@@ -614,7 +614,7 @@ export const PRODUCTS: Product[] = [
     }),
     shortDescription: L6({
       en: 'A daily leave-in serum. The topical half of the Gray system.',
-      he: 'סרום יומי ללא שטיפה. החצי המקומי של מערכת Gray.',
+      he: 'סרום יומי ללא שטיפה. החצי המקומי של המערכת לשיער אפור.',
       ar: 'سيروم يومي يُترك دون شطف. النصف الموضعي من نظام الشعر الرمادي.',
       ru: 'Ежедневная несмываемая сыворотка. Топическая часть системы седины.',
       fr: 'Un sérum quotidien sans rinçage. La moitié topique du système Cheveux gris.',
@@ -867,7 +867,7 @@ export const PRODUCTS: Product[] = [
     size: '60 capsules',
     role: L6({
       en: 'Inside-out nutritional support in the Gray system.',
-      he: 'תמיכה תזונתית מבפנים במערכת Gray.',
+      he: 'תמיכה תזונתית מבפנים במערכת לשיער אפור.',
       ar: 'دعم غذائي من الداخل ضمن نظام الشعر الرمادي.',
       ru: 'Нутритивная поддержка изнутри в системе седины.',
       fr: 'Le soutien nutritionnel « de l’intérieur » du système Cheveux gris.',
@@ -883,7 +883,7 @@ export const PRODUCTS: Product[] = [
     }),
     shortDescription: L6({
       en: 'One daily capsule. The inside half of the Gray system.',
-      he: 'קפסולה אחת ביום. החצי הפנימי של מערכת Gray.',
+      he: 'קפסולה אחת ביום. החצי הפנימי של המערכת לשיער אפור.',
       ar: 'كبسولة واحدة يوميًا. النصف الداخلي من نظام الشعر الرمادي.',
       ru: 'Одна капсула в день. Внутренняя часть системы седины.',
       fr: 'Une gélule par jour. La moitié « interne » du système Cheveux gris.',
@@ -1070,7 +1070,7 @@ export const PRODUCTS: Product[] = [
     name: 'ROOTÉ Regrowth Shampoo',
     subtitle: L6({
       en: 'Scalp & Density Support Cleanser',
-      he: 'תכשיר ניקוי לתמיכה בקרקפת וב-Density',
+      he: 'תכשיר ניקוי לתמיכה בקרקפת ובצפיפות השיער',
       ar: 'منظّف داعم لفروة الرأس والكثافة',
       ru: 'Очищающее средство для поддержки кожи головы и плотности волос',
       fr: 'Nettoyant de soutien cuir chevelu et Densité',
@@ -1081,7 +1081,7 @@ export const PRODUCTS: Product[] = [
     size: '200 mL',
     role: L6({
       en: 'Daily cleanse layer in the Density system.',
-      he: 'שכבת הניקוי היומית במערכת Density.',
+      he: 'שכבת הניקוי היומית במערכת הצפיפות.',
       ar: 'خطوة التنظيف اليومية ضمن نظام الكثافة.',
       ru: 'Ежедневный этап очищения в системе плотности.',
       fr: 'L’étape de nettoyage quotidienne du système Densité.',
@@ -1089,7 +1089,7 @@ export const PRODUCTS: Product[] = [
     }),
     heroCopy: L6({
       en: 'A scalp-focused shampoo for thinning hair, built to sit alongside a Density program.',
-      he: 'שמפו ממוקד קרקפת לשיער דליל, שנבנה ללוות תוכנית Density.',
+      he: 'שמפו ממוקד קרקפת לשיער דליל, שנבנה ללוות תוכנית צפיפות.',
       ar: 'شامبو يركّز على فروة الرأس لترقّق الشعر، صُمِّم ليواكب برنامج الكثافة.',
       ru: 'Шампунь, сфокусированный на коже головы, для истончённых волос, созданный в дополнение к программе плотности.',
       fr: 'Un shampooing ciblant le cuir chevelu pour cheveux clairsemés, conçu pour accompagner un programme Densité.',
@@ -1314,11 +1314,11 @@ export const ARCHIVED_CONCEPTS = [
     name: 'Color Restore Shampoo',
     note: L6({
       en: 'Archived concept, superseded by Gray Serum for the anti-gray topical role.',
-      he: 'קונספט בארכיון, הוחלף בסרום Gray לתפקיד התכשיר המקומי לשיער אפור.',
-      ar: 'مفهوم مؤرشف، حلّ محله Gray Serum لأداء دور التحضير الموضعي لشعر الشيب.',
-      ru: 'Архивная концепция, заменена Gray Serum в роли топического средства для седых волос.',
-      fr: 'Concept archivé, remplacé par Gray Serum pour le rôle de soin topique dédié aux cheveux grisonnants.',
-      es: 'Concepto archivado, sustituido por Gray Serum en el papel de tratamiento tópico para el cabello canoso.',
+      he: 'קונספט בארכיון, הוחלף בסרום לשיער אפור לתפקיד התכשיר המקומי לשיער אפור.',
+      ar: 'مفهوم مؤرشف، حلّ محله سيروم العناية بالشيب لأداء دور التحضير الموضعي لشعر الشيب.',
+      ru: 'Архивная концепция, заменена сывороткой против седины в роли топического средства для седых волос.',
+      fr: 'Concept archivé, remplacé par le sérum anti-cheveux gris pour le rôle de soin topique dédié aux cheveux grisonnants.',
+      es: 'Concepto archivado, sustituido por el sérum anticanas en el papel de tratamiento tópico para el cabello canoso.',
     }),
   },
 ] as const;

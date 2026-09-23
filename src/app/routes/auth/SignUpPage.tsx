@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useAuth } from '@/store/auth';
 import { useSession } from '@/store/sessionStore';
@@ -13,42 +13,43 @@ const ERROR_KEYS: Record<string, string> = {
   'duplicate-email': 'start.account.error.duplicateEmail',
 };
 
-type SignUpState = { orderId?: string } | null;
-
 /**
- * A standalone signup form — not part of the /program assessment funnel.
- * Order history (store/orders.ts) is a flat, unauthenticated list in this
- * browser's localStorage, so any account created here already "sees" any
- * order already placed — no explicit linking step needed, just an account
- * to view it on /account/profile through.
+ * A standalone signup form — not part of any purchase path (checkout needs no
+ * account; buyers get back in with order number + email). Order history
+ * (store/orders.ts) is a flat list in this browser's localStorage, so an
+ * account created here already "sees" any order placed on this device.
  */
 export function SignUpPage() {
   const t = useT();
   const withLocale = useLocalizedPath();
   const navigate = useNavigate();
-  const location = useLocation();
   const auth = useAuth();
   const session = useSession();
-  const orderId = (location.state as SignUpState)?.orderId;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (password !== confirm) {
+      setError(t('auth.signUp.error.mismatch'));
+      return;
+    }
     const result = auth.signUp(email.trim(), password);
     if (!result.ok) {
       setError(t(ERROR_KEYS[result.error] as never));
       return;
     }
     session.setEmail(email.trim());
-    navigate(withLocale(PATHS.accountSection('profile')));
+    // Never drop a brand-new customer into an empty dashboard (Mischa review):
+    // the dashboard is for program owners; everyone else goes back to the shop.
+    navigate(withLocale(session.program ? PATHS.account : PATHS.products));
   }
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col gap-4 px-6 py-16">
       <h1 className={funnelHeading}>{t('auth.signUp.title')}</h1>
-      {orderId ? <p className="font-body text-sm text-muted-foreground">{t('auth.signUp.orderNote', { orderId })}</p> : null}
       <form className="flex flex-col gap-4" onSubmit={submit}>
         <label className="flex flex-col gap-2 text-sm">
           {t('start.account.emailLabel')}
@@ -66,6 +67,15 @@ export function SignUpPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            inputClassName={funnelField}
+          />
+        </label>
+        <label className="flex flex-col gap-2 text-sm">
+          {t('auth.signUp.confirmLabel')}
+          <PasswordField
+            required
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
             inputClassName={funnelField}
           />
         </label>

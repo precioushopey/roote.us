@@ -15,8 +15,8 @@ import {
   PendingChip,
   CtaSection,
   SectionIntro,
-  useToast,
 } from '@/app/components/roote';
+import { useAddedToCartPanel } from '@/app/components/cart/AddedToCartPanel';
 import { useFitTitle } from '@/app/lib/useFitTitle';
 import { useCart } from '@/store/cart';
 import { PATHS } from '@/app/paths';
@@ -54,7 +54,7 @@ export function ProductDetail() {
   const withLocale = useLocalizedPath();
   const titleRef = useFitTitle<HTMLHeadingElement>(3);
   const cart = useCart();
-  const toast = useToast();
+  const added = useAddedToCartPanel();
   const product = slug ? getProduct(slug) : undefined;
   const statusLabel: Record<ClaimStatus, string> = {
     approved: t('marketing.sci.status.approved'),
@@ -62,7 +62,7 @@ export function ProductDetail() {
     'requires-review': t('marketing.sci.status.requiresReview'),
   };
 
-  if (!product) return <PagePlaceholder title="Product" body="This product could not be found." />;
+  if (!product) return <PagePlaceholder title={t('notFound.product.title')} body={t('notFound.product.body')} />;
 
   const related = product.relatedProducts.map(getProduct).filter((p): p is NonNullable<typeof p> => !!p);
   const isGrayConcern = product.concern === 'gray' || product.concern === 'gray-support';
@@ -102,12 +102,13 @@ export function ProductDetail() {
 
   return (
     <>
+      {added.panel}
       <Section tone="teal" width="content" className="py-12 md:py-12">
         <div className="flex flex-col items-center gap-12 lg:flex-row">
           {PRODUCT_PHOTOS[product.slug] ? (
             <img
               src={PRODUCT_PHOTOS[product.slug]}
-              alt={`${product.name} packaging`}
+              alt={t('common.packagingAlt', { name: product.name })}
               loading="lazy"
               className="aspect-square w-full rounded-sm object-contain lg:w-1/2"
             />
@@ -115,7 +116,7 @@ export function ProductDetail() {
             <MediaPlaceholder
               tone={isGrayConcern ? 'cream' : 'card'}
               ratio="1"
-              alt={`${product.name} packaging`}
+              alt={t('common.packagingAlt', { name: product.name })}
               label={`${product.name}: product photography, ${product.requiresMedicalReview ? 'dark-teal' : 'cream'} packaging`}
               className="w-full lg:w-1/2"
             />
@@ -152,7 +153,7 @@ export function ProductDetail() {
                 className="w-full sm:w-auto"
                 onClick={() => {
                   cart.add(product.slug);
-                  toast.show(t('cart.added'), 'success');
+                  added.show(product.slug, 1);
                 }}
               >
                 {t('cart.add')}
@@ -300,7 +301,7 @@ export function ProductDetail() {
                 subtitle={pickLocalized(p.subtitle, cl)}
                 to={withLocale(PATHS.product(p.slug))}
                 priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}
-                mediaAlt={`${p.name} packaging`}
+                mediaAlt={t('common.packagingAlt', { name: p.name })}
                 mediaLabel={`${p.name}: product photography`}
                 image={PRODUCT_PHOTOS[p.slug]}
               />

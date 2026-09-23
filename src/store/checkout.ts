@@ -1,13 +1,31 @@
 import type { CartLine } from './cart';
 
-/** Shared contact/shipping details. `country` is fixed to IL for now — see CheckoutFields. */
-export type Contact = {
-  name: string;
-  email: string;
-  phone: string;
-  country: string;
+/** One postal address. `country` is fixed to `'US'` for now (91 ENTERPRISE LLC is a US
+ *  entity, currency is USD) — CheckoutFields renders it as a locked field, not free text,
+ *  so US-shaped phone/postal validation always applies. Multi-country shipping is a
+ *  [PENDING] client/commerce decision, same as multi-currency (see roote.config.ts). */
+export type Address = {
+  addressLine1: string;
+  addressLine2: string;
   city: string;
+  state: string;
   postal: string;
+  country: string;
+};
+
+/** Shared contact + billing/shipping details (brief §8 — Mischa review, 2026-09-23:
+ *  first/last name split, billing before shipping with a "same as billing" toggle, name
+ *  collected once and never repeated on either address). `shipping` is always a concrete
+ *  `Address` by the time it reaches `onSubmit` — CheckoutFields resolves "same as billing"
+ *  into a copy of `billing`, so callers never need to know which the customer picked. */
+export type Contact = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  /** Optional — the only optional field (client instruction). */
+  mobile: string;
+  billing: Address;
+  shipping: Address;
 };
 
 /** Only the last4 + expiry ever leave the payment form — never the full number or CVC. */

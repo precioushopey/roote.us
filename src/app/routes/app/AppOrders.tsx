@@ -52,7 +52,7 @@ function OrderItemCard({ item, locale }: { item: NonNullable<OrderRecord['items'
         to={withLocale(PATHS.product(product.slug))}
         priceLabel={product.price === null ? null : formatMoney(product.price, rooteContent.currency, locale).formatted}
         packaging={product.concern === 'gray' || product.concern === 'gray-support' ? 'women' : 'men'}
-        mediaAlt={`${product.name} packaging`}
+        mediaAlt={t('common.packagingAlt', { name: product.name })}
         mediaLabel={`${product.name}: product photography`}
         image={TREATMENT_PHOTOS[product.slug]}
       />

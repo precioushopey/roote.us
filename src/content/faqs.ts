@@ -90,7 +90,7 @@ export const HOME_FAQS: Faq[] = [
     id: 'density-difference',
     q: L6({
       en: 'What is the difference between Density 6, 10, and 15?',
-      he: 'מה ההבדל בין Density 6, 10 ו-15?',
+      he: 'מה ההבדל בין רמות 6, 10 ו-15?',
       ar: 'ما الفرق بين مستويات الكثافة 6 و10 و15؟',
       ru: 'В чём разница между уровнями плотности 6, 10 и 15?',
       fr: 'Quelle est la différence entre les niveaux de densité 6, 10 et 15 ?',

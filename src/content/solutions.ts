@@ -53,7 +53,7 @@ export const SOLUTIONS: Solution[] = [
       }),
       body: L6({
         en: 'Thinning shows up differently at the hairline, the crown, and across the whole scalp. Start with an analysis, then look at the Density system.',
-        he: 'דלילות מתבטאת אחרת בקו השיער, בקודקוד ובכל הקרקפת. מתחילים באבחון, ואז בוחנים את מערכת Density.',
+        he: 'דלילות מתבטאת אחרת בקו השיער, בקודקוד ובכל הקרקפת. מתחילים באבחון, ואז בוחנים את מערכת הצפיפות.',
         ar: 'يظهر الترقّق بشكل مختلف عند خط الشعر، في تاج الرأس، وعلى فروة الرأس بأكملها. ابدأ بالتحليل، ثم اطّلع على نظام الكثافة.',
         ru: 'Поредение проявляется по-разному у линии роста волос, на макушке и по всей коже головы. Начните с диагностики, а затем ознакомьтесь с системой ухода за плотностью.',
         fr: "Le dégarnissement se manifeste différemment au niveau de la ligne d'implantation, du vertex, et sur l'ensemble du cuir chevelu. Commencez par une analyse, puis découvrez le système de densité.",
@@ -225,7 +225,7 @@ export const SOLUTIONS: Solution[] = [
       }),
       body: L6({
         en: 'Graying is a change in pigment at the follicle. The Gray system pairs a daily supplement with a topical serum: a routine, not a promise.',
-        he: 'האפרה היא שינוי בפיגמנט בזקיק. מערכת Gray משלבת תוסף יומי עם סרום מקומי: שגרה, לא הבטחה.',
+        he: 'האפרה היא שינוי בפיגמנט בזקיק. המערכת לשיער אפור משלבת תוסף יומי עם סרום מקומי: שגרה, לא הבטחה.',
         ar: 'الشيب هو تغيّر في الصبغة داخل الجُريب. يجمع نظام الشعر الرمادي بين مكمّل غذائي يومي وسيروم موضعي: إنه روتين، لا وعد.',
         ru: 'Поседение — это изменение пигмента в волосяном фолликуле. Система ухода за сединой сочетает ежедневную биодобавку с сывороткой местного действия: это регулярный уход, а не обещание.',
         fr: 'Le grisonnement est un changement de pigmentation au niveau du follicule. Le système pour cheveux gris associe un complément quotidien à un sérum topique : une routine, pas une promesse.',

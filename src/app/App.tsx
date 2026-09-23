@@ -11,7 +11,6 @@ import { AccountRescan } from './routes/app/AccountRescan';
 import { marketingRoutes } from './routes/marketing/marketingRoutes';
 import { analysisRoutes } from './routes/analysis/analysisRoutes';
 import { StartLayout } from './routes/start/StartLayout';
-import { AccountStep } from './routes/start/AccountStep';
 import { PlanStep } from './routes/start/PlanStep';
 import { CheckoutStep } from './routes/start/CheckoutStep';
 import { SuccessStep } from './routes/start/SuccessStep';
@@ -41,7 +40,7 @@ const router = createBrowserRouter([
             path: 'program',
             element: <StartLayout />,
             children: [
-              { index: true, element: <AccountStep /> },
+              { index: true, element: null }, // forwards via StartLayout (guards.ts 'entry')
               { path: 'plan', element: <PlanStep /> },
               { path: 'checkout', element: <CheckoutStep /> },
               { path: 'success', element: <SuccessStep /> },

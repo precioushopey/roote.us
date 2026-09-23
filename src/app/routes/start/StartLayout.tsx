@@ -2,7 +2,6 @@
 import { Navigate, useLocation, useSearchParams } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
-import { useAuth } from '@/store/auth';
 import { Stepper, Button, RouteFade } from '@/app/components/roote';
 import { redirectForStartStep, START_STEPS, type StartStep } from './guards';
 import { seedDiagnosisAndReport } from '@/store/devSeed';
@@ -14,20 +13,15 @@ export function StartLayout() {
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
   const session = useSession();
-  const auth = useAuth();
   useDocumentMeta();
 
   const seg = pathname.split('/')[3]; // ['', locale, 'program', step] — undefined for /program itself, 'plan' | 'checkout' | 'success' otherwise
-  const step: StartStep = (START_STEPS as readonly string[]).includes(seg ?? '') ? (seg as StartStep) : 'account';
-  // The stepper displays Account/Payment/Plan (2026-09-22 — Plan is usually skipped now that
-  // duration is already chosen on the report page, so Payment reads as the natural 2nd stage);
-  // the actual page order is unchanged (account → plan → checkout → success, see guards.ts's
-  // START_STEPS and redirectForStartStep) — this only maps each real step to its display
-  // position, since START_STEPS.indexOf(step) no longer matches the display order directly.
-  const STEP_DISPLAY_INDEX: Record<StartStep, number> = { account: 0, plan: 2, checkout: 1, success: -1 };
+  const step: StartStep = (START_STEPS as readonly string[]).includes(seg ?? '') ? (seg as StartStep) : 'entry';
+  // Stepper: Plan → Payment (no Account stage — the funnel has no signup step, see guards.ts).
+  // `entry` only ever renders for the instant before its redirect.
+  const STEP_DISPLAY_INDEX: Record<StartStep, number> = { entry: 0, plan: 0, checkout: 1, success: -1 };
   const current = STEP_DISPLAY_INDEX[step];
-  // On success, nothing is "in progress" any more (current: -1 above) — Account and Payment
-  // both show as done instead, Plan stays upcoming/grey since it was skipped, not completed.
+  // On success nothing is "in progress" any more (current: -1) — both stages show as done.
   const doneThrough = step === 'success' ? 2 : undefined;
 
   const queryReportId = searchParams.get('report');
@@ -55,13 +49,12 @@ export function StartLayout() {
     );
   }
 
-  const redirect = redirectForStartStep(step, session, auth.email);
+  const redirect = redirectForStartStep(step, session);
   if (redirect) return <Navigate to={withLocale(redirect)} replace />;
 
   const steps = [
-    { id: 'account', label: t('start.rail.account') },
-    { id: 'payment', label: t('start.rail.payment') },
     { id: 'plan', label: t('start.rail.plan') },
+    { id: 'payment', label: t('start.rail.payment') },
   ];
 
   return (

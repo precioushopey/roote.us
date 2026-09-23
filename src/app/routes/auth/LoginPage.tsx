@@ -11,6 +11,8 @@ import heroImage from '@/assets/heroes/Hero.png';
 const ERROR_KEYS: Record<string, string> = {
   'not-found': 'auth.login.error.notFound',
   'wrong-password': 'auth.login.error.wrongPassword',
+  'no-password': 'auth.login.error.noPassword',
+  'order-not-found': 'auth.login.error.orderNotFound',
 };
 
 export function LoginPage() {
@@ -21,16 +23,27 @@ export function LoginPage() {
   const session = useSession();
   const [email, setEmail] = useState(auth.email ?? '');
   const [password, setPassword] = useState('');
+  const [orderId, setOrderId] = useState('');
+  // Guest checkout means most customers never set a password — the order number
+  // from their confirmation + their email is the other way in (Mischa review).
+  const [mode, setMode] = useState<'password' | 'order'>('password');
   const [error, setError] = useState<string | null>(null);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    const result = auth.signIn(email.trim(), password);
+    const result =
+      mode === 'order' ? auth.signInWithOrder(email, orderId) : auth.signIn(email.trim(), password);
     if (!result.ok) {
       setError(t(ERROR_KEYS[result.error] as never));
       return;
     }
-    navigate(withLocale(session.program ? '/account' : '/'));
+    // Program owners land on their dashboard; shop-only customers on their orders.
+    navigate(withLocale(session.program ? PATHS.account : PATHS.accountSection('profile')));
+  }
+
+  function switchMode(next: 'password' | 'order') {
+    setMode(next);
+    setError(null);
   }
 
   return (
@@ -54,17 +67,38 @@ export function LoginPage() {
               className={funnelField}
             />
           </label>
-          <label className="flex flex-col gap-2 text-sm">
-            {t('start.account.passwordLabel')}
-            <PasswordField
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              inputClassName={funnelField}
-            />
-          </label>
+          {mode === 'password' ? (
+            <label className="flex flex-col gap-2 text-sm">
+              {t('start.account.passwordLabel')}
+              <PasswordField
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                inputClassName={funnelField}
+              />
+            </label>
+          ) : (
+            <label className="flex flex-col gap-2 text-sm">
+              {t('auth.login.orderLabel')}
+              <input
+                required
+                value={orderId}
+                onChange={(e) => setOrderId(e.target.value)}
+                autoComplete="off"
+                className={funnelField}
+              />
+              <span className="text-sm text-muted-foreground">{t('auth.login.orderHint')}</span>
+            </label>
+          )}
           {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
           <button type="submit" className={funnelPrimaryBtn}>{t('auth.login.submit')}</button>
+          <button
+            type="button"
+            onClick={() => switchMode(mode === 'password' ? 'order' : 'password')}
+            className="text-sm text-accent underline"
+          >
+            {mode === 'password' ? t('auth.login.withOrder') : t('auth.login.withPassword')}
+          </button>
         </form>
         <p className="text-sm text-muted-foreground">
           {t('auth.login.noAccount')}{' '}

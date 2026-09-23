@@ -1,17 +1,16 @@
-import { Navigate, useLocation, useNavigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
 import { PATHS } from '@/app/paths';
-import { useAuth } from '@/store/auth';
+import { useSession } from '@/store/sessionStore';
 
 type SuccessState = { orderId?: string } | null;
 
 export function CartSuccess() {
   const t = useT();
   const location = useLocation();
-  const navigate = useNavigate();
   const withLocale = useLocalizedPath();
-  const auth = useAuth();
+  const session = useSession();
   const orderId = (location.state as SuccessState)?.orderId;
 
   if (!orderId) return <Navigate to={withLocale(PATHS.products)} replace />;
@@ -37,18 +36,21 @@ export function CartSuccess() {
         </ul>
       </div>
 
+      {/* Shop-first buyers skipped the analysis — offer it now that they own the
+          product (Mischa review); results land in the account they're already
+          signed into (CartCheckout signs guests in after payment). */}
+      {!session.analysis && (
+        <div className="flex flex-col items-start gap-3 rounded-xl border border-border bg-background p-6">
+          <h2 className="font-display text-xl font-medium">{t('bag.success.analysisTitle')}</h2>
+          <Prose>{t('bag.success.analysisBody')}</Prose>
+          <Button to={withLocale(PATHS.analysis)} variant="secondary" caps>
+            {t('marketing.nav.cta')}
+          </Button>
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-4">
-        <Button
-          onClick={() => {
-            if (auth.email) {
-              navigate(withLocale(PATHS.accountSection('profile')));
-            } else {
-              navigate(withLocale('/signup'), { state: { orderId } });
-            }
-          }}
-        >
-          {t('bag.success.trackOrder')}
-        </Button>
+        <Button to={withLocale(PATHS.accountSection('profile'))}>{t('bag.success.trackOrder')}</Button>
         <Button to={withLocale(PATHS.products)} variant="secondary">{t('bag.success.continue')}</Button>
         <Button to={withLocale(PATHS.home)} variant="secondary">{t('bag.success.home')}</Button>
       </div>

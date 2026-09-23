@@ -134,11 +134,11 @@ export const ROUTE_META: Record<string, PageMeta> = {
     }),
     description: L6({
       en: 'Understand what is changing at the root, and the Gray system.',
-      he: 'להבין מה משתנה בשורש, ואת מערכת Gray.',
-      ar: 'افهم ما الذي يتغيّر عند الجذر، وتعرّف على نظام Gray.',
-      ru: 'Поймите, что меняется у корня волос, и узнайте о системе Gray.',
-      fr: 'Comprenez ce qui change à la racine, et découvrez le système Gray.',
-      es: 'Entienda qué está cambiando en la raíz, y conozca el sistema Gray.',
+      he: 'להבין מה משתנה בשורש, ואת המערכת לשיער אפור.',
+      ar: 'افهم ما الذي يتغيّر عند الجذر، وتعرّف على نظام العناية بالشيب.',
+      ru: 'Поймите, что меняется у корня волос, и узнайте о системе ухода против седины.',
+      fr: 'Comprenez ce qui change à la racine, et découvrez le système anti-cheveux gris.',
+      es: 'Entienda qué está cambiando en la raíz, y conozca el sistema anticanas.',
     }),
   },
   '/program': {

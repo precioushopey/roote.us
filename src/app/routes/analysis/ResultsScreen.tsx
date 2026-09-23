@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useOutletContext } from 'react-router';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
@@ -25,6 +25,11 @@ export function ResultsScreen() {
   const [error, setError] = useState<string | null>(null);
 
   const redirect = redirectForAnalysisStep('results', session);
+  // Once per mount, only when the gate actually renders — the denominator for
+  // email_result_submitted, so the gate's conversion can be measured.
+  useEffect(() => {
+    if (!redirect) track('results_viewed', { hairGoal: session.diagnosis.hairGoal });
+  }, []);
   if (redirect) return <Navigate to={withLocale(redirect)} replace />;
 
   const gray = session.grayProfile;
