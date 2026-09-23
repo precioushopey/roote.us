@@ -10,6 +10,7 @@ import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { isPending } from '@/content/pending';
 import { pickLocalized } from '@/content/localized';
 import { HAIR_GOAL_OPTIONS } from '@/content/assessment';
+import { getProduct } from '@/content/products';
 import { PendingChip, LegalNotice } from '@/app/components/roote';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type ProgramOrder, type Contact, type CardRef } from '@/store/checkout';
@@ -67,6 +68,15 @@ export function CheckoutStep() {
     ...model.plan.supporting.map((s) => (isPending(s.name) ? t('app.task.pendingName') : s.name)),
   ];
   const packLabel = rec?.packaging === 'men' ? t('program.checkout.packMen') : t('program.checkout.packWomen');
+  // Same product keys that decided model.plan.core/supporting above (buildReport
+  // runs the same recommend() internally), resolved to order-history line items
+  // so /account/orders shows what's actually in the kit, not just the program's
+  // duration label. 2026-09-23 fix: this was previously never set for program
+  // orders, unlike a cart order's `items` (see store/orders.ts).
+  const planProductKeys = [rec?.coreProductKey, ...(rec?.supportingProductKeys ?? [])].filter(
+    (k): k is string => Boolean(k),
+  );
+  const orderItems = planProductKeys.map((slug) => ({ name: getProduct(slug)?.name ?? slug, qty: 1, slug }));
 
   async function onSubmit({ contact, card }: { contact: Contact; card: CardRef }) {
     setError(null);
@@ -88,6 +98,7 @@ export function CheckoutStep() {
         at: new Date().toISOString(),
         label: row!.label,
         email: contact.email.trim(),
+        items: orderItems,
       });
       // No signup step before checkout any more — sign the buyer in now so
       // /program/success → /account works (order number + email gets them back later).

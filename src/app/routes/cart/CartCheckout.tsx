@@ -5,7 +5,6 @@ import { resolveCartLines } from '@/store/cartLines';
 import { useAuth } from '@/store/auth';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
-import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { CheckoutFields } from '@/app/components/checkout/CheckoutFields';
 import { submitPayment, type CartOrder, type Contact, type CardRef } from '@/store/checkout';
 import { recordOrder } from '@/store/orders';
@@ -97,9 +96,9 @@ export function CartCheckout() {
           <ul className="mt-4 flex flex-col divide-y divide-border">
             {lines.map((line) => (
               <li key={line.id} className="flex items-center gap-4 py-3">
-                {line.sku && TREATMENT_PHOTOS[line.sku] ? (
+                {line.photo ? (
                   <img
-                    src={TREATMENT_PHOTOS[line.sku]}
+                    src={line.photo}
                     alt=""
                     className="h-12 w-12 shrink-0 rounded-md bg-cream-100 object-contain"
                   />

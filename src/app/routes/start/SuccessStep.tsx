@@ -1,4 +1,5 @@
-import { Package, CheckCircle2, Bell, Camera, type LucideIcon } from 'lucide-react';
+import { useState } from 'react';
+import { Package, CheckCircle2, Bell, Camera, Copy, Check, type LucideIcon } from 'lucide-react';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useSession } from '@/store/sessionStore';
 import { DisplayTitle, Button } from '@/app/components/roote';
@@ -20,16 +21,36 @@ export function SuccessStep() {
   const withLocale = useLocalizedPath();
   const session = useSession();
   const program = session.program;
+  const [copied, setCopied] = useState(false);
   if (!program) return null;
+  const orderId = program.orderId;
+
+  function copyOrderId() {
+    navigator.clipboard.writeText(orderId).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
 
   return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-4 text-center">
       <DisplayTitle as="h1" step="sm" align="center">
         {t('start.success.title')}
       </DisplayTitle>
-      <p className="font-body text-sm text-muted-foreground">
-        #{program.orderId} · {t('report.duration.label', { days: program.durationDays })} · {program.orderedAt}
-      </p>
+      <div className="flex items-center gap-1.5">
+        <p className="font-body text-sm text-muted-foreground">
+          #{program.orderId} · {t('report.duration.label', { days: program.durationDays })} · {program.orderedAt}
+        </p>
+        <button
+          type="button"
+          onClick={copyOrderId}
+          aria-label={copied ? t('start.success.copied') : t('start.success.copyOrderId')}
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-cream-100 hover:text-foreground"
+        >
+          {copied ? <Check className="h-3.5 w-3.5" aria-hidden /> : <Copy className="h-3.5 w-3.5" aria-hidden />}
+        </button>
+      </div>
+      <p className="font-body text-xs text-muted-foreground">{t('start.success.saveOrderNote')}</p>
 
       <div className="mt-4 flex w-full flex-col items-start gap-1 text-start">
         <h2 className="font-display text-md text-foreground">{t('start.success.stepsTitle')}</h2>

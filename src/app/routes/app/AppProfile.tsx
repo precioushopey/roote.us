@@ -75,20 +75,6 @@ export function AppProfile() {
           flowing on its own avoids that. */}
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 lg:items-start">
         <div className="flex flex-col gap-4 md:gap-8">
-          <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
-            <h2 className="font-display text-lg font-medium">{t('app.profile.account.title')}</h2>
-            <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2 lg:grid-cols-1">
-              <div className="flex flex-col">
-                <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.email')}</dt>
-                <dd>{auth.email}</dd>
-              </div>
-              <div className="flex flex-col">
-                <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.memberSince')}</dt>
-                <dd>{memberSince}</dd>
-              </div>
-            </dl>
-          </section>
-
           {program && (
             <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
               <h2 className="font-display text-lg font-medium">{t('app.subscription.title')}</h2>
@@ -205,6 +191,20 @@ export function AppProfile() {
         </div>
 
         <div className="flex flex-col gap-4 md:gap-8">
+          <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
+            <h2 className="font-display text-lg font-medium">{t('app.profile.account.title')}</h2>
+            <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2 lg:grid-cols-1">
+              <div className="flex flex-col">
+                <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.email')}</dt>
+                <dd>{auth.email}</dd>
+              </div>
+              <div className="flex flex-col">
+                <dt className="text-sm uppercase text-muted-foreground">{t('app.profile.memberSince')}</dt>
+                <dd>{memberSince}</dd>
+              </div>
+            </dl>
+          </section>
+
           {program && (
             <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
               <h2 className="font-display text-lg font-medium">{t('app.profile.program.title')}</h2>

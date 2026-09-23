@@ -4,7 +4,6 @@ import { useCart } from '@/store/cart';
 import { resolveCartLines } from '@/store/cartLines';
 import { rooteContent } from '@/content/roote.config';
 import { formatMoney } from '@/domain/report/money';
-import { TREATMENT_PHOTOS } from '@/content/treatmentPhotos';
 import { Section, DisplayTitle, Prose, Button } from '@/app/components/roote';
 import { PendingChip } from '@/app/components/brand/PendingChip';
 import { PATHS } from '@/app/paths';
@@ -40,9 +39,9 @@ export function CartPage() {
           <ul className="flex flex-col divide-y divide-border">
             {lines.map((line) => (
               <li key={line.id} className="flex gap-4 py-6">
-                {line.sku && TREATMENT_PHOTOS[line.sku] ? (
+                {line.photo ? (
                   <img
-                    src={TREATMENT_PHOTOS[line.sku]}
+                    src={line.photo}
                     alt=""
                     className="h-24 w-24 shrink-0 rounded-lg bg-cream-100 object-contain"
                   />

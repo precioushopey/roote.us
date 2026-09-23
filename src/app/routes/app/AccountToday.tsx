@@ -209,7 +209,7 @@ export function AccountToday() {
             <p className="font-body text-sm font-medium text-foreground">
               {t('app.overview.dayOf', { day: up.currentDay, total: up.durationDays })}
             </p>
-            <Badge tone={STATUS_TONE[up.status]}>{t(STATUS_KEY[up.status])}</Badge>
+            <Badge tone={STATUS_TONE[up.status]} className="text-xs sm:text-sm">{t(STATUS_KEY[up.status])}</Badge>
           </div>
           <p className="font-body text-sm text-muted-foreground">
             {t('app.overview.completedRemaining', { done: up.daysCompleted, left: up.daysRemaining })}
@@ -283,7 +283,7 @@ export function AccountToday() {
       </div>
 
       <div className="grid gap-4 md:gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
-        <Card className="flex flex-col gap-4">
+        <Card className="flex min-w-0 flex-col gap-4">
           <div className="flex items-baseline justify-between">
             <h2 className="font-display text-md text-foreground">{t('app.today.title')}</h2>
             <span className="font-body text-sm text-muted-foreground">

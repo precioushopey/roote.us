@@ -224,7 +224,7 @@ export function CheckoutFields({
           value={addr.addressLine2}
           onChange={(e) => setAddr({ ...addr, addressLine2: e.target.value })}
         />
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <TextField
             className="flex-[2]"
             label={t('checkout.city')}
@@ -244,7 +244,7 @@ export function CheckoutFields({
             onChange={(e) => setAddr({ ...addr, state: e.target.value })}
           />
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <TextField
             className="flex-1"
             label={t('checkout.postal')}
@@ -274,7 +274,7 @@ export function CheckoutFields({
   return (
     <form className={cn('flex flex-col gap-4', className)} onSubmit={handleSubmit} noValidate>
       <h2 className="text-sm font-medium">{t('checkout.contactTitle')}</h2>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <TextField
           className="flex-1"
           label={t('checkout.firstName')}
@@ -296,7 +296,7 @@ export function CheckoutFields({
           onChange={(e) => setLastName(e.target.value)}
         />
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <TextField
           className="flex-1"
           label={t('checkout.email')}
@@ -360,7 +360,7 @@ export function CheckoutFields({
         value={cardNumber}
         onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
       />
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <TextField
           className="flex-1"
           label={t('checkout.expiry')}

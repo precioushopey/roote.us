@@ -170,7 +170,7 @@ export function SolutionPage({ slug: slugProp }: { slug?: 'thinning' | 'gray-hai
           title={pickLocalized(program.name, cl)}
           body={pickLocalized(program.summary, cl)}
         />
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
           {products.map((p) => (
             <ProductCard
               key={p.slug}
