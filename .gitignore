@@ -8,3 +8,10 @@ coverage/
 *.log
 .superpowers/
 .worktrees/
+
+# secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
