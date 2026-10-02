@@ -149,7 +149,7 @@ six. Every route sits under a `/:locale` URL prefix: `LocaleGate` (the router el
 mounts `LocaleProvider`, and `resolveLocaleRedirect` / `isValidLocaleSegment` in
 `src/i18n/localeUrl.ts` send a bare or bad-locale URL to stored `roote.locale` → `navigator.language`
 → `en`. Copy is one file per locale, `src/i18n/messages/<code>.ts`, held at exact key parity
-(1125 keys) by `pnpm i18n:check` (`scripts/check-i18n-parity.mjs` — parity / no-stray / no-empty /
+(1175 keys) by `pnpm i18n:check` (`scripts/check-i18n-parity.mjs` — parity / no-stray / no-empty /
 placeholder-integrity, plain Node, not a test); `he.ts` is the per-key reference for the `ar/ru/fr/es`
 first-pass translations. **Content-layer `LocalizedText`** (`src/content/*.ts` + `roote.config.ts`)
 is likewise fully six-locale — its `LocalizedText` type carries optional `ar?/ru?/fr?/es?`.
