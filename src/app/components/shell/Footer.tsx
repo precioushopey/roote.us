@@ -63,6 +63,8 @@ const SOCIAL_ICONS: Record<string, ComponentType<LucideProps>> = {
   youtube: Youtube,
 };
 
+const ALWAYS_SHOWN_SOCIAL = ['instagram', 'facebook'];
+
 const SOCIAL_LABELS: Record<string, string> = {
   instagram: 'Instagram',
   facebook: 'Facebook',
@@ -77,8 +79,11 @@ export function Footer() {
   const auth = useAuth();
   const year = new Date().getFullYear();
   const { company, brand } = rooteContent;
+  // Instagram + Facebook always show (client request, 2026-10-02); until the real
+  // profile URL is supplied (`null` in roote.config) the icon is an inert placeholder.
+  // Other platforms only appear once they have a URL.
   const socialLinks = Object.entries(brand.social).filter(
-    (entry): entry is [string, string] => entry[1] !== null,
+    ([key, href]) => href !== null || ALWAYS_SHOWN_SOCIAL.includes(key),
   );
 
   const getStartedLinks = [
@@ -192,17 +197,25 @@ export function Footer() {
               <div className="mt-6 flex items-center gap-4">
                 {socialLinks.map(([key, href]) => {
                   const Icon = SOCIAL_ICONS[key];
-                  return (
+                  const icon = Icon ? <Icon width={16} height={16} strokeWidth={1.5} aria-hidden /> : null;
+                  const box =
+                    'flex h-9 w-9 items-center justify-center rounded-full border border-ink-foreground/15 text-ink-foreground';
+                  return href ? (
                     <a
                       key={key}
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={SOCIAL_LABELS[key] ?? key}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-ink-foreground/15 text-ink-foreground transition-colors hover:bg-ink-foreground/10"
+                      className={`${box} transition-colors hover:bg-ink-foreground/10`}
                     >
-                      {Icon ? <Icon width={16} height={16} strokeWidth={1.5} aria-hidden /> : null}
+                      {icon}
                     </a>
+                  ) : (
+                    // TODO: client to supply the profile URL (roote.config brand.social)
+                    <span key={key} aria-hidden className={`${box} opacity-50`}>
+                      {icon}
+                    </span>
                   );
                 })}
               </div>

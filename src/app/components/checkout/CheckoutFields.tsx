@@ -1,10 +1,11 @@
 import { useId, useRef, useState, type InputHTMLAttributes, type ReactNode } from 'react';
-import { Link } from 'react-router';
+import { createPortal } from 'react-dom';
 import { Loader2 } from 'lucide-react';
 import { useT, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { cn } from '@/app/components/ui/utils';
 import { RadioCard } from '@/app/components/roote';
 import { funnelField, funnelPrimaryBtn } from '@/app/components/funnel/funnelStyles';
+import { CheckoutTrust } from '@/app/components/checkout/CheckoutTrust';
 import type { Address, Contact, CardRef } from '@/store/checkout';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -119,16 +120,22 @@ export function CheckoutFields({
   error,
   defaultEmail = '',
   className,
+  paymentTarget,
   onSubmit,
 }: {
   submitting: boolean;
   error: string | null;
   defaultEmail?: string;
   className?: string;
+  /** When given (even as `null` while the element mounts), the payment block — method,
+   *  card fields, terms and the submit button — renders into that element (e.g. under the
+   *  order summary) instead of inline. It still belongs to this form via the `form` attr. */
+  paymentTarget?: HTMLElement | null;
   onSubmit: (data: { contact: Contact; card: CardRef }) => void;
 }) {
   const t = useT();
   const withLocale = useLocalizedPath();
+  const formId = useId();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -271,8 +278,79 @@ export function CheckoutFields({
     );
   }
 
+  const payment = (
+    <div className="flex flex-col gap-4">
+      <h2 className="mt-2 text-sm font-medium">{t('checkout.paymentTitle')}</h2>
+      <p className="text-sm text-muted-foreground">{t('checkout.testNotice')}</p>
+      <h3 className="mt-1 text-sm font-medium">{t('checkout.paymentMethodTitle')}</h3>
+      <div className="flex flex-col gap-2">
+        <RadioCard name="paymentMethod" value="card" checked title={t('checkout.paymentMethod.card')} />
+        {/* TODO: confirm with client — which alternate payment methods to actually offer */}
+        <RadioCard name="paymentMethod" value="alt" disabled title={t('checkout.altPayment')} />
+      </div>
+
+      <TextField
+        label={t('checkout.cardName')}
+        required
+        error={fieldErrors.cardName}
+        refCb={refCb('cardName')}
+        autoComplete="cc-name"
+        value={cardName}
+        onChange={(e) => setCardName(e.target.value)}
+      />
+      <TextField
+        label={t('checkout.cardNumber')}
+        required
+        error={fieldErrors.cardNumber}
+        refCb={refCb('cardNumber')}
+        inputMode="numeric"
+        autoComplete="cc-number"
+        dir="ltr"
+        maxLength={23}
+        value={cardNumber}
+        onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
+      />
+      <div className="flex flex-col gap-4 sm:flex-row">
+        <TextField
+          className="flex-1"
+          label={t('checkout.expiry')}
+          required
+          error={fieldErrors.expiry}
+          refCb={refCb('expiry')}
+          inputMode="numeric"
+          autoComplete="cc-exp"
+          dir="ltr"
+          placeholder="MM/YY"
+          maxLength={5}
+          value={expiry}
+          onChange={(e) => setExpiry(formatExpiry(e.target.value, expiry))}
+        />
+        <TextField
+          className="flex-1"
+          label={t('checkout.cvc')}
+          required
+          error={fieldErrors.cvc}
+          refCb={refCb('cvc')}
+          inputMode="numeric"
+          autoComplete="cc-csc"
+          dir="ltr"
+          maxLength={4}
+          value={cvc}
+          onChange={(e) => setCvc(e.target.value.replace(/\D/g, '').slice(0, 4))}
+        />
+      </div>
+
+      {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
+      <button type="submit" form={formId} disabled={submitting} className={funnelPrimaryBtn}>
+        {submitting && <Loader2 aria-hidden className="h-4 w-4 animate-spin" strokeWidth={2} />}
+        {submitting ? t('checkout.submitting') : t('checkout.submit')}
+      </button>
+      <CheckoutTrust />
+    </div>
+  );
+
   return (
-    <form className={cn('flex flex-col gap-4', className)} onSubmit={handleSubmit} noValidate>
+    <form id={formId} className={cn('flex flex-col gap-4', className)} onSubmit={handleSubmit} noValidate>
       <h2 className="text-sm font-medium">{t('checkout.contactTitle')}</h2>
       <div className="flex flex-col gap-4 sm:flex-row">
         <TextField
@@ -337,75 +415,8 @@ export function CheckoutFields({
       </label>
       {!shippingSameAsBilling && addressFields(shipping, setShipping, 'shipping')}
 
-      <h2 className="mt-2 text-sm font-medium">{t('checkout.paymentTitle')}</h2>
-      <p className="text-sm text-muted-foreground">{t('checkout.testNotice')}</p>
-      <TextField
-        label={t('checkout.cardName')}
-        required
-        error={fieldErrors.cardName}
-        refCb={refCb('cardName')}
-        autoComplete="cc-name"
-        value={cardName}
-        onChange={(e) => setCardName(e.target.value)}
-      />
-      <TextField
-        label={t('checkout.cardNumber')}
-        required
-        error={fieldErrors.cardNumber}
-        refCb={refCb('cardNumber')}
-        inputMode="numeric"
-        autoComplete="cc-number"
-        dir="ltr"
-        maxLength={23}
-        value={cardNumber}
-        onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-      />
-      <div className="flex flex-col gap-4 sm:flex-row">
-        <TextField
-          className="flex-1"
-          label={t('checkout.expiry')}
-          required
-          error={fieldErrors.expiry}
-          refCb={refCb('expiry')}
-          inputMode="numeric"
-          autoComplete="cc-exp"
-          dir="ltr"
-          placeholder="MM/YY"
-          maxLength={5}
-          value={expiry}
-          onChange={(e) => setExpiry(formatExpiry(e.target.value, expiry))}
-        />
-        <TextField
-          className="flex-1"
-          label={t('checkout.cvc')}
-          required
-          error={fieldErrors.cvc}
-          refCb={refCb('cvc')}
-          inputMode="numeric"
-          autoComplete="cc-csc"
-          dir="ltr"
-          maxLength={4}
-          value={cvc}
-          onChange={(e) => setCvc(e.target.value.replace(/\D/g, '').slice(0, 4))}
-        />
-      </div>
-
-      <h3 className="mt-1 text-sm font-medium">{t('checkout.paymentMethodTitle')}</h3>
-      <div className="flex flex-col gap-2">
-        <RadioCard name="paymentMethod" value="card" checked title={t('checkout.paymentMethod.card')} />
-        {/* TODO: confirm with client — which alternate payment methods to actually offer */}
-        <RadioCard name="paymentMethod" value="alt" disabled title={t('checkout.altPayment')} />
-      </div>
-
-      {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-      <p className="text-sm text-muted-foreground">
-        {t('checkout.termsAgree')}{' '}
-        <Link to={withLocale('/terms')} className="text-accent underline">{t('marketing.legal.terms.title')}</Link>.
-      </p>
-      <button type="submit" disabled={submitting} className={funnelPrimaryBtn}>
-        {submitting && <Loader2 aria-hidden className="h-4 w-4 animate-spin" strokeWidth={2} />}
-        {submitting ? t('checkout.submitting') : t('checkout.submit')}
-      </button>
+      {paymentTarget === undefined && payment}
+      {paymentTarget && createPortal(payment, paymentTarget)}
     </form>
   );
 }

@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { CircleCheck } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useReducedMotion } from '@/app/lib/useReducedMotion';
@@ -241,7 +243,7 @@ function SystemAndProgress() {
     t('marketing.home.durations.includesTracking'),
   ];
   return (
-    <Section tone="teal" width="content" gap={20}>
+    <Section id="products" tone="teal" width="content" gap={20} className="scroll-mt-16">
       <div className="flex flex-col gap-12">
         <SectionIntro
           onInk
@@ -438,6 +440,14 @@ function FinalCta() {
 }
 
 export function Home() {
+  // The router doesn't scroll to `#hash` targets on its own — the header's
+  // "Products" link lands here as `/<locale>#products`.
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.getElementById(hash.slice(1));
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [hash]);
   return (
     <>
       <HomeHero />

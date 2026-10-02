@@ -198,7 +198,7 @@ export const HAIR_GOAL_OPTIONS: Array<{
   },
   {
     value: 'other',
-    title: L6({ en: 'Something else', he: 'משהו אחר', ar: 'شيء آخر', ru: 'Что-то другое', fr: 'Autre chose', es: 'Otra cosa' }),
+    title: L6({ en: 'All answers', he: 'כל התשובות', ar: 'كل الإجابات', ru: 'Все ответы', fr: 'Toutes les réponses', es: 'Todas las respuestas' }),
     description: L6({
       en: 'Not sure yet, or a different goal; we’ll still run your analysis.',
       he: 'עוד לא בטוח/ה, או מטרה אחרת, עדיין נבצע את הניתוח עבורך.',

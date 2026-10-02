@@ -29,6 +29,8 @@ export function CartCheckout() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [placed, setPlaced] = useState(false);
+  // Payment (method, card, submit) renders under the order summary, not in the left column.
+  const [paymentEl, setPaymentEl] = useState<HTMLElement | null>(null);
 
   // Once the order is placed we clear the cart, so the empty-cart guard below
   // must not fire during that same render and bounce us back to /cart.
@@ -83,6 +85,7 @@ export function CartCheckout() {
             submitting={submitting}
             error={error}
             defaultEmail={auth.email ?? ''}
+            paymentTarget={paymentEl}
             onSubmit={onSubmit}
           />
           <Link to={withLocale(PATHS.cart)} className="max-w-lg text-center text-sm text-muted-foreground underline">
@@ -122,6 +125,7 @@ export function CartCheckout() {
             ))}
           </ul>
           <CartTotalRows totals={totals} />
+          <div ref={setPaymentEl} className="mt-6 border-t border-border pt-2" />
         </aside>
       </div>
     </Section>

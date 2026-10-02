@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useLocation } from 'react-router';
 import { Menu, User } from 'lucide-react';
 import { useT, useLocale, useLocalizedPath } from '@/i18n/LocaleProvider';
 import { useScrollCondense } from '@/app/lib/useScrollCondense';
@@ -19,7 +19,7 @@ import { resolveCartLines } from '@/store/cartLines';
 // consolidation — /about, /science, /how-it-works, /system no longer exist.
 const NAV: Array<[key: MessageKey, to: string]> = [
   ['marketing.nav.magazine', PATHS.magazine],
-  ['marketing.nav.products', PATHS.products],
+  ['marketing.nav.products', `${PATHS.home}#products`],
   ['marketing.nav.aiSection', PATHS.hairScan],
 ];
 
@@ -32,6 +32,17 @@ export function Header() {
   const { locale, setLocale } = useLocale();
   const resolvedCartCount = resolveCartLines(cart.lines, locale).reduce((n, l) => n + l.qty, 0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+  // A `#hash` nav link on the page it points to: the URL wouldn't change, so Home's
+  // hash-scroll effect never re-fires — scroll straight to the target instead.
+  const onHashLinkClick = (to: string) => (e: React.MouseEvent) => {
+    const [path, hash] = to.split('#');
+    if (!hash || pathname.replace(/\/$/, '') !== withLocale(path || '/').replace(/\/$/, '')) return;
+    const el = document.getElementById(hash);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   // A guest with no account can't reach the authenticated /account app (it
   // redirects away, see AppShell.tsx), so send them to the guest-facing
   // nudge page instead of a link that silently bounces them.
@@ -70,7 +81,13 @@ export function Header() {
             className="hidden items-center gap-8 lg:flex xl:gap-8"
           >
             {NAV.map(([key, to]) => (
-              <NavLink key={to} to={withLocale(to)} className={navLinkClass}>
+              <NavLink
+                key={to}
+                to={withLocale(to)}
+                onClick={onHashLinkClick(to)}
+                // A `#hash` link points into the home page, so it must never light up as "active" there.
+                className={(s) => navLinkClass({ isActive: s.isActive && !to.includes('#') })}
+              >
                 <span className="whitespace-nowrap">{t(key)}</span>
               </NavLink>
             ))}
@@ -127,7 +144,10 @@ export function Header() {
             <Link
               key={to}
               to={withLocale(to)}
-              onClick={() => setMenuOpen(false)}
+              onClick={(e) => {
+                onHashLinkClick(to)(e);
+                setMenuOpen(false);
+              }}
               className="rounded-lg px-2 py-3 font-display text-base text-foreground hover:bg-cream-100"
             >
               {t(key)}
