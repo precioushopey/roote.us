@@ -17,6 +17,7 @@ const US_POSTAL_RE = /^\d{5}$/;
 const CARD_RE = /^\d{13,19}$/;
 const EXPIRY_RE = /^(0[1-9]|1[0-2])\/\d{2}$/;
 const CVC_RE = /^\d{3,4}$/;
+const ADDRESS_MAX_LENGTH = 100;
 
 /** "4242424242424242" → "4242 4242 4242 4242" as the customer types (digits only, max 19). */
 function formatCardNumber(value: string): string {
@@ -42,7 +43,7 @@ function formatUSPhone(value: string): string {
   return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
 }
 
-const EMPTY_ADDRESS: Address = { addressLine1: '', addressLine2: '', city: '', state: '', postal: '', country: 'US' };
+const EMPTY_ADDRESS: Address = { addressLine1: '', city: '', state: '', postal: '', country: 'US' };
 
 /** Every field this form can report an error on, in DOM order — the order `validate()`
  *  below checks them in, so "first invalid field" and "first field on the page" agree. */
@@ -83,7 +84,7 @@ function TextField({
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'className'>) {
   const id = useId();
   return (
-    <label htmlFor={id} className={cn('flex flex-col gap-2 text-sm', className)}>
+    <label htmlFor={id} className={cn('flex flex-col gap-2 text-base', className)}>
       <span>
         {label}
         {required && <Req />}
@@ -97,11 +98,11 @@ function TextField({
         {...inputProps}
       />
       {error ? (
-        <span role="alert" className="text-sm text-destructive">
+        <span role="alert" className="text-base text-destructive">
           {error}
         </span>
       ) : hint ? (
-        <span className="text-sm text-muted-foreground">{hint}</span>
+        <span className="text-base text-muted-foreground">{hint}</span>
       ) : null}
     </label>
   );
@@ -165,7 +166,7 @@ export function CheckoutFields({
       { key: 'firstName', invalid: !firstName.trim(), message: t('checkout.error.required') },
       { key: 'lastName', invalid: !lastName.trim(), message: t('checkout.error.required') },
       { key: 'email', invalid: !EMAIL_RE.test(email.trim()), message: t('checkout.error.email') },
-      { key: 'mobile', invalid: mobile.trim() !== '' && !US_PHONE_RE.test(mobile), message: t('checkout.error.mobile') },
+      { key: 'mobile', invalid: !US_PHONE_RE.test(mobile), message: mobile.trim() === '' ? t('checkout.error.required') : t('checkout.error.mobile') },
       { key: 'billingAddressLine1', invalid: !billing.addressLine1.trim(), message: t('checkout.error.required') },
       { key: 'billingCity', invalid: !billing.city.trim(), message: t('checkout.error.required') },
       { key: 'billingState', invalid: !billing.state.trim(), message: t('checkout.error.required') },
@@ -223,13 +224,9 @@ export function CheckoutFields({
           required
           error={err('AddressLine1')}
           refCb={refCb(`${prefix}AddressLine1`)}
+          maxLength={ADDRESS_MAX_LENGTH}
           value={addr.addressLine1}
           onChange={(e) => setAddr({ ...addr, addressLine1: e.target.value })}
-        />
-        <TextField
-          label={t('checkout.addressLine2')}
-          value={addr.addressLine2}
-          onChange={(e) => setAddr({ ...addr, addressLine2: e.target.value })}
         />
         <div className="flex flex-col gap-4 sm:flex-row">
           <TextField
@@ -264,7 +261,7 @@ export function CheckoutFields({
             value={addr.postal}
             onChange={(e) => setAddr({ ...addr, postal: e.target.value.replace(/\D/g, '').slice(0, 5) })}
           />
-          <label className="flex flex-1 flex-col gap-2 text-sm">
+          <label className="flex flex-1 flex-col gap-2 text-base">
             {t('checkout.country')}
             <input
               disabled
@@ -280,9 +277,9 @@ export function CheckoutFields({
 
   const payment = (
     <div className="flex flex-col gap-4">
-      <h2 className="mt-2 text-sm font-medium">{t('checkout.paymentTitle')}</h2>
-      <p className="text-sm text-muted-foreground">{t('checkout.testNotice')}</p>
-      <h3 className="mt-1 text-sm font-medium">{t('checkout.paymentMethodTitle')}</h3>
+      <h2 className="mt-2 text-base font-medium">{t('checkout.paymentTitle')}</h2>
+      <p className="text-base text-muted-foreground">{t('checkout.testNotice')}</p>
+      <h3 className="mt-1 text-base font-medium">{t('checkout.paymentMethodTitle')}</h3>
       <div className="flex flex-col gap-2">
         <RadioCard name="paymentMethod" value="card" checked title={t('checkout.paymentMethod.card')} />
         {/* TODO: confirm with client — which alternate payment methods to actually offer */}
@@ -340,7 +337,7 @@ export function CheckoutFields({
         />
       </div>
 
-      {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
+      {error && <p role="alert" className="text-base text-destructive">{error}</p>}
       <button type="submit" form={formId} disabled={submitting} className={funnelPrimaryBtn}>
         {submitting && <Loader2 aria-hidden className="h-4 w-4 animate-spin" strokeWidth={2} />}
         {submitting ? t('checkout.submitting') : t('checkout.submit')}
@@ -351,7 +348,7 @@ export function CheckoutFields({
 
   return (
     <form id={formId} className={cn('flex flex-col gap-4', className)} onSubmit={handleSubmit} noValidate>
-      <h2 className="text-sm font-medium">{t('checkout.contactTitle')}</h2>
+      <h2 className="text-base font-medium">{t('checkout.contactTitle')}</h2>
       <div className="flex flex-col gap-4 sm:flex-row">
         <TextField
           className="flex-1"
@@ -389,6 +386,7 @@ export function CheckoutFields({
         <TextField
           className="flex-1"
           label={t('checkout.mobile')}
+          required
           hint={t('checkout.mobileHint')}
           error={fieldErrors.mobile}
           refCb={refCb('mobile')}
@@ -400,11 +398,11 @@ export function CheckoutFields({
         />
       </div>
 
-      <h2 className="mt-2 text-sm font-medium">{t('checkout.billingTitle')}</h2>
+      <h2 className="mt-2 text-base font-medium">{t('checkout.billingTitle')}</h2>
       {addressFields(billing, setBilling, 'billing')}
 
-      <h2 className="mt-2 text-sm font-medium">{t('checkout.shippingTitle')}</h2>
-      <label className="flex cursor-pointer items-center gap-2 text-sm">
+      <h2 className="mt-2 text-base font-medium">{t('checkout.shippingTitle')}</h2>
+      <label className="flex cursor-pointer items-center gap-2 text-base">
         <input
           type="checkbox"
           checked={shippingSameAsBilling}

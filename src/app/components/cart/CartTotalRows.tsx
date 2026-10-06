@@ -13,7 +13,7 @@ export function CartTotalRows({ totals }: { totals: CartTotals }) {
 
   return (
     <>
-      <div className="mt-4 flex items-center justify-between text-sm">
+      <div className="mt-4 flex items-center justify-between text-base">
         <span>{t('cart.subtotal')}</span>
         {totals.subtotal === null ? (
           <PendingChip label="cart subtotal" />
@@ -21,7 +21,7 @@ export function CartTotalRows({ totals }: { totals: CartTotals }) {
           <span className="text-foreground">{money(totals.subtotal)}</span>
         )}
       </div>
-      <div className="mt-1 flex items-center justify-between text-sm text-muted-foreground">
+      <div className="mt-1 flex items-center justify-between text-base text-muted-foreground">
         <span>{t('bag.shipping')}</span>
         {totals.shipping === null ? (
           <PendingChip label="shipping" />
@@ -29,7 +29,7 @@ export function CartTotalRows({ totals }: { totals: CartTotals }) {
           <span className="text-foreground">{totals.shipping === 0 ? t('start.checkout.shippingFree') : money(totals.shipping)}</span>
         )}
       </div>
-      <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-sm font-medium">
+      <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-base font-medium">
         <span>{t('bag.total')}</span>
         {totals.total === null ? <PendingChip label="cart total" /> : <span>{money(totals.total)}</span>}
       </div>

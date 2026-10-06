@@ -73,12 +73,12 @@ export function CartCheckout() {
   }
 
   return (
-    <Section tone="cream" className="pt-28 md:pt-32" gap={12}>
+    <Section tone="cream" className="pt-16 pb-14 md:pt-20" gap={8}>
       <DisplayTitle as="h1" step="xl">
         {t('bag.checkout.title')}
       </DisplayTitle>
 
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1fr]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1fr]">
         <div className="flex flex-col gap-4">
           <CheckoutFields
             className="max-w-lg"
@@ -88,15 +88,15 @@ export function CartCheckout() {
             paymentTarget={paymentEl}
             onSubmit={onSubmit}
           />
-          <Link to={withLocale(PATHS.cart)} className="max-w-lg text-center text-sm text-muted-foreground underline">
+          <Link to={withLocale(PATHS.cart)} className="max-w-lg text-center text-base text-muted-foreground underline">
             {t('bag.checkout.back')}
           </Link>
         </div>
 
         <aside className="h-fit rounded-xl border border-border bg-background p-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium">{t('bag.checkout.summaryTitle')}</h2>
-            <Link to={withLocale(PATHS.cart)} className="text-sm text-accent underline">{t('bag.checkout.edit')}</Link>
+            <h2 className="text-base font-medium">{t('bag.checkout.summaryTitle')}</h2>
+            <Link to={withLocale(PATHS.cart)} className="text-base text-accent underline">{t('bag.checkout.edit')}</Link>
           </div>
           <ul className="mt-4 flex flex-col divide-y divide-border">
             {lines.map((line) => (
@@ -111,13 +111,13 @@ export function CartCheckout() {
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-cream-100" />
                 )}
                 <div className="flex flex-1 flex-col">
-                  <span className="text-sm">{line.name}</span>
-                  <span className="text-sm text-muted-foreground">{t('bag.checkout.qty', { qty: String(line.qty) })}</span>
+                  <span className="text-base">{line.name}</span>
+                  <span className="text-base text-muted-foreground">{t('bag.checkout.qty', { qty: String(line.qty) })}</span>
                 </div>
                 {line.price === null ? (
                   <PendingChip label={`${line.name} price`} />
                 ) : (
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-base font-medium text-foreground">
                     {formatMoney(line.price * line.qty, rooteContent.currency, cl).formatted}
                   </span>
                 )}

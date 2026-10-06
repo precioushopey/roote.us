@@ -6,7 +6,6 @@ import type { CartLine } from './cart';
  *  [PENDING] client/commerce decision, same as multi-currency (see roote.config.ts). */
 export type Address = {
   addressLine1: string;
-  addressLine2: string;
   city: string;
   state: string;
   postal: string;
