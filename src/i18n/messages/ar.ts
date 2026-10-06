@@ -1522,4 +1522,11 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'marketing.learn.system.gray': 'نظام Gray',
   'marketing.learn.system.grayBody': 'جانبان لنظام واحد: من الخارج بالسيروم، ومن الداخل بالكبسولة.',
   'marketing.learn.link': 'لست متأكدًا من أين تبدأ؟ تعرّف على الأساسيات',
+
+  // --- Cart discounts ---
+  'cart.discount': 'الخصم',
+  'cart.discount.quantity': 'توفير الكميات',
+  'cart.discount.set': 'توفير المجموعة الكاملة',
+  'cart.discount.package': 'توفير الحزمة الكاملة',
+  'cart.discountRules': 'وفّر أكثر كلما اشتريت أكثر. 4 وحدات من المنتج نفسه: خصم 10%. 12 وحدة من المنتج نفسه: خصم 30%. 12 وحدة من كل منتج من المنتجات الستة (72 وحدة): خصم 40%. وحدة واحدة من كل منتج من المنتجات الستة (المجموعة الكاملة): خصم 10%. يُطبَّق أفضل خصم، ولا تُجمع الخصومات.',
 };

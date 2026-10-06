@@ -157,6 +157,7 @@ export function ProductDetail() {
                 )}
               </span>
             </div>
+            <p className="max-w-[32rem] font-body text-xs text-ink-foreground">{t('cart.discountRules')}</p>
             <div className="mt-4 w-full sm:w-auto">
               <Button
                 caps

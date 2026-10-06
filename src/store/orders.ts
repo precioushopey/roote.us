@@ -26,8 +26,9 @@ export type OrderRecord = {
    *  subtotal + shipping. Optional: orders recorded before 2026-09-23 lack it,
    *  and it is left unset when a price was still [PENDING] at purchase. */
   total?: number;
-  /** Cart orders only: the two parts of `total`. */
+  /** Cart orders only: the parts of `total` (gross subtotal, discount saved, shipping). */
   subtotal?: number;
+  discount?: number;
   shipping?: number;
   /** Program orders only: how long the purchased program runs. */
   durationDays?: number;

@@ -1455,6 +1455,13 @@ export const en = {
   'marketing.learn.system.gray': 'Gray system',
   'marketing.learn.system.grayBody': 'Two sides of one system: outside with the serum, inside with the capsule.',
   'marketing.learn.link': 'Not sure where to start? Learn the basics',
+
+  // --- Cart discounts ---
+  'cart.discount': 'Discount',
+  'cart.discount.quantity': 'Multi-unit savings',
+  'cart.discount.set': 'Complete set savings',
+  'cart.discount.package': 'Full package savings',
+  'cart.discountRules': 'Save more when you buy more. 4 of the same product: 10% off. 12 of the same product: 30% off. 12 of each of the six products (72 units): 40% off. One of each of the six products (the complete set): 10% off. The best discount applies; discounts don\'t stack.',
 } as const;
 
 export type MessageKey = keyof typeof en;

@@ -1499,4 +1499,11 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'marketing.learn.system.gray': 'Système Gray',
   'marketing.learn.system.grayBody': 'Deux côtés d\'un même système : l\'extérieur avec le sérum, l\'intérieur avec la capsule.',
   'marketing.learn.link': 'Pas sûr par où commencer ? Découvrez les bases',
+
+  // --- Cart discounts ---
+  'cart.discount': 'Remise',
+  'cart.discount.quantity': 'Remise sur quantité',
+  'cart.discount.set': 'Remise sur le set complet',
+  'cart.discount.package': 'Remise sur le pack complet',
+  'cart.discountRules': 'Plus vous achetez, plus vous économisez. 4 unités du même produit : 10 % de remise. 12 unités du même produit : 30 %. 12 unités de chacun des six produits (72 unités) : 40 %. Une unité de chacun des six produits (le set complet) : 10 %. La meilleure remise s\'applique ; les remises ne se cumulent pas.',
 };

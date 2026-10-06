@@ -90,6 +90,7 @@ export function CartPage() {
           <aside className="h-fit rounded-xl border border-border bg-background p-6">
             <h2 className="font-display text-lg font-medium">{t('bag.summary')}</h2>
             <CartTotalRows totals={totals} />
+            <p className="mt-4 font-body text-xs text-muted-foreground">{t('cart.discountRules')}</p>
             <Button to={withLocale(PATHS.cartCheckout)} block className="mt-5">
               {t('bag.checkout')}
             </Button>

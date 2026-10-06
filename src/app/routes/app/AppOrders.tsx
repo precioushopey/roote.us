@@ -98,6 +98,7 @@ function OrderDetails({ order, durationDays, locale }: { order: OrderRecord; dur
         <Detail label={t('app.profile.orders.programLength')} value={t('report.duration.label', { days: durationDays })} />
       )}
       {order.subtotal !== undefined && <Detail label={t('cart.subtotal')} value={money(order.subtotal)} />}
+      {order.discount !== undefined && <Detail label={t('cart.discount')} value={`−${money(order.discount)}`} />}
       {order.shipping !== undefined && (
         <Detail
           label={t('bag.shipping')}

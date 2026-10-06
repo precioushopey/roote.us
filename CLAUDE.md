@@ -124,6 +124,9 @@ content/roote.config.ts   brand + company (entity facts) + formula + programDura
         education.ts       /magazine "learn" hub topics → EducationHub.tsx; visuals in ProductVisuals.tsx
                            ("time to visible results" is always [PENDING] — roote.config's value is an invented stand-in)
         pending.ts          PENDING() / isPending() / collectPending()
+domain/cart/               totals.ts (subtotal/discount/shipping/total) + discounts.ts (DISCOUNT_RULES: 4+ → 10%, 12+ → 30%,
+                           complete six-product set → 10%, 12 of each of six → 40%; best single discount, never stacked;
+                           bundle prices are derived in content/bundles.ts as component sum − 10%)
 domain/analysis/           deriveAnalysis (pure, deterministic), analyzeHair (orchestrator + fallback),
                            remoteAnalysisAdapter (env-gated PLACEHOLDER contract, vendor TBD), types
        report/             buildReport (pure view-model builder), types, money (Intl currency)

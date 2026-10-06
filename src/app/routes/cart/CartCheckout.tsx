@@ -57,6 +57,7 @@ export function CartCheckout() {
         // subtitle/badges, not just its name.
         items: lines.map((l) => ({ name: l.name, qty: l.qty, slug: l.sku })),
         subtotal: totals.subtotal ?? undefined,
+        discount: totals.discount && totals.discount > 0 ? totals.discount : undefined,
         shipping: totals.shipping ?? undefined,
         total: totals.total ?? undefined,
         cardLast4: card.last4,

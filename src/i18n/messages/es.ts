@@ -1430,4 +1430,11 @@ export const es: Partial<Record<MessageKey, string>> = {
   'marketing.learn.system.gray': 'Sistema Gray',
   'marketing.learn.system.grayBody': 'Dos caras de un mismo sistema: por fuera con el sérum, por dentro con la cápsula.',
   'marketing.learn.link': '¿No sabes por dónde empezar? Aprende lo básico',
+
+  // --- Cart discounts ---
+  'cart.discount': 'Descuento',
+  'cart.discount.quantity': 'Ahorro por cantidad',
+  'cart.discount.set': 'Ahorro por set completo',
+  'cart.discount.package': 'Ahorro por paquete completo',
+  'cart.discountRules': 'Ahorra más cuanto más compras. 4 unidades del mismo producto: 10 % de descuento. 12 unidades del mismo producto: 30 %. 12 unidades de cada uno de los seis productos (72 unidades): 40 %. Una unidad de cada uno de los seis productos (el set completo): 10 %. Se aplica el mejor descuento; los descuentos no se acumulan.',
 };

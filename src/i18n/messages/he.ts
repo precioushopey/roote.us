@@ -1450,4 +1450,11 @@ export const he: Record<MessageKey, string> = {
   'marketing.learn.system.gray': 'מערכת Gray',
   'marketing.learn.system.grayBody': 'שני צדדים של מערכת אחת: מבחוץ עם הסרום, מבפנים עם הקפסולה.',
   'marketing.learn.link': 'לא בטוחים מאיפה להתחיל? ללמוד את היסודות',
+
+  // --- Cart discounts ---
+  'cart.discount': 'הנחה',
+  'cart.discount.quantity': 'חיסכון ברכישת כמה יחידות',
+  'cart.discount.set': 'חיסכון על הסט המלא',
+  'cart.discount.package': 'חיסכון על החבילה המלאה',
+  'cart.discountRules': 'חוסכים יותר כשקונים יותר. 4 יחידות מאותו מוצר: 10% הנחה. 12 יחידות מאותו מוצר: 30% הנחה. 12 מכל אחד מששת המוצרים (72 יחידות): 40% הנחה. אחד מכל אחד מששת המוצרים (הסט המלא): 10% הנחה. חלה ההנחה הטובה ביותר; ההנחות אינן מצטברות.',
 };
