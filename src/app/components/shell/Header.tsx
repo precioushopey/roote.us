@@ -46,6 +46,9 @@ export function Header() {
   // A guest with no account can't reach the authenticated /account app (it
   // redirects away, see AppShell.tsx), so send them to the guest-facing
   // nudge page instead of a link that silently bounces them.
+  // Checkout is the one stage where the analysis CTA is a distraction (stakeholder
+  // feedback): the whole focus is on payment. Still shown on the thank-you page.
+  const onCheckout = pathname.replace(/\/$/, '') === withLocale(PATHS.cartCheckout).replace(/\/$/, '');
   const accountLink = auth.email ? PATHS.account : PATHS.getStarted;
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -120,14 +123,16 @@ export function Header() {
             </div>
             <CartLink label={t('cart.open')} count={resolvedCartCount} />
           </div>
-          <Button
-            to={withLocale(PATHS.analysis)}
-            caps
-            variant={condensed ? 'primary' : 'secondary'}
-            className="hidden min-w-0 sm:inline-flex text-sm"
-          >
-            <span className="min-w-0 truncate">{t('marketing.nav.cta')}</span>
-          </Button>
+          {!onCheckout && (
+            <Button
+              to={withLocale(PATHS.analysis)}
+              caps
+              variant={condensed ? 'primary' : 'secondary'}
+              className="hidden min-w-0 sm:inline-flex text-sm"
+            >
+              <span className="min-w-0 truncate">{t('marketing.nav.cta')}</span>
+            </Button>
+          )}
           <IconButton
             label={t('marketing.nav.openMenu')}
             onClick={() => setMenuOpen(true)}
@@ -156,9 +161,11 @@ export function Header() {
         </nav>
         <div className="mt-6 border-t border-border pt-6">
           <LanguagePicker locale={locale} onChange={setLocale} />
-          <Button to={withLocale(PATHS.analysis)} caps block variant="secondary" className="mt-4 text-xs" onClick={() => setMenuOpen(false)}>
-            {t('marketing.nav.cta')}
-          </Button>
+          {!onCheckout && (
+            <Button to={withLocale(PATHS.analysis)} caps block variant="secondary" className="mt-4 text-xs" onClick={() => setMenuOpen(false)}>
+              {t('marketing.nav.cta')}
+            </Button>
+          )}
         </div>
       </Drawer>
     </header>
