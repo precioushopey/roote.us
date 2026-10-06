@@ -16,6 +16,11 @@ import {
   CtaSection,
   SectionIntro,
 } from '@/app/components/roote';
+import { LevelComparisonSection } from '@/app/components/marketing/LevelComparison';
+import type { LevelSlug } from '@/content/levelComparison';
+import { buildProductGuide } from '@/content/productGuides';
+import { GuideWho, GuideHow, GuideRoutine, GuideCompare, GuideExpect } from '@/app/components/marketing/ProductGuide';
+import { HowToUseSteps } from '@/app/components/marketing/ProductVisuals';
 import { useAddedToCartPanel } from '@/app/components/cart/AddedToCartPanel';
 import { useFitTitle } from '@/app/lib/useFitTitle';
 import { useCart } from '@/store/cart';
@@ -64,6 +69,7 @@ export function ProductDetail() {
 
   if (!product) return <PagePlaceholder title={t('notFound.product.title')} body={t('notFound.product.body')} />;
 
+  const guide = buildProductGuide(product.slug, cl);
   const related = product.relatedProducts.map(getProduct).filter((p): p is NonNullable<typeof p> => !!p);
   const isGrayConcern = product.concern === 'gray' || product.concern === 'gray-support';
   const eyebrowLabel = isGrayConcern ? t('marketing.shop.filterGray') : t('marketing.shop.filterThinning');
@@ -76,6 +82,7 @@ export function ProductDetail() {
   };
 
   const details: Array<{ id: string; title: string; body: React.ReactNode }> = [
+    ...(guide?.faq ?? []).map((f, i) => ({ id: `guide-faq-${i}`, title: f.q, body: f.a })),
     {
       id: 'formula',
       title: t('marketing.pdp.formula'),
@@ -126,6 +133,9 @@ export function ProductDetail() {
             <DisplayTitle ref={titleRef} as="h1" className="!font-normal">
               {product.name}
             </DisplayTitle>
+            {guide ? (
+              <p className="font-display text-xl text-ink-foreground md:text-2xl">{guide.whatItDoes}</p>
+            ) : null}
             <Prose className="text-ink-foreground">
               {pickLocalized(product.heroCopy, cl)}
             </Prose>
@@ -186,6 +196,8 @@ export function ProductDetail() {
         )}
       </Section>
 
+      {guide ? <GuideWho guide={guide} /> : null}
+
       <Section tone="cream" width="content" gap={8} className="-mt-24">
         <SectionIntro title={t('marketing.pdp.activesTitle')} body={t('marketing.pdp.activesBody')} />
         {product.ingredients.length > 0 ? (
@@ -214,12 +226,20 @@ export function ProductDetail() {
         ) : null}
       </Section>
 
+      {guide ? <GuideHow guide={guide} /> : null}
+
       <Section tone="grid" width="content" gap={8} className="-mt-24">
         <SectionIntro title={t('marketing.pdp.directionsTitle')} body={t('marketing.pdp.directionsBody')} />
         <div className="flex flex-col gap-2">
           <h2 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.howToUse')}</h2>
           <Prose>{pickLocalized(product.usage, cl)}</Prose>
         </div>
+        {guide ? (
+          <div className="flex flex-col gap-4">
+            <h3 className="font-display text-lg md:text-xl text-foreground">{t('marketing.guide.stepsTitle')}</h3>
+            <HowToUseSteps steps={guide.steps} />
+          </div>
+        ) : null}
         <div className="flex flex-col gap-2">
           <h3 className="font-display text-lg md:text-xl text-foreground">{t('marketing.pdp.safety')}</h3>
           <Prose>{pickLocalized(product.safety, cl)}</Prose>
@@ -284,6 +304,16 @@ export function ProductDetail() {
           </div>
         </Section>
       ) : null}
+
+      {guide ? <GuideRoutine guide={guide} /> : null}
+
+      {guide?.isLevel ? (
+        <LevelComparisonSection highlight={product.slug as LevelSlug} />
+      ) : guide ? (
+        <GuideCompare guide={guide} />
+      ) : null}
+
+      {guide ? <GuideExpect guide={guide} /> : null}
 
       <Section tone="grid" width="content" gap={8} className="-mt-24">
         <SectionIntro title={t('marketing.pdp.detailsTitle')} body={t('marketing.pdp.detailsBody')} />
