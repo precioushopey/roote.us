@@ -47,7 +47,7 @@
 
   --roote-ink: #172022;
   --roote-body: #333a3c;
-  --roote-muted: #6f7676;
+  --roote-muted: #596060; /* 2026-10-06 WCAG: was #6f7676 (4.4:1 on cream-50); now >=5:1 on cream-50/100/white, 4.98 on cream-200 */
   --roote-line: rgba(23, 32, 34, 0.14);
 
   /* --- fonts --------------------------------------------------------------
@@ -95,13 +95,13 @@
   --destructive-foreground: #ffffff;
   --success: #1f7a53;
   --success-foreground: #ffffff;
-  --warning: #a8681c;
+  --warning: #94590f; /* 2026-10-06 WCAG: was #a8681c (4.29:1 as text on cream-50); now 5.4:1 */
   --warning-foreground: #ffffff;
   --info: var(--roote-gold-700);
   --info-foreground: #ffffff;
 
   --border: var(--roote-cream-300);
-  --input: var(--roote-cream-300);
+  --input: #8f8878; /* 2026-10-06 WCAG 1.4.11: field outline was cream-300 (1.3:1); now 3.5:1 on white, 3.35 on cream-50. --border (cards/dividers) is unchanged */
   --input-background: #ffffff;
   --switch-background: #cbc0ac;
   --ring: var(--roote-gold-600);

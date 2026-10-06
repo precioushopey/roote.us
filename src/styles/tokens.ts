@@ -26,7 +26,7 @@ export const primitives = {
   taupe500: '#E0C9B6',
   ink: '#172022',
   body: '#333A3C',
-  muted: '#6F7676',
+  muted: '#596060',
   line: 'rgba(23, 32, 34, 0.14)',
 } as const;
 
@@ -50,7 +50,7 @@ export const palette = {
   inkGhost: '#4D3D16',
   destructive: '#B3261E',
   success: '#1F7A53',
-  warning: '#A8681C',
+  warning: '#94590F',
   info: primitives.gold700,
 } as const;
 
