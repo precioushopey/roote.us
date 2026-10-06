@@ -1447,4 +1447,19 @@ export const fr: Partial<Record<MessageKey, string>> = {
   'app.profile.orders.shipTo': 'Livraison à',
   'app.profile.orders.programLength': 'Durée du programme',
   'app.profile.orders.includes': 'Contenu',
+
+  // --- Level comparison ---
+  'marketing.levels.title': 'Niveau 6, 10 ou 15 ?',
+  'marketing.levels.body': 'Trois niveaux pour des personnes différentes. Découvrez ce que contient chacun.',
+  'marketing.levels.tabsLabel': 'Choisir un niveau',
+  'marketing.levels.minoxidilLabel': 'Niveau de Minoxidil',
+  'marketing.levels.finasterideLabel': 'Finasteride (échelle distincte)',
+  'marketing.levels.extrasLabel': 'Ingrédients ajoutés',
+  'marketing.levels.noExtras': 'Aucun ajout',
+  'marketing.levels.suitsLabel': 'Peut convenir à',
+  'marketing.levels.stripTitle': 'Des personnes différentes, des niveaux différents',
+  'marketing.levels.thisLevel': 'Ce niveau',
+  'marketing.levels.snippetsTitle': 'Les bases, simplement',
+  'marketing.levels.meterAria': '{label} : {value} %',
+  'marketing.levels.legalNote': 'Informations générales, pas un avis médical. En attente de validation juridique formelle.',
 };

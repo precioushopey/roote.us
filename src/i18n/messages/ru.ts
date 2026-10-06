@@ -1423,4 +1423,19 @@ export const ru: Partial<Record<MessageKey, string>> = {
   'app.profile.orders.shipTo': 'Доставка по адресу',
   'app.profile.orders.programLength': 'Длительность программы',
   'app.profile.orders.includes': 'Что входит',
+
+  // --- Level comparison ---
+  'marketing.levels.title': 'Уровень 6, 10 или 15?',
+  'marketing.levels.body': 'Три уровня для разных людей. Посмотрите, что входит в каждый.',
+  'marketing.levels.tabsLabel': 'Выберите уровень',
+  'marketing.levels.minoxidilLabel': 'Уровень Minoxidil',
+  'marketing.levels.finasterideLabel': 'Finasteride (отдельная шкала)',
+  'marketing.levels.extrasLabel': 'Дополнительные компоненты',
+  'marketing.levels.noExtras': 'Без добавок',
+  'marketing.levels.suitsLabel': 'Может подойти',
+  'marketing.levels.stripTitle': 'Разные люди — разные уровни',
+  'marketing.levels.thisLevel': 'Этот уровень',
+  'marketing.levels.snippetsTitle': 'Основы — просто',
+  'marketing.levels.meterAria': '{label}: {value}%',
+  'marketing.levels.legalNote': 'Общая информация, не медицинская консультация. Ожидает официальной юридической проверки.',
 };

@@ -1398,4 +1398,19 @@ export const he: Record<MessageKey, string> = {
   'app.profile.orders.shipTo': 'משלוח אל',
   'app.profile.orders.programLength': 'משך התוכנית',
   'app.profile.orders.includes': 'מה כלול',
+
+  // --- Level comparison ---
+  'marketing.levels.title': 'רמה 6, 10 או 15?',
+  'marketing.levels.body': 'שלוש עוצמות לאנשים שונים. הנה מה שכל אחת מכילה.',
+  'marketing.levels.tabsLabel': 'בחירת רמה',
+  'marketing.levels.minoxidilLabel': 'רמת מינוקסידיל',
+  'marketing.levels.finasterideLabel': 'פינסטריד (סולם נפרד)',
+  'marketing.levels.extrasLabel': 'רכיבים נוספים',
+  'marketing.levels.noExtras': 'ללא תוספות',
+  'marketing.levels.suitsLabel': 'עשוי להתאים ל',
+  'marketing.levels.stripTitle': 'אנשים שונים, רמות שונות',
+  'marketing.levels.thisLevel': 'הרמה הזו',
+  'marketing.levels.snippetsTitle': 'היסודות, בפשטות',
+  'marketing.levels.meterAria': '{label}: {value}%',
+  'marketing.levels.legalNote': 'מידע כללי, לא ייעוץ רפואי. בהמתנה לבדיקה משפטית רשמית.',
 };

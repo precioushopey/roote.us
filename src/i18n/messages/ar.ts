@@ -1470,4 +1470,19 @@ export const ar: Partial<Record<MessageKey, string>> = {
   'app.profile.orders.shipTo': 'الشحن إلى',
   'app.profile.orders.programLength': 'مدة البرنامج',
   'app.profile.orders.includes': 'ما يتضمنه',
+
+  // --- Level comparison ---
+  'marketing.levels.title': 'المستوى 6 أو 10 أو 15؟',
+  'marketing.levels.body': 'ثلاثة مستويات لأشخاص مختلفين. تعرّف على محتوى كل مستوى.',
+  'marketing.levels.tabsLabel': 'اختر مستوى',
+  'marketing.levels.minoxidilLabel': 'مستوى Minoxidil',
+  'marketing.levels.finasterideLabel': 'Finasteride (مقياس منفصل)',
+  'marketing.levels.extrasLabel': 'مكوّنات إضافية',
+  'marketing.levels.noExtras': 'لا إضافات',
+  'marketing.levels.suitsLabel': 'قد يناسب',
+  'marketing.levels.stripTitle': 'أشخاص مختلفون، مستويات مختلفة',
+  'marketing.levels.thisLevel': 'هذا المستوى',
+  'marketing.levels.snippetsTitle': 'الأساسيات ببساطة',
+  'marketing.levels.meterAria': '{label}: {value}%',
+  'marketing.levels.legalNote': 'معلومات عامة وليست نصيحة طبية. بانتظار المراجعة القانونية الرسمية.',
 };

@@ -1403,6 +1403,21 @@ export const en = {
   'app.profile.orders.shipTo': 'Ship to',
   'app.profile.orders.programLength': 'Program length',
   'app.profile.orders.includes': 'What is included',
+
+  // --- Level comparison ---
+  'marketing.levels.title': 'Level 6, 10 or 15?',
+  'marketing.levels.body': 'Three strengths for different people. See what each one contains.',
+  'marketing.levels.tabsLabel': 'Choose a level',
+  'marketing.levels.minoxidilLabel': 'Minoxidil level',
+  'marketing.levels.finasterideLabel': 'Finasteride (its own scale)',
+  'marketing.levels.extrasLabel': 'Added ingredients',
+  'marketing.levels.noExtras': 'None added',
+  'marketing.levels.suitsLabel': 'May suit',
+  'marketing.levels.stripTitle': 'Different people, different levels',
+  'marketing.levels.thisLevel': 'This level',
+  'marketing.levels.snippetsTitle': 'The basics, simply',
+  'marketing.levels.meterAria': '{label}: {value}%',
+  'marketing.levels.legalNote': 'General information, not medical advice. Pending formal legal review.',
 } as const;
 
 export type MessageKey = keyof typeof en;
