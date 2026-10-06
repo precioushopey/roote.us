@@ -9,11 +9,14 @@ import {
   ProductCard,
   SegmentedControl,
   PendingChip,
+  TextLink,
   MediaPlaceholder,
   Hero,
   CtaSection,
   renderWithEmphasis,
 } from '@/app/components/roote';
+import { LevelComparisonSection } from '@/app/components/marketing/LevelComparison';
+import { SystemMap } from '@/app/components/marketing/ProductVisuals';
 import { useAddedToCartPanel } from '@/app/components/cart/AddedToCartPanel';
 import { useCart } from '@/store/cart';
 import { PATHS } from '@/app/paths';
@@ -326,6 +329,16 @@ export function Products() {
   const withLocale = useLocalizedPath();
   const [filter, setFilter] = useState<Filter>('all');
   const items = PRODUCTS.filter((p) => matches(p, filter));
+  // Role pill on each card: treatment vs supportive vs the two sides of the Gray system.
+  const treatment = t('marketing.learn.system.treatment');
+  const roleTag: Record<string, string> = {
+    'density-6': treatment,
+    'density-10': treatment,
+    'density-15': treatment,
+    'regrowth-shampoo': t('marketing.learn.system.supportive'),
+    'gray-serum': `${t('marketing.learn.system.gray')} · ${t('marketing.learn.outside')}`,
+    'gray-support': `${t('marketing.learn.system.gray')} · ${t('marketing.learn.inside')}`,
+  };
 
   return (
     <>
@@ -343,6 +356,15 @@ export function Products() {
           className: 'aspect-[4/3] w-full object-contain shadow-product',
         }}
       />
+
+      <Section tone="cream" width="content" gap={8}>
+        <SystemMap />
+        <TextLink to={`${withLocale(PATHS.magazine)}#learn`} withArrow>
+          {t('marketing.learn.link')}
+        </TextLink>
+      </Section>
+
+      <LevelComparisonSection />
 
       <Section tone="cream" width="content" gap={8}>
         <div className="flex flex-col gap-12">
@@ -366,6 +388,7 @@ export function Products() {
             <div key={p.slug} className="flex flex-col place-content-between gap-4">
               <ProductCard
                 name={p.name}
+                tag={roleTag[p.slug]}
                 subtitle={pickLocalized(p.subtitle, cl)}
                 to={withLocale(PATHS.product(p.slug))}
                 priceLabel={p.price === null ? null : formatMoney(p.price, rooteContent.currency, cl).formatted}

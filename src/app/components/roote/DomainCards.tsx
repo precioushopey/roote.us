@@ -110,10 +110,13 @@ export function ProductCard({
   mediaAlt,
   mediaLabel,
   image,
+  tag,
 }: {
   name: string;
   subtitle: string;
   to: string;
+  /** Optional role pill (e.g. "Treatment" / "Supportive") shown above the name. */
+  tag?: string;
   /** resolved price string, or null → [PENDING] */
   priceLabel: string | null;
   packaging?: 'men' | 'women';
@@ -137,6 +140,11 @@ export function ProductCard({
       )}
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
+          {tag ? (
+            <span className="w-fit rounded-full border border-border px-2.5 py-0.5 font-body text-xs text-muted-foreground">
+              {tag}
+            </span>
+          ) : null}
           <h3 className="font-display text-md text-foreground">{name}</h3>
           <p className="font-body text-sm text-muted-foreground">{subtitle}</p>
         </div>

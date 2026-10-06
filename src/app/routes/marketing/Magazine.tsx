@@ -23,6 +23,7 @@ import {
 } from '@/content/magazine';
 import type { MessageKey } from '@/i18n/messages';
 import { INGREDIENT_PHOTOS } from '@/app/components/roote/ingredientPhotos';
+import { EducationHub } from '@/app/components/marketing/EducationHub';
 import concernThinning from '@/assets/concerns/concern-thinning.png';
 import level10 from '@/assets/products/Level 10.png';
 import graySupport from '@/assets/products/Gray Support.png';
@@ -87,7 +88,9 @@ export function Magazine() {
         }
       />
 
-      <Section id="why" tone="cream" width="content">
+      <EducationHub />
+
+      <Section id="why" tone="cream" width="content" className="-mt-24">
         <div className="grid lg:grid-cols-2 items-center gap-12">
           <div className="flex flex-col items-start gap-8">
             <SectionIntro

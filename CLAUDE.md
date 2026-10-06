@@ -118,6 +118,11 @@ Guards are plain functions returning a redirect path or `null`:
 ```
 content/roote.config.ts   brand + company (entity facts) + formula + programDurations + treatments + disclaimers
         catalog.ts         17-SKU product catalogue (prices are [PENDING])
+        levelComparison.ts Level 6/10/15 comparison view-model (`buildLevelComparison(locale)`), derived from
+                           products.ts; rendered by app/components/marketing/LevelComparison.tsx on /products + Level PDPs
+        productGuides.ts   per-product guide (who/how/steps/routine/compare/expect/FAQ) → ProductGuide.tsx on every PDP
+        education.ts       /magazine "learn" hub topics → EducationHub.tsx; visuals in ProductVisuals.tsx
+                           ("time to visible results" is always [PENDING] — roote.config's value is an invented stand-in)
         pending.ts          PENDING() / isPending() / collectPending()
 domain/analysis/           deriveAnalysis (pure, deterministic), analyzeHair (orchestrator + fallback),
                            remoteAnalysisAdapter (env-gated PLACEHOLDER contract, vendor TBD), types
