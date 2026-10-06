@@ -1,4 +1,5 @@
 import { L6, pickLocalized, type LocalizedText } from './localized';
+import { getProduct } from './products';
 import type { LocaleCode } from '@/i18n/locales';
 
 /**
@@ -9,19 +10,11 @@ import type { LocaleCode } from '@/i18n/locales';
  * + review gated — their cards show a review note instead of "Add to cart"
  * (see `bundleRequiresReview` in Products.tsx).
  *
- * `compareAtPrice` is the sum of the bundle's own component SKU prices (the
- * real cost of buying the same items separately) — never invented, always
- * derivable from `content/products.ts`. 2026-09-08: user asked to match
- * heyhair.co's bundle-discount pattern (their real "ESCAPE YOUR GRAY CORE"
- * and "Hair Growth Starter/Ultimate" kits discount 9.6%–12.5% off the sum of
- * components, sourced by fetching their live product data). Complete System
- * and Hair Growth Bundle previously had no discount (price === sum); both
- * now carry a ~10% markdown to match. Gray Support Bundle's price ($70) was
- * set earlier by direct competitor price-matching (a separate prior
- * decision, not re-touched here) — its `compareAtPrice` ($90, the real sum
- * of its two components) is therefore a genuine ~22% discount, wider than
- * the 10-12% band, because it already undercut the component sum before
- * this change.
+ * Prices are derived, not typed in (2026-10-06, with the client's single-unit
+ * price list): `compareAtPrice` is the sum of the bundle's component SKU
+ * prices (the real cost of buying the same items separately) and `price` is
+ * that sum less `BUNDLE_DISCOUNT_PERCENT` (10%, the complete-set discount) —
+ * see `withPrices` below. This replaces the earlier hand-set prices.
  */
 
 export type BundlePackaging = 'men' | 'women';
@@ -45,14 +38,11 @@ export type ShopBundle = {
   compareAtPrice: number | null;
 };
 
-export const SHOP_BUNDLES: ShopBundle[] = [
+const RAW_BUNDLES: Array<Omit<ShopBundle, 'price' | 'compareAtPrice'>> = [
   // Complete System: one product line × 2 packagings × 3 density levels
   // (6, 10, 15), same real-variant treatment as Hair Growth Bundle below
-  // (2026-09-23). Flat $18 discount for every level (was already the
-  // discount on the original Level-15-only bundle: 183 -> 165); component
-  // sums from content/products.ts: density-6 (47) + density-10 (50) +
-  // density-15 (53), gray-support (38) + gray-serum (52) + regrowth-shampoo
-  // (40) for all three.
+  // (2026-09-23). Each level's bundle is that level + gray-support + gray-serum
+  // + regrowth-shampoo, priced from `products.ts` (see `withPrices`).
   {
     id: 'complete-system-men-6',
     packaging: 'men',
@@ -74,8 +64,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'La routine complète contre le dégarnissement et les cheveux gris, en emballage homme.',
       es: 'La rutina completa para el aclaramiento y las canas, en envase para hombre.',
     }),
-    price: 159,
-    compareAtPrice: 177,
   },
   {
     id: 'complete-system-men-10',
@@ -98,8 +86,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'La routine complète contre le dégarnissement et les cheveux gris, en emballage homme.',
       es: 'La rutina completa para el aclaramiento y las canas, en envase para hombre.',
     }),
-    price: 162,
-    compareAtPrice: 180,
   },
   {
     id: 'complete-system-men-15',
@@ -122,8 +108,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'La routine complète contre le dégarnissement et les cheveux gris, en emballage homme.',
       es: 'La rutina completa para el aclaramiento y las canas, en envase para hombre.',
     }),
-    price: 165,
-    compareAtPrice: 183,
   },
   {
     id: 'complete-system-women-6',
@@ -146,8 +130,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'La routine complète contre le dégarnissement et les cheveux gris, en emballage femme.',
       es: 'La rutina completa para el aclaramiento y las canas, en envase para mujer.',
     }),
-    price: 159,
-    compareAtPrice: 177,
   },
   {
     id: 'complete-system-women-10',
@@ -170,8 +152,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'La routine complète contre le dégarnissement et les cheveux gris, en emballage femme.',
       es: 'La rutina completa para el aclaramiento y las canas, en envase para mujer.',
     }),
-    price: 162,
-    compareAtPrice: 180,
   },
   {
     id: 'complete-system-women-15',
@@ -194,8 +174,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'La routine complète contre le dégarnissement et les cheveux gris, en emballage femme.',
       es: 'La rutina completa para el aclaramiento y las canas, en envase para mujer.',
     }),
-    price: 165,
-    compareAtPrice: 183,
   },
   {
     id: 'gray-support-bundle-men',
@@ -218,9 +196,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       es: 'Cápsulas y sérum anticanas, en envase para hombre.',
     }),
     // Matches Advanced Anti-Grey Hair Treatment Kit (Gray Escape + Root Revival Serum, 1 kit), heyhair.co.
-    // compareAtPrice is the real sum of its own components: gray-support (38) + gray-serum (52) = 90.
-    price: 70,
-    compareAtPrice: 90,
   },
   {
     id: 'gray-support-bundle-women',
@@ -243,9 +218,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       es: 'Cápsulas y sérum anticanas, en envase para mujer.',
     }),
     // Matches Advanced Anti-Grey Hair Treatment Kit (Gray Escape + Root Revival Serum, 1 kit), heyhair.co.
-    // compareAtPrice is the real sum of its own components: gray-support (38) + gray-serum (52) = 90.
-    price: 70,
-    compareAtPrice: 90,
   },
   // Hair Growth Bundle: one product line × 2 packagings × 3 density levels
   // (6, 10, 15), each level a real, separately purchasable variant (its
@@ -276,8 +248,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'Le soin Densité et le shampooing repousse, en emballage homme.',
       es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para hombre.',
     }),
-    price: 78,
-    compareAtPrice: 87,
   },
   {
     id: 'hair-growth-bundle-men-10',
@@ -300,8 +270,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'Le soin Densité et le shampooing repousse, en emballage homme.',
       es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para hombre.',
     }),
-    price: 81,
-    compareAtPrice: 90,
   },
   {
     id: 'hair-growth-bundle-men-15',
@@ -324,8 +292,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'Le soin Densité et le shampooing repousse, en emballage homme.',
       es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para hombre.',
     }),
-    price: 84,
-    compareAtPrice: 93,
   },
   {
     id: 'hair-growth-bundle-women-6',
@@ -348,8 +314,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'Le soin Densité et le shampooing repousse, en emballage femme.',
       es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para mujer.',
     }),
-    price: 78,
-    compareAtPrice: 87,
   },
   {
     id: 'hair-growth-bundle-women-10',
@@ -372,8 +336,6 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'Le soin Densité et le shampooing repousse, en emballage femme.',
       es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para mujer.',
     }),
-    price: 81,
-    compareAtPrice: 90,
   },
   {
     id: 'hair-growth-bundle-women-15',
@@ -396,10 +358,27 @@ export const SHOP_BUNDLES: ShopBundle[] = [
       fr: 'Le soin Densité et le shampooing repousse, en emballage femme.',
       es: 'El tratamiento de densidad y el champú de recrecimiento, en envase para mujer.',
     }),
-    price: 84,
-    compareAtPrice: 93,
   },
 ];
+
+/** Every bundle is priced at the sum of its components' current unit prices
+ *  (`products.ts`, the client's 2026-10-06 price list) less this markdown. It is
+ *  derived, never typed in, so a bundle can't drift from the price list. A bundle
+ *  line is never discounted a second time by the cart (see `domain/cart/discounts.ts`). */
+export const BUNDLE_DISCOUNT_PERCENT = 10;
+
+function withPrices(b: Omit<ShopBundle, 'price' | 'compareAtPrice'>): ShopBundle {
+  const parts = b.skus.map((sku) => getProduct(sku)?.price ?? null);
+  if (parts.some((p) => p === null)) return { ...b, price: null, compareAtPrice: null };
+  const sum = (parts as number[]).reduce((a, n) => a + n, 0);
+  return {
+    ...b,
+    price: Math.round(sum * (100 - BUNDLE_DISCOUNT_PERCENT)) / 100,
+    compareAtPrice: sum,
+  };
+}
+
+export const SHOP_BUNDLES: ShopBundle[] = RAW_BUNDLES.map(withPrices);
 
 /** "Level" in each of the six UI locales, same convention as the density
  *  products themselves (`content/products.ts`'s `name: 'ROOTÉ Level 15'`,

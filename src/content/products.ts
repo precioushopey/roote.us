@@ -8,12 +8,12 @@ import type { ClaimStatus, ClaimSourceType } from './claims';
  * so wording can be approved centrally. No efficacy, "clinically proven",
  * "FDA-approved", regrowth or gray-reversal language appears here (brief §9).
  *
- * Prices are matched to the named competitor product the client pointed at
- * for each SKU (client references, 2026-09-08: `ROOTÉ_Personal_design_
- * minoxidilmax.docx` + `6-product lineup.docx`) — the 1-unit/lowest tier
- * price of the linked product, in USD. Not invented: sourced per SKU below.
- * Until a SKU has a named reference, its price stays `null` → [PENDING]
- * (hard rule: never invent product content).
+ * Prices are the client's single-unit price list (2026-10-06): Level 6 $185,
+ * Level 10 $190, Level 15 $200, Gray Support $150, Gray Serum $130, Regrowth
+ * Shampoo $110, in USD. They replace the earlier competitor-matched prices.
+ * Multi-unit / set / package discounts live in `domain/cart/discounts.ts`.
+ * A SKU without a supplied price stays `null` → [PENDING] (hard rule: never
+ * invent product content).
  *
  * The old "Color Restore Shampoo" is intentionally NOT a launch SKU — it is
  * kept as an archived concept in `ARCHIVED_CONCEPTS` only.
@@ -278,7 +278,7 @@ export const PRODUCTS: Product[] = [
     evidenceStatus: 'ingredient-literature',
     claimStatus: 'working',
     // Client-set price (2026-09-08), overriding the Essengen-6 Extra competitor match.
-    price: 47,
+    price: 185,
   },
   {
     slug: 'density-10',
@@ -414,7 +414,7 @@ export const PRODUCTS: Product[] = [
     evidenceStatus: 'ingredient-literature',
     claimStatus: 'working',
     // Client-set price (2026-09-08), overriding the Dualgen-10 Plus competitor match.
-    price: 50,
+    price: 190,
   },
   {
     slug: 'density-15',
@@ -580,7 +580,7 @@ export const PRODUCTS: Product[] = [
     evidenceStatus: 'ingredient-literature',
     claimStatus: 'working',
     // Matches DualGen-15 With PG Plus (15% Minoxidil + 0.1% Finasteride + Azelaic Acid, 1 unit / 2 oz), minoxidilmax.com.
-    price: 53,
+    price: 200,
   },
   {
     slug: 'gray-serum',
@@ -849,7 +849,7 @@ export const PRODUCTS: Product[] = [
     evidenceStatus: 'none',
     claimStatus: 'working',
     // Matches Root Revival™ Advanced Anti-Gray Hair Serum (1 bottle), heyhair.co.
-    price: 52,
+    price: 130,
   },
   {
     slug: 'gray-support',
@@ -1063,7 +1063,7 @@ export const PRODUCTS: Product[] = [
     evidenceStatus: 'none',
     claimStatus: 'working',
     // Matches Gray Escape™ Advanced Anti-Gray Hair Growth Supplement (1 bottle), heyhair.co.
-    price: 38,
+    price: 150,
   },
   {
     slug: 'regrowth-shampoo',
@@ -1289,7 +1289,7 @@ export const PRODUCTS: Product[] = [
     evidenceStatus: 'none',
     claimStatus: 'working',
     // Matches ACTIVATE+ Advanced Anti-Thinning Hair Growth Shampoo (1 bottle), heyhair.co.
-    price: 40,
+    price: 110,
   },
 ];
 
